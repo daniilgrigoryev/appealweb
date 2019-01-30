@@ -1,0 +1,7 @@
+node_modules
+.idea/
+/nbproject/
+/v8-compile-cache-0/
+/.git/
+package-lock.json
+yarn-error.log
