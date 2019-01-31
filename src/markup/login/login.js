@@ -7,13 +7,14 @@ import { connect } from 'react-redux'
 import {post,get} from '../../services/ajax.js'
 import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
+import {getUser} from '../../selectors/common.js'
 
 class Login extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
-      username : '',
+      username : 'aleksandrov',
       password : '',
       db: 'PG.TEST',
       list: []
@@ -75,6 +76,6 @@ class Login extends React.Component {
   }
 }; //
 
-export default connect((state) => { 
-    return state.get('user').toJS();
+export default connect((state) => {
+    return getUser(state).toJS();
 })(Login);

@@ -12,9 +12,10 @@ const addMessage = (state,type,message)=>{
 const rootReducer = function(state, action){
   switch (action.type) {
   	case A.LOGOUT_DONE:
-  		return initialState;
+  		window.location = window.location; 
+      return state;
   	case A.MESSAGES_ERASE:
-  		return state.set('messagesQueue',im([]));
+      return state.set('messagesQueue',im([]));
   	case A.MESSAGE_SET:
   		return addMessage(state,action.severity,action.message)
   	case A.LOGIN_DONE:
@@ -25,12 +26,16 @@ const rootReducer = function(state, action){
 }
 
 const initialState = Immutable.fromJS({
-		messagesQueue: [],
-		user : {
-			username : '',
-			sessionId: ''
-		}
-
+    general : {
+      messagesQueue: [],
+      user : {
+        username : '',
+        sessionId: ''
+      }
+    },
+    form: {
+      appeal : {}
+    }
 		//,   ...
 });
 

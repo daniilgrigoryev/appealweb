@@ -13,7 +13,7 @@ export function* watchLogin(action) {
       const loggedData = yield call(api.login,action.loginData); 
       log(' in watchLogin : logged');      
       let exc = 'Unknown login error';
-      if (!loggedData || !loggedData.data ||  (exc=loggedData.data.error)) {
+      if (!loggedData || !loggedData.data || (exc=loggedData.data.error)) {
         throw exc;
       }
       yield put(actions.loginSuccess(loggedData.data));
@@ -27,7 +27,7 @@ export function* watchLogout(action) {
     try{
       const loggedData = yield call(api.logout,action.sessionId);      
       let exc = 'Unknown logout error';
-      if (!loggedData || !loggedData.data ||  (exc=loggedData.data.error)) {
+      if (!loggedData || !loggedData.data || (exc=loggedData.data.error)) {
         throw exc;
       }
       yield put(actions.logoutSuccess());

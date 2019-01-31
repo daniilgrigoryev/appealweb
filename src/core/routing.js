@@ -1,11 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Login from '../markup/login/login.js'
 import App from '../markup/app/app.js'
 import { Notification } from 'element-react'
 import { messagesErase } from '../actions/common.js'
 import 'element-theme-default';
+import {getSessionId,getMessages} from '../selectors/common.js'
 
 class Routing  extends React.Component  {
 
@@ -29,8 +29,8 @@ class Routing  extends React.Component  {
   }
 };
 
-export default connect((state) => { 
-   const messagesQueue = state.get('messagesQueue').toJS();
-   const loggedIn  = !!state.getIn(['user','sessionID']);
+export default connect((state) => {
+   const messagesQueue = getMessages(state).toJS();
+   const loggedIn  = getSessionId(state);
    return {loggedIn, messagesQueue};
 })(Routing);
