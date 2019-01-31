@@ -56,7 +56,6 @@ class Login extends React.Component {
       cookie : navigator.cookieEnabled
     };
 
-    console.log('click');
     this.props.dispatch(loginRequest(loginData));
   }
 

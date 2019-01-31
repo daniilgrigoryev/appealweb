@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 import Finput from '../element2rform/finput.js'
+import Fautocomplete from '../element2rform/fautocomplete.js'
 
 const BasicData = props => {
   const { handleSubmit, pristine, previousPage, submitting } = props
@@ -32,6 +33,10 @@ const BasicData = props => {
       <table>
         <tbody>
           {CONTENT}
+          <tr>
+            <td>ac</td>
+            <td><Fautocomplete placeholder='123' /></td>
+          </tr>
         </tbody>
       </table>
 

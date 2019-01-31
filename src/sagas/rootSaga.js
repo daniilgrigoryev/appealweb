@@ -1,7 +1,6 @@
 import { take, takeLeading, takeEvery, put, call, fork, select, all } from 'redux-saga/effects'
 import * as actions from '../actions/common.js'
 import { getUserData } from '../selectors/common.js'
-import {setSession,post,get} from '../services/ajax.js'
 import * as api from '../services/api.js'
 
 const log = (msg)=>console.log(msg)

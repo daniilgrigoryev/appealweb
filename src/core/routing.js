@@ -7,6 +7,8 @@ import { messagesErase } from '../actions/common.js'
 import 'element-theme-default';
 import {getSessionId,getMessages} from '../selectors/common.js'
 
+import AppealWizard from '../markup/appeal/appealWizard.js'
+
 class Routing  extends React.Component  {
 
   checkMessages(){
@@ -25,6 +27,11 @@ class Routing  extends React.Component  {
 
   render (){ 
     setTimeout(this.checkMessages.bind(this),0)
+
+    if (true){
+      return <AppealWizard />
+    }
+
     return !this.props.loggedIn ? <Login /> : <App />; //
   }
 };
