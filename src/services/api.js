@@ -24,13 +24,30 @@ export function logout(sessionId){
 export function fetchAutocomplete(key,query){
 	return new Promise((resolve,reject)=>{
 		const resp = [
-		  { "value": "vue", "address": "https://github.com/vuejs/vue" },
-	      { "value": "element", "address": "https://github.com/ElemeFE/element" },
-	      { "value": "cooking", "address": "https://github.com/ElemeFE/cooking" },
-	      { "value": "mint-ui", "address": "https://github.com/ElemeFE/mint-ui" },
-	      { "value": "vuex", "address": "https://github.com/vuejs/vuex" },
-	      { "value": "vue-router", "address": "https://github.com/vuejs/vue-router" },
-	      { "value": "babel", "address": "https://github.com/babel/babel" }
+		  { "value": "vue", 		"property": "https://github.com/vuejs/vue" },
+	      { "value": "element", 	"property": "https://github.com/ElemeFE/element" },
+	      { "value": "cooking", 	"property": "https://github.com/ElemeFE/cooking" },
+	      { "value": "mint-ui", 	"property": "https://github.com/ElemeFE/mint-ui" },
+	      { "value": "vuex", 		"property": "https://github.com/vuejs/vuex" },
+	      { "value": "vue-router", 	"property": "https://github.com/vuejs/vue-router" },
+	      { "value": "babel", 		"property": "https://github.com/babel/babel" }
+		]
+		setTimeout(()=>{
+			resolve(resp);
+		},100);
+	});
+}
+
+export function fetchSelect(key){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+		  { "value": "Svue", 		"property": "Shttps://github.com/vuejs/vue" },
+	      { "value": "Selement", 	"property": "Shttps://github.com/ElemeFE/element" },
+	      { "value": "Scooking", 	"property": "Shttps://github.com/ElemeFE/cooking" },
+	      { "value": "Smint-ui", 	"property": "Shttps://github.com/ElemeFE/mint-ui" },
+	      { "value": "Svuex", 		"property": "Shttps://github.com/vuejs/vuex" },
+	      { "value": "Svue-router", "property": "Shttps://github.com/vuejs/vue-router" },
+	      { "value": "Sbabel", 		"property": "Shttps://github.com/babel/babel" }
 		]
 		setTimeout(()=>{
 			resolve(resp);

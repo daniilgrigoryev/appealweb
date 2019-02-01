@@ -1,54 +1,69 @@
 import React from 'react'
 import {AutoComplete} from 'element-react'
-import getAc from '../../../services/acCacher.js'
+import {getAc} from '../../../services/acCacher.js'
 
-export default class Fautocomplete extends React.Component {
+// Element component
+class EAutocomplete extends React.Component {
 
-constructor(props) {
-  super(props);
+	constructor(props) {
+	  super(props);
 
-  const data = props.data  || null;
-  let text   = '';
-  let val    = '';
+	  const data = props.data  || null;
+	  const {value,property} = props.item || {};
+	  this.state = {data,value,property};
 
-  if (data && data.length){
-  	const found = data.filter(x=>x.text===searchText || x.val===searchValue)[0];
-	if (found){
-		text = found.text;
-		val  = found.text;
+	  this.querySearch  = this.querySearch.bind(this);
+	  this.handleSelect = this.handleSelect.bind(this);
 	}
-  }
 
-  this.state = {data,text,val};
-}
+	querySearch(queryString, cb) {
+		const {filter} = this;
+		const {data} = this.state;
+		const key = this.props.acKey;
+	  	if (data){
+	  		cb(filter(data,queryString));
+	  	} else {
+	  		const getCallback = (data)=>{
+	  			this.setState({data},()=>{
+	  				cb(filter(data,queryString));
+	  			});
+	  		}
+	  		getAc(getCallback,key)
+	  	}
+	}
 
-querySearch(queryString, cb) {
-	const {data} = this.state;
-	const key = this.props.acKey;
-  	if (data){
-  		cb(data);
-  	} else {
-  		const getCallback = (data)=>{
-  			this.setState({data},()=>{
-  				cb(data);
-  			});
-  		}
-  		getAc(getCallback,key)
-  	}
-}
+	filter(data,query){
+		if (!data){
+			return [];
+		} else if (!query){
+			return data;
+		}
+		const upper = query.toUpperCase();
+		return data.filter(x=>x.value.toUpperCase().indexOf(upper)==0);
+	}
 
-handleSelect(item) {
-	debugger;
+	handleSelect(item) {
+		const onChange = this.props.onChange;
+		this.setState(item || {value:'',property:''},()=>{
+			onChange && (onChange(item.property));
+		});
+	}
 
-}
+	render() {
+	  return (
+	 	<AutoComplete {...this.props}
+	          value={this.state.value}
+	          fetchSuggestions={this.querySearch}
+	          onSelect={this.handleSelect}
+	        ></AutoComplete>)
+	    }
+} //
 
-render() {
-  return (
- 	<AutoComplete
-          {...this.props}
-          value={this.state.value1}
-          fetchSuggestions={this.querySearch.bind(this)}
-          onSelect={this.handleSelect.bind(this)}
-        ></AutoComplete>)
-    }
-}
+
+// redux Form component
+const FAutocomplete = (props) => {
+	const {input,meta} = props;
+	return <EAutocomplete {...props} {...input} {...meta} />
+}  //
+
+export {EAutocomplete,FAutocomplete};

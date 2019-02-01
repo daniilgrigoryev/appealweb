@@ -2,59 +2,61 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
+import TestElement2RF from './appealContent/testElement2rf.js'
+import OrganizationsData from './appealContent/organizationsData.js'
 
-class AppealWizard extends Component {
-  constructor(props) {
-    super(props)
-    this.nextPage = this.nextPage.bind(this)
-    this.previousPage = this.previousPage.bind(this)
-    this.state = {
-      page: 1
-    }
-  }
-  nextPage() {
-    this.setState({ page: this.state.page + 1 })
-  }
-
-  previousPage() {
-    this.setState({ page: this.state.page - 1 })
-  }
-
-  render() {
-    const { onSubmit } = this.props
-    const { page } = this.state
-    const a = this;
-
-
-    const onClick = ()=>{
-      const aa = a;
-      debugger;
-    }
-    return (
-      <div onClick={onClick}>
-        {page === 1 && <BasicData onSubmit={this.nextPage} />}
-        {page === 2 && (
-          <ClaimantData
-            previousPage={this.previousPage}
-            onSubmit={onSubmit}
-          />
-        )}
-      </div>
-    )
+const NAVI = {
+  testElements: {
+    header: 'тест',
+    form: TestElement2RF,
+    nextPage: ()=>'basicData'
+  },
+  basicData : {
+    header: 'Основные сведения',
+    form: BasicData,
+    nextPage: ()=>'claimantData'  
+  },
+  claimantData: {
+    header: 'Сведения о заявителе',
+    form: ClaimantData,
+    nextPage: ()=>'organizationData',  
+    prevPage: ()=>'basicData'
+  },
+  organizationData: {
+    header: '',
+    form: OrganizationData,
+    nextPage: ()=>'organizationData',  
+    prevPage: ()=>'claimantData'
   }
 }
 
-export default AppealWizard
+export default class AppealWizard extends Component {
+  
+  constructor(props) {
+    super(props)
+    this.state = { page: props.page || 'testElements' }
+  }
 
+  toPage(newPage){
+    this.setState({page: newPage});
+  }
 
-/*
+  render() {
+    const a = this;
+    const { page } = this.state
+    const { onSubmit } = this.props
+    const toPage = this.toPage.bind(this);
 
-{page === 2 && (
-          <WizardFormSecondPage
-            previousPage={this.previousPage}
-            onSubmit={this.nextPage}
-          />
-        )}
+    const Page = NAVI[page];
+    const {header} = Page;
+    const nextPage = Page.nextPage && (()=>toPage(Page.nextPage()));
+    const prevPage = Page.prevPage && (()=>toPage(Page.prevPage()));
+    const props = {nextPage,prevPage,header};
 
-
-*/
+    return (
+      <div>
+        <Page.form {...props} onSubmit={nextPage} />
+      </div>
+    )
+  }//
+}

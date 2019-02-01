@@ -8,9 +8,9 @@ import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import mapping from './mapping.js'
 
-const BasicData = props => {
+const OrganizationsData = props => {
     const { handleSubmit, pristine, previousPage, submitting, header } = props
-    const M = mapping.basicData;
+    const M = mapping.organizationsData;
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
@@ -43,12 +43,8 @@ const BasicData = props => {
             </table>
 
             <div>
-              <button type="button" className="previous" onClick={previousPage}>
-                Previous
-              </button>
-              <button type="submit" >
-                Submit
-              </button>
+              <button type="button" className="previous" onClick={previousPage}>Previous</button>
+              <button type="submit" >Submit</button>
             </div>
           </form>
         </div>
@@ -61,4 +57,4 @@ export default reduxForm({
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate
-})(BasicData)
+})(OrganizationsData)
