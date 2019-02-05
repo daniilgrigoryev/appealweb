@@ -31,50 +31,50 @@ class ClaimantData extends React.Component {
     ? ([
       <tr key='flFam'>
         <td>{M.FAM.label}</td>
-        <td colspan='3'><Field name={M.FAM.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.FAM.name} component={FInput} /></td>
       </tr>,
       <tr key='flName'>
         <td>{M.NAME.label}</td>
-        <td colspan='3'><Field name={M.NAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.NAME.name} component={FInput} /></td>
       </tr>,
       <tr key='flSurname'>
         <td>{M.SURNAME.label}</td>
-        <td colspan='3'><Field name={M.SURNAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.SURNAME.name} component={FInput} /></td>
       </tr>,
       <tr key='flSex'>
         <td>{M.SEX.label}</td>
-        <td colspan='3'><Field name={M.SEX.name} component={FRadio} options={sexOptions} /></td>
+        <td colSpan='3'><Field name={M.SEX.name} component={FRadio} options={sexOptions} /></td>
       </tr>,
       <tr key='flPred'>
         <td>{M.PRED.label}</td>
-        <td colspan='3'><Field name={M.PRED.name} component={FCheckbox} /></td>
+        <td colSpan='3'><Field name={M.PRED.name} component={FCheckbox} /></td>
       </tr>
       ])
 
     :([
       <tr key='ulOrgName'>
         <td>{M.ORG_NAME.label}</td>
-        <td colspan='3'><Field name={M.ORG_NAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.ORG_NAME.name} component={FInput} /></td>
       </tr>,
       <tr key='ulINN'>
         <td>{M.INN.label}</td>
-        <td colspan='3'><Field name={M.INN.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.INN.name} component={FInput} /></td>
       </tr>,
       <tr key='ulKPP'>
         <td>{M.KPP.label}</td>
-        <td colspan='3'><Field name={M.KPP.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.KPP.name} component={FInput} /></td>
       </tr>,
       <tr key='ulIshNum'>
         <td>{M.ISH_NUMBER.label}</td>
-        <td colspan='3'><Field name={M.ISH_NUMBER.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.ISH_NUMBER.name} component={FInput} /></td>
       </tr>,
       <tr key='ulIshDt'>
         <td>{M.ISH_DATE.label}</td>
-        <td colspan='3'><Field name={M.ISH_DATE.name} component={FPicker} datepicker='+' /></td>
+        <td colSpan='3'><Field name={M.ISH_DATE.name} component={FPicker} datepicker='+' /></td>
       </tr>,
       <tr key='ulPodpis'>
         <td>{M.PODPIS.label}</td>
-        <td colspan='3'><Field name={M.PODPIS.name} component={FInput} /></td>
+        <td colSpan='3'><Field name={M.PODPIS.name} component={FInput} /></td>
       </tr>
       ]);
 
@@ -97,34 +97,34 @@ class ClaimantData extends React.Component {
             <table>
               <tbody>
                 <tr key='flSurname'>
-                  <td colspan='2'><ERadio options={zajavOptions} onChange={toggleZajav} /></td>
+                  <td colSpan='2'><ERadio options={zajavOptions} onChange={toggleZajav} /></td>
                 </tr>
                 {ZAJAV_SOURCE}
 
                 <tr>
                   <td>{M.PHONE.label}</td>
-                  <td colspan='3'><Field name={M.PHONE.name} component={FInput} mask={phoneMask} /></td>
+                  <td colSpan='3'><Field name={M.PHONE.name} component={FInput} mask={phoneMask} /></td>
                 </tr>
                 <tr>
                   <td>{M.EMAIL.label}</td>
-                  <td colspan='3'><Field name={M.EMAIL.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.EMAIL.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.REGION.label}</td>
-                  <td colspan='3'><Field name={M.REGION.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.REGION.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.RAYON.label}</td>
-                  <td colspan='3'><Field name={M.RAYON.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.RAYON.name} component={FInput} /></td>
                 </tr>
 
                 <tr>
                   <td>{M.NPUNKT.label}</td>
-                  <td colspan='3'><Field name={M.NPUNKT.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.NPUNKT.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.STREET.label}</td>
-                  <td colspan='3'><Field name={M.STREET.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.STREET.name} component={FInput} /></td>
                 </tr>
 
                 <tr>
@@ -140,7 +140,7 @@ class ClaimantData extends React.Component {
                 </tr>
                 <tr>
                   <td>{M.PINDEX.label}</td>
-                  <td colspan='3'><Field name={M.PINDEX.name} component={FInput} /></td>
+                  <td colSpan='3'><Field name={M.PINDEX.name} component={FInput} /></td>
                 </tr>
               </tbody>
             </table>

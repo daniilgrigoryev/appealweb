@@ -6,23 +6,20 @@ import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
 import {ESwitch,FSwitch} from '../element2rform/switch.js'
 import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
-import {EOrganizationFrom,FOrganizationFrom} from '../subForms/organizationFrom.js'
-import {EOrganizationControl,FOrganizationControl} from '../subForms/organizationControl.js'
+import {ETopicList,FTopicList} from '../subForms/topicList.js'
 import mapping from './mapping.js'
 
-const OrganizationsData = props => {
+const TopicsData = props => {
     const { handleSubmit, pristine, previousPage, submitting, header } = props
-    const M = mapping.organizationsData;
+    const M = mapping.TopicsData;
 
     return (
-      <div className='appealSection'>
+       <div className='appealSection'>
+          <h2>{header}</h2>
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
-            <h2>Направлено из организации</h2>            
-            <Field name='organizationsFrom' component={FOrganizationFrom} />                
 
-            <h2>На контроле в организации</h2>            
-            <Field name='organizationsControl' component={FOrganizationControl} />    
+            <Field name='topicsData' component={FTopicList} />    
 
             <div>
               <button type="button" className="previous" onClick={previousPage}>Previous</button>
@@ -39,4 +36,4 @@ export default reduxForm({
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate
-})(OrganizationsData)
+})(TopicsData)

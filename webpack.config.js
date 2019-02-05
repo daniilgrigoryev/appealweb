@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: './src/main.js',
+    entry: './src/init.js',
     output: {path: __dirname + '/dist', filename: 'bundle.js'},
     node: {
         fs: "empty"

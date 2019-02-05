@@ -115,5 +115,15 @@ export default {
 			name:  'PINDEX',
 			label: 'Индекс'
 		}
+	},
+	archive:{
+		TOM : {
+			name: 'TOM',
+			label: 'Том'
+		},
+		SHEETS : {
+			name: 'SHEETS',
+			label: 'Страницы'
+		}
 	}
 }

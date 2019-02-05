@@ -21,10 +21,7 @@ class ESelect extends React.Component {
 		if (data && data.size){
 			this.setState({data});
 		} else if (dataKey) {
-			const getCallback = (data)=>{
-				this.setState({data});
-			}
-			getSl(getCallback,dataKey);
+			getSl(dataKey).then((data)=>this.setState({data}));
 		}
 	}
 

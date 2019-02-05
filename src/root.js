@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Login from '../markup/login/login.js'
-import App from '../markup/app/app.js'
+import Login from './markup/login/login.js'
+import App from './markup/app/app.js'
 import { Notification } from 'element-react'
-import { messagesErase } from '../actions/common.js'
+import { messagesErase } from './actions/common.js'
 import 'element-theme-default';
-import {getSessionId,getMessages} from '../selectors/common.js'
+import { i18n } from 'element-react'
+import locale from 'element-react/src/locale/lang/ru-RU'
+import {getSessionId,getMessages} from './selectors/common.js'
+import AppealWizard from './markup/appeal/appealWizard.js'
 
-import AppealWizard from '../markup/appeal/appealWizard.js'
+i18n.use(locale);
 
-class Routing  extends React.Component  {
+class Root  extends React.Component  {
 
   checkMessages(){
     const messages = this.props.messagesQueue;
@@ -36,8 +39,8 @@ class Routing  extends React.Component  {
   }
 };
 
-export default connect((state) => {
+export default connect((state) => { debugger;
    const messagesQueue = getMessages(state).toJS();
    const loggedIn  = getSessionId(state);
    return {loggedIn, messagesQueue};
-})(Routing);
+})(Root);

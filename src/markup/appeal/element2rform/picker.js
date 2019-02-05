@@ -10,8 +10,11 @@ class EPicker extends React.Component {
         value = value || null;
         
 		const customChanger = (newVal)=>{
+			let changer = null;
 			if (reduxformfield){
 				this.props.input.onChange(newVal);
+			} else if (changer=this.props.onChange){
+				changer(newVal);
 			}
 		}
 

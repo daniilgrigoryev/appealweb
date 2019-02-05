@@ -18,36 +18,64 @@ const cache = {
 
 const now = ()=> new Date().getTime();
 
-const getAc = (getCallback,key,query)=>{
-	const cached = cache[key]; 
-	if (cached){
-		cached.lastAccess = now();
-		getCallback(cached.data);
-		return;
-	} 
-	fetchAutocomplete(key,query).then(data=>{
-		const lastAccess = now();
-		cache[key] = {data,lastAccess};
-		getCallback(data);
+const getAc = (key,query)=>{
+	return new Promise((resolve,reject)=>{
+		try{
+			const cached = cache[key]; 
+			if (cached){
+				cached.lastAccess = now();
+				resolve(cached.data);
+			} else {
+				fetchAutocomplete(key,query).then(data=>{
+					const lastAccess = now();
+					cache[key] = {data,lastAccess};
+					resolve(data);
+				}).catch(reject);
+			}
+		} catch (exc){
+			console.error(exc);
+			reject(null);
+		}
 	});
 }
 
-
-const getAcNoCache = (getCallback,key,query)=>{
-	fetchAutocomplete(key,query).then(getCallback);
+const getAcNoCache = (key,query)=>{
+	return fetchAutocomplete(key,query);
 }
 
-const getSl = (getCallback,key)=>{
-	const cached = cache[key]; 
-	if (cached){
-		getCallback(cached.data);
-		return;
-	} 
-	fetchSelect(key).then(data=>{
-		const lastAccess = Number.MAX_VALUE;
-		cache[key] = {data,lastAccess};
-		getCallback(data);
+const getSl = (key)=>{
+	return new Promise((resolve,reject)=>{
+		try{
+			const cached = cache[key]; 
+			if (cached){
+				resolve(cached.data);
+			} else { 
+				fetchSelect(key).then(data=>{
+					const lastAccess = Number.MAX_VALUE;
+					cache[key] = {data,lastAccess};
+					resolve(data);
+				}).catch(reject);
+			}
+		} catch (exc){
+			console.error(exc);
+			reject(null);
+		}	
 	});
+}
+
+const getValue = (listLoader,key,property)=>{
+	return new Promise((resolve,reject)=>{
+		const retCB = (data)=> _.chain(data).filter(x=>x.property==property).first().get('value').value() || '';
+		listLoader(key).then((data=>resolve(retCB(data)))).catch(reject);
+	});
+}
+
+const getAcValue = (key,property)=>{
+	return getValue(getAc,key,property);
+}
+
+const getSlValue = (key,property)=>{
+	return getValue(getSl,key,property);
 }
 
 const cleaner = ()=>{
@@ -62,4 +90,4 @@ const cleaner = ()=>{
 const tickRate = 120; // seconds
 const timer = setInterval(cleaner,1000*tickRate)
 
-export {getAc,getSl,getAcNoCache};
+export {getAc,getSl,getAcNoCache,getAcValue};

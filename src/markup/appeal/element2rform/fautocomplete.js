@@ -1,6 +1,6 @@
 import React from 'react'
 import {AutoComplete} from 'element-react'
-import {getAc} from '../../../services/acCacher.js'
+import {getAc,getAcValue} from '../../../services/acCacher.js'
 
 // Element component
 class EAutocomplete extends React.Component {
@@ -8,12 +8,19 @@ class EAutocomplete extends React.Component {
 	constructor(props) {
 	  super(props);
 
-	  const data = props.data  || null;
-	  const {value,property} = props.item || {};
-	  this.state = {data,value,property};
+	  const data     = props.data  || null;
+	  const value    = null;
+	  this.state     = {data,value};
 
 	  this.querySearch  = this.querySearch.bind(this);
 	  this.handleSelect = this.handleSelect.bind(this);
+	}
+
+	componentDidMount(){
+		const {acKey,value} = this.props;
+		if (value){
+			getAcValue(acKey,value).then((value)=>this.setState({value}))
+		}		
 	}
 
 	querySearch(queryString, cb) {
@@ -23,12 +30,10 @@ class EAutocomplete extends React.Component {
 	  	if (data){
 	  		cb(filter(data,queryString));
 	  	} else {
-	  		const getCallback = (data)=>{
-	  			this.setState({data},()=>{
-	  				cb(filter(data,queryString));
-	  			});
-	  		}
-	  		getAc(getCallback,key)
+	  		getAc(key).then((data)=>{ 
+	  			const value = this.state.value || null;
+	  			this.setState({data,value},()=>cb(filter(data,queryString)));
+	  		});
 	  	}
 	}
 
@@ -44,7 +49,8 @@ class EAutocomplete extends React.Component {
 
 	handleSelect(item) {
 		const onChange = this.props.onChange;
-		this.setState(item || {value:'',property:''},()=>{
+		const value = item ? item.value : null;
+		this.setState({value} || {value:''},()=>{
 			onChange && (onChange(item.property));
 		});
 	}
@@ -52,18 +58,19 @@ class EAutocomplete extends React.Component {
 	render() {
 	  return (
 	 	<AutoComplete {...this.props}
+	 		  onChange={()=>{}}
 	          value={this.state.value}
 	          fetchSuggestions={this.querySearch}
 	          onSelect={this.handleSelect}
 	        ></AutoComplete>)
-	    }
+	}
 } //
 
 
 // redux Form component
 const FAutocomplete = (props) => {
 	const {input,meta} = props;
-	return <EAutocomplete {...props} {...input} {...meta} />
+	return <EAutocomplete {...props} {...input} {...meta} reduxformfield="true" />
 }  //
 
 export {EAutocomplete,FAutocomplete};

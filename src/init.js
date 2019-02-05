@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Routing from './core/routing.js'
+import Root from './root.js'
 import { reducer as formReducer } from 'redux-form/immutable'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider, connect } from 'react-redux'
@@ -20,7 +20,7 @@ import Immutable from 'immutable'
 	
 	ReactDOM.render(
 		<Provider store={store}>	
-			<Routing />
+			<Root />
 		</Provider>
 	,el);//
 })();

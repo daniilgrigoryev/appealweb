@@ -4,10 +4,13 @@ import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
 import TestElement2RF from './appealContent/testElement2rf.js'
 import OrganizationsData from './appealContent/organizationsData.js'
+import TopicsData from './appealContent/topicsData.js'
+import IshDocsData from './appealContent/ishDocsData.js'
+import ArchiveData from './appealContent/archiveData.js'
 
 const NAVI = {
   testElements: {
-    header: 'тест',
+    header: 'Ejs 2 reduxF test',
     form: TestElement2RF,
     nextPage: ()=>'basicData'
   },
@@ -19,19 +22,37 @@ const NAVI = {
   claimantData: {
     header: 'Сведения о заявителе',
     form: ClaimantData,
-    nextPage: ()=>'organizationData',  
+    nextPage: ()=>'organizationsData',  
     prevPage: ()=>'basicData'
   },
-  organizationData: {
-    header: '',
-    form: OrganizationData,
-    nextPage: ()=>'organizationData',  
+  organizationsData: {
+    header: 'Организации',
+    form: OrganizationsData,
+    nextPage: ()=>'topicsData',  
     prevPage: ()=>'claimantData'
+  },
+  topicsData: {
+    header: 'Темы обращения',
+    form: TopicsData,
+    nextPage: ()=>'ishDocsData',  
+    prevPage: ()=>'organizationsData'
+  },
+  ishDocsData:{
+    header: 'Исходящие документы',
+    form: IshDocsData,
+    nextPage: ()=>'topicsData',  
+    prevPage: ()=>'archiveData'
+  },
+  archiveData: {
+    header: 'Архивная информация',
+    form: ArchiveData,
+    nextPage: ()=>'basicData',  
+    prevPage: ()=>'ishDocsData'
   }
 }
 
 export default class AppealWizard extends Component {
-  
+
   constructor(props) {
     super(props)
     this.state = { page: props.page || 'testElements' }
