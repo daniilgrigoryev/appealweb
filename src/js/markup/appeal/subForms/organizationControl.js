@@ -2,6 +2,7 @@ import React from 'react'
 import {EInput} from '../element2rform/finput.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import * as _ from 'lodash'
+import * as V from '../../../validators'
 
 const OFRow = (props)=>{
   const {id,onChange,onRemove} = props;
@@ -9,22 +10,22 @@ const OFRow = (props)=>{
   const onChg = (field)=>(newVal)=>onChange(id,field,newVal);
 
   return (<tr key={id} >
-            <td><EInput name='name' value={props.name} onChange={onChg('name')} /></td>
-            <td><EInput name='num'  value={props.num}  onChange={onChg('num')} /></td>
-            <td><EPicker name='date' value={props.date} onChange={onChg('date')} datepicker='+' /></td>
-            <td><EPicker name='control_date' value={props.control_date} onChange={onChg('control_date')} datepicker='+' /></td>
+            <td><EInput name='name' value={props.name} onChange={onChg('name')} validate={[V.org.validateOrgCtrl('name')]} validate_args={props} /></td>
+            <td><EInput name='num'  value={props.num}  onChange={onChg('num')} validate={[V.org.validateOrgCtrl('num')]} validate_args={props} /></td>
+            <td><EPicker name='date' value={props.date} onChange={onChg('date')} validate={[V.org.validateOrgCtrl('date')]} validate_args={props} datepicker='+' /></td>
+            <td><EPicker name='control_date' value={props.control_date} validate={[V.org.validateOrgCtrl('control_date')]} validate_args={props} onChange={onChg('control_date')} datepicker='+' /></td>
             <td><button onClick={onRmv}>x</button></td>
           </tr>);
 } //
 
 
-const getRow = (name,num,date,control_data)=>{
+const getRow = (name,num,date,control_date)=>{
   return {
     id: _.uniqueId('orc'),
     name: name || '',
     num:  num  || '',
     date: date || null,
-    control_data: control_data || null
+    control_date: control_date || null
   }
 }
 

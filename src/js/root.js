@@ -9,6 +9,7 @@ import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
 import {getSessionId,getMessages} from './selectors/common.js'
 import AppealWizard from './markup/appeal/appealWizard.js'
+import '../scss/index.scss'
 
 i18n.use(locale);
 
@@ -39,7 +40,7 @@ class Root  extends React.Component  {
   }
 };
 
-export default connect((state) => { debugger;
+export default connect((state) => { //debugger;
    const messagesQueue = getMessages(state).toJS();
    const loggedIn  = getSessionId(state);
    return {loggedIn, messagesQueue};

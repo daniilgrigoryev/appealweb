@@ -1,0 +1,69 @@
+body {
+    //background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
+    background-size: cover;
+    font-family: Montserrat;
+    overflow: hidden;
+}
+
+/*
+.el-tooltip{
+	&.validationErr	input {
+		border-color: red;
+	}
+
+	&.validationWarn input {
+		border-color: darkorange;
+	}
+
+	&.validationOk input {
+		border-color: green;
+	}	
+}
+*/
+
+
+div.tooltipWrap{
+	background: white;
+	border-radius: 100%;
+	padding: 4px;
+	width: 4px;
+	height: 4px;
+	/*border: 1px solid transparent;*/
+
+	&.validationErr {
+		border-color: red;
+		background: red; /*#FFC4C4;*/
+	}
+
+	&.validationWarn {
+		border-color: darkorange;
+		background: darkorange; /*#FFC4C4;*/
+	}
+
+	&.validationOk {
+		border-color: green;
+		background: green; /*#C6FFC4;*/
+	}
+}	
+
+.validationErr input {
+	border-color: red;
+}
+
+.validationWarn input {
+	border-color: darkorange;
+}
+
+.validationOk input {
+	border-color: green;
+}
+
+
+
+
+
+/*
+
+validationErr, validationWarn, validationOk
+
+*/

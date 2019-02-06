@@ -1,9 +1,10 @@
 import React from 'react'
+import withValidators from './tooltipper.js'
 import {Select} from 'element-react'
 import {getSl} from '../../../services/acCacher.js'
 
 // Element component
-class ESelect extends React.Component {
+class ASelect extends React.Component {
 
 	constructor(props) {
 	  super(props);
@@ -33,8 +34,9 @@ class ESelect extends React.Component {
 		    </Select>
 		)
 	} //
-
 }
+
+const ESelect = withValidators(ASelect);
 
 const FSelect = (props) => {
 	const {input,meta} = props;

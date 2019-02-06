@@ -2,16 +2,17 @@ import React from 'react'
 import {EInput} from '../element2rform/finput.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import * as _ from 'lodash'
+import * as V from '../../../validators'
 
 const OFRow = (props)=>{
   const {id,onChange,onRemove} = props;
   const onRmv = ()=>onRemove(id);
   const onChg = (field)=>(newVal)=>onChange(id,field,newVal);
-
+debugger;
   return (<tr key={id} >
-            <td><EInput name='name' value={props.name} onChange={onChg('name')} /></td>
-            <td><EInput name='num'  value={props.num}  onChange={onChg('num')} /></td>
-            <td><EPicker name='date' value={props.date} onChange={onChg('date')} datepicker='+' /></td>
+            <td><EInput  name='name'  value={props.name} onChange={onChg('name')} validate={[V.org.validateOrgFrom('name')]} validate_args={props} /></td>
+            <td><EInput  name='num'   value={props.num}  onChange={onChg('num')} validate={[V.org.validateOrgFrom('num')]} validate_args={props} /></td>
+            <td><EPicker name='date'  value={props.date} onChange={onChg('date')} validate={[V.org.validateOrgFrom('date')]} datepicker='+'   validate_args={props} /></td>
             <td><button onClick={onRmv}>x</button></td>
           </tr>);
 } //

@@ -1,20 +1,33 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import withValidators from './tooltipper.js'
 import {Input} from 'element-react'
 import MaskedInput from 'react-text-mask'
 
 // Element component
-class EInput extends React.Component {
+class AInput extends React.Component {
+
+	constructor(props){
+		super(props);
+		this.ref = null;
+	}
+
 	render(){
+		const clearProps = Object.assign({},this.props);
+		delete clearProps.mask;
+		delete clearProps.input;
+		delete clearProps.meta;
+
 		const {mask,onChange,reduxformfield} = this.props;
 		if (!mask){
-			return <Input {...this.props} />;
+			return <Input {...clearProps} />;
 		} //
 
 		if (reduxformfield){
-			const reduxFormOnChange = onChange; 
+			const reduxFormOnChange = onChange;
 			return <MaskedInput  
 					mask={mask} 
-					render={(ref, props) =>{ 
+					render={(ref, props) =>{
 							let inp = null;
 							const onChange = (evt)=>{
 								props.onChange(evt); 
@@ -33,6 +46,8 @@ class EInput extends React.Component {
 		
 	} //
 }
+
+const EInput = withValidators(AInput);
 
 // redux Form component
 const FInput = (props) => {

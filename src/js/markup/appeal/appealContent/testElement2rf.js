@@ -7,6 +7,7 @@ import {ESwitch,FSwitch} from '../element2rform/switch.js'
 import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ERadio,FRadio} from '../element2rform/radio.js'
+import * as V from '../../../validators'
 
 const TestElement2RF = props => {
   const { handleSubmit, pristine, previousPage, submitting } = props
@@ -31,7 +32,7 @@ const TestElement2RF = props => {
   ].map(x=>(x.type=x.type||'text',x));
 
 
-  const CONTENT = fields.map((f)=><tr key={f.name}><td>{f.label}</td><td><Field name={f.name} component={FInput} /></td></tr>) //
+  const CONTENT = fields.map((f)=><tr key={f.name}><td>{f.label}</td><td><Field name={f.name} component={FInput} className='zzz22' validate={[V.required]} /></td></tr>) //
   const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
  
   const radioOptions = [
@@ -54,11 +55,11 @@ const TestElement2RF = props => {
           {CONTENT}
           <tr>
             <td>ac</td>
-            <td><Field  name='autocompl' placeholder='123' key='2344' component={FAutocomplete}  /></td>
+            <td><Field  name='autocompl' placeholder='123' key='2344' component={FAutocomplete} validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>телефон с маской</td>
-            <td><Field component={FInput} placeholder='123' key='phone' name='phonemask' mask={phoneMask} /></td>
+            <td><Field component={FInput} placeholder='123' key='phone' className='phone22' name='phonemask' mask={phoneMask} validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>чекбокс</td>
@@ -70,22 +71,22 @@ const TestElement2RF = props => {
           </tr>
           <tr>
             <td>селект</td>
-            <td><Field component={FSelect} name='select' dataKey='123' placeholder='Select' /></td>
+            <td><Field component={FSelect} name='select' dataKey='123' placeholder='Select' validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>время</td>
-            <td><Field component={FPicker} name='timepicker' timepicker='+' placeholder='timepicker' /></td>
+            <td><Field component={FPicker} name='timepicker' timepicker='+' placeholder='timepicker' validate={[V.required]}   /></td>
             <td><EPicker timepicker='+' /></td>
           </tr>
 
           <tr>
             <td>дата</td>
-            <td><Field component={FPicker} name='datepicker' datepicker='+' placeholder='datepicker' /></td>
+            <td><Field component={FPicker} name='datepicker' datepicker='+' placeholder='datepicker' validate={[V.required]} /></td>
             <td><EPicker datepicker='+' /></td>
           </tr>
           <tr>
             <td>датавремя</td>
-            <td><Field component={FPicker} name='datetimepicker' datetimepicker='+' placeholder='datetimepicker' /></td>
+            <td><Field component={FPicker} name='datetimepicker' datetimepicker='+' placeholder='datetimepicker' validate={[V.required]}   /></td>
             <td><EPicker datetimepicker='+' /></td>
           </tr>
           <tr>

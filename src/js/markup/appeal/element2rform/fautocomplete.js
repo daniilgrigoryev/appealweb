@@ -1,9 +1,10 @@
 import React from 'react'
+import withValidators from './tooltipper.js'
 import {AutoComplete} from 'element-react'
 import {getAc,getAcValue} from '../../../services/acCacher.js'
 
 // Element component
-class EAutocomplete extends React.Component {
+class AAutocomplete extends React.Component {
 
 	constructor(props) {
 	  super(props);
@@ -20,7 +21,7 @@ class EAutocomplete extends React.Component {
 		const {acKey,value} = this.props;
 		if (value){
 			getAcValue(acKey,value).then((value)=>this.setState({value}))
-		}		
+		}
 	}
 
 	querySearch(queryString, cb) {
@@ -66,6 +67,8 @@ class EAutocomplete extends React.Component {
 	}
 } //
 
+
+const EAutocomplete = withValidators(AAutocomplete);
 
 // redux Form component
 const FAutocomplete = (props) => {
