@@ -32,10 +32,6 @@ class Root  extends React.Component  {
   render (){ 
     setTimeout(this.checkMessages.bind(this),0)
 
-    if (true){
-      return <AppealWizard />
-    }
-
     return !this.props.loggedIn ? <Login /> : <App />; //
   }
 };

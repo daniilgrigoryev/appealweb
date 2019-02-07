@@ -59,6 +59,13 @@ class Login extends React.Component {
     this.props.dispatch(loginRequest(loginData));
   }
 
+
+  loadDocx(){
+    
+    
+    
+  }
+
   render (){
     const {username,password} = this.state; 
     return (
@@ -69,6 +76,7 @@ class Login extends React.Component {
               <input type="text"     placeholder="Username" id="username" onChange={this.onInput} value={username}  />
               <input type="password" placeholder="Password" id="password" onChange={this.onInput} value={password}  />
               <button onClick={this.onLogin}>Submit</button>
+              <button onClick={this.loadDocx}>Load docx</button>
           </div>
         </div>
     ); //
