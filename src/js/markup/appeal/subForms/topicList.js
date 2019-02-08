@@ -1,5 +1,7 @@
 import React from 'react'
-import {EInput} from '../element2rform/finput.js'
+import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
+import {EInput,FInput} from '../element2rform/finput.js'
+import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
@@ -7,28 +9,21 @@ import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 
 const data2str=(data)=>(data ? data.toISOString() : '');
-
-const prevDef = (callback, ctx, ...args)=>{
+const stopPg = (cb,id)=>(evt)=>{
     evt.stopPropagation();
-    callback.apply(cxt,args);
+    cb(id);
     return false;
 }
 
 const OFRow = (props)=>{
-  const {ind,id,onChange,onRemove,onInfo,onExpand,expanded} = props;
-  const onRmv = (evt)=>{
-    evt.stopPropagation();
-    onRemove(id);
-    return false;
-  };
-  const onInf = (evt)=>{
-    evt.stopPropagation();
-    onInfo(id);
-    return false;
-  };
-  const onChg = (field)=>(newVal)=>onChange(id,field,newVal);
+  const {ind,field,value,onChange,onRemove,onInfo,onExpand,checkExpand} = props;
+  const {id} = value;
+  const expanded = checkExpand(id);
+  const onRmv = stopPg(onRemove,ind);
+  const onInf = stopPg(onInfo,id);
+  
   const onXpd = ()=>onExpand(id);
-  const P = props;
+  const P = value;
 
   if (!expanded){
     const collapsed = (
@@ -37,20 +32,30 @@ const OFRow = (props)=>{
             <td>{props.getValue(P.category)}</td>
             <td>{P.post_n}</td>
             <td>{data2str(P.post_date)}</td>
-            <td><button onClick={onInf}>i</button></td>
-            <td><button onClick={onRmv}>x</button></td>
+            <td><button type='button' onClick={onInf}>i</button></td>
+            <td><button type='button' onClick={onRmv}>x</button></td>
           </tr>);
     return [collapsed];
   } //
 
+  const PRIS_UCH = (!P.uch_pris) ? null : [
+     <tr key='pu1' >
+      <td>Дата рассмотрения</td>
+      <td><Field component={FPicker} name={field+'uch_pris_date'} value={P.uch_pris_date} datepicker='+' /></td>
+    </tr>,
+    <tr key='pu2' >
+      <td>Время рассмотрения</td>
+      <td><Field component={FPicker} name={field+'uch_pris_time'} value={P.uch_pris_time} timepicker='+' /></td>
+    </tr>];
+
   const editable = [
     <tr key={id+'e1'}>
             <td>{ind+1}</td>
-            <td><EAutocomplete placeholder='Категория' key='2344' value={P.category} onChange={onChg('category')}/></td>
-            <td><EInput  name='post_n'    value={P.post_n}    onChange={onChg('post_n')} /></td>
-            <td><EPicker name='post_date' value={P.post_date} onChange={onChg('post_date')} datepicker='+' /></td>
-            <td><button onClick={onInf}>i</button></td>
-            <td><button onClick={onRmv}>x</button></td>
+            <td><Field component={FAutocomplete} name={field+'category'} placeholder='Категория' key='2344' value={P.category} /></td>
+            <td><Field component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
+            <td><Field component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
+            <td><button type='button' onClick={onInf}>i</button></td>
+            <td><button type='button' onClick={onRmv}>x</button></td>
     </tr>
     ,
     <tr key={id+'e2'}>
@@ -63,24 +68,57 @@ const OFRow = (props)=>{
             </tr>
             <tr>
               <td>Причина жалобы на постановление по делу об АП (В случае отмены постановления указывается причина по которой постановление отменено)</td>
-              <td><EAutocomplete placeholder='Причина жалобы' key='2344' value={P.cause} onChange={onChg('cause')} name='cause' /></td>
+              <td><Field component={FAutocomplete} placeholder='Причина жалобы' key='2344' value={P.cause} name={field+'cause'} /></td>
             </tr>
             <tr>
               <td>Необходимо присутствие участника</td>
-              <td><ECheckbox value={P.uch_pris} onChange={onChg('uch_pris')} name='uch_pris' /></td>
+              <td><Field component={FCheckbox} value={P.uch_pris} name={field+'uch_pris'} /></td>
             </tr>
+            {PRIS_UCH}
             <tr>
               <td>Адрес АПН</td>
-              <td><EInput  name='apn_adr'    value={P.apn_adr}    onChange={onChg('apn_adr')} type="textarea" /></td>                            
+              <td><Field component={FInput} name={field+'apn_adr'} value={P.apn_adr} type="textarea" /></td>                            
             </tr>
             <tr>
               <td>Дата АПН</td>
-              <td><EPicker name='apn_date' value={P.apn_date} onChange={onChg('apn_date')} datepicker='+' /></td>
+              <td><Field component={FPicker} name={field+'apn_date'} value={P.apn_date} datepicker='+' /></td>
             </tr>
             <tr>
               <td>Описание</td>
-              <td><EInput  name='description'    value={P.description}    onChange={onChg('description')} type="textarea" /></td>
+              <td><Field component={FInput} name={field+'description'} value={P.description} type="textarea" /></td>
             </tr>
+            <tr>
+              <td>Владелец ТС</td>
+              <td><Field component={FInput} name={field+'owner'} value={P.owner} /></td>
+            </tr>
+            <tr>
+              <td>Адрес владелеца ТС</td>
+              <td><Field component={FInput} name={field+'owner_adr'} value={P.owner_adr} /></td>
+            </tr>
+            <tr>
+              <td>Решение по теме</td>
+              <td><Field component={FSelect} name={field+'decision'} dataKey='decision' placeholder='Select' /></td>
+            </tr>
+            <tr>
+              <td>Основание для решения</td>
+              <td><Field component={FSelect} name={field+'decision_base'} dataKey='decision_base' placeholder='Select' /></td>
+            </tr>
+            <tr>
+              <td>Решение принял руководитель</td>
+              <td><Field component={FSelect} name={field+'chief'} dataKey='chief' placeholder='Select' /></td>
+            </tr>
+            <tr>
+              <td>Дата принятия решения</td>
+              <td><Field component={FPicker} name={field+'decision_date'} value={P.decision_date} datepicker='+' /></td>
+            </tr>
+            <tr>
+              <td>Статья кодекса</td>
+              <td><Field component={FInput} name={field+'article'} value={P.article} /></td>
+            </tr>
+            <tr>
+              <td>ГРЗ нарушителя</td>
+              <td><Field component={FInput} name={field+'regno'} value={P.regno} /></td>
+            </tr>  
           </tbody>
         </table>
       </td>
@@ -89,7 +127,7 @@ const OFRow = (props)=>{
 } //
 
 
-const getRow = (category,post_n,post_date,docs,cause,uch_pris,apn_adr,apn_date,description)=>{
+const getRow = (category,post_n,post_date,docs,cause,uch_pris,apn_adr,apn_date,description,owner,owner_adr,decision,decision_base,chief,decision_date,article,regno)=>{
   return {
     id: _.uniqueId('tcl'),
     category: category || '',
@@ -100,7 +138,15 @@ const getRow = (category,post_n,post_date,docs,cause,uch_pris,apn_adr,apn_date,d
     uch_pris: !!uch_pris || false,
     apn_adr: apn_adr || '',
     apn_date: apn_date || null,
-    description: description || ''
+    description: description || '',
+    owner: owner || '',
+    owner_adr: owner_adr || '',
+    decision: decision || null,
+    decision_base: decision_base || null,
+    chief: chief || null,
+    decision_date: decision_date || null,
+    article: article || '',
+    regno: regno || '' 
   }
 }
 
@@ -109,14 +155,10 @@ class ETopicList extends React.Component {
 
   constructor(props) {
     super(props);
-    let {rows} = this.props;
-    if (!rows || !rows.length){
-      rows = [getRow()];
-    }
+    const eid = _.chain(this.props.fileds).first().get('id').value();
     this.state = { 
       acCateg: null,
-      rows: rows,
-      expandedId : rows[0].id 
+      expandedId : eid 
     };
   }
 
@@ -127,81 +169,48 @@ class ETopicList extends React.Component {
       : _.chain(acCateg).filter(x=>x.property==property).first().get('value').value();
   }
 
-
   componentDidMount(){
-    getAc('key').then(data=>{
-      this.setState({acCateg:data});
-    });
+    getAc('key').then(data=>this.setState({acCateg:data}));
   }
 
-  onChange(id,field,newVal) {
+  onRemove(index){ 
     const P = this.props;
     const {reduxformfield,input} = P;
-    const onChange = reduxformfield ? P.input.onChange : P.onChange;
-    this.state.rows.filter(x=>x.id==id)[0][field] = newVal;
-    const rows = this.state.rows;
-    this.setState({rows},()=>{
-      if (onChange){
-        onChange(rows);
-      }
-    });
-  }
+    const {expandedId} = this.state;
 
-  onRemove(rowId){ 
-    const P = this.props;
-    const {reduxformfield,input} = P;
-    const onChange = reduxformfield ? P.input.onChange : P.onChange;
-    const {rows,expandedId} = this.state;
+    const rows = this.props.fields; 
+    const rowId = rows.get(index).id;
+    rows.remove(index);
 
-    let newRows = null;
     let newExpandedId = null;
     if (rowId == expandedId){
-      const oldIndex = _.findIndex(this.state.rows,x=>x.id==this.state.expandedId);
       if (rows.length==1){
-        newRows = [getRow()];
-        newExpandedId = newRows[0].id;
+        newExpandedId = rows[0].id;
       } else {
-        newRows = this.state.rows.filter(x=>x.id!=rowId);
-        newExpandedId = newRows[Math.max(0,oldIndex-1)].id;
+        newExpandedId = rows[Math.max(0,index-1)].id;
       }
-    } else {
-      newRows = this.state.rows.filter(x=>x.id!=rowId);
     }
-
-    this.setState({
-      rows: newRows,
-      expandedId: newExpandedId
-    },()=>{
-      if (onChange){
-        onChange(rows);
-      }
-    }); 
+    this.setState({expandedId: newExpandedId}); 
   }
 
   onInfo(rowId){
-
-
       debugger;
   }
 
 
   onExpand(expandedId){
-    this.setState({expandedId})
+    this.setState({expandedId});
   }
 
   render() {
-    const chg  = this.onChange.bind(this);
     const rmv  = this.onRemove.bind(this);
     const inf  = this.onInfo.bind(this);
     const xpd  = this.onExpand.bind(this);
     const getV = this.getCategValue.bind(this);
 
-    const ROWS = this.state.rows.map((x,i)=>(<OFRow key={x.id} ind={i} expanded={x.id===this.state.expandedId} {...x} onChange={chg} onRemove={rmv} onInfo={inf} onExpand={xpd} getValue={getV}  >{x.value}</OFRow>)); //
-    const add = ()=>{
-      const {rows} = this.state;
-      rows.push(getRow());
-      this.setState({rows})
-    };
+    const {fields} = this.props; 
+    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} checkExpand={(id)=>id===this.state.expandedId} field={x} value={arr.get(i)} onRemove={rmv} onInfo={inf} onExpand={xpd} getValue={getV}>{x.value}</OFRow>)); //
+    const add = ()=>fields.push(getRow());
 
     return (
       <table>

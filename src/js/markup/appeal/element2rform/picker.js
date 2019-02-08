@@ -10,7 +10,7 @@ class APicker extends React.Component {
 		let value = reduxformfield ? this.props.input.value : this.props.value;
         value = value || null;
         
-		const customChanger = (newVal)=>{ debugger;
+		const customChanger = (newVal)=>{
 			let changer = null;
 			if (reduxformfield){
 				this.props.input.onChange(newVal);

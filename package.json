@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "axios": "^0.18.0",
     "document-offset": "^1.0.4",
     "element-react": "^1.4.26",

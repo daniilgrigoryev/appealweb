@@ -1,4 +1,4 @@
-export const validateOrgFrom = (field)=>(val,props)=>{
+export const validateOrgFrom = (field)=>(val,props)=>{  debugger;
 	const F = field, V = val, P = props;
 
 	const emptyName = !P.name;

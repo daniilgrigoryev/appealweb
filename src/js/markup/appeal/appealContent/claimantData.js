@@ -1,4 +1,6 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
@@ -15,19 +17,14 @@ const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\
 const M = mapping.claimantData;
 
 class ClaimantData extends React.Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      isFL: true
-    }
-  }
   
   render(){
-    const { handleSubmit, nextPage, prevPage, pristine, submitting,header } = this.props;
-    const toggleZajav = (newVal)=>this.setState({isFL:newVal=='FL'})
+    const { handleSubmit, nextPage, prevPage, pristine, submitting,header, content } = this.props;
+    
+    const isPred = !!content[M.PRED.name]; 
+    const isFL = content[M.ZAJAV_LIC.name] != 'UL';
 
-    const ZAJAV_SOURCE = this.state.isFL
+    const ZAJAV_SOURCE = isFL
     ? ([
       <tr key='flFam'>
         <td>{M.FAM.label}</td>
@@ -44,10 +41,6 @@ class ClaimantData extends React.Component {
       <tr key='flSex'>
         <td>{M.SEX.label}</td>
         <td colSpan='3'><Field name={M.SEX.name} component={FRadio} options={sexOptions} /></td>
-      </tr>,
-      <tr key='flPred'>
-        <td>{M.PRED.label}</td>
-        <td colSpan='3'><Field name={M.PRED.name} component={FCheckbox} /></td>
       </tr>
       ])
 
@@ -79,7 +72,7 @@ class ClaimantData extends React.Component {
       ]);
 
 
-    const KVART =this.state.isFL 
+    const KVART = isFL 
       ? ([
           <td key='kvFl1'>{M.KVART.label}</td>,
           <td key='kvFl2'><Field name={M.KVART.name} component={FInput} /></td>
@@ -89,6 +82,22 @@ class ClaimantData extends React.Component {
           <td key='kvUl2'><Field name={M.OFFICE.name} component={FInput} /></td>
         ]);
 //
+
+    const PREDST = isPred ? [
+       <tr key='flPredFam'>
+        <td>{M.PRED_FAM.label}</td>
+        <td colSpan='3'><Field name={M.PRED_FAM.name} component={FInput} /></td>
+      </tr>,
+      <tr key='flPredName'>
+        <td>{M.PRED_NAME.label}</td>
+        <td colSpan='3'><Field name={M.PRED_NAME.name} component={FInput} /></td>
+      </tr>,
+      <tr key='flPredSurname'>
+        <td>{M.PRED_SURNAME.label}</td>
+        <td colSpan='3'><Field name={M.PRED_SURNAME.name} component={FInput} /></td>
+      </tr>]
+    : null ;
+
     return ( <div className='appealSection'>
           <h2>{header}</h2>
           <div className='appealContent'>
@@ -97,9 +106,15 @@ class ClaimantData extends React.Component {
             <table>
               <tbody>
                 <tr key='flSurname'>
-                  <td colSpan='2'><ERadio options={zajavOptions} onChange={toggleZajav} /></td>
+                  <td colSpan='2'><Field name={M.ZAJAV_LIC.name} component={FRadio} options={zajavOptions} /></td>
                 </tr>
                 {ZAJAV_SOURCE}
+
+                <tr key='flPred'>
+                  <td>{M.PRED.label}</td>
+                  <td colSpan='3'><Field name={M.PRED.name} component={FCheckbox} /></td>
+                </tr>
+                {PREDST}
 
                 <tr>
                   <td>{M.PHONE.label}</td>
@@ -153,12 +168,20 @@ class ClaimantData extends React.Component {
         </div>
       </div>);
   } //  
+}//
+
+
+const mapStateToProps = (state)=>{
+  const V = state.getIn(['form','appeal','values']);
+  return { content: V ? V.toJS() : {}};
 }
-
-
-export default reduxForm({
-  form: 'appeal', // <------ same form name
-  destroyOnUnmount: false, // <------ preserve form data
-  forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
+ 
+export default compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'appeal', // <------ same form name
+    destroyOnUnmount: false, // <------ preserve form data
+    forceUnregisterOnUnmount: true // <------ unregister fields on unmount
   //validate
-})(ClaimantData)
+  })
+)(ClaimantData)

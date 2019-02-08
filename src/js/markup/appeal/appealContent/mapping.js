@@ -43,6 +43,25 @@ export default {
 			name:  'PRED',
 			label: 'Представитель'
 		},
+
+		PRED_FAM:{
+			name:  'PRED_FAM',
+			label: 'Представитель: Фамилия'
+		},
+		PRED_NAME:{
+			name:  'PRED_NAME',
+			label: 'Представитель: Имя'
+		},
+		PRED_SURNAME:{
+			name:  'PRED_SURNAME',
+			label: 'Представитель: Отчество'
+		},
+
+
+		ZAJAV_LIC:{
+			name: 'zajavLic',
+			label: '#radiobutton#'
+		},
 		ORG_NAME:{
 			name:  'ORG_NAME',
 			label: 'Название организации'

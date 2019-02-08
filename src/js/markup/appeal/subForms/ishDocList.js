@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button} from 'element-react'
-import {EInput} from '../element2rform/finput.js'
+import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
+import {EInput,FInput} from '../element2rform/finput.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
 import {ESelect,FSelect} from  '../element2rform/select.js'
@@ -8,23 +9,21 @@ import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 
 const data2str=(data)=>(data ? data.toISOString() : '');
+const stopPg = (cb,id)=>(evt)=>{
+    evt.stopPropagation();
+    cb(id);
+    return false;
+}
 
 const OFRow = (props)=>{
-  const {ind,id,onChange,onRemove,onInfo,onExpand,expanded} = props;
-  const onRmv = (evt)=>{
-    evt.stopPropagation();
-    onRemove(id);
-    return false;
-  };
-  const onInf = (evt)=>{
-    evt.stopPropagation();
-    onInfo(id);
-    return false;
-  };
-  const onChg = (field)=>(newVal)=>onChange(id,field,newVal);
+  const {ind,field,value,onRemove,onInfo,onExpand,checkExpand} = props;
+  const {id} = value;
+  const expanded = checkExpand(id);
+  const onRmv = stopPg(onRemove,ind);
+  const onInf = stopPg(onInfo,id);
   const onXpd = ()=>onExpand(id);
-  const P = props;
 
+  const P = value;
   if (!expanded){
     const collapsed = (
           <tr key={id} onClick={onXpd}>
@@ -40,12 +39,12 @@ const OFRow = (props)=>{
 
   const editable = [
     <tr key={id+'e1'}>
-            <td><EInput  name='doc_target'    value={P.doc_target}    onChange={onChg('doc_target')} /></td>
-            <td><EInput  name='ish_num'       value={P.ish_num}       onChange={onChg('ish_num')} /></td>
-            <td><EPicker name='ish_date'      value={P.ish_date}      onChange={onChg('ish_date')} datepicker='+' /></td>
-            <td><EInput  name='podpisal'      value={P.podpisal}      onChange={onChg('podpisal')} /></td>
+            <td><Field component={FInput}  name={field+'doc_target'}    value={P.doc_target}     /></td>
+            <td><Field component={FInput}  name={field+'ish_num'}       value={P.ish_num}        /></td>
+            <td><Field component={FPicker} name={field+'ish_date'}      value={P.ish_date}       datepicker='+' /></td>
+            <td><Field component={FInput}  name={field+'podpisal'}      value={P.podpisal}       /></td>
             <td>{P.status}</td>
-            <td><button onClick={onRmv}>x</button></td>
+            <td><button type='button' onClick={onRmv}>x</button></td>
     </tr>
     ,
     <tr key={id+'e2'}>
@@ -55,26 +54,26 @@ const OFRow = (props)=>{
           <tbody>
             <tr>
               <td>Связанная тема</td>
-              <td><ESelect  name='related_topic'      value={P.related_topic}    onChange={onChg('related_topic')} dataKey='related_topic' /></td>
+              <td><Field component={FSelect}  name={field+'related_topic'}      value={P.related_topic}    dataKey='related_topic' /></td>
               <td>Подпись с ЭП</td>
-              <td><ECheckbox  name='crypto_signature' value={P.crypto_signature}    onChange={onChg('crypto_signature')} /></td>
+              <td><Field component={FCheckbox}  name={field+'crypto_signature'} value={P.crypto_signature}    /></td>
             </tr>
             <tr>
               <td>Вид документа</td>
-              <td><ESelect  name='doc_type'       value={P.doc_type}    onChange={onChg('doc_type')} dataKey='doc_type' /></td>
+              <td><Field component={FSelect}  name={field+'doc_type'}       value={P.doc_type}     dataKey='doc_type' /></td>
               <td>Способ доставки</td>
-              <td><ESelect  name='delivery_type'  value={P.delivery_type}    onChange={onChg('delivery_type')} dataKey='delivery_type' /></td>
+              <td><Field component={FSelect}  name={field+'delivery_type'}  value={P.delivery_type} dataKey='delivery_type' /></td>
             </tr>
             <tr>
               <td>Кол-во листов</td>
-              <td><EInput  name='sheets_count'       value={P.sheets_count}    onChange={onChg('sheets_count')} /></td>
+              <td><Field component={FInput}  name={field+'sheets_count'}       value={P.sheets_count}  /></td>
               <td>Номер в ЭДО</td>
-              <td><EInput  name='edo_num'  value={P.edo_num}    onChange={onChg('edo_num')} /></td>
+              <td><Field component={FInput}  name={field+'edo_num'}  value={P.edo_num}    /></td>
             </tr>
 
             <tr>
               <td>Комментарий</td>
-              <td><EInput  name='comment'    value={P.comment}    onChange={onChg('comment')} type="textarea" /></td>                 
+              <td><Field component={FInput}  name={field+'comment'}    value={P.comment}   type="textarea" /></td>                 
             </tr>                    
           </tbody>
         </table>
@@ -168,13 +167,9 @@ class EIshDocList extends React.Component {
 
   constructor(props) {
     super(props);
-    let {rows} = this.props;
-    if (!rows || !rows.length){
-      rows = [getRowZajav()];
-    }
-    this.state = { 
-      rows: rows,
-      expandedId : rows[0].id 
+    const eid = _.chain(this.props.fileds).first().get('id').value();
+    this.state = {
+      expandedId : eid 
     };
   }
 
@@ -185,44 +180,24 @@ class EIshDocList extends React.Component {
       : _.chain(acCateg).filter(x=>x.property==property).first().get('value').value();
   }
 
-  onChange(id,field,newVal) {
+  onRemove(index){ 
     const P = this.props;
     const {reduxformfield,input} = P;
-    const onChange = reduxformfield ? P.input.onChange : P.onChange;
-    this.state.rows.filter(x=>x.id==id)[0][field] = newVal;
-    const rows = this.state.rows;
-    this.setState({rows},()=>{
-      (onChange) && (onChange(rows));
-    });
-  }
+    const {expandedId} = this.state;
 
-  onRemove(rowId){ 
-    const P = this.props;
-    const {reduxformfield,input} = P;
-    const onChange = reduxformfield ? P.input.onChange : P.onChange;
-    const {rows,expandedId} = this.state;
+    const rows = this.props.fields; 
+    const rowId = rows.get(index).id;
+    rows.remove(index);
 
-    let newRows = null;
     let newExpandedId = null;
     if (rowId == expandedId){
-      const oldIndex = _.findIndex(this.state.rows,x=>x.id==this.state.expandedId);
       if (rows.length==1){
-        newRows = [getRowZajav()];
-        newExpandedId = newRows[0].id;
+        newExpandedId = rows[0].id;
       } else {
-        newRows = this.state.rows.filter(x=>x.id!=rowId);
-        newExpandedId = newRows[Math.max(0,oldIndex-1)].id;
+        newExpandedId = rows[Math.max(0,index-1)].id;
       }
-    } else {
-      newRows = this.state.rows.filter(x=>x.id!=rowId);
     }
-
-    this.setState({
-      rows: newRows,
-      expandedId: newExpandedId
-    },()=>{
-      (onChange) && (onChange(rows));
-    }); 
+    this.setState({expandedId: newExpandedId}); 
   }
 
   onFileCreate(rowId,type){
@@ -237,18 +212,14 @@ class EIshDocList extends React.Component {
   }
 
   render() {
-    const chg  = this.onChange.bind(this);
     const rmv  = this.onRemove.bind(this);
     const crf  = this.onFileCreate.bind(this);
     const xpd  = this.onExpand.bind(this);
     
-    const ROWS = this.state.rows.map((x,i)=>(<OFRow key={x.id} ind={i} expanded={x.id===this.state.expandedId} {...x} onChange={chg} onRemove={rmv} onExpand={xpd} >{x.value}</OFRow>)); //
+    const {fields} = this.props;
+    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id)=>id===this.state.expandedId} onRemove={rmv} onExpand={xpd} >{x.value}</OFRow>)); //
     
-    const add = (rowGetter)=>()=>{
-      const {rows} = this.state;
-      rows.push(rowGetter());
-      this.setState({rows})
-    };
+    const add = (rowGetter)=>()=>fields.push(rowGetter());
 
     return (
       <table>
@@ -279,6 +250,5 @@ const FIshDocList = (props) => {
   return <EIshDocList {...props} {...input} {...meta} reduxformfield="true" />
 }  //
 //
-
 
 export {EIshDocList,FIshDocList};

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
 import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
@@ -19,7 +19,7 @@ const TopicsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
 
-            <Field name='topicsData' component={FTopicList} />    
+            <FieldArray name='topicsData' component={FTopicList} />    
 
             <div>
               <button type="button" className="previous" onClick={previousPage}>Previous</button>

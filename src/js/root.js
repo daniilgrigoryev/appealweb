@@ -40,7 +40,7 @@ class Root  extends React.Component  {
   }
 };
 
-export default connect((state) => { //debugger;
+export default connect((state) => { debugger;
    const messagesQueue = getMessages(state).toJS();
    const loggedIn  = getSessionId(state);
    return {loggedIn, messagesQueue};

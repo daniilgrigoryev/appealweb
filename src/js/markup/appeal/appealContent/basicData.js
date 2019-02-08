@@ -8,20 +8,19 @@ import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import mapping from './mapping.js'
 
-const BasicData = props => {
-    const { handleSubmit, pristine, previousPage, submitting, header } = props
+const  BasicData = props => {
+    const { nextPage,handleSubmit,previousPage, header } = props
     const M = mapping.basicData;
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
           <div className='appealContent'>
-          <form onSubmit={handleSubmit}>
-            
+            <form onSubmit={handleSubmit}>
             <table>
               <tbody>
                 <tr>
                   <td>{M.EDO_NUM.label}</td>
-                  <td><Field name={M.EDO_NUM.name} component={FInput} /></td>
+                  <td><Field component={FInput} name={M.EDO_NUM.name} /></td>
                 </tr>
                 <tr>
                   <td>{M.REQUEST_TYPE.label}</td>
@@ -29,7 +28,7 @@ const BasicData = props => {
                 </tr>
                 <tr>
                   <td>{M.ECOO_NUM.label}</td>
-                  <td><Field name={M.ECOO_NUM.name} component={FInput} /></td>
+                  <td><Field component={FInput} name={M.ECOO_NUM.name} /></td>
                 </tr>
                 <tr>
                   <td>{M.RESPONSE_TYPE.label}</td>
@@ -37,27 +36,23 @@ const BasicData = props => {
                 </tr>
                 <tr>
                   <td>{M.SHEETS_COUNT.label}</td>
-                  <td><Field name={M.SHEETS_COUNT.name} component={FInput} /></td>
+                  <td><Field component={FInput} name={M.SHEETS_COUNT.name} /></td>
                 </tr>
               </tbody>
             </table>
 
             <div>
-              <button type="button" className="previous" onClick={previousPage}>
-                Previous
-              </button>
-              <button type="submit" >
-                Submit
-              </button>
+              <button type="button" onClick={previousPage}>Previous</button>
+              <button type="submit" onClick={nextPage}>Submit</button>
             </div>
-          </form>
+            </form>
         </div>
       </div>
     )
 } //
 
 export default reduxForm({
-  form: 'appeal', // <------ same form name                       disabled={pristine || submitting}
+  form: 'appeal', // <------ same form name
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate

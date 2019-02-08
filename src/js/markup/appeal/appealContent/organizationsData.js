@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
 import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
@@ -19,10 +19,10 @@ const OrganizationsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
             <h2>Направлено из организации</h2>            
-            <Field name='organizationsFrom' component={FOrganizationFrom} />                
+            <FieldArray name='organizationsFrom' component={EOrganizationFrom} />                
 
             <h2>На контроле в организации</h2>            
-            <Field name='organizationsControl' component={FOrganizationControl} />    
+            <FieldArray name='organizationsControl' component={EOrganizationControl} />    
 
             <div>
               <button type="button" className="previous" onClick={previousPage}>Previous</button>

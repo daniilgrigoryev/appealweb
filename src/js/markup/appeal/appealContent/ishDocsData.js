@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { FieldArray, reduxForm } from 'redux-form/immutable'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
 import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
@@ -18,7 +18,7 @@ const IshDocsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
 
-            <Field name='ishDocsData' component={FIshDocList} />    
+            <FieldArray name='ishDocsData' component={FIshDocList} />    
 
             <div>
               <button type="button" className="previous" onClick={previousPage}>Previous</button>
