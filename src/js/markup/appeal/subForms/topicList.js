@@ -7,6 +7,7 @@ import {ECheckbox,FCheckbox} from '../element2rform/checkbox.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
 import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
+import mapping from '../appealContent/mapping.js'
 
 const data2str=(data)=>(data ? data.toISOString() : '');
 const stopPg = (cb,id)=>(evt)=>{
@@ -24,6 +25,7 @@ const OFRow = (props)=>{
   
   const onXpd = ()=>onExpand(id);
   const P = value;
+  const M = mapping.topicList;
 
   if (!expanded){
     const collapsed = (
@@ -38,14 +40,14 @@ const OFRow = (props)=>{
     return [collapsed];
   } //
 
-  const PRIS_UCH = (!P.uch_pris) ? null : [
+  const PRIS_UCH = (!P.UCH_PRIS) ? null : [
      <tr key='pu1' >
       <td>Дата рассмотрения</td>
-      <td><Field component={FPicker} name={field+'uch_pris_date'} value={P.uch_pris_date} datepicker='+' /></td>
+      <td><Field component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
     </tr>,
     <tr key='pu2' >
       <td>Время рассмотрения</td>
-      <td><Field component={FPicker} name={field+'uch_pris_time'} value={P.uch_pris_time} timepicker='+' /></td>
+      <td><Field component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
     </tr>];
 
   const editable = [
@@ -67,58 +69,34 @@ const OFRow = (props)=>{
               <td>{P.docs}</td>
             </tr>
             <tr>
-              <td>Причина жалобы на постановление по делу об АП (В случае отмены постановления указывается причина по которой постановление отменено)</td>
-              <td><Field component={FAutocomplete} placeholder='Причина жалобы' key='2344' value={P.cause} name={field+'cause'} /></td>
-            </tr>
-            <tr>
               <td>Необходимо присутствие участника</td>
-              <td><Field component={FCheckbox} value={P.uch_pris} name={field+'uch_pris'} /></td>
+              <td><Field component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field+M.UCH_PRIS.name} /></td>
             </tr>
             {PRIS_UCH}
+
             <tr>
-              <td>Адрес АПН</td>
-              <td><Field component={FInput} name={field+'apn_adr'} value={P.apn_adr} type="textarea" /></td>                            
+              <td>{M.CODEX_ARTICLE.label}</td>
+              <td><Field component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field+M.CODEX_ARTICLE.name} /></td>
             </tr>
             <tr>
-              <td>Дата АПН</td>
-              <td><Field component={FPicker} name={field+'apn_date'} value={P.apn_date} datepicker='+' /></td>
+              <td>{M.OWNER_TS.label}</td>
+              <td><Field component={FInput} value={P[M.OWNER_TS.name]} name={field+M.OWNER_TS.name} /></td>
             </tr>
             <tr>
-              <td>Описание</td>
-              <td><Field component={FInput} name={field+'description'} value={P.description} type="textarea" /></td>
+              <td>{M.OWNER_TS_ADR.label}</td>
+              <td><Field component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field+M.OWNER_TS_ADR.name} /></td>
             </tr>
-            <tr>
-              <td>Владелец ТС</td>
-              <td><Field component={FInput} name={field+'owner'} value={P.owner} /></td>
-            </tr>
-            <tr>
-              <td>Адрес владелеца ТС</td>
-              <td><Field component={FInput} name={field+'owner_adr'} value={P.owner_adr} /></td>
-            </tr>
-            <tr>
-              <td>Решение по теме</td>
-              <td><Field component={FSelect} name={field+'decision'} dataKey='decision' placeholder='Select' /></td>
-            </tr>
-            <tr>
-              <td>Основание для решения</td>
-              <td><Field component={FSelect} name={field+'decision_base'} dataKey='decision_base' placeholder='Select' /></td>
-            </tr>
-            <tr>
-              <td>Решение принял руководитель</td>
-              <td><Field component={FSelect} name={field+'chief'} dataKey='chief' placeholder='Select' /></td>
-            </tr>
-            <tr>
-              <td>Дата принятия решения</td>
-              <td><Field component={FPicker} name={field+'decision_date'} value={P.decision_date} datepicker='+' /></td>
-            </tr>
-            <tr>
-              <td>Статья кодекса</td>
-              <td><Field component={FInput} name={field+'article'} value={P.article} /></td>
-            </tr>
-            <tr>
-              <td>ГРЗ нарушителя</td>
-              <td><Field component={FInput} name={field+'regno'} value={P.regno} /></td>
-            </tr>  
+
+
+
+
+
+
+
+
+
+
+ 
           </tbody>
         </table>
       </td>

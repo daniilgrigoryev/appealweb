@@ -39,6 +39,13 @@ export function fetchAutocomplete(key,query){
 }
 
 export function fetchSelect(key){
+	switch(key){
+		case 'REQUEST_TYPE':  return fetchAppealSource();
+		case 'RESPONSE_TYPE': return fetchAppealOut();
+		case 'delivery_type': return fetchAppeaVidDoc();
+		case 'doc_vid':       return fetchAppeaVidDost();
+	}
+
 	return new Promise((resolve,reject)=>{
 		const resp = [
 		  { "value": "Svue", 		"property": "Shttps://github.com/vuejs/vue" },
@@ -155,6 +162,71 @@ export function fetchDecisionBasis(){
 			{ value: 'Смерть физ.лица' , property: 'Смерть физ.лица' },
 			{ value: 'Малозначительность' , property: 'Малозначительность' },
 			{ value: 'Неустранимые сомнения' , property: 'Неустранимые сомнения' }
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});
+}
+
+export function fetchAppealSource(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			{"value":"АИС ЕСОО","property":"АИС ЕСОО"},
+			{"value":"ЕСОО (ручной ввод)","property":"ЕСОО (ручной ввод)"},
+			{"value":"Иное","property":"Иное"},
+			{"value":"Курьер","property":"Курьер"},
+			{"value":"Личный приём","property":"Личный приём"},
+			{"value":"Почта","property":"Почта"},
+			{"value":"Сервисный центр","property":"Сервисный центр"},
+			{"value":"Фельдсвязь","property":"Фельдсвязь"},
+			{"value":"ЭДО","property":"ЭДО"},
+			{"value":"Электронная почта","property":"Электронная почта"},
+			{"value":"Электронная приёмная","property":"Электронная приёмная"},
+			{"value":"Ящик для жалоб","property":"Ящик для жалоб"}
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});
+}
+
+export function fetchAppealOut(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			{"value":"Электронная почта","property":"Электронная почта"},
+			{"value":"Почта","property":"Почта"},
+			{"value":"Лично","property":"Лично"},
+			{"value":"ЭДО","  property":"ЭДО"}
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});
+}
+
+export function fetchAppeaVidDoc(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			{"value":"Окончательный ответ","property":"Окончательный ответ"},
+			{"value":"Промежуточный ответ","property":"Промежуточный ответ"},
+			{"value":"Запрос","property":"Запрос"},
+			{"value":"Перенос контрольного срока","property":"Перенос контрольного срока"},
+			{"value":"Направление по принадлежности","property":"Направление по принадлежности"}
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});
+}
+
+export function fetchAppeaVidDost(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			{"value":"Электронная почта","property":"Электронная почта"},
+			{"value":"Почта","property":"Почта"},
+			{"value":"ЭДО","property":"ЭДО"},
+			{"value":"Курьер","property":"Курьер"}
 		];
 		setTimeout(()=>{
 			resolve(resp);

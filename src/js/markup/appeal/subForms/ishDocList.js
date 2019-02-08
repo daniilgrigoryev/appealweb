@@ -60,7 +60,7 @@ const OFRow = (props)=>{
             </tr>
             <tr>
               <td>Вид документа</td>
-              <td><Field component={FSelect}  name={field+'doc_type'}       value={P.doc_type}     dataKey='doc_type' /></td>
+              <td><Field component={FSelect}  name={field+'doc_vid'}       value={P.doc_vid}     dataKey='doc_vid' /></td>
               <td>Способ доставки</td>
               <td><Field component={FSelect}  name={field+'delivery_type'}  value={P.delivery_type} dataKey='delivery_type' /></td>
             </tr>
@@ -132,7 +132,7 @@ const OFRow = (props)=>{
 
 
 const getRow = (doc_target,args = {})=>{
-  const {ish_num,ish_date,podpisal,status,related_topic,crypto_signature,doc_type,delivery_type,sheets_count,edo_num, comment,soprovod,universal,opred,uvedom,vyzov,initiation} = args;
+  const {ish_num,ish_date,podpisal,status,related_topic,crypto_signature,doc_vid,delivery_type,sheets_count,edo_num, comment,soprovod,universal,opred,uvedom,vyzov,initiation} = args;
   return {
     id: _.uniqueId('idl'),
     doc_target: doc_target,
@@ -142,7 +142,7 @@ const getRow = (doc_target,args = {})=>{
     status: status || '',
     related_topic: related_topic || null,
     crypto_signature: crypto_signature || false,
-    doc_type: doc_type || null,
+    doc_vid: doc_vid || null,
     delivery_type: delivery_type || null,
     sheets_count: sheets_count || '',
     edo_num: edo_num || '',

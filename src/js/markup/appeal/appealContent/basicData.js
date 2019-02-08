@@ -8,9 +8,10 @@ import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import mapping from './mapping.js'
 
+const M = mapping.basicData;
+
 const  BasicData = props => {
     const { nextPage,handleSubmit,previousPage, header } = props
-    const M = mapping.basicData;
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
