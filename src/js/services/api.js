@@ -42,8 +42,10 @@ export function fetchSelect(key){
 	switch(key){
 		case 'REQUEST_TYPE':  return fetchAppealSource();
 		case 'RESPONSE_TYPE': return fetchAppealOut();
-		case 'delivery_type': return fetchAppeaVidDoc();
-		case 'doc_vid':       return fetchAppeaVidDost();
+		case 'delivery_type': return fetchAppeaVidDost();
+		case 'doc_vid':       return fetchAppeaVidDoc();
+		case 'questions':     return fetchQuestions();
+		case 'departments':   return fetchDepartments();
 	}
 
 	return new Promise((resolve,reject)=>{
@@ -197,7 +199,7 @@ export function fetchAppealOut(){
 			{"value":"Электронная почта","property":"Электронная почта"},
 			{"value":"Почта","property":"Почта"},
 			{"value":"Лично","property":"Лично"},
-			{"value":"ЭДО","  property":"ЭДО"}
+			{"value":"ЭДО","property":"ЭДО"}
 		];
 		setTimeout(()=>{
 			resolve(resp);
@@ -232,4 +234,33 @@ export function fetchAppeaVidDost(){
 			resolve(resp);
 		},10);
 	});
+}
+
+export function fetchQuestions(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			'тематика 1',
+			'тематика 2',
+			'тематика 3',
+			'тематика 4',
+			'тематика 5'
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});
+}
+
+export function fetchDepartments(){
+	return new Promise((resolve,reject)=>{
+		const resp = [
+			'отдел 1',
+			'отдел 2',
+			'отдел 3',
+			'отдел 4'
+		];
+		setTimeout(()=>{
+			resolve(resp);
+		},10);
+	});	
 }

@@ -10,7 +10,7 @@ import {ERadio,FRadio} from '../element2rform/radio.js'
 import * as V from '../../../validators'
 
 const TestElement2RF = props => {
-  const { handleSubmit, pristine, previousPage, submitting } = props
+  const { handleSubmit, pristine, nextPage, prevPage, submitting } = props
   
   const fields = [
     /*{ 
@@ -99,12 +99,8 @@ const TestElement2RF = props => {
       </table>
 
       <div>
-        <button type="button" className="previous" onClick={previousPage}>
-          Previous
-        </button>
-        <button type="submit" >
-          Submit
-        </button>
+        <button type="button" className="previous" onClick={prevPage}>Previous</button>
+        <button type="submit" onClick={nextPage} >Submit</button>
       </div>
     </form>
   )

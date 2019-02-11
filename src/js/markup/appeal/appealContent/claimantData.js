@@ -162,7 +162,7 @@ class ClaimantData extends React.Component {
 
             <div>
               <button type="button" className="previous" onClick={prevPage}>Previous</button>
-              <button type="submit" >Submit</button>
+              <button type="submit" onClick={nextPage}>Submit</button>
             </div>
           </form>
         </div>

@@ -1,4 +1,6 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
@@ -10,9 +12,11 @@ import {EOrganizationFrom,FOrganizationFrom} from '../subForms/organizationFrom.
 import {EOrganizationControl,FOrganizationControl} from '../subForms/organizationControl.js'
 import mapping from './mapping.js'
 
+const M = mapping.organizationsData;
+
 const OrganizationsData = props => {
-    const { handleSubmit, pristine, previousPage, submitting, header } = props
-    const M = mapping.organizationsData;
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, header, system } = props
+    const isMadi = system =='M';
 
     return (
       <div className='appealSection'>
@@ -25,8 +29,8 @@ const OrganizationsData = props => {
             <FieldArray name='organizationsControl' component={EOrganizationControl} />    
 
             <div>
-              <button type="button" className="previous" onClick={previousPage}>Previous</button>
-              <button type="submit" >Submit</button>
+              <button type="button" onClick={prevPage.bind(isMadi)} >Previous</button>
+              <button type="submit" onClick={nextPage.bind(isMadi)} >Submit</button>
             </div>
           </form>
         </div>
@@ -34,9 +38,14 @@ const OrganizationsData = props => {
     )
 } //
 
-export default reduxForm({
-  form: 'appeal', // <------ same form name                       disabled={pristine || submitting}
-  destroyOnUnmount: false, // <------ preserve form data
-  forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
+const mapStateToProps = (state)=>({ system: state.getIn(['general','system']) });
+
+export default compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'appeal', // <------ same form name
+    destroyOnUnmount: false, // <------ preserve form data
+    forceUnregisterOnUnmount: true // <------ unregister fields on unmount
   //validate
-})(OrganizationsData)
+  })
+)(OrganizationsData)

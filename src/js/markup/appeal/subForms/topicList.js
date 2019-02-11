@@ -1,5 +1,6 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable'
+import {Button} from 'element-react'
 import {EInput,FInput} from '../element2rform/finput.js'
 import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
@@ -11,7 +12,7 @@ import mapping from '../appealContent/mapping.js'
 import {fields,categories,matrix} from './categories.js'
 
 const data2str=(data)=>(data ? data.toISOString() : '');
-const stopPg = (cb,id)=>(evt)=>{
+const stopPg  =(cb,id)=>(evt)=>{
     evt.stopPropagation();
     cb(id);
     return false;
@@ -56,7 +57,7 @@ const OFRow = (props)=>{
   } //
 
   const PRIS_UCH = (!P.UCH_PRIS) ? null : [
-     <tr key='pu1' >
+    <tr key='pu1' >
       <td>Дата рассмотрения</td>
       <td><Field component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
     </tr>
@@ -64,8 +65,12 @@ const OFRow = (props)=>{
     <tr key='pu2' >
       <td>Время рассмотрения</td>
       <td><Field component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
+    </tr>
+    ,
+    <tr key='pu3'>
+      <td colSpan='2'><Button type='button'>Зарезервировать слот в СУО</Button></td>
     </tr>];
-
+//
   const editable = [
     <tr key={id+'e1'}>
       <td>{ind+1}</td>

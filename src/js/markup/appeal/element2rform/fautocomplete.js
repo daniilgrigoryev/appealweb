@@ -20,7 +20,7 @@ class AAutocomplete extends React.Component {
 	componentDidMount(){
 		const {acKey,value} = this.props;
 		if (value){
-			getAcValue(acKey,value).then((value)=>this.setState({value}))
+			getAcValue(acKey,value).then((value)=>this.setState({value}));
 		}
 	}
 
@@ -31,9 +31,13 @@ class AAutocomplete extends React.Component {
 	  	if (data){
 	  		cb(filter(data,queryString));
 	  	} else {
-	  		getAc(key).then((data)=>{ 
+	  		getAc(key).then((d)=>{
 	  			const value = this.state.value || null;
-	  			this.setState({data,value},()=>cb(filter(data,queryString)));
+	  			let data = {};
+				if (d && d.length){
+					data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
+				}
+				this.setState({data,value},()=>cb(filter(data,queryString)));
 	  		});
 	  	}
 	}

@@ -10,7 +10,7 @@ import {EIshDocList,FIshDocList} from '../subForms/ishDocList.js'
 import mapping from './mapping.js'
 
 const IshDocsData = props => {
-    const { handleSubmit, pristine, previousPage, submitting, header } = props
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, header } = props
     
     return (
        <div className='appealSection'>
@@ -21,8 +21,8 @@ const IshDocsData = props => {
             <FieldArray name='ishDocsData' component={FIshDocList} />    
 
             <div>
-              <button type="button" className="previous" onClick={previousPage}>Previous</button>
-              <button type="submit" >Submit</button>
+              <button type="button" className="previous" onClick={prevPage}>Previous</button>
+              <button type="submit" onClick={nextPage} >Submit</button>
             </div>
           </form>
         </div>

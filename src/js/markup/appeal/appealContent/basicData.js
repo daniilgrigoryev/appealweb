@@ -11,7 +11,7 @@ import mapping from './mapping.js'
 const M = mapping.basicData;
 
 const  BasicData = props => {
-    const { nextPage,handleSubmit,previousPage, header } = props
+    const { nextPage,handleSubmit,prevPage, header } = props;
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
@@ -43,7 +43,7 @@ const  BasicData = props => {
             </table>
 
             <div>
-              <button type="button" onClick={previousPage}>Previous</button>
+              <button type="button" onClick={prevPage}>Previous</button>
               <button type="submit" onClick={nextPage}>Submit</button>
             </div>
             </form>

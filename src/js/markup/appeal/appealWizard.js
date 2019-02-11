@@ -4,6 +4,7 @@ import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
 import TestElement2RF from './appealContent/testElement2rf.js'
 import OrganizationsData from './appealContent/organizationsData.js'
+import SummaryData from './appealContent/summaryData.js'
 import TopicsData from './appealContent/topicsData.js'
 import IshDocsData from './appealContent/ishDocsData.js'
 import ArchiveData from './appealContent/archiveData.js'
@@ -28,14 +29,20 @@ const NAVI = {
   organizationsData: {
     header: 'Организации',
     form: OrganizationsData,
-    nextPage: ()=>'topicsData',  
-    prevPage: ()=>'claimantData'
-  },
-  topicsData: {
-    header: 'Темы обращения',
-    form: TopicsData,
-    nextPage: ()=>'ishDocsData',  
-    prevPage: ()=>'organizationsData'
+    nextPage: (isMadi)=> isMadi ? 'summaryData' : 'topicsData',  
+    prevPage: ()=>'claimantData'      //   ^       ^
+  },                                  //   |       |
+  summaryData:{                       //   |       |
+    header: 'Краткое содержание',     //   |       |
+    form: SummaryData,                // <--       |         
+    nextPage: ()=>'topicsData',       //   мади    | не мади
+    prevPage: ()=>'organizationsData' // <--       |  
+  },                                  //   |       |
+  topicsData: {                       //   |       |
+    header: 'Темы обращения',         //   |       |
+    form: TopicsData,                 //   |       |
+    nextPage: ()=>'ishDocsData',      //   V       V
+    prevPage: (isMadi)=> isMadi ? 'summaryData': 'organizationsData'
   },
   ishDocsData:{
     header: 'Исходящие документы',
@@ -55,7 +62,7 @@ export default class AppealWizard extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { page: props.page || 'topicsData' ||'testElements' }
+    this.state = { page: props.page || 'basicData' ||'testElements' }
   }
 
   toPage(page){
@@ -64,18 +71,17 @@ export default class AppealWizard extends Component {
 
   render() {
     const { page } = this.state
-    const { onSubmit } = this.props
     const toPage = this.toPage.bind(this);
 
     const Page = NAVI[page];
     const {header} = Page;
-    const nextPage = Page.nextPage && (()=>toPage(Page.nextPage()));
-    const prevPage = Page.prevPage && (()=>toPage(Page.prevPage()));
+    const nextPage = Page.nextPage && (function(){ toPage(Page.nextPage(this)); });
+    const prevPage = Page.prevPage && (function(){ toPage(Page.prevPage(this)); });
     const props = {nextPage,prevPage,header};
 
     return (
       <div>
-        <Page.form {...props} onSubmit={nextPage} />
+        <Page.form {...props} />
       </div>
     )
   }//

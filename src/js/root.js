@@ -13,7 +13,7 @@ import '../scss/index.scss'
 
 i18n.use(locale);
 
-class Root  extends React.Component  {
+class Root extends React.Component  {
 
   checkMessages(){
     const messages = this.props.messagesQueue;
