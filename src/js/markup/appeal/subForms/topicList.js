@@ -10,7 +10,6 @@ import * as _ from 'lodash'
 import mapping from '../appealContent/mapping.js'
 import {fields,categories,matrix} from './categories.js'
 
-
 const data2str=(data)=>(data ? data.toISOString() : '');
 const stopPg = (cb,id)=>(evt)=>{
     evt.stopPropagation();
@@ -29,17 +28,16 @@ const OFRow = (props)=>{
   const P = value;
   const M = mapping.topicList;
 
+  const SYS = 'M'; 
   const FF = fields, FFF = FF.map(x=>x.field), CC = categories, CCF = categories.filter(x=>x), MM = matrix;
-  const cIndex = CC.indexOf(P.category);
+  
+  const CCC = CC.filter(x=>x && x.sys.indexOf(SYS)>-1).map(x=>x.text);
+  const cIndex = CCC.indexOf(P.category);
   const cRow = MM[cIndex];
-
-debugger;
-
   const cif = (field, el)=>{
     if (!cRow){
       return null;
     }
-    debugger;
     const fIndex = FFF.indexOf(field);
     return !!cRow[fIndex] ? el : null;
   }
@@ -61,7 +59,8 @@ debugger;
      <tr key='pu1' >
       <td>Дата рассмотрения</td>
       <td><Field component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
-    </tr>,
+    </tr>
+    ,
     <tr key='pu2' >
       <td>Время рассмотрения</td>
       <td><Field component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
@@ -69,12 +68,12 @@ debugger;
 
   const editable = [
     <tr key={id+'e1'}>
-            <td>{ind+1}</td>
-            <td><Field component={FSelect} name={field+'category'} placeholder='Категория' data={CCF} value={P.category} /></td>
-            <td><Field component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
-            <td><Field component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
-            <td><button type='button' onClick={onInf}>i</button></td>
-            <td><button type='button' onClick={onRmv}>x</button></td>
+      <td>{ind+1}</td>
+      <td><Field component={FSelect} name={field+'category'} placeholder='Категория' data={CCC} value={P.category} /></td>
+      <td><Field component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
+      <td><Field component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
+      <td><button type='button' onClick={onInf}>i</button></td>
+      <td><button type='button' onClick={onRmv}>x</button></td>
     </tr>
     ,
     <tr key={id+'e2'}>
