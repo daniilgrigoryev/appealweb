@@ -8,6 +8,8 @@ import {EAutocomplete,FAutocomplete} from '../element2rform/fautocomplete.js'
 import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 import mapping from '../appealContent/mapping.js'
+import {fields,categories,matrix} from './categories.js'
+
 
 const data2str=(data)=>(data ? data.toISOString() : '');
 const stopPg = (cb,id)=>(evt)=>{
@@ -26,6 +28,21 @@ const OFRow = (props)=>{
   const onXpd = ()=>onExpand(id);
   const P = value;
   const M = mapping.topicList;
+
+  const FF = fields, FFF = FF.map(x=>x.field), CC = categories, CCF = categories.filter(x=>x), MM = matrix;
+  const cIndex = CC.indexOf(P.category);
+  const cRow = MM[cIndex];
+
+debugger;
+
+  const cif = (field, el)=>{
+    if (!cRow){
+      return null;
+    }
+    debugger;
+    const fIndex = FFF.indexOf(field);
+    return !!cRow[fIndex] ? el : null;
+  }
 
   if (!expanded){
     const collapsed = (
@@ -53,7 +70,7 @@ const OFRow = (props)=>{
   const editable = [
     <tr key={id+'e1'}>
             <td>{ind+1}</td>
-            <td><Field component={FAutocomplete} name={field+'category'} placeholder='Категория' key='2344' value={P.category} /></td>
+            <td><Field component={FSelect} name={field+'category'} placeholder='Категория' data={CCF} value={P.category} /></td>
             <td><Field component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
             <td><Field component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
             <td><button type='button' onClick={onInf}>i</button></td>
@@ -74,29 +91,84 @@ const OFRow = (props)=>{
             </tr>
             {PRIS_UCH}
 
-            <tr>
-              <td>{M.CODEX_ARTICLE.label}</td>
-              <td><Field component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field+M.CODEX_ARTICLE.name} /></td>
-            </tr>
-            <tr>
-              <td>{M.OWNER_TS.label}</td>
-              <td><Field component={FInput} value={P[M.OWNER_TS.name]} name={field+M.OWNER_TS.name} /></td>
-            </tr>
-            <tr>
-              <td>{M.OWNER_TS_ADR.label}</td>
-              <td><Field component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field+M.OWNER_TS_ADR.name} /></td>
-            </tr>
-
-
-
-
-
-
-
-
-
-
- 
+            {cif(M.CODEX_ARTICLE.name,
+              (<tr>
+                <td>{M.CODEX_ARTICLE.label}</td>
+                <td><Field component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field+M.CODEX_ARTICLE.name} /></td>
+              </tr>)
+            )}
+            {cif(M.OWNER_TS.name,
+              (<tr>
+                <td>{M.OWNER_TS.label}</td>
+                <td><Field component={FInput} value={P[M.OWNER_TS.name]} name={field+M.OWNER_TS.name} /></td>
+              </tr>)
+            )}
+            {cif(M.OWNER_TS_ADR.name,
+              (<tr>
+                <td>{M.OWNER_TS_ADR.label}</td>
+                <td><Field component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field+M.OWNER_TS_ADR.name} /></td>
+              </tr>)
+            )}
+            {cif(M.APN_ADR.name,
+              (<tr>
+                <td>{M.APN_ADR.label}</td>
+                <td><Field component={FInput} value={P[M.APN_ADR.name]} name={field+M.APN_ADR.name} /></td>
+              </tr>)
+            )}
+            {cif(M.APN_DATA.name,
+              (<tr>
+                <td>{M.APN_DATA.label}</td>
+                <td><Field component={FPicker} value={P[M.APN_DATA.name]} name={field+M.APN_DATA.name} datepicker='+' /></td>
+              </tr>)
+            )}
+            {cif(M.DESCRIPTION.name,
+              (<tr>
+                <td>{M.DESCRIPTION.label}</td>
+                <td><Field component={FInput} value={P[M.DESCRIPTION.name]} name={field+M.DESCRIPTION.name}   type="textarea"  /></td>
+              </tr>)
+            )}
+            {cif(M.DECISION_DATE.name,
+              (<tr>
+                <td>{M.DECISION_DATE.label}</td>
+                <td><Field component={FPicker} value={P[M.DECISION_DATE.name]} name={field+M.DECISION_DATE.name} datepicker='+' /></td>
+              </tr>)
+            )}
+            {cif(M.VIOLATOR_REGNO.name,
+              (<tr>
+                <td>{M.VIOLATOR_REGNO.label}</td>
+                <td><Field component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field+M.VIOLATOR_REGNO.name} /></td>
+              </tr>)
+            )}
+            {cif(M.APPEAL_CAUSE.name,
+              (<tr>
+                <td>{M.APPEAL_CAUSE.label}</td>
+                <td><Field component={FSelect} value={P[M.APPEAL_CAUSE.name]} name={field+M.APPEAL_CAUSE.name} key={M.APPEAL_CAUSE.key} /></td>
+              </tr>)
+            )}
+            {cif(M.DESISION_MAKER.name,
+              (<tr>
+                <td>{M.DESISION_MAKER.label}</td>
+                <td><Field component={FSelect} value={P[M.DESISION_MAKER.name]} name={field+M.DESISION_MAKER.name} key={M.DESISION_MAKER.key} /></td>
+              </tr>)
+            )}
+            {cif(M.DECISION_THEME.name,
+              (<tr>
+                <td>{M.DECISION_THEME.label}</td>
+                <td><Field component={FSelect} value={P[M.DECISION_THEME.name]} name={field+M.DECISION_THEME.name} key={M.DECISION_THEME.key} /></td>
+              </tr>)
+            )}
+            {cif(M.DECISION_BASIS.name,
+              (<tr>
+                <td>{M.DECISION_BASIS.label}</td>
+                <td><Field component={FSelect} value={P[M.DECISION_BASIS.name]} name={field+M.DECISION_BASIS.name} key={M.DECISION_BASIS.key} /></td>
+              </tr>)
+            )}
+            {cif(M.APPEAL_APN.name,
+              (<tr>
+                <td>{M.APPEAL_APN.label}</td>
+                <td><Field component={FSelect} value={P[M.APPEAL_APN.name]} name={field+M.APPEAL_APN.name} key={M.APPEAL_APN.key} /></td>
+              </tr>)
+            )}
           </tbody>
         </table>
       </td>

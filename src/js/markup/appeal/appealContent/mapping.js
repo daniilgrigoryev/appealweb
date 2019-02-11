@@ -53,12 +53,12 @@ export default {
 		DESCRIPTION:     {name: 'DESCRIPTION',    label: 'Описание'},
 		DECISION_DATE:   {name: 'DECISION_DATE',  label: 'Дата принятия решения'},
 		VIOLATOR_REGNO:  {name: 'VIOLATOR_REGNO', label: 'ГРЗ нарушителя'},
-		APPEAL_CAUSE:    {name: 'APPEAL_CAUSE',   label: 'Причина обращения'},
-		
-		DESISION_MAKER:  {name: 'DESISION_MAKER', label: 'Решение принял руководитель'},
-		DECISION_THEME:  {name: 'DECISION_THEME', label: 'Решение по теме'},
-		DECISION_BASIS:  {name: 'DECISION_BASIS', label: 'Основания для решения'},
-		APPEAL_APN:      {name: 'APPEAL_APN',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)'},
+		APPEAL_CAUSE:    {name: 'APPEAL_CAUSE',   label: 'Причина обращения', key: 'APPEAL_CAUSE'},
+
+		DESISION_MAKER:  {name: 'DESISION_MAKER', label: 'Решение принял руководитель', key:'DESISION_MAKER'},
+		DECISION_THEME:  {name: 'DECISION_THEME', label: 'Решение по теме',             key:'DECISION_THEME'},
+		DECISION_BASIS:  {name: 'DECISION_BASIS', label: 'Основания для решения',       key: 'DECISION_BASIS'},
+		APPEAL_APN:      {name: 'APPEAL_APN',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)', key:'APPEAL_APN'},
 	}
 
 }
