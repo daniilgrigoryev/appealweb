@@ -15,5 +15,4 @@ const FCheckbox = (props) => {
 	return <ECheckbox {...props} {...input} {...meta} />
 }  //
 
-
 export {ECheckbox,FCheckbox};
