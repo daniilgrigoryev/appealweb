@@ -21,11 +21,11 @@ class ASelect extends React.Component {
 		let data = {};
 		if (d && d.length){
 			data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
-		} debugger;
+		}
 		this.setState({data});
 	}
 
-	pushData2state(){ debugger;
+	pushData2state(){
 		let {data,dataKey,datagetter} = this.props;
 		if (data && data.length){
 			this.setData(data);

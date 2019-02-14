@@ -29,7 +29,7 @@ module.exports = {
                 include: /node_modules/,
                 loaders: ['style-loader', 'css-loader', "sass-loader"]
             },{
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
                 loader: 'url-loader?limit=100000'
             }
 
@@ -42,10 +42,6 @@ module.exports = {
                     "css-loader?url=false", // translates CSS into CommonJS
                     "sass-loader" // compiles Sass to CSS
                 ]
-            }, {
-                test: /\.svg$/,
-                loader: 'svg-sprite-loader',
-                options: {}
             }
         ]
     }

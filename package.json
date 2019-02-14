@@ -26,6 +26,8 @@
     "lodash": "^4.17.10",
     "node-sass-utils": "^1.1.2",
     "positions": "^1.6.2",
+    "primeicons": "^1.0.0",
+    "primereact": "^3.0.0",
     "r": "0.0.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

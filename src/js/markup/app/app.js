@@ -5,14 +5,16 @@ import { BrowserRouter, Route, Switch, NavLink, Link,withRouter } from 'react-ro
 import {logoutRequest} from '../../actions/common.js'
 import {getSessionId} from '../../selectors/common.js'
 import AppealWizard from '../appeal/appealWizard.js'
+import AppealExplorer from '../table/appealExplorer.js'
 
 export default function App(){
   return (
     <BrowserRouter>
       <LayoutConnected>
         <Switch>          
-          <Route exact path='/' component={Home} />
-          <Route path='/appeal' component={AppealWizard} />
+          <Route exact path='/'  component={Home} />
+          <Route path='/appeal'  component={AppealWizard} />
+          <Route path='/explore' component={AppealExplorer} />
           <Route path='*' component={NotFoundPage} />
         </Switch>        
       </LayoutConnected>
@@ -47,6 +49,7 @@ class Layout  extends React.Component  {
         <nav>
           <ul className='navLinks'>
             <li><Link to="/">Home</Link></li>
+            <li><Link to="/explore">Поиск</Link></li>
             <li><Link to="/appeal">Жалоба</Link></li>
           </ul>
         </nav>
