@@ -31,19 +31,47 @@ const ajax = (method,url,payload,ajaxOpts) => {
 
 	if (method=='GET'){
 		opts.params = opts.data;
+	} else if (method=='POST_FILE'){
+		const data = new FormData();
+		data.append("file", payload);
+
+		opts.responseType= 'blob';
+		opts.method='POST';
+		opts.data = data;
+		opts.headers['Content-Type'] = 'multipart/form-data';
+		delete opts.headers['Accept'];
 	} else {
 		opts.data = JSON.stringify(opts.data);
-	}
-	
-	return new Promise((resolve, reject)=>axios(opts).then(resolve).catch(reject));
+	} 	
+	return new Promise((resolve, reject)=>{axios(opts).then(resolve).catch(reject)});
 }
 
 const	get     = (url,payload,ajaxOpts)=> ajax('GET',url,payload,ajaxOpts);
 const	post    = (url,payload,ajaxOpts)=> ajax('POST',url,payload,ajaxOpts);
+const	postFile= (url,payload,ajaxOpts)=> ajax('POST_FILE',url,payload,ajaxOpts);
 const	del     = (url,payload,ajaxOpts)=> ajax('DELETE',url,payload,ajaxOpts);
 const	put     = (url,payload,ajaxOpts)=> ajax('PUT',url,payload,ajaxOpts);
 
 const	setBase = (newBase)=>{ BASE_URL = newBase; }
 const   setMode = (newMode)=>{ MODE = newMode;}
 
-export {setBase,setMode,get,post,del,put};
+const	out = (res) => {
+    let filename = (res.headers['content-type'] || "").replace("attachment; filename=", "");
+    filename = decodeURI(filename);
+  	const hasWarns = res.headers['content-language'];
+    const warn = hasWarns && decodeURI(hasWarns);
+    const data = new Blob([res.data], {type: 'application/octet-stream'});
+    const answ = window.URL.createObjectURL(data);
+    let tempLink = document.createElement('a');
+    tempLink.href = answ;
+    tempLink.setAttribute('download', filename);
+    tempLink.click();
+
+    setTimeout(() => {
+        tempLink && (tempLink.remove());
+    }, 5000);
+
+    return warn;
+}
+
+export {setBase,setMode,get,post,postFile,del,put,out};

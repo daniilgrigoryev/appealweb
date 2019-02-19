@@ -8,6 +8,7 @@ import {combineReducers} from 'redux-immutable'
 import createSagaMiddleware from 'redux-saga'
 import {initialState,rootReducer} from './reducers/rootReducer.js'
 import rootSaga from './sagas/rootSaga.js'
+import loadSagas from './sagas/loadSagas.js'
 import Immutable from 'immutable'
 
 (()=>{

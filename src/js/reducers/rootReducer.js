@@ -1,5 +1,6 @@
 import * as A from '../actions/common.js'
 import Immutable from 'immutable'
+import {out} from '../services/ajax.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
@@ -20,6 +21,11 @@ const rootReducer = function(state, action){
   		return addMessage(state,action.severity,action.message)
   	case A.LOGIN_DONE:
   		return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
+    case A.FILLED_UPLOAD:
+      let rs = out(action.file);
+      if (rs) {
+        return addMessage(state, 'warning', 'Некорректно:\n' + rs.split('**').join('\n'));
+      }
     default: 
     	return state
   }

@@ -7,6 +7,10 @@ export const GET_ALL_APPEALS = 'GET_ALL_APPEALS'
 export const MESSAGE_SET   = 'MESSAGE_SET'
 export const MESSAGES_ERASE = 'MESSAGES_ERASE'
 
+export const FILE_LOAD_START = 'FILE_LOAD_START';
+export const FILLED_UPLOAD = 'FILLED_UPLOAD';
+export const LOAD_REQUEST = 'LOAD_REQUEST';
+
 export function messageSet(message, severity){
 	return {type: MESSAGE_SET, message, severity}
 }
@@ -29,4 +33,16 @@ export function logoutRequest(sessionId){
 
 export function logoutSuccess(){
 	return {type: LOGOUT_DONE }	
+}
+
+export function fileLoadStart() {
+	return {type: FILE_LOAD_START}
+}
+
+export function filledUpload(file) {
+	return {type: FILLED_UPLOAD, file}
+}
+
+export function loadRequest(file) {
+	return {type: LOAD_REQUEST, file}
 }

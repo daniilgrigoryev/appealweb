@@ -1,13 +1,13 @@
 import './login.scss'
 
-import {loginRequest} from '../../actions/common.js'
+import {loginRequest, loadRequest} from '../../actions/common.js'
 import * as _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import {post,get} from '../../services/ajax.js'
 import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
-import {getUser} from '../../selectors/common.js'
+import {getUser, getFile} from '../../selectors/common.js'
 
 class Login extends React.Component {
 
@@ -22,6 +22,7 @@ class Login extends React.Component {
 
     this.onInput = this.onInput.bind(this);
     this.onLogin = this.onLogin.bind(this);
+    this.onFileLoad = this.onFileLoad.bind(this);
   }
 
   componentDidMount(){
@@ -59,42 +60,9 @@ class Login extends React.Component {
     this.props.dispatch(loginRequest(loginData));
   }
 
-
-  loadDocx(e){
-    const myHeaders = new Headers();
-    myHeaders.append('Access-Control-Allow-Origin',"*");
-
+  onFileLoad(e) {
     const file = e.target.files[0];
-    const formData = new FormData();
-    let filename;
-    let warn;
-
-    formData.append('file', file);
-
-    fetch('https://127.0.0.1:8443/AppealAPI/rest/load_docx', {
-          method: 'POST',
-          headers: myHeaders,
-          mode: 'cors',
-          cache: 'no-cache',
-          body: formData
-    }).then(res => {
-          filename = (res.headers.get("Content-Type") || "").replace("attachment; filename=","");
-          filename = decodeURI(filename);
-          warn = decodeURI(res.headers.get("Content-Language"));
-          console.log(warn)
-          return res.blob();
-    }).then(res => { 
-          const data = new Blob([res], {type: 'application/octet-stream'});
-          const answ = window.URL.createObjectURL(data);
-          var tempLink = document.createElement('a');
-          tempLink.href = answ;
-          tempLink.setAttribute('download', filename);
-          tempLink.click();
-
-          setTimeout(()=>{
-            tempLink && (tempLink.remove());
-          },5000);
-        });
+    const res = this.props.dispatch(loadRequest(file));
   }
 
   render (){
@@ -107,7 +75,7 @@ class Login extends React.Component {
               <input type="text"     placeholder="Username" id="username" onChange={this.onInput} value={username}  />
               <input type="password" placeholder="Password" id="password" onChange={this.onInput} value={password}  />
               <button onClick={this.onLogin}>Submit</button>
-              <input type="file" name="file" onChange={this.loadDocx} />
+              <input type="file" name="file" onChange={this.onFileLoad} />
           </div>
         </div>
     ); //

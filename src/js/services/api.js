@@ -1,6 +1,7 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DEV_47'
+// const MODE = 'DEV_47'
+const MODE = 'DEV_152'
 
 const URLS = {
 	'DEV_152': 'https://172.20.255.152:8443/AppealAPI/',
@@ -19,6 +20,10 @@ export function login(loginData){
 
 export function logout(sessionId){
 	return AJ.post('rest/logout',{sessionId});
+}
+
+export function loadFile(file) { 
+	return AJ.postFile('rest/load_docx', file);
 }
 
 export function fetchAutocomplete(key,query){
