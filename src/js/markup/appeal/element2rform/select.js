@@ -25,7 +25,7 @@ class ASelect extends React.Component {
 		this.setState({data});
 	}
 
-	pushData2state(){
+	pushData2state(){ 
 		let {data,dataKey,datagetter} = this.props;
 		if (data && data.length){
 			this.setData(data);

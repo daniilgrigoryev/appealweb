@@ -20,9 +20,8 @@ class AppealExplorer extends React.Component {
   }//
 }
 
-const state2props = (state) => { debugger;
-  const sid = getSessionId(state);
-  return {sid};
+const state2props = (state) => {
+  return {sid:getSessionId(state)};
 }
 
 export default connect(state2props)(AppealExplorer);

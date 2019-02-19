@@ -1,15 +1,14 @@
 import React from 'react'
 import {Radio} from 'element-react'
 
-
 // Element component
 class ERadio extends React.Component {
 
   constructor(props) {
     super(props);
-    const {options,defValue} = this.props;
+    const {options,value} = this.props;
     this.state = {
-      value: defValue || options[0].property
+      value: value || options[0].property
     }
   }
 
@@ -26,11 +25,7 @@ class ERadio extends React.Component {
     const {options} = this.props;
     const RADIOS = options.map(x=><Radio key={x.value} value={x.property} checked={this.state.value === x.property} onChange={this.onChange.bind(this)}>{x.value}</Radio>);
 //
-    return (
-      <div>
-        {RADIOS}
-      </div>
-    )
+    return (<div>{RADIOS}</div>)
   }//
 }
 
