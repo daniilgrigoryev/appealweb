@@ -9,8 +9,9 @@ import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
 import {getSessionId,getMessages} from './selectors/common.js'
 import AppealWizard from './markup/appeal/appealWizard.js'
-import ListTest from './markup/fabulas/listTest.js'
-import FabulasList from './markup/fabulas/fabulasList.js'
+import ListTest from './markup/editable/listTest.js'
+import FabulasList from './markup/editable/fabulasList.js'
+import TipDocList from './markup/editable/tipDocList.js'
 import '../scss/index.scss'
 
 i18n.use(locale);
@@ -37,7 +38,8 @@ class Root extends React.Component  {
     if (true){
       //return <AppealWizard />
       //return <ListTest />
-      return <FabulasList/>;
+      //return <FabulasList/>;
+      //return <TipDocList />
     }
 
     return !this.props.loggedIn ? <Login /> : <App />; //

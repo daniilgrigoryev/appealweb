@@ -60,7 +60,6 @@ export default {
 		RASSMOTR_DATE:   {name: 'RASSMOTR_DATE',  label: 'Дата рассмотрения дела'},
 		RASSMOTR_TIME:   {name: 'RASSMOTR_TIME',  label: 'Время рассмотрения дела'},
 		
-
 		APN_ADR:         {name: 'APN_ADR',        label: 'Адрес АПН'},
 		APN_DATA:        {name: 'APN_DATA',       label: 'Дата АПН'},
 		DESCRIPTION:     {name: 'DESCRIPTION',    label: 'Описание'},
@@ -73,5 +72,4 @@ export default {
 		DECISION_BASIS:  {name: 'DECISION_BASIS', label: 'Основания для решения',       key: 'DECISION_BASIS'},
 		APPEAL_APN:      {name: 'APPEAL_APN',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)', key:'APPEAL_APN'},
 	}
-
 }

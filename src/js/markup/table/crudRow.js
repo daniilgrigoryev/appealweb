@@ -1,10 +1,9 @@
 import * as _ from 'lodash'
+import * as F from './fields.js'
 import React from 'react'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Dialog,Button,Input,Select} from 'element-react'
-import * as F from './fields.js'
-
 import {EInput} from '../appeal/element2rform/finput.js'
 import {EAutocomplete} from '../appeal/element2rform/fautocomplete.js'
 import {ECheckbox} from '../appeal/element2rform/checkbox.js'
@@ -14,6 +13,17 @@ import {EPicker} from '../appeal/element2rform/picker.js'
 import {ERadio} from '../appeal/element2rform/radio.js'
 
 export default class CrudRow extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            row: Object.assign({},props.row)
+        }
+    }
+
+    renderFileInput(field,onChange,val){
+        return <EInput onChange={onChange} value={val} type='file' />
+    }
 
     renderSelect(field,onChange,val){
         const {selectKey,selectData,selectGetter} = field;  
@@ -40,7 +50,7 @@ export default class CrudRow extends React.Component {
         return <ERadio value={val} onChange={onChange} options={radioOptions} />;
     } //
     
-    renderCheckbox(field,onChange,val){ 
+    renderCheckbox(field,onChange,val){
         return <ECheckbox onChange={onChange} value={val} />;
     } //
     
@@ -48,9 +58,16 @@ export default class CrudRow extends React.Component {
         return <EInput onChange={onChange} value={val} mask={field.mask} maskguide={field.maskguide} />;
     } //
 
+    updateProperty(field,newVal){
+        const {row} = this.state;
+        row[field.field] = newVal;
+        this.setState({row});   
+    }
 
     getChanger(fIndex){
-        const {row,fields,updateProperty} = this.props;
+        const updateProperty = this.updateProperty.bind(this);
+        const {fields} = this.props;
+        const {row} = this.state;
         const field = fields[fIndex];
         const val = row[field.field];
 
@@ -67,6 +84,8 @@ export default class CrudRow extends React.Component {
             INP = this.renderRadiobutton(field,onChange,val);
         } else if (F.isCheckbox(field)){
             INP = this.renderCheckbox(field,onChange,val);
+        } else if (F.isFile(field)){
+            INP = this.renderFileInput(field,onChange,val);
         } else if (F.isNumber(field)){
             INP = this.renderString(field,onChange,val);
         } else if (F.isString(field)){
@@ -91,12 +110,28 @@ export default class CrudRow extends React.Component {
         );//
     }
 
+    hasChanges(){
+        const outerRow = this.props.row;
+        const innerRow = this.state.row;
+        for (let field in outerRow){
+            if ((outerRow[field]||'')!=(innerRow[field]||'')){
+                return true;
+            }
+        }
+        return false;
+    }
+
     render(){
-        const {fields,removeRow,hideCrud,row} = this.props;
+        const {row} = this.state;
+        const {fields,editor,removeCrud,hideRow,saveCrud,columns} = this.props; 
         const {id} = row;
         const filtered = fields.filter(x=>x.field!='id');
-        const CONTENT = this.getColumns(filtered,1);
-debugger;
+        const CONTENT = this.getColumns(filtered,+columns);
+        const CHG = this.hasChanges();
+        const NWR = !id;
+
+        const save = ()=>saveCrud(row);
+
         return (
             <div>
                 <table>
@@ -105,14 +140,14 @@ debugger;
                 <table>
                     <tbody>
                         <tr>
-                            <td><Button onClick={hideCrud}>К таблице</Button></td>
-                            {id==null?null:<td><Button onClick={removeRow}>Удалить</Button></td>}
+                            <td><Button onClick={hideRow}>Отмена</Button></td>
+                            {!CHG ? null : <td><Button onClick={save}>Сохранить</Button></td>}
+                            { NWR ? null : <td><Button onClick={removeCrud}>Удалить</Button></td>}
                         </tr>
                     </tbody>
                 </table>
+                {editor}
             </div>
         );
     } //
-
-
 }

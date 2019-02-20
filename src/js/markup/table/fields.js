@@ -7,7 +7,7 @@ const gField = function(field,header,type,args={}){
 		throw 'no type found'
 	}
 
-    const {mask,selectKey,selectData,acKey,acData,checkBox,radio,hidden} = args;
+    const {mask,selectKey,selectData,acKey,acData,checkBox,radio,noTable,noEdit} = args;
     return {field,header,type, ...args};
 }
 
@@ -48,6 +48,10 @@ export function radNum(field,header,args){
 
 export function chk(field,header,args){
     return gField(field,header,'C',args);    
+}
+
+export function fil(field,header,args){
+	return gField(field,header,'F',args);
 }
 
 
@@ -95,5 +99,7 @@ export function isCheckbox(f){
 	return f && f.type=='C' && f.checkBox && f.checkBox; // field.checkBox:true::boolean
 }
 
-
+export function isFile(f){
+	return f && f.type=='F';
+}
 

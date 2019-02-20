@@ -55,12 +55,13 @@ export default class CrudTable extends React.Component {
         this.add    = this.add.bind(this);
     }
 
-    save() {
+    save(row) {
+        const newRow = row || this.state.row;
         let rows = [...this.state.rows];
         if(this.newrow){
-            rows.push(this.state.row);
+            rows.push(newRow);
         } else {
-            rows[this.findSelectedIndex()] = this.state.row;
+            rows[this.findSelectedIndex()] = newRow;
         }
 
         this.setState({rows:rows, selectedRow:null, row: null, displayCrud:false});
@@ -106,36 +107,58 @@ export default class CrudTable extends React.Component {
 
         this.newrow = true;
         this.setState({
-            row: Object.assign({id:null},newRow),
+            row: Object.assign({},newRow),  // new row - has no id field
             displayCrud: true
         });
     }
 
-    hideCrud(){
-        this.save();
+    hideRow(){
         this.setState({displayCrud: false});
     }
 
-	render(){
-        const {displayCrud,selectedRow,row} = this.state;
-        const {fields} = this.props;
-        const noHidden = fields.filter(x=>!x.hidden);
+    saveCrud(newRow){
+        setTimeout(()=>{
+            newRow.id = _.uniqueId('row');
+            this.save(newRow);
+        },100);
+    }
 
-        const removeRow = this.delete.bind(this);
-        const hideCrud = this.hideCrud.bind(this);
+    removeCrud(){
+        setTimeout(()=>{
+            this.delete();
+        },100);
+    }
+
+	render(){
+        const {displayCrud,selectedRow,row,rows} = this.state;
+        const {fields,editor,columns} = this.props;
+        
+        const removeCrud = this.removeCrud.bind(this);
+        const hideRow = this.hideRow.bind(this);
+        const saveCrud = this.saveCrud.bind(this);
         const updateProperty = this.updateProperty.bind(this);
 
-	    let header = (<div className="p-clearfix" style={{width:'100%'}}><Button onClick={this.add}> Добавить</Button>
-        </div>); //
+	    let header = (<div className="p-clearfix" style={{width:'100%'}}><Button onClick={this.add}> Добавить</Button></div>); //
 
-        const CONTENT = displayCrud 
-            ? <CrudRow fields={fields} row={row} updateProperty={updateProperty} hideCrud={hideCrud} removeRow={removeRow} /> 
-            : <DataTable value={this.state.rows}  
-                       onRowSelect={this.select} header={header}
-                       selectionMode="single"    selection={selectedRow} 
-                       onSelectionChange={e => this.setState({selectedRow: e.value})}  >
-                {noHidden.map((f,i)=>(<Column key={i} field={f.field} header={f.header} sortable={!!f.sortable} body={callIfExists(T[f.type],f)} />))}             
-              </DataTable>;
+        let CONTENT = null;
+        if (displayCrud){
+            const rowFields = fields.filter(x=>!x.noEdit);
+            const Editor = editor;
+            const EDITOR = !editor? null : <Editor row={row} />; //
+            CONTENT = (<CrudRow fields={rowFields} row={row} saveCrud={saveCrud} hideRow={hideRow} removeCrud={removeCrud} editor={EDITOR} columns={columns} />); //
+        }  else {
+            const tableFields = fields.filter(x=>!x.noTable);
+            CONTENT = (<DataTable 
+                            value={this.state.rows}  
+                            onRowSelect={this.select} 
+                            header={header}
+                            selectionMode="single"    
+                            selection={selectedRow} 
+                            onSelectionChange={e => this.setState({selectedRow: e.value})}  
+                        >
+                {tableFields.map((f,i)=>(<Column key={i} field={f.field} header={f.header} sortable={!!f.sortable} body={callIfExists(T[f.type],f)} />))}             
+              </DataTable>); //
+        }
 
 	    return (<div>{CONTENT}</div>); //
 	}
