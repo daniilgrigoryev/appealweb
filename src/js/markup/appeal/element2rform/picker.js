@@ -16,7 +16,7 @@ class APicker extends React.Component {
 				this.props.input.onChange(newVal);
 			} else if (changer=this.props.onChange){ 
 				changer(newVal);
-			} else if (changer=this.props.onValidate){ debugger;
+			} else if (changer=this.props.onValidate){ ;
 				changer(newVal);
 			}
 		}

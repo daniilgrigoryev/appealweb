@@ -11,10 +11,11 @@ import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ETopicList,FTopicList} from '../subForms/topicList.js'
 import mapping from './mapping.js'
 
+const header =  'Темы обращения';
 const M = mapping.TopicsData;
     
 const TopicsData = props => {
-    const { handleSubmit, pristine, nextPage, prevPage, submitting, header, system } = props
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, header, system,disabled } = props
     const isMadi = system =='M';
     
     return (
@@ -23,11 +24,16 @@ const TopicsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
 
-            <FieldArray name='topicsData' component={FTopicList} />    
+            <FieldArray name='topicsData' component={FTopicList} disabled={disabled} />    
 
             <div>
-              <button type="button" onClick={prevPage.bind(isMadi)}>Previous</button>
-              <button type="submit" onClick={nextPage.bind(isMadi)} >Submit</button>
+            {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage.bind(isMadi)}>Previous</button>
+                  <button type="submit" onClick={nextPage.bind(isMadi)}>Submit</button>
+                </div>)
+            }
             </div>
           </form>
         </div>

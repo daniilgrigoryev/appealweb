@@ -32,7 +32,7 @@ class Login extends React.Component {
       }
       const db = arr[0].key;
       const list = _.reduce(arr,(memo,it)=>(memo[it.key]=it.val,memo),{});
-      //debugger;
+      //;
     });*/
   }
 

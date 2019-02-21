@@ -18,14 +18,14 @@ const getRow = (question,department)=>{
 export class EQuestionList extends React.Component {
 
   render() {
-    const {fields} = this.props
+    const {fields,disabled} = this.props
     const add = ()=>fields.push(getRow());
     const rmv = (ind)=>()=>fields.remove(ind);
     const ROWS = fields.map((x,i)=>(<tr key={i} >
             <td>{i+1}</td>
-            <td><Field component={FSelect} name={x+'question'}   value={x.question} dataKey='questions'  /></td>
-            <td><Field component={FSelect} name={x+'department'} value={x.department} dataKey='departments'  /></td>
-            <td><button type='button' onClick={rmv(i)}>x</button></td>
+            <td><Field disabled={disabled} component={FSelect} name={x+'question'}   value={x.question} dataKey='questions'  /></td>
+            <td><Field disabled={disabled} component={FSelect} name={x+'department'} value={x.department} dataKey='departments'  /></td>
+            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>
           </tr>)); //
 
     return (
@@ -35,7 +35,7 @@ export class EQuestionList extends React.Component {
             <th>№</th>
             <th>Тематика обращения</th>
             <th>Отдел</th>
-            <th><button type="button" onClick={add} title='Добавить тематику обращения'>+</button></th>
+            <th>{disabled ? null : <button type="button" onClick={add} title='Добавить тематику обращения'>+</button>}</th>
           </tr>
         </thead>
         <tbody>

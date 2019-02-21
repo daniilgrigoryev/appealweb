@@ -18,14 +18,14 @@ const getRow = (name,num,date)=>{
 export class EOrganizationFrom extends React.Component {
 
   render() {
-    const {fields} = this.props
+    const {fields,disabled} = this.props
     const add = ()=>fields.push(getRow());
     const rmv = (ind)=>()=>fields.remove(ind);
     const ROWS = fields.map((x,i)=>(<tr key={i} >
-            <td><Field component={FInput} name={x+'name'} value={x.name}  /></td>
-            <td><Field component={FInput} name={x+'num'}  value={x.num}  /></td>
-            <td><Field component={FPicker} name={x+'date'} value={x.date} datepicker='+' /></td>
-            <td><button type='button' onClick={rmv(i)}>x</button></td>
+            <td><Field disabled={disabled} component={FInput} name={x+'name'} value={x.name}  /></td>
+            <td><Field disabled={disabled} component={FInput} name={x+'num'}  value={x.num}  /></td>
+            <td><Field disabled={disabled} component={FPicker} name={x+'date'} value={x.date} datepicker='+' /></td>
+            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>
           </tr>)); //
 
     return (
@@ -35,7 +35,7 @@ export class EOrganizationFrom extends React.Component {
             <th>Наименование</th>
             <th>Исходящий номер</th>
             <th>Исходящая дата</th>
-            <th><button type="button" onClick={add} title='Добавить организацию'>+</button></th>
+            <th>{disabled ? null : <button type="button" onClick={add} title='Добавить организацию'>+</button>}</th>
           </tr>
         </thead>
         <tbody>

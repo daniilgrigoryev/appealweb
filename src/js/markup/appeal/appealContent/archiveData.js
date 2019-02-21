@@ -8,10 +8,11 @@ import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import mapping from './mapping.js'
 
+const header = 'Архивная информация';
 const M = mapping.archive;
     
 const ArchiveData = props => {
-    const { handleSubmit, pristine, nextPage, prevPage, submitting, header } = props
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, header,disabled } = props
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
@@ -21,18 +22,23 @@ const ArchiveData = props => {
               <tbody>
                 <tr>
                   <td>{M.TOM.label}</td>
-                  <td><Field name={M.TOM.name} component={FInput} /></td>
+                  <td><Field disabled={disabled} name={M.TOM.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.SHEETS.label}</td>
-                  <td><Field name={M.SHEETS.name} component={FInput} /></td>
+                  <td><Field disabled={disabled} name={M.SHEETS.name} component={FInput} /></td>
                 </tr>                
               </tbody>
             </table>
 
             <div>
-              <button type="button" className="previous" onClick={prevPage}>Previous</button>
-              <button type="submit" onClick={nextPage}>Submit</button>
+            {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage}>Previous</button>
+                  <button type="submit" onClick={nextPage}>Submit</button>
+                </div>)
+            }
             </div>
           </form>
         </div>

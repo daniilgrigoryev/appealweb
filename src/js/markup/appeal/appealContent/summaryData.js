@@ -10,11 +10,12 @@ import {EApnList} from  '../subForms/apnList.js'
 import {EQuestionList} from '../subForms/questionList.js'
 import mapping from './mapping.js'
 
+const header = 'Краткое содержание';
 const M = mapping.SummaryData;
 const tds = {'verticalAlign':'top'};
 
 const  SummaryData = props => {
-    const { nextPage,handleSubmit,prevPage, header } = props;
+    const { nextPage,handleSubmit,prevPage, header ,disabled} = props;
 
     return (
       <div className='appealSection'>
@@ -24,15 +25,20 @@ const  SummaryData = props => {
             <table>
               <tbody>
                 <tr>
-                  <td style={tds}><FieldArray component={EQuestionList} name='questions' /></td>
-                  <td style={tds}><FieldArray component={EApnList}      name='apn_list' /></td>
+                  <td style={tds}><FieldArray component={EQuestionList} name='questions' disabled={disabled} /></td>
+                  <td style={tds}><FieldArray component={EApnList}      name='apn_list' disabled={disabled} /></td>
                 </tr>
               </tbody>
             </table>
 
             <div>
-              <button type="button" onClick={prevPage}>Previous</button>
-              <button type="submit" onClick={nextPage}>Submit</button>
+            {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage}>Previous</button>
+                  <button type="submit" onClick={nextPage}>Submit</button>
+                </div>)
+            }
             </div>
             </form>
         </div>

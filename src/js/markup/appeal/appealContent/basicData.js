@@ -8,10 +8,11 @@ import {ESelect,FSelect} from  '../element2rform/select.js'
 import {EPicker,FPicker} from '../element2rform/picker.js'
 import mapping from './mapping.js'
 
+const header = 'Основные сведения';
 const M = mapping.basicData;
 
 const  BasicData = props => {
-    const { nextPage,handleSubmit,prevPage, header } = props;
+    const { nextPage,handleSubmit,prevPage, disabled } = props;
     return (
       <div className='appealSection'>
           <h2>{header}</h2>
@@ -21,31 +22,34 @@ const  BasicData = props => {
               <tbody>
                 <tr>
                   <td>{M.EDO_NUM.label}</td>
-                  <td><Field component={FInput} name={M.EDO_NUM.name} /></td>
+                  <td><Field disabled={disabled} component={FInput} name={M.EDO_NUM.name} /></td>
                 </tr>
                 <tr>
                   <td>{M.REQUEST_TYPE.label}</td>
-                  <td><Field component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор' /></td>
+                  <td><Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор' /></td>
                 </tr>
                 <tr>
                   <td>{M.ECOO_NUM.label}</td>
-                  <td><Field component={FInput} name={M.ECOO_NUM.name} /></td>
+                  <td><Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name} /></td>
                 </tr>
                 <tr>
                   <td>{M.RESPONSE_TYPE.label}</td>
-                  <td><Field component={FSelect} name={M.RESPONSE_TYPE.name} dataKey={M.RESPONSE_TYPE.key} placeholder='Выбор' /></td>
+                  <td><Field disabled={disabled} component={FSelect} name={M.RESPONSE_TYPE.name} dataKey={M.RESPONSE_TYPE.key} placeholder='Выбор' /></td>
                 </tr>
                 <tr>
                   <td>{M.SHEETS_COUNT.label}</td>
-                  <td><Field component={FInput} name={M.SHEETS_COUNT.name} /></td>
+                  <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name} /></td>
                 </tr>
               </tbody>
             </table>
 
-            <div>
-              <button type="button" onClick={prevPage}>Previous</button>
-              <button type="submit" onClick={nextPage}>Submit</button>
-            </div>
+            {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage}>Previous</button>
+                  <button type="submit" onClick={nextPage}>Submit</button>
+                </div>)
+            }
             </form>
         </div>
       </div>

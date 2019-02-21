@@ -18,15 +18,15 @@ const getRow = (apn,date)=>{
 export class EApnList extends React.Component {
 
   render() {
-    const {fields} = this.props
+    const {fields,disabled} = this.props
     const add = ()=>fields.push(getRow());
     const rmv = (ind)=>()=>fields.remove(ind);
     const inf = (ind)=>()=>fields.remove(ind);
     const ROWS = fields.map((x,i)=>(<tr key={i} >
-            <td><Field component={FInput}  name={x+'apn'}  value={x.apn}  /></td>
-            <td><Field component={FPicker} name={x+'date'} value={x.date} date='+' /></td>
-            <td><button type='button' onClick={inf(i)}>i</button></td>
-            <td><button type='button' onClick={rmv(i)}>x</button></td>
+            <td><Field disabled={disabled} component={FInput}  name={x+'apn'}  value={x.apn}  /></td>
+            <td><Field disabled={disabled} component={FPicker} name={x+'date'} value={x.date} date='+' /></td>
+            <td>{disabled ? null : <button type='button' onClick={inf(i)}>i</button>}</td>
+            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>
           </tr>)); //
 
     return (
@@ -35,7 +35,9 @@ export class EApnList extends React.Component {
           <tr>
             <th>№ постановления</th>
             <th>Дата</th>
-            <th colSpan='2'><button type="button" onClick={add} title='Добавить № постановления'>+</button></th>
+            <th colSpan='2'>
+              {disabled ? null : <button type="button" onClick={add} title='Добавить № постановления'>+</button>}
+            </th>
           </tr>
         </thead>
         <tbody>

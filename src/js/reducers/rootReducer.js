@@ -12,7 +12,8 @@ const addMessage = (state,type,message)=>{
 const rootReducer = function(state, action){
   switch (action.type) {
   	case A.LOGOUT_DONE:
-  		window.location = window.location; 
+  		window.location.reload(); 
+      //window.location = window.location; 
       return state;
   	case A.MESSAGES_ERASE:
       return state.set('messagesQueue',im([]));

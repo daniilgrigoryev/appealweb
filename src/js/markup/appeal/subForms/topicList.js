@@ -19,7 +19,7 @@ const stopPg  =(cb,id)=>(evt)=>{
 }
 
 const OFRow = (props)=>{
-  const {ind,field,value,onChange,onRemove,onInfo,onExpand,checkExpand} = props;
+  const {ind,field,value,onChange,onRemove,onInfo,onExpand,checkExpand,disabled} = props;
   const {id} = value;
   const expanded = checkExpand(id);
   const onRmv = stopPg(onRemove,ind);
@@ -50,8 +50,8 @@ const OFRow = (props)=>{
             <td>{props.getValue(P.category)}</td>
             <td>{P.post_n}</td>
             <td>{data2str(P.post_date)}</td>
-            <td><button type='button' onClick={onInf}>i</button></td>
-            <td><button type='button' onClick={onRmv}>x</button></td>
+            <td>{disabled ? null : <button type='button' onClick={onInf}>i</button>}</td>
+            <td>{disabled ? null : <button type='button' onClick={onRmv}>x</button>}</td>
           </tr>);
     return [collapsed];
   } //
@@ -59,12 +59,12 @@ const OFRow = (props)=>{
   const PRIS_UCH = (!P.UCH_PRIS) ? null : [
     <tr key='pu1' >
       <td>Дата рассмотрения</td>
-      <td><Field component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
+      <td><Field disabled={disabled} component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
     </tr>
     ,
     <tr key='pu2' >
       <td>Время рассмотрения</td>
-      <td><Field component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
+      <td><Field disabled={disabled} component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
     </tr>
     ,
     <tr key='pu3'>
@@ -74,11 +74,11 @@ const OFRow = (props)=>{
   const editable = [
     <tr key={id+'e1'}>
       <td>{ind+1}</td>
-      <td><Field component={FSelect} name={field+'category'} placeholder='Категория' data={CCC} value={P.category} /></td>
-      <td><Field component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
-      <td><Field component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
-      <td><button type='button' onClick={onInf}>i</button></td>
-      <td><button type='button' onClick={onRmv}>x</button></td>
+      <td><Field disabled={disabled} component={FSelect} name={field+'category'} placeholder='Категория' data={CCC} value={P.category} /></td>
+      <td><Field disabled={disabled} component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
+      <td><Field disabled={disabled} component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
+      <td>{disabled ? null : <button type='button' onClick={onInf}>i</button>}</td>
+      <td>{disabled ? null : <button type='button' onClick={onRmv}>x</button>}</td>
     </tr>
     ,
     <tr key={id+'e2'}>
@@ -91,86 +91,86 @@ const OFRow = (props)=>{
             </tr>
             <tr>
               <td>Необходимо присутствие участника</td>
-              <td><Field component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field+M.UCH_PRIS.name} /></td>
+              <td><Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field+M.UCH_PRIS.name} /></td>
             </tr>
             {PRIS_UCH}
 
             {cif(M.CODEX_ARTICLE.name,
               (<tr>
                 <td>{M.CODEX_ARTICLE.label}</td>
-                <td><Field component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field+M.CODEX_ARTICLE.name} /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field+M.CODEX_ARTICLE.name} /></td>
               </tr>)
             )}
             {cif(M.OWNER_TS.name,
               (<tr>
                 <td>{M.OWNER_TS.label}</td>
-                <td><Field component={FInput} value={P[M.OWNER_TS.name]} name={field+M.OWNER_TS.name} /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.OWNER_TS.name]} name={field+M.OWNER_TS.name} /></td>
               </tr>)
             )}
             {cif(M.OWNER_TS_ADR.name,
               (<tr>
                 <td>{M.OWNER_TS_ADR.label}</td>
-                <td><Field component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field+M.OWNER_TS_ADR.name} /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field+M.OWNER_TS_ADR.name} /></td>
               </tr>)
             )}
             {cif(M.APN_ADR.name,
               (<tr>
                 <td>{M.APN_ADR.label}</td>
-                <td><Field component={FInput} value={P[M.APN_ADR.name]} name={field+M.APN_ADR.name} /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.APN_ADR.name]} name={field+M.APN_ADR.name} /></td>
               </tr>)
             )}
             {cif(M.APN_DATA.name,
               (<tr>
                 <td>{M.APN_DATA.label}</td>
-                <td><Field component={FPicker} value={P[M.APN_DATA.name]} name={field+M.APN_DATA.name} datepicker='+' /></td>
+                <td><Field disabled={disabled} component={FPicker} value={P[M.APN_DATA.name]} name={field+M.APN_DATA.name} datepicker='+' /></td>
               </tr>)
             )}
             {cif(M.DESCRIPTION.name,
               (<tr>
                 <td>{M.DESCRIPTION.label}</td>
-                <td><Field component={FInput} value={P[M.DESCRIPTION.name]} name={field+M.DESCRIPTION.name}   type="textarea"  /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.DESCRIPTION.name]} name={field+M.DESCRIPTION.name}   type="textarea"  /></td>
               </tr>)
             )}
             {cif(M.DECISION_DATE.name,
               (<tr>
                 <td>{M.DECISION_DATE.label}</td>
-                <td><Field component={FPicker} value={P[M.DECISION_DATE.name]} name={field+M.DECISION_DATE.name} datepicker='+' /></td>
+                <td><Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field+M.DECISION_DATE.name} datepicker='+' /></td>
               </tr>)
             )}
             {cif(M.VIOLATOR_REGNO.name,
               (<tr>
                 <td>{M.VIOLATOR_REGNO.label}</td>
-                <td><Field component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field+M.VIOLATOR_REGNO.name} /></td>
+                <td><Field disabled={disabled} component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field+M.VIOLATOR_REGNO.name} /></td>
               </tr>)
             )}
             {cif(M.APPEAL_CAUSE.name,
               (<tr>
                 <td>{M.APPEAL_CAUSE.label}</td>
-                <td><Field component={FSelect} value={P[M.APPEAL_CAUSE.name]} name={field+M.APPEAL_CAUSE.name} key={M.APPEAL_CAUSE.key} /></td>
+                <td><Field disabled={disabled} component={FSelect} value={P[M.APPEAL_CAUSE.name]} name={field+M.APPEAL_CAUSE.name} key={M.APPEAL_CAUSE.key} /></td>
               </tr>)
             )}
             {cif(M.DESISION_MAKER.name,
               (<tr>
                 <td>{M.DESISION_MAKER.label}</td>
-                <td><Field component={FSelect} value={P[M.DESISION_MAKER.name]} name={field+M.DESISION_MAKER.name} key={M.DESISION_MAKER.key} /></td>
+                <td><Field disabled={disabled} component={FSelect} value={P[M.DESISION_MAKER.name]} name={field+M.DESISION_MAKER.name} key={M.DESISION_MAKER.key} /></td>
               </tr>)
             )}
             {cif(M.DECISION_THEME.name,
               (<tr>
                 <td>{M.DECISION_THEME.label}</td>
-                <td><Field component={FSelect} value={P[M.DECISION_THEME.name]} name={field+M.DECISION_THEME.name} key={M.DECISION_THEME.key} /></td>
+                <td><Field disabled={disabled} component={FSelect} value={P[M.DECISION_THEME.name]} name={field+M.DECISION_THEME.name} key={M.DECISION_THEME.key} /></td>
               </tr>)
             )}
             {cif(M.DECISION_BASIS.name,
               (<tr>
                 <td>{M.DECISION_BASIS.label}</td>
-                <td><Field component={FSelect} value={P[M.DECISION_BASIS.name]} name={field+M.DECISION_BASIS.name} key={M.DECISION_BASIS.key} /></td>
+                <td><Field disabled={disabled} component={FSelect} value={P[M.DECISION_BASIS.name]} name={field+M.DECISION_BASIS.name} key={M.DECISION_BASIS.key} /></td>
               </tr>)
             )}
             {cif(M.APPEAL_APN.name,
               (<tr>
                 <td>{M.APPEAL_APN.label}</td>
-                <td><Field component={FSelect} value={P[M.APPEAL_APN.name]} name={field+M.APPEAL_APN.name} key={M.APPEAL_APN.key} /></td>
+                <td><Field disabled={disabled} component={FSelect} value={P[M.APPEAL_APN.name]} name={field+M.APPEAL_APN.name} key={M.APPEAL_APN.key} /></td>
               </tr>)
             )}
           </tbody>
@@ -248,7 +248,7 @@ class ETopicList extends React.Component {
   }
 
   onInfo(rowId){
-      debugger;
+      ;
   }
 
 
@@ -262,8 +262,8 @@ class ETopicList extends React.Component {
     const xpd  = this.onExpand.bind(this);
     const getV = this.getCategValue.bind(this);
 
-    const {fields} = this.props; 
-    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} checkExpand={(id)=>id===this.state.expandedId} field={x} value={arr.get(i)} onRemove={rmv} onInfo={inf} onExpand={xpd} getValue={getV}>{x.value}</OFRow>)); //
+    const {fields,disabled} = this.props; 
+    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} checkExpand={(id)=>id===this.state.expandedId} field={x} value={arr.get(i)} onRemove={rmv} onInfo={inf} onExpand={xpd} getValue={getV} disabled={disabled}>{x.value}</OFRow>)); //
     const add = ()=>fields.push(getRow());
 
     return (
@@ -280,7 +280,7 @@ class ETopicList extends React.Component {
         </thead>
         <tbody>
           <tr>
-            <td><button type="button" onClick={add}>Добавить тему</button></td>
+            <td>{disabled ? null : <button type="button" onClick={add}>Добавить тему</button>}</td>
           </tr>
           {ROWS}
         </tbody>

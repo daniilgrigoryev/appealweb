@@ -19,8 +19,8 @@ class AInput extends React.Component {
 		delete clearProps.meta;
 
 		const {value} = clearProps;
-		const {mask,onChange,reduxformfield,maskguide} = this.props;
-		if (!mask){
+		const {mask,onChange,reduxformfield,maskguide,disabled} = this.props;
+		if (!mask || disabled){
 			return <Input {...clearProps} />;
 		} //
 
@@ -29,14 +29,16 @@ class AInput extends React.Component {
 		
 		if (reduxformfield){
 			const reduxFormOnChange = onChange;
+			;
 			return <MaskedInput  
 					mask={mask} 
 					guide={maskGuideMode}
 					render={(ref, props) =>{
 							let inp = null;
-							const onChange = (evt)=>{
+							const onChange = (evt)=>{ ;
 								props.onChange(evt); 
-								setTimeout(()=>reduxFormOnChange(inp.value),50);								
+								reduxFormOnChange(inp.value)
+								//setTimeout(()=>reduxFormOnChange(inp.value),50);								
 							}
 							return <Input {...props} value={conformed} onChange={onChange} ref={(x)=>{ if (x){ ref(x.refs.input); inp =x.refs.input; } }}  />;
 						}

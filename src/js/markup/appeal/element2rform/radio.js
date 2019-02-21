@@ -22,8 +22,8 @@ class ERadio extends React.Component {
   }
 
   render() {
-    const {options} = this.props;
-    const RADIOS = options.map(x=><Radio key={x.value} value={x.property} checked={this.state.value === x.property} onChange={this.onChange.bind(this)}>{x.value}</Radio>);
+    const {options,disabled} = this.props;
+    const RADIOS = options.map(x=><Radio key={x.value} value={x.property} checked={this.state.value === x.property} onChange={this.onChange.bind(this)} disabled={disabled}>{x.value}</Radio>);
 //
     return (<div>{RADIOS}</div>)
   }//

@@ -3,7 +3,7 @@ import * as actions from '../actions/common.js'
 import { getUserData } from '../selectors/common.js'
 import * as api from '../services/api.js'
 
-const log = (msg)=>console.log(msg)
+const log = ()=>{} //(msg)=>console.log(msg)
 const err = (err)=>console.error(err)
 
 export function* watchLogin(action) {   

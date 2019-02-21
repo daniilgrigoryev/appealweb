@@ -28,7 +28,7 @@ const fTypes = [
 ]
 
 const OFRow = (props)=>{
-  const {ind,field,value,onRemove,onInfo,onExpand,checkExpand,onFabula,fabData} = props;
+  const {ind,field,value,onRemove,onInfo,onExpand,checkExpand,onFabula,fabData,disabled} = props;
   const {id} = value;
   const expanded = checkExpand(id);
   const onRmv = stopPg(onRemove,ind);
@@ -46,19 +46,23 @@ const OFRow = (props)=>{
             <td>{data2str(P.ish_date)}</td>
             <td>{P.podpisal}</td>
             <td>{P.status}</td>
-            <td><button onClick={onRmv}>x</button></td>
+            <td>
+              {disabled ? null : <button onClick={onRmv}>x</button>}
+            </td>
           </tr>);
     return [collapsed];
   } //
 
   const editable = [
     <tr key={id+'e1'}>
-            <td><Field component={FInput}  name={field+'doc_target'}    value={P.doc_target}     /></td>
-            <td><Field component={FInput}  name={field+'ish_num'}       value={P.ish_num}        /></td>
-            <td><Field component={FPicker} name={field+'ish_date'}      value={P.ish_date}       datepicker='+' /></td>
-            <td><Field component={FInput}  name={field+'podpisal'}      value={P.podpisal}       /></td>
+            <td><Field disabled={disabled} component={FInput}  name={field+'doc_target'}    value={P.doc_target}     /></td>
+            <td><Field disabled={disabled} component={FInput}  name={field+'ish_num'}       value={P.ish_num}        /></td>
+            <td><Field disabled={disabled} component={FPicker} name={field+'ish_date'}      value={P.ish_date}       datepicker='+' /></td>
+            <td><Field disabled={disabled} component={FInput}  name={field+'podpisal'}      value={P.podpisal}       /></td>
             <td>{P.status}</td>
-            <td><button type='button' onClick={onRmv}>x</button></td>
+            <td>
+              {disabled ? null : <button type='button' onClick={onRmv}>x</button>}
+            </td>
     </tr>
     ,
     <tr key={id+'e2'}>
@@ -68,39 +72,40 @@ const OFRow = (props)=>{
           <tbody>
             <tr>
               <td>Связанная тема</td>
-              <td><Field component={FSelect}  name={field+'related_topic'}      value={P.related_topic}    dataKey='related_topic' /></td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+'related_topic'}      value={P.related_topic}    dataKey='related_topic' /></td>
               <td>Подпись с ЭП</td>
-              <td><Field component={FCheckbox}  name={field+'crypto_signature'} value={P.crypto_signature}    /></td>
+              <td><Field disabled={disabled} component={FCheckbox}  name={field+'crypto_signature'} value={P.crypto_signature}    /></td>
             </tr>
             <tr>
               <td>Вид документа</td>
-              <td><Field component={FSelect}  name={field+'doc_vid'}        value={P.doc_vid}     dataKey='doc_vid' /></td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+'doc_vid'}        value={P.doc_vid}     dataKey='doc_vid' /></td>
               <td>Способ доставки</td>
-              <td><Field component={FSelect}  name={field+'delivery_type'}  value={P.delivery_type} dataKey='delivery_type' /></td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+'delivery_type'}  value={P.delivery_type} dataKey='delivery_type' /></td>
             </tr>
             <tr>
               <td>Кол-во листов</td>
-              <td><Field component={FInput}  name={field+'sheets_count'}       value={P.sheets_count}  /></td>
+              <td><Field disabled={disabled} component={FInput}  name={field+'sheets_count'}       value={P.sheets_count}  /></td>
               <td>Номер в ЭДО</td>
-              <td><Field component={FInput}  name={field+'edo_num'}  value={P.edo_num}    /></td>
+              <td><Field disabled={disabled} component={FInput}  name={field+'edo_num'}  value={P.edo_num}    /></td>
             </tr>
 
             <tr>
               <td>Комментарий</td>
-              <td><Field component={FInput}  name={field+'comment'}    value={P.comment}   type="textarea" /></td>                 
+              <td><Field disabled={disabled} component={FInput}  name={field+'comment'}    value={P.comment}   type="textarea" /></td>                 
             </tr>                    
           </tbody>
         </table>
 
         <h1>Фабулы документов</h1>
 
+        {disabled ? null :( 
         <Dropdown 
           onCommand={commandFabula}
           menu={(<Dropdown.Menu>
                   { fTypes.map(x=><Dropdown.Item command={x}>{x}</Dropdown.Item>) }
                  </Dropdown.Menu>)}>
           <Button type="primary">Создать файл<i className="el-icon-caret-bottom el-icon--right"></i></Button>
-        </Dropdown>
+        </Dropdown>)}
 
         {null && <table>
           <tbody>
@@ -241,7 +246,7 @@ class EIshDocList extends React.Component {
   onFileCreate(rowId,type){
 
 
-      debugger;
+      ;
   }
 
 
@@ -255,10 +260,10 @@ class EIshDocList extends React.Component {
     const xpd  = this.onExpand.bind(this);
     const fab  = this.dialogOpenFabula.bind(this);
     
-    const {fields} = this.props;
+    const {fields,disabled} = this.props;
     const fabData = {};
-    debugger;
-    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id)=>id===this.state.expandedId} onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} >{x.value}</OFRow>)); //
+    
+    const ROWS = fields.map((x,i,arr)=>(<OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id)=>id===this.state.expandedId} onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} disabled={disabled}>{x.value}</OFRow>)); //
     
     const add = (rowGetter)=>()=>fields.push(rowGetter());
     const DIALOG = this.state.dialog;
@@ -278,8 +283,8 @@ class EIshDocList extends React.Component {
         <tbody>
           {ROWS}
           <tr>
-            <td><button type="button" onClick={add(getRowZajav)}>Добавить документ для заявителя</button></td>
-            <td><button type="button" onClick={add(getRowOrg)}>Добавить документ для организации</button></td>
+            <td>{disabled ? null : <button type="button" onClick={add(getRowZajav)}>Добавить документ для заявителя</button>}</td>
+            <td>{disabled ? null : <button type="button" onClick={add(getRowOrg)}>Добавить документ для организации</button>}</td>
           </tr>
         </tbody>
       </table>, DIALOG]

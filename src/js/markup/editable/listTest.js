@@ -5,6 +5,8 @@ import {getSessionId} from '../../selectors/common.js'
 import CrudTable from '../table/crudTable.js'
 import * as F from '../table/fields.js'
 
+const title = 'Тестовая таблица'
+
 const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
  
 const fields = [
@@ -27,7 +29,7 @@ const fields = [
 class ListTest extends React.Component {
 
   render() {
-    return <CrudTable sid={this.props.sid} fields={fields} />;
+    return <CrudTable sid={this.props.sid} fields={fields} title={title} />;
   }//
 
 }

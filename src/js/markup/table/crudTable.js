@@ -131,7 +131,7 @@ export default class CrudTable extends React.Component {
 
 	render(){
         const {displayCrud,selectedRow,row,rows} = this.state;
-        const {fields,editor,columns} = this.props;
+        const {fields,editor,columns,title} = this.props;
         
         const removeCrud = this.removeCrud.bind(this);
         const hideRow = this.hideRow.bind(this);
@@ -160,6 +160,12 @@ export default class CrudTable extends React.Component {
               </DataTable>); //
         }
 
-	    return (<div>{CONTENT}</div>); //
+	    return (
+            <div>
+                <div>
+                    <h2>{title}</h2>
+                </div>
+                {CONTENT}
+            </div>); //
 	}
 }

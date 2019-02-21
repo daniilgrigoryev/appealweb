@@ -12,10 +12,11 @@ import {EOrganizationFrom,FOrganizationFrom} from '../subForms/organizationFrom.
 import {EOrganizationControl,FOrganizationControl} from '../subForms/organizationControl.js'
 import mapping from './mapping.js'
 
+const header = 'Организации';
 const M = mapping.organizationsData;
 
 const OrganizationsData = props => {
-    const { handleSubmit, pristine, nextPage, prevPage, submitting, header, system } = props
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, header, system,disabled } = props
     const isMadi = system =='M';
 
     return (
@@ -23,14 +24,19 @@ const OrganizationsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
             <h2>Направлено из организации</h2>            
-            <FieldArray name='organizationsFrom' component={EOrganizationFrom} />                
+            <FieldArray name='organizationsFrom' component={EOrganizationFrom} disabled={disabled} />                
 
             <h2>На контроле в организации</h2>            
-            <FieldArray name='organizationsControl' component={EOrganizationControl} />    
+            <FieldArray name='organizationsControl' component={EOrganizationControl} disabled={disabled} />    
 
             <div>
-              <button type="button" onClick={prevPage.bind(isMadi)} >Previous</button>
-              <button type="submit" onClick={nextPage.bind(isMadi)} >Submit</button>
+            {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage.bind(isMadi)}>Previous</button>
+                  <button type="submit" onClick={nextPage.bind(isMadi)}>Submit</button>
+                </div>)
+            }
             </div>
           </form>
         </div>

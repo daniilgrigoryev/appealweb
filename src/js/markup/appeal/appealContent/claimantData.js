@@ -11,6 +11,7 @@ import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ERadio,FRadio,getOptions} from '../element2rform/radio.js'
 import mapping from './mapping.js'
 
+const header = 'Сведения о заявителе';
 const sexOptions = getOptions('M','мужской','F','женский');
 const zajavOptions = getOptions(  'FL','Физическое лицо','UL','Юридическое лицо');
 const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -19,7 +20,7 @@ const M = mapping.claimantData;
 class ClaimantData extends React.Component {
   
   render(){
-    const { handleSubmit, nextPage, prevPage, pristine, submitting,header, content } = this.props;
+    const { handleSubmit, nextPage, prevPage, pristine, submitting,header, content ,disabled} = this.props;
     
     const isPred = !!content[M.PRED.name]; 
     const isFL = content[M.ZAJAV_LIC.name] != 'UL';
@@ -28,46 +29,46 @@ class ClaimantData extends React.Component {
     ? ([
       <tr key='flFam'>
         <td>{M.FAM.label}</td>
-        <td colSpan='3'><Field name={M.FAM.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.FAM.name} component={FInput} /></td>
       </tr>,
       <tr key='flName'>
         <td>{M.NAME.label}</td>
-        <td colSpan='3'><Field name={M.NAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.NAME.name} component={FInput} /></td>
       </tr>,
       <tr key='flSurname'>
         <td>{M.SURNAME.label}</td>
-        <td colSpan='3'><Field name={M.SURNAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.SURNAME.name} component={FInput} /></td>
       </tr>,
       <tr key='flSex'>
         <td>{M.SEX.label}</td>
-        <td colSpan='3'><Field name={M.SEX.name} component={FRadio} options={sexOptions} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.SEX.name} component={FRadio} options={sexOptions} /></td>
       </tr>
       ])
 
     :([
       <tr key='ulOrgName'>
         <td>{M.ORG_NAME.label}</td>
-        <td colSpan='3'><Field name={M.ORG_NAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.ORG_NAME.name} component={FInput} /></td>
       </tr>,
       <tr key='ulINN'>
         <td>{M.INN.label}</td>
-        <td colSpan='3'><Field name={M.INN.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.INN.name} component={FInput} /></td>
       </tr>,
       <tr key='ulKPP'>
         <td>{M.KPP.label}</td>
-        <td colSpan='3'><Field name={M.KPP.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.KPP.name} component={FInput} /></td>
       </tr>,
       <tr key='ulIshNum'>
         <td>{M.ISH_NUMBER.label}</td>
-        <td colSpan='3'><Field name={M.ISH_NUMBER.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.ISH_NUMBER.name} component={FInput} /></td>
       </tr>,
       <tr key='ulIshDt'>
         <td>{M.ISH_DATE.label}</td>
-        <td colSpan='3'><Field name={M.ISH_DATE.name} component={FPicker} datepicker='+' /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.ISH_DATE.name} component={FPicker} datepicker='+' /></td>
       </tr>,
       <tr key='ulPodpis'>
         <td>{M.PODPIS.label}</td>
-        <td colSpan='3'><Field name={M.PODPIS.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.PODPIS.name} component={FInput} /></td>
       </tr>
       ]);
 
@@ -75,26 +76,26 @@ class ClaimantData extends React.Component {
     const KVART = isFL 
       ? ([
           <td key='kvFl1'>{M.KVART.label}</td>,
-          <td key='kvFl2'><Field name={M.KVART.name} component={FInput} /></td>
+          <td key='kvFl2'><Field disabled={disabled} name={M.KVART.name} component={FInput} /></td>
         ])
       : ([
           <td key='kvUl1'>{M.OFFICE.label}</td>,
-          <td key='kvUl2'><Field name={M.OFFICE.name} component={FInput} /></td>
+          <td key='kvUl2'><Field disabled={disabled} name={M.OFFICE.name} component={FInput} /></td>
         ]);
 //
 
     const PREDST = isPred ? [
        <tr key='flPredFam'>
         <td>{M.PRED_FAM.label}</td>
-        <td colSpan='3'><Field name={M.PRED_FAM.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.PRED_FAM.name} component={FInput} /></td>
       </tr>,
       <tr key='flPredName'>
         <td>{M.PRED_NAME.label}</td>
-        <td colSpan='3'><Field name={M.PRED_NAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.PRED_NAME.name} component={FInput} /></td>
       </tr>,
       <tr key='flPredSurname'>
         <td>{M.PRED_SURNAME.label}</td>
-        <td colSpan='3'><Field name={M.PRED_SURNAME.name} component={FInput} /></td>
+        <td colSpan='3'><Field disabled={disabled} name={M.PRED_SURNAME.name} component={FInput} /></td>
       </tr>]
     : null ;
 
@@ -106,63 +107,68 @@ class ClaimantData extends React.Component {
             <table>
               <tbody>
                 <tr key='flSurname'>
-                  <td colSpan='2'><Field name={M.ZAJAV_LIC.name} component={FRadio} options={zajavOptions} /></td>
+                  <td colSpan='2'><Field disabled={disabled} name={M.ZAJAV_LIC.name} component={FRadio} options={zajavOptions} /></td>
                 </tr>
                 {ZAJAV_SOURCE}
 
                 <tr key='flPred'>
                   <td>{M.PRED.label}</td>
-                  <td colSpan='3'><Field name={M.PRED.name} component={FCheckbox} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.PRED.name} component={FCheckbox} /></td>
                 </tr>
                 {PREDST}
 
                 <tr>
                   <td>{M.PHONE.label}</td>
-                  <td colSpan='3'><Field name={M.PHONE.name} component={FInput} mask={phoneMask} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.PHONE.name} component={FInput} mask={phoneMask} /></td>
                 </tr>
                 <tr>
                   <td>{M.EMAIL.label}</td>
-                  <td colSpan='3'><Field name={M.EMAIL.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.EMAIL.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.REGION.label}</td>
-                  <td colSpan='3'><Field name={M.REGION.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.REGION.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.RAYON.label}</td>
-                  <td colSpan='3'><Field name={M.RAYON.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.RAYON.name} component={FInput} /></td>
                 </tr>
 
                 <tr>
                   <td>{M.NPUNKT.label}</td>
-                  <td colSpan='3'><Field name={M.NPUNKT.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.NPUNKT.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.STREET.label}</td>
-                  <td colSpan='3'><Field name={M.STREET.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.STREET.name} component={FInput} /></td>
                 </tr>
 
                 <tr>
                   <td>{M.DOM.label}</td>
-                  <td><Field name={M.DOM.name} component={FInput} /></td>
+                  <td><Field disabled={disabled} name={M.DOM.name} component={FInput} /></td>
                   <td>{M.KORPUS.label}</td>
-                  <td><Field name={M.KORPUS.name} component={FInput} /></td>
+                  <td><Field disabled={disabled} name={M.KORPUS.name} component={FInput} /></td>
                 </tr>
                 <tr>
                   <td>{M.STR.label}</td>
-                  <td><Field name={M.STR.name} component={FInput} /></td>
+                  <td><Field disabled={disabled} name={M.STR.name} component={FInput} /></td>
                   {KVART}
                 </tr>
                 <tr>
                   <td>{M.PINDEX.label}</td>
-                  <td colSpan='3'><Field name={M.PINDEX.name} component={FInput} /></td>
+                  <td colSpan='3'><Field disabled={disabled} name={M.PINDEX.name} component={FInput} /></td>
                 </tr>
               </tbody>
             </table>
 
             <div>
-              <button type="button" className="previous" onClick={prevPage}>Previous</button>
-              <button type="submit" onClick={nextPage}>Submit</button>
+              {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage}>Previous</button>
+                  <button type="submit" onClick={nextPage}>Submit</button>
+                </div>)
+            }
             </div>
           </form>
         </div>

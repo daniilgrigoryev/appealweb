@@ -9,8 +9,10 @@ import {EPicker,FPicker} from '../element2rform/picker.js'
 import {ERadio,FRadio} from '../element2rform/radio.js'
 import * as V from '../../../validators'
 
+const header = 'Ejs 2 reduxF test';
+
 const TestElement2RF = props => {
-  const { handleSubmit, pristine, nextPage, prevPage, submitting } = props
+  const { handleSubmit, pristine, nextPage, prevPage, submitting,disabled } = props
   
   const fields = [
     /*{ 
@@ -32,7 +34,7 @@ const TestElement2RF = props => {
   ].map(x=>(x.type=x.type||'text',x));
 
 
-  const CONTENT = fields.map((f)=><tr key={f.name}><td>{f.label}</td><td><Field name={f.name} component={FInput} className='zzz22' validate={[V.required]} /></td></tr>) //
+  const CONTENT = fields.map((f)=><tr key={f.name}><td>{f.label}</td><td><Field disabled={disabled} name={f.name} component={FInput} className='zzz22' validate={[V.required]} /></td></tr>) //
   const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
  
   const radioOptions = [
@@ -55,43 +57,43 @@ const TestElement2RF = props => {
           {CONTENT}
           <tr>
             <td>ac</td>
-            <td><Field  name='autocompl' placeholder='123' key='2344' component={FAutocomplete} validate={[V.required]} /></td>
+            <td><Field disabled={disabled}  name='autocompl' placeholder='123' key='2344' component={FAutocomplete} validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>телефон с маской</td>
-            <td><Field component={FInput} placeholder='123' key='phone' className='phone22' name='phonemask' mask={phoneMask} validate={[V.required]} /></td>
+            <td><Field disabled={disabled} component={FInput} placeholder='123' key='phone' className='phone22' name='phonemask' mask={phoneMask} validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>чекбокс</td>
-            <td><Field component={FCheckbox} name='checkbox' key='chch' checked/></td>
+            <td><Field disabled={disabled} component={FCheckbox} name='checkbox' key='chch' checked/></td>
           </tr>
            <tr>
             <td>свитч</td>
-            <td><Field component={FSwitch} name='switch' /></td>
+            <td><Field disabled={disabled} component={FSwitch} name='switch' /></td>
           </tr>
           <tr>
             <td>селект</td>
-            <td><Field component={FSelect} name='select' dataKey='123' placeholder='Select' validate={[V.required]} /></td>
+            <td><Field disabled={disabled} component={FSelect} name='select' dataKey='123' placeholder='Select' validate={[V.required]} /></td>
           </tr>
           <tr>
             <td>время</td>
-            <td><Field component={FPicker} name='timepicker' timepicker='+' placeholder='timepicker' validate={[V.required]}   /></td>
+            <td><Field disabled={disabled} component={FPicker} name='timepicker' timepicker='+' placeholder='timepicker' validate={[V.required]}   /></td>
             <td><EPicker timepicker='+' /></td>
           </tr>
 
           <tr>
             <td>дата</td>
-            <td><Field component={FPicker} name='datepicker' datepicker='+' placeholder='datepicker' validate={[V.required]} /></td>
+            <td><Field disabled={disabled} component={FPicker} name='datepicker' datepicker='+' placeholder='datepicker' validate={[V.required]} /></td>
             <td><EPicker datepicker='+' /></td>
           </tr>
           <tr>
             <td>датавремя</td>
-            <td><Field component={FPicker} name='datetimepicker' datetimepicker='+' placeholder='datetimepicker' validate={[V.required]}   /></td>
+            <td><Field disabled={disabled} component={FPicker} name='datetimepicker' datetimepicker='+' placeholder='datetimepicker' validate={[V.required]}   /></td>
             <td><EPicker datetimepicker='+' /></td>
           </tr>
           <tr>
             <td>радио</td>
-            <td><Field component={FRadio} name='radio' options={radioOptions} /></td>
+            <td><Field disabled={disabled} component={FRadio} name='radio' options={radioOptions} /></td>
             <td><ERadio options={radioOptions} /></td>
           </tr>
 

@@ -9,8 +9,10 @@ import {EPicker,FPicker} from '../element2rform/picker.js'
 import {EIshDocList,FIshDocList} from '../subForms/ishDocList.js'
 import mapping from './mapping.js'
 
+const header = 'Исходящие документы';
+
 const IshDocsData = props => {
-    const { handleSubmit, pristine, nextPage, prevPage, submitting, header } = props
+    const { handleSubmit, pristine, nextPage, prevPage, submitting, disabled } = props
     
     return (
        <div className='appealSection'>
@@ -18,11 +20,16 @@ const IshDocsData = props => {
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
 
-            <FieldArray name='ishDocsData' component={FIshDocList} />    
+            <FieldArray name='ishDocsData' component={FIshDocList} disabled={disabled} />    
 
             <div>
-              <button type="button" className="previous" onClick={prevPage}>Previous</button>
-              <button type="submit" onClick={nextPage} >Submit</button>
+              {disabled 
+              ? null 
+              : (<div>
+                  <button type="button" onClick={prevPage}>Previous</button>
+                  <button type="submit" onClick={nextPage}>Submit</button>
+                </div>)
+            }
             </div>
           </form>
         </div>
