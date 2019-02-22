@@ -12,6 +12,7 @@ import DecisionsList from '../editable/decisionsList.js'
 import CategoriesList from '../editable/categoriesList.js'
 import AppealCauseList from '../editable/appealCauseList.js'
 import TipDocList from '../editable/tipDocList.js'
+import Outgoing from '../outgoing/outgoing.js'
 
 const relocate = (newPath)=>{
   window.location.hash=('#/'+newPath);
@@ -24,6 +25,7 @@ export default function App(){
         <Switch>          
           <Route exact path='/'  component={Home} />
           <Route path='/appeal'  component={AppealWizard} />
+          <Route path='/outgoing'  component={Outgoing} />
           <Route path='/explore' component={AppealExplorer} />
           <Route path='/settings/fabulas' component={FabulasList} />
           <Route path='/settings/decisions' component={DecisionsList} />
@@ -78,6 +80,7 @@ class Layout  extends React.Component  {
             <Menu.Item index="">Главная</Menu.Item>
             <Menu.Item index="explore">Входящие обращения</Menu.Item>
             <Menu.Item index="appeal">Новое входящее</Menu.Item>
+            <Menu.Item index="outgoing">Новое исходящее</Menu.Item>
             <Menu.SubMenu index="" title="Справочники">
               <Menu.Item index="settings/fabulas">Фабулы</Menu.Item>
               <Menu.Item index="settings/decisions">Решения</Menu.Item>

@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
-import TestElement2RF from './appealContent/testElement2rf.js'
+import TestElement2RF from './appealContent/testElement2rf.js' 
 import OrganizationsData from './appealContent/organizationsData.js'
 import SummaryData from './appealContent/summaryData.js'
 import TopicsData from './appealContent/topicsData.js'
 import IshDocsData from './appealContent/ishDocsData.js'
 import ArchiveData from './appealContent/archiveData.js'
 
-import FullAppeal from './fullAppeal.js'
+import FullAppeal from './fullAppeal.js' 
 
 const NAVI = {
   testElements: {

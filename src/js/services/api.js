@@ -1,21 +1,20 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DESIGN'
+const MODE = 'PROD'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
 	'DEV_152': 'https://172.20.255.152:8443/AppealAPI/',
 	'DEV_47' : 'https://172.20.255.47:8443/AppealAPI/',
-	'PROD'   : '/'
+	'PROD'   : ''
 }
-
 
 const BASE_URL = URLS[MODE];
 AJ.setBase(BASE_URL)
 AJ.setMode(MODE)
 
 export function login(loginData){ 
-	if (MODE=='DESIGN'){ ;
+	if (MODE=='DESIGN'){
 		return new Promise((resolve)=>setTimeout(()=>resolve({data:{sessionID : 'a123',username : 'design'}}),1500))
 	}
 	return AJ.post('rest/login',loginData);
@@ -39,9 +38,7 @@ export function fetchAutocomplete(key,query){
 	      { "value": "vue-router", 	"property": "https://github.com/vuejs/vue-router" },
 	      { "value": "babel", 		"property": "https://github.com/babel/babel" }
 		]
-		setTimeout(()=>{
-			resolve(resp);
-		},100);
+		setTimeout(()=>resolve(resp),100);
 	});
 }
 
@@ -68,9 +65,7 @@ export function fetchSelect(key){
 	      { "value": "Svue-router", "property": "Shttps://github.com/vuejs/vue-router" },
 	      { "value": "Sbabel", 		"property": "Shttps://github.com/babel/babel" }
 		]
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -127,9 +122,7 @@ export function fetchDecisions(){
 			{ value: 'Дано разъяснение 50% (надлежащее извещение)' , property: 'Дано разъяснение 50% (надлежащее извещение)' },
 			{ value: 'Предоставлена рассрочка' , property: 'Предоставлена рассрочка' }
 		]
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -161,9 +154,7 @@ export function fetchDecisionReasons(){
 			{ value: 'ТС зафиксировано в движении' , property: 'ТС зафиксировано в движении' },
 			{ value: 'Иное' , property: 'Иное' }
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -182,9 +173,7 @@ export function fetchDecisionBasis(){
 			{ value: 'Малозначительность' , property: 'Малозначительность' },
 			{ value: 'Неустранимые сомнения' , property: 'Неустранимые сомнения' }
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -204,9 +193,7 @@ export function fetchAppealSource(){
 			{"value":"Электронная приёмная","property":"Электронная приёмная"},
 			{"value":"Ящик для жалоб","property":"Ящик для жалоб"}
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -218,9 +205,7 @@ export function fetchAppealOut(){
 			{"value":"Лично","property":"Лично"},
 			{"value":"ЭДО","property":"ЭДО"}
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -233,9 +218,7 @@ export function fetchAppeaVidDoc(){
 			{"value":"Перенос контрольного срока","property":"Перенос контрольного срока"},
 			{"value":"Направление по принадлежности","property":"Направление по принадлежности"}
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -247,9 +230,7 @@ export function fetchAppeaVidDost(){
 			{"value":"ЭДО","property":"ЭДО"},
 			{"value":"Курьер","property":"Курьер"}
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -262,9 +243,7 @@ export function fetchQuestions(){
 			'тематика 4',
 			'тематика 5'
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});
 }
 
@@ -276,9 +255,7 @@ export function fetchDepartments(){
 			'отдел 3',
 			'отдел 4'
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});	
 }
 
@@ -324,16 +301,13 @@ export function fetchFabulasDoc(){
 			{id:36,label:'Уведомление_ПРОПУСК СРОКА_ФЛ',type:'Решение'},
 			{id:37,label:'Извещение о явке ФЛ',type:'Извещение о явке'}
 		];
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});	
 }
 
 export function fetchFabulasCategories(){
 	return new Promise((resolve,reject)=>{
 		const resp =[];
-
 		const size = Math.floor(Math.random()*4);
 
 		for (let i=0;i<size;i++){
@@ -342,16 +316,13 @@ export function fetchFabulasCategories(){
 			resp.push({id,label});
 		}
 
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});		
 }
 
 export function fetchFabulasThemes(){
 	return new Promise((resolve,reject)=>{
 		const resp =[];
-
 		const size = 2+Math.floor(Math.random()*8);
 
 		for (let i=0;i<size;i++){
@@ -362,8 +333,6 @@ export function fetchFabulasThemes(){
 			resp.push({category,fabulaTheme,decision,text});
 		}
 
-		setTimeout(()=>{
-			resolve(resp);
-		},10);
+		setTimeout(()=>resolve(resp),10);
 	});	
 }

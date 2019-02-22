@@ -6,8 +6,8 @@ import {Dialog,Button} from 'element-react'
 import * as F from '../table/fields.js'
 import {post} from '../../services/api.js'
 import {messageSet} from '../../actions/common.js'
-import {ESelect} from  '../appeal/element2rform/select.js'
-import {EInput} from '../appeal/element2rform/finput.js'
+import {ESelect} from  '../components/select.js'
+import {EInput} from '../components/finput.js'
 
 
 class FabulasDocSections extends React.Component {

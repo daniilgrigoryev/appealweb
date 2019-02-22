@@ -1,8 +1,8 @@
 import React from 'react'
-import {FInput, EInput} from '../element2rform/finput.js'
+import {FInput, EInput} from '../../components/finput.js'
 import { Field, reduxForm } from 'redux-form/immutable'
-import {ESelect,FSelect} from  '../element2rform/select.js'
-import {EPicker,FPicker} from '../element2rform/picker.js'
+import {ESelect,FSelect} from  '../../components/select.js'
+import {EPicker,FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
 import * as V from '../../../validators'
 

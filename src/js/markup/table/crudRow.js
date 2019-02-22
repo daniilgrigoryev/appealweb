@@ -4,13 +4,13 @@ import React from 'react'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Dialog,Button,Input,Select} from 'element-react'
-import {EInput} from '../appeal/element2rform/finput.js'
-import {EAutocomplete} from '../appeal/element2rform/fautocomplete.js'
-import {ECheckbox} from '../appeal/element2rform/checkbox.js'
-import {ESwitch} from '../appeal/element2rform/switch.js'
-import {ESelect} from  '../appeal/element2rform/select.js'
-import {EPicker} from '../appeal/element2rform/picker.js'
-import {ERadio} from '../appeal/element2rform/radio.js'
+import {EInput} from '../components/finput.js'
+import {EAutocomplete} from '../components/fautocomplete.js'
+import {ECheckbox} from '../components/checkbox.js'
+import {ESwitch} from '../components/switch.js'
+import {ESelect} from  '../components/select.js'
+import {EPicker} from '../components/picker.js'
+import {ERadio} from '../components/radio.js'
 
 export default class CrudRow extends React.Component {
 
