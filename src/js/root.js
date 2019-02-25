@@ -8,6 +8,7 @@ import 'element-theme-default';
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
 import {getSessionId,getMessages} from './selectors/common.js'
+import '@mapbox/assembly/dist/assembly.min.css'
 import '../scss/index.scss'
 
 import AppealWizard from './markup/appeal/appealWizard.js'
@@ -38,7 +39,7 @@ class Root extends React.Component  {
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){
-      //return <AppealWizard />
+      // return <AppealWizard />
       //return <Outgoing/>;
       //return <ListTest />
       //return <FabulasList/>;
