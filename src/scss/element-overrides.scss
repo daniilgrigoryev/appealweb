@@ -112,3 +112,8 @@
 .el-select-dropdown__item {
   font-size: $input-font-size;
 }
+
+
+.el-autocomplete-suggestion {
+  z-index: 10 !important;
+}

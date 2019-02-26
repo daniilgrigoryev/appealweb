@@ -1,5 +1,6 @@
 @import "variables";
 @import "element-overrides";
+@import "primefaces-overrides";
 
 body {
     //background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
@@ -85,6 +86,18 @@ div.tooltipWrap{
 	font-weight: 600;
 	letter-spacing: 0.2px;
 	line-height: 2;
+}
+
+.ap-txt-big {
+	font-size: 15px;
+	letter-spacing: 0.1px;
+	line-height: 1.3px;
+}
+
+.ap-txt-small {
+	font-size: 10px;
+	letter-spacing: 0.1px;
+	line-height: 1.2px;
 }
 
 // Стили элементов форм
