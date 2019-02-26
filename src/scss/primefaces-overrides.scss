@@ -1,6 +1,16 @@
 @import "variables";
 
 .p-datatable {
+  background: white;
+
+  .p-datatable-header, .p-datatable-footer {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: $color-input-placeholder !important;
+    background: transparent !important;
+    border: 1px solid $color-input-border !important;
+  }
+
   .p-datatable-tbody > tr:nth-child(2n) {
     background-color: initial !important;
   }
@@ -12,8 +22,8 @@
   .p-datatable-thead > tr > th {
     padding: 20px !important;
     text-align: left !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
     color: $color-input-placeholder !important;
     line-height: 26px !important;
     background: white !important;

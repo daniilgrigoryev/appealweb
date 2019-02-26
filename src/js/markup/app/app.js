@@ -1,8 +1,8 @@
 import './app.scss'
 import React from 'react'
-import { connect } from 'react-redux'
-import { BrowserRouter,HashRouter, Route, Switch, NavLink, Link,withRouter } from 'react-router-dom'
-import {Menu}  from 'element-react'
+import {connect} from 'react-redux'
+import {BrowserRouter, HashRouter, Route, Switch, NavLink, Link, withRouter} from 'react-router-dom'
+import {Menu, Layout, Button} from 'element-react'
 import {logoutRequest} from '../../actions/common.js'
 import {getSessionId} from '../../selectors/common.js'
 import AppealWizard from '../appeal/appealWizard.js'
@@ -13,92 +13,104 @@ import CategoriesList from '../editable/categoriesList.js'
 import AppealCauseList from '../editable/appealCauseList.js'
 import TipDocList from '../editable/tipDocList.js'
 import Outgoing from '../outgoing/outgoing.js'
+import burger from '../../../images/burger.svg'
 
-const relocate = (newPath)=>{
-  window.location.hash=('#/'+newPath);
+const relocate = (newPath) => {
+    window.location.hash = ('#/' + newPath);
 }
 
-export default function App(){
-  return (
-    <HashRouter>
-      <LayoutConnected>
-        <Switch>          
-          <Route exact path='/'  component={Home} />
-          <Route path='/appeal'  component={AppealWizard} />
-          <Route path='/outgoing'  component={Outgoing} />
-          <Route path='/explore' component={AppealExplorer} />
-          <Route path='/settings/fabulas' component={FabulasList} />
-          <Route path='/settings/decisions' component={DecisionsList} />
-          <Route path='/settings/categories' component={CategoriesList} />
-          <Route path='/settings/appeal_causes' component={AppealCauseList} />
-          <Route path='/settings/doc_types' component={TipDocList} />
-          <Route path='*' component={NotFoundPage} />
-        </Switch>        
-      </LayoutConnected>
-    </HashRouter>
-  ); //
+export default function App() {
+    return (
+        <HashRouter>
+            <LayoutConnected>
+                <Switch>
+                    <Route exact path='/' component={Home}/>
+                    <Route path='/appeal' component={AppealWizard}/>
+                    <Route path='/outgoing' component={Outgoing}/>
+                    <Route path='/explore' component={AppealExplorer}/>
+                    <Route path='/settings/fabulas' component={FabulasList}/>
+                    <Route path='/settings/decisions' component={DecisionsList}/>
+                    <Route path='/settings/categories' component={CategoriesList}/>
+                    <Route path='/settings/appeal_causes' component={AppealCauseList}/>
+                    <Route path='/settings/doc_types' component={TipDocList}/>
+                    <Route path='*' component={NotFoundPage}/>
+                </Switch>
+            </LayoutConnected>
+        </HashRouter>
+    ); //
 };
-
-
 
 
 const Home = () => {
-  return <h1>Главная страница. Тут может быть что-то. А может не быть.</h1>;
+    return <h1>Главная страница. Тут может быть что-то. А может не быть.</h1>;
 }; //
 
 
-const NotFoundPage = ({ match }) => {
-  const {url} = match;
-  return (
-    <div>
-      <h1>Неудача.</h1>
-      <p>Такой страницы тут нет</p>
-    </div>
-  );//
+const NotFoundPage = ({match}) => {
+    const {url} = match;
+    return (
+        <div>
+            <h1>Неудача.</h1>
+            <p>Такой страницы тут нет</p>
+        </div>
+    );//
 };
 
-class Layout  extends React.Component  {
+class LayoutMain extends React.Component {
 
-  render(){
-    const {children,dispatch,sessionId} = this.props;
-    
-    const onSelect = (newVal)=>{
-      if (newVal=='LOGOUT'){
-        relocate('');
-        dispatch(logoutRequest(sessionId));
-      } else {
-        relocate(newVal);
-      }
+    render() {
+        const {children, dispatch, sessionId} = this.props;
+
+        const onSelect = (newVal) => {
+            if (newVal == 'LOGOUT') {
+                relocate('');
+                dispatch(logoutRequest(sessionId));
+            } else {
+                relocate(newVal);
+            }
+        }
+
+        const stLogout = {'cursor': 'pointer'}
+        return (
+            <div className='w-full'>
+                <header className='ap-header'>
+                    <Layout.Row align='middle'>
+                        <Layout.Col span="4" className='flex-parent flex-parent--center-main flex-parent--center-cross mt3'>
+                            <Button type="text">
+                                <img src={burger} className='px12' alt="Переключение между модулями" />
+                            </Button>
+
+                            <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
+                        </Layout.Col>
+
+                        <Layout.Col span="20">
+                            <nav>
+                                <Menu defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={onSelect}>
+                                    <Menu.Item index="">Главная</Menu.Item>
+                                    <Menu.Item index="explore">Входящие обращения</Menu.Item>
+                                    <Menu.Item index="appeal">Новое входящее</Menu.Item>
+                                    <Menu.Item index="outgoing">Новое исходящее</Menu.Item>
+                                    <Menu.SubMenu index="" title="Справочники">
+                                        <Menu.Item index="settings/fabulas">Фабулы</Menu.Item>
+                                        <Menu.Item index="settings/decisions">Решения</Menu.Item>
+                                        <Menu.Item index="settings/categories">Категории</Menu.Item>
+                                        <Menu.Item index="settings/appeal_causes">Причины жалоб</Menu.Item>
+                                        <Menu.Item index="settings/doc_types">Типы документов</Menu.Item>
+                                    </Menu.SubMenu>
+                                    <Menu.Item index="LOGOUT">Выход</Menu.Item>
+                                </Menu>
+                            </nav>
+                        </Layout.Col>
+                    </Layout.Row>
+                </header>
+
+                <main>{children}</main>
+            </div>
+        ); //
     }
-
-    const stLogout={'cursor': 'pointer'}
-    return (
-      <div>
-        <header>
-        <nav>
-          <Menu defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={onSelect}>
-            <Menu.Item index="">Главная</Menu.Item>
-            <Menu.Item index="explore">Входящие обращения</Menu.Item>
-            <Menu.Item index="appeal">Новое входящее</Menu.Item>
-            <Menu.Item index="outgoing">Новое исходящее</Menu.Item>
-            <Menu.SubMenu index="" title="Справочники">
-              <Menu.Item index="settings/fabulas">Фабулы</Menu.Item>
-              <Menu.Item index="settings/decisions">Решения</Menu.Item>
-              <Menu.Item index="settings/categories">Категории</Menu.Item>
-              <Menu.Item index="settings/appeal_causes">Причины жалоб</Menu.Item>
-              <Menu.Item index="settings/doc_types">Типы документов</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item index="LOGOUT">Выход</Menu.Item>
-          </Menu>
-        </nav>
-      </header>
-        <main>{children}</main>
-      </div>
-    ); //
-  }
 }
 
-const LayoutConnected = withRouter(connect((state,props) => {
-  const sessionId = getSessionId(state);
-  return {...props,sessionId};
-})(Layout));
+const LayoutConnected = withRouter(connect((state, props) => {
+    const sessionId = getSessionId(state);
+    return {...props, sessionId};
+})(LayoutMain));

@@ -38,6 +38,10 @@
 }
 
 
+.el-submenu__icon-arrow {
+  font-size: 8px !important;
+}
+
 
 .el-switch {
   .el-switch__label {
@@ -84,7 +88,6 @@
 }
 
 .el-button {
-  background-color: white;
   border-color: $color-input-border-blue;
   color: $color-blue-selected;
   text-transform: uppercase;
@@ -107,6 +110,7 @@
 .el-textarea__inner {
   font-size: $input-font-size;
   color: $color-input-text;
+  border-color: $color-input-border;
 }
 
 .el-select-dropdown__item {
@@ -116,4 +120,18 @@
 
 .el-autocomplete-suggestion {
   z-index: 10 !important;
+}
+
+.el-menu {
+  background: transparent;
+}
+
+.el-card {
+  border: 1px solid $box-border-color !important;
+  box-shadow: none !important;
+}
+
+.el-card__header {
+  padding: 0 20px !important;
+  border-bottom-color: $color-input-border;
 }
