@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
+
 import {get,post,del,put} from '../../services/ajax.js'
 
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-export default class AppealTable extends Component {
+export default class AppealTable extends React.Component {
 
 	 constructor(props) {
         super(props);
@@ -20,18 +21,28 @@ export default class AppealTable extends Component {
             page: 0, 
             pageCount: 0,
             selected: []
-        }
+        };
 
         this.onPage = this.onPage.bind(this);
+        this.getSelected = this.getSelected.bind(this);
 	}
 
 	componentDidMount(){
+		const {registerGetSelected} = this.props;
 		const {rows,first,page,pageCount} = this.state;
 		this.onPage({rows, first, page, pageCount});
+		if (registerGetSelected){
+			registerGetSelected(this.getSelected);
+		}
 	}
 
 	toSuitableVal(table) {
 		return table.rows.map(x => _.zipObject(this.state.table.columns.map(y => y.label), x.map(y=>y.value)))
+	}
+
+	getSelected(){
+		const {selected} =  this.state;
+		return [...selected];
 	}
 
 	onPage(event) {
@@ -40,7 +51,7 @@ export default class AppealTable extends Component {
 		post('rest/select',data).then(x=>{
 			const s = Object.assign({},this.state,{table:x.data},event);
 			this.setState(s);			
-		})
+		});
     }
 
 	render() {

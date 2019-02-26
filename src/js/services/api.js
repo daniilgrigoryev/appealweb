@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'PROD'
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -53,6 +53,8 @@ export function fetchSelect(key){
 		case 'fabulasDoc': 	  return fetchFabulasDoc();
 		case 'fabulasThemes': 	  return fetchFabulasThemes();
 		case 'fabulasCategories': return fetchFabulasCategories();
+		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
+		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
 	}
 
 	return new Promise((resolve,reject)=>{
@@ -300,6 +302,28 @@ export function fetchFabulasDoc(){
 			{id:35,label:'Решение - ФЛ_Фотофиксация',type:'Решение'},
 			{id:36,label:'Уведомление_ПРОПУСК СРОКА_ФЛ',type:'Решение'},
 			{id:37,label:'Извещение о явке ФЛ',type:'Извещение о явке'}
+		];
+		setTimeout(()=>resolve(resp),10);
+	});	
+}
+
+
+export function fetchDecisionsRegionalCourt(){
+	return new Promise((resolve,reject)=>{
+		const resp =[
+			"постановление оставлено без изменения, жалоба не удовлетворена",
+			"постановление отменено, прекращено производство по делу",
+			"постановление отменено, дело возвращено на новое рассмотрение"
+		];
+		setTimeout(()=>resolve(resp),10);
+	});	
+}
+
+export function fetchDecisionsMoscowCourt(){
+	return new Promise((resolve,reject)=>{
+		const resp =[
+			"МАДИ",
+			"заявитель"
 		];
 		setTimeout(()=>resolve(resp),10);
 	});	

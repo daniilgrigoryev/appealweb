@@ -4,9 +4,9 @@ import { Dialog,Button } from 'element-react'
 import * as _ from 'lodash'
 
 import DocLinker from './docLinker.js'
-import {FInput, EInput}  from '../../components/finput.js'
-import {ESelect,FSelect} from  '../../components/select.js'
-import {EPicker,FPicker} from '../../components/picker.js'
+import {FInput, EInput}  from '../../../components/finput.js'
+import {ESelect,FSelect} from  '../../../components/select.js'
+import {EPicker,FPicker} from '../../../components/picker.js'
 
 const getRow = (npost,desc,docId)=>{
   return {
@@ -101,7 +101,7 @@ class IshLinkInner extends React.Component {
 }
 
 export default reduxForm({
-  form: 'outgoing', // <------ same form name
+  form: 'letter_incoming', // <------ same form name
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate

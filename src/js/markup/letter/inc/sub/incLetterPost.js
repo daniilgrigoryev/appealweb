@@ -1,10 +1,10 @@
 import React from 'react'
-import {FInput, EInput} from '../../components/finput.js'
-import { Field, reduxForm } from 'redux-form/immutable'
-import {ESelect,FSelect} from  '../../components/select.js'
-import {EPicker,FPicker} from '../../components/picker.js'
+import { Field,FieldArray, reduxForm } from 'redux-form/immutable'
+import {FInput, EInput}  from '../../../components/finput.js'
+import {ESelect,FSelect} from  '../../../components/select.js'
+import {EPicker,FPicker} from '../../../components/picker.js'
 import * as _ from 'lodash'
-import * as V from '../../../validators'
+
 
 const getRow = (apn,date)=>{
   return {
@@ -14,11 +14,8 @@ const getRow = (apn,date)=>{
   }
 }
 
-// Element component
-export class EApnList extends React.Component {
-
-  render() {
-    const {fields,disabled} = this.props
+const postRows = (props)=>{
+    const {fields,disabled} = props;
     const add = ()=>fields.push(getRow());
     const rmv = (ind)=>()=>fields.remove(ind);
     const inf = (ind)=>()=>fields.remove(ind);
@@ -33,17 +30,32 @@ export class EApnList extends React.Component {
       <table>
         <thead>
           <tr>
-            <th>№ постановления</th>
+            <th>№</th>
             <th>Дата</th>
             <th colSpan='2'>
               {disabled ? null : <button type="button" onClick={add} title='Добавить № постановления'>+</button>}
             </th>
           </tr>
         </thead>
-        <tbody>
-          {ROWS}
-        </tbody>
+        <tbody>{ROWS}</tbody>
       </table>
     );
-  }//
-}
+}//
+
+const  IncLetterPost = props => {
+    const {disabled} = props;
+    return (
+    	<div style={{background:'#ddeaff'}}>
+    		<div>
+    			<h2>Постановления</h2>
+    		</div>
+    		<FieldArray component={postRows} name='posts' disabled={disabled} />
+    	</div>);
+} //
+
+export default reduxForm({
+  form: 'letter_incoming', // <------ same form name
+  destroyOnUnmount: false, // <------ preserve form data
+  forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
+  //validate
+})(IncLetterPost)
