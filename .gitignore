@@ -5,13 +5,11 @@ node_modules
 /.git/
 package-lock.json
 yarn-error.log
-<<<<<<< HEAD
-
 
 dist/
-=======
+
 /src/js/markup/appeal/сюдаможнолезть
 /src/js/markup/letter/inc/сюдаможнолезть
 /src/js/markup/outgoing/сюдаможнолезть
 /npm-debug.log
->>>>>>> origin/mapping
+origin/mapping
