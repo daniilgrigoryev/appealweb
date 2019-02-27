@@ -11,7 +11,7 @@ import OutLinkInner from './sub/outLinksInner.js'
 import OutLinkScan from './sub/outLinksScan.js'
 
 
-export default class IncomingLetter extends React.Component {
+export default class OutcomingLetter extends React.Component {
 
   render() {  
   	return(

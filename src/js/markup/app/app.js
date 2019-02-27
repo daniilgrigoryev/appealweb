@@ -13,6 +13,9 @@ import CategoriesList from '../editable/categoriesList.js'
 import AppealCauseList from '../editable/appealCauseList.js'
 import TipDocList from '../editable/tipDocList.js'
 import Outgoing from '../outgoing/outgoing.js'
+import OutcomingLetter from '../letter/out/outcomingLetter.js'
+import IncomingLetter from '../letter/inc/incomingLetter.js'
+
 import burger from '../../../images/burger.svg'
 
 const relocate = (newPath) => {
@@ -25,9 +28,11 @@ export default function App() {
             <LayoutConnected>
                 <Switch>
                     <Route exact path='/' component={Home}/>
-                    <Route path='/appeal' component={AppealWizard}/>
-                    <Route path='/outgoing' component={Outgoing}/>
+                    <Route path='/appeal_incoming' component={AppealWizard}/>
+                    <Route path='/appeal_outgoing' component={Outgoing}/>
                     <Route path='/explore' component={AppealExplorer}/>
+                    <Route path='/letter_incoming' component={IncomingLetter}/>
+                    <Route path='/letter_outgoing' component={OutcomingLetter}/>
                     <Route path='/settings/fabulas' component={FabulasList}/>
                     <Route path='/settings/decisions' component={DecisionsList}/>
                     <Route path='/settings/categories' component={CategoriesList}/>
@@ -87,10 +92,21 @@ class LayoutMain extends React.Component {
                             <nav>
                                 <Menu defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={onSelect}>
                                     <Menu.Item index="">Главная</Menu.Item>
-                                    <Menu.Item index="explore">Входящие обращения</Menu.Item>
-                                    <Menu.Item index="appeal">Новое входящее</Menu.Item>
-                                    <Menu.Item index="outgoing">Новое исходящее</Menu.Item>
-                                    <Menu.SubMenu index="" title="Справочники">
+                                  
+                                    <Menu.SubMenu index="1" title="Обращения">
+                                        <Menu.Item index="appeal_incoming">Новое входящее</Menu.Item>
+                                        <Menu.Item index="appeal_outgoing">Новое исходящее</Menu.Item>
+                                        <Menu.Item index="explore">Поиск</Menu.Item>
+                                    </Menu.SubMenu>
+
+
+                                    <Menu.SubMenu index="2" title="Служебные письма">
+                                        <Menu.Item index="letter_incoming">Новое входящее</Menu.Item>
+                                        <Menu.Item index="letter_outgoing">Новое исходящее</Menu.Item>
+                                        <Menu.Item index="explore">Поиск</Menu.Item>
+                                    </Menu.SubMenu>
+
+                                    <Menu.SubMenu index="3" title="Справочники">
                                         <Menu.Item index="settings/fabulas">Фабулы</Menu.Item>
                                         <Menu.Item index="settings/decisions">Решения</Menu.Item>
                                         <Menu.Item index="settings/categories">Категории</Menu.Item>
