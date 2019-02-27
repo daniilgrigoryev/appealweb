@@ -23,10 +23,10 @@ const OrganizationsData = props => {
       <div className='appealSection'>
           <div className='appealContent'>
           <form onSubmit={handleSubmit}>
-            <h2>Направлено из организации</h2>            
+            <h2>{M.SENT_FROM.label}</h2>            
             <FieldArray name='organizationsFrom' component={EOrganizationFrom} disabled={disabled} />                
 
-            <h2>На контроле в организации</h2>            
+            <h2>{M.UNDER_CONTROL.label}</h2>            
             <FieldArray name='organizationsControl' component={EOrganizationControl} disabled={disabled} />    
 
             <div>

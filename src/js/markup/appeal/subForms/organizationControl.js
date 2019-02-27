@@ -4,6 +4,9 @@ import { Field, reduxForm } from 'redux-form/immutable'
 import {EPicker,FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
 import * as V from '../../../validators'
+import mapping from '../appealContent/mapping.js' 
+
+const M = mapping.organizationControl;
 
 const getRow = (name,num,date,control_date)=>{
   return {
@@ -23,10 +26,10 @@ export class EOrganizationControl extends React.Component {
     const add = ()=>fields.push(getRow());
     const rmv = (ind)=>()=>fields.remove(ind);
     const ROWS = fields.map((x,i)=>(<tr key={i} >
-            <td><Field disabled={disabled} component={FInput} name={x+'name'} value={x.name}  /></td>
-            <td><Field disabled={disabled} component={FInput} name={x+'num'}  value={x.num}  /></td>
-            <td><Field disabled={disabled} component={FPicker} name={x+'date'} value={x.date} datepicker='+' /></td>
-            <td><Field disabled={disabled} component={FPicker} name={x+'control_date'} value={x.control_date} datepicker='+' /></td>
+            <td><Field disabled={disabled} component={FInput} name={x+M.ORG_NAME.name} value={x[M.ORG_NAME.name]}  /></td>
+            <td><Field disabled={disabled} component={FInput} name={x+M.ISH_NUM.name}  value={x[M.ISH_NUM.name]}  /></td>
+            <td><Field disabled={disabled} component={FPicker} name={x+M.ISH_DATE.name} value={x[M.ISH_DATE.name]} datepicker='+' /></td>
+            <td><Field disabled={disabled} component={FPicker} name={x+M.CONTR_DATE.name} value={x[M.CONTR_DATE.name]} datepicker='+' /></td>
             <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>
           </tr>)); //
 
@@ -34,10 +37,10 @@ export class EOrganizationControl extends React.Component {
       <table>
         <thead>
           <tr>
-            <th>Наименование</th>
-            <th>Исх. номер</th>
-            <th>Исх. дата</th>
-            <th>Дата контроля</th>
+            <th>{M.ORG_NAME.label}</th>
+            <th>{M.ISH_NUM.label}</th>
+            <th>{M.ISH_DATE.label}</th>
+            <th>{M.CONTR_DATE.label}</th>
             <th>{disabled ? null : <button type="button" onClick={add} title='Добавить организацию'>+</button>}</th>
           </tr>
         </thead>

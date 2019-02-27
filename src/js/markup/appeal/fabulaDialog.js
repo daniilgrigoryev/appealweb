@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import {post} from '../../services/ajax.js'
 import {fetchSelect,fetchFabulasThemesMadi} from '../../services/api.js'
 
+import mapping from './appealContent/mapping.js'
+const M = mapping.fabulaDialog;
+
 const st = {
 	width: '200px',
     display: 'inline-block'
@@ -106,7 +109,7 @@ class FabulaDialog extends React.Component {
 	        	<table>
 	        		<tbody>
 		        		<tr>
-		        			<td>Документ</td>
+		        			<td>{M.DOCUMENT.label}</td>
 		        			<td>
 		        				<Select value={this.state.doc} onChange={this.setDoc.bind(this)} >
 									{ docList.map(el =>(<Select.Option key={el.id} label={el.label} value={el}  />)) }
@@ -114,11 +117,11 @@ class FabulaDialog extends React.Component {
 							</td>
 		        		</tr>
 		        		<tr>
-		        			<td>Тип заявителя</td>
+		        			<td>{M.ZAJAV_TYPE.label}</td>
 		        			<td>{zajav=='UL'?'ЮЛ':'ФЛ'}</td>
 		        		</tr>
 		        		<tr>
-		        			<td>Файл шаблона</td>
+		        			<td>{M.TEMPL_FILE.label}</td>
 		        			<td>{!doc ?null :(<a href={'fabulas/'+doc.fileName} >{doc.fileName}</a>)}</td>
 		        		</tr>
 		        		<tr>
@@ -159,7 +162,7 @@ class FabulaDialog extends React.Component {
 					<table>
 						<tbody>
 							<tr>
-								<td>Фабула</td>
+								<td>{M.FABULA.label}</td>
 								<td>
 									<Select value={this.state.cat} onChange={this.setTheme.bind(this)}>
 									 	{ (themeList||[]).map(el =>(<Select.Option key={el.fabulaTheme} label={el.fabulaTheme} value={el} />)) }
@@ -167,7 +170,7 @@ class FabulaDialog extends React.Component {
 								</td>
 							</tr>
 							<tr>
-								<td>Решение</td>
+								<td>{M.DECISION.label}</td>
 								<td>{theme ? theme.decision : ''}</td>
 							</tr>
 							<tr>

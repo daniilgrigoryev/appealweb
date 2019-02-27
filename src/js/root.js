@@ -42,7 +42,7 @@ class Root extends React.Component {
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){
-      return <IncomingLetter/>;
+    //  return <IncomingLetter/>;
       //return <DocLinker />
       //return <AppealWizard />
       //return <Outgoing/>;

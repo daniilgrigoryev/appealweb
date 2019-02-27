@@ -28,7 +28,7 @@ const rootReducer = function(state, action){
 
 const initialState = Immutable.fromJS({
     general : {
-      system: 'A',
+      system: 'M',
       messagesQueue: [],
       user : {
         username : '',
