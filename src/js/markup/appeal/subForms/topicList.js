@@ -11,6 +11,8 @@ import * as _ from 'lodash'
 import mapping from '../appealContent/mapping.js'
 import {fields,categories,matrix} from './categories.js'
 
+const M = mapping.topicList;
+
 const data2str=(data)=>(data ? data.toISOString() : '');
 const stopPg  =(cb,id)=>(evt)=>{
     evt.stopPropagation();
@@ -27,13 +29,12 @@ const OFRow = (props)=>{
   
   const onXpd = ()=>onExpand(id);
   const P = value;
-  const M = mapping.topicList;
 
   const SYS = 'M'; 
   const FF = fields, FFF = FF.map(x=>x.field), CC = categories, CCF = categories.filter(x=>x), MM = matrix;
   
   const CCC = CC.filter(x=>x && x.sys.indexOf(SYS)>-1).map(x=>x.text);
-  const cIndex = CCC.indexOf(P.category);
+  const cIndex = CCC.indexOf(P[M.CAT.name]);
   const cRow = MM[cIndex];
   const cif = (field, el)=>{
     if (!cRow){
@@ -47,23 +48,23 @@ const OFRow = (props)=>{
     const collapsed = (
           <tr key={id} onClick={onXpd}>
             <td>{ind+1}</td>
-            <td>{props.getValue(P.category)}</td>
-            <td>{P.post_n}</td>
-            <td>{data2str(P.post_date)}</td>
+            <td>{props.getValue(P[M.CAT.name])}</td>
+            <td>{P[M.POST_N.name]}</td>
+            <td>{data2str(P[M.POST_DATE.name])}</td>
             <td>{disabled ? null : <button type='button' onClick={onInf}>i</button>}</td>
             <td>{disabled ? null : <button type='button' onClick={onRmv}>x</button>}</td>
           </tr>);
     return [collapsed];
   } //
 
-  const PRIS_UCH = (!P.UCH_PRIS) ? null : [
+  const PRIS_UCH = (!P[M.UCH_PRIS.name]) ? null : [
     <tr key='pu1' >
-      <td>Дата рассмотрения</td>
+      <td>{M.RASSMOTR_DATE.label}</td>
       <td><Field disabled={disabled} component={FPicker} name={field+M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datepicker='+' /></td>
     </tr>
     ,
     <tr key='pu2' >
-      <td>Время рассмотрения</td>
+      <td>{M.RASSMOTR_TIME.label}</td>
       <td><Field disabled={disabled} component={FPicker} name={field+M.RASSMOTR_TIME.name} value={P[M.RASSMOTR_TIME.name]} timepicker='+' /></td>
     </tr>
     ,
@@ -74,9 +75,9 @@ const OFRow = (props)=>{
   const editable = [
     <tr key={id+'e1'}>
       <td>{ind+1}</td>
-      <td><Field disabled={disabled} component={FSelect} name={field+'category'} placeholder='Категория' data={CCC} value={P.category} /></td>
-      <td><Field disabled={disabled} component={FInput}  name={field+'post_n'}    value={P.post_n}     /></td>
-      <td><Field disabled={disabled} component={FPicker} name={field+'post_date'} value={P.post_date}  datepicker='+' /></td>
+      <td><Field disabled={disabled} component={FSelect} name={field+M.CAT.name} placeholder={M.CAT.label} data={CCC} value={P[M.CAT.name]} /></td>
+      <td><Field disabled={disabled} component={FInput}  name={field+M.POST_N.name}    value={P[M.POST_N.name]}     /></td>
+      <td><Field disabled={disabled} component={FPicker} name={field+M.POST_DATE.name} value={P[M.POST_DATE.name]}  datepicker='+' /></td>
       <td>{disabled ? null : <button type='button' onClick={onInf}>i</button>}</td>
       <td>{disabled ? null : <button type='button' onClick={onRmv}>x</button>}</td>
     </tr>
@@ -86,11 +87,11 @@ const OFRow = (props)=>{
         <table>
           <tbody>
             <tr>
-              <td>Связанные документы</td>
-              <td>{P.docs}</td>
+              <td>{M.REL_DOCS.label}</td>
+              <td>{P[M.REL_DOCS.name]}</td>
             </tr>
             <tr>
-              <td>Необходимо присутствие участника</td>
+              <td>{M.UCH_PRIS.label}</td>
               <td><Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field+M.UCH_PRIS.name} /></td>
             </tr>
             {PRIS_UCH}
@@ -271,9 +272,9 @@ class ETopicList extends React.Component {
         <thead>
           <tr>
             <th>№</th>
-            <th>Категория</th>
-            <th>№ постановления</th>
-            <th>Дата</th>
+            <th>{M.CAT.label}</th>
+            <th>{M.POST_N.label}</th>
+            <th>{M.POST_DATE.label}</th>
             <th></th>
             <th></th>
           </tr>

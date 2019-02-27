@@ -22,19 +22,19 @@ const TopicsData = props => {
        <div className='appealSection'>
           <h2>{header}</h2>
           <div className='appealContent'>
-          <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
-            <FieldArray name='topicsData' component={FTopicList} disabled={disabled} />    
+              <FieldArray name='topicsData' component={FTopicList} disabled={disabled} />    
 
-            <div>
-            {disabled 
-              ? null 
-              : (<div>
-                  <button type="button" onClick={prevPage.bind(isMadi)}>Previous</button>
-                  <button type="submit" onClick={nextPage.bind(isMadi)}>Submit</button>
-                </div>)
-            }
-            </div>
+              <div>
+              {disabled 
+                ? null 
+                : (<div>
+                    <button type="button" onClick={prevPage.bind(isMadi)}>Previous</button>
+                    <button type="submit" onClick={nextPage.bind(isMadi)}>Submit</button>
+                  </div>)
+              }
+              </div>
           </form>
         </div>
       </div>

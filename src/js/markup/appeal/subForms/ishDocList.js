@@ -8,6 +8,9 @@ import {ESelect,FSelect} from  '../../components/select.js'
 import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 import FabulaDialog from '../fabulaDialog.js'
+import mapping from '../appealContent/mapping.js' 
+
+const M = mapping.ishDocList;
 
 const data2str=(data)=>(data ? data.toISOString() : '');
 const stopPg = (cb,id)=>(evt)=>{
@@ -41,11 +44,11 @@ const OFRow = (props)=>{
   if (!expanded){
     const collapsed = (
           <tr key={id} onClick={onXpd}>
-            <td>{P.doc_target}</td>
-            <td>{P.ish_num}</td>
-            <td>{data2str(P.ish_date)}</td>
-            <td>{P.podpisal}</td>
-            <td>{P.status}</td>
+            <td>{P[M.DOC_TARGET.name]}</td>
+            <td>{P[M.ISH_NUM.name]}</td>
+            <td>{data2str(P[M.ISH_DATE.name])}</td>
+            <td>{P[M.PODPISAL.name]}</td>
+            <td>{P[M.STATUS.name]}</td>
             <td>
               {disabled ? null : <button onClick={onRmv}>x</button>}
             </td>
@@ -55,11 +58,11 @@ const OFRow = (props)=>{
 
   const editable = [
     <tr key={id+'e1'}>
-            <td><Field disabled={disabled} component={FInput}  name={field+'doc_target'}    value={P.doc_target}     /></td>
-            <td><Field disabled={disabled} component={FInput}  name={field+'ish_num'}       value={P.ish_num}        /></td>
-            <td><Field disabled={disabled} component={FPicker} name={field+'ish_date'}      value={P.ish_date}       datepicker='+' /></td>
-            <td><Field disabled={disabled} component={FInput}  name={field+'podpisal'}      value={P.podpisal}       /></td>
-            <td>{P.status}</td>
+            <td><Field disabled={disabled} component={FInput}  name={field+M.DOC_TARGET.name}    value={P[M.DOC_TARGET.name]}     /></td>
+            <td><Field disabled={disabled} component={FInput}  name={field+M.ISH_NUM.name}       value={P[M.ISH_NUM.name]}        /></td>
+            <td><Field disabled={disabled} component={FPicker} name={field+M.ISH_DATE.name}      value={P[M.ISH_DATE.name]}       datepicker='+' /></td>
+            <td><Field disabled={disabled} component={FInput}  name={field+M.PODPISAL.name}      value={P[M.PODPISAL.name]}       /></td>
+            <td>{P[M.STATUS.name]}</td>
             <td>
               {disabled ? null : <button type='button' onClick={onRmv}>x</button>}
             </td>
@@ -67,36 +70,36 @@ const OFRow = (props)=>{
     ,
     <tr key={id+'e2'}>
       <td colSpan='6'>
-        <h1>Детальная информация</h1>
+        <h1>{M.DETAIL_INF.label}</h1>
         <table>
           <tbody>
             <tr>
-              <td>Связанная тема</td>
-              <td><Field disabled={disabled} component={FSelect}  name={field+'related_topic'}      value={P.related_topic}    dataKey='related_topic' /></td>
-              <td>Подпись с ЭП</td>
-              <td><Field disabled={disabled} component={FCheckbox}  name={field+'crypto_signature'} value={P.crypto_signature}    /></td>
+              <td>{M.REL_TOPIC.label}</td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+M.REL_TOPIC.name}      value={P[M.REL_TOPIC.name]}    dataKey={M.REL_TOPIC.key} /></td>
+              <td>{M.CRYPTO_SIGN.label}</td>
+              <td><Field disabled={disabled} component={FCheckbox}  name={field+M.CRYPTO_SIGN.name}  value={P[M.CRYPTO_SIGN.name]}    /></td>
             </tr>
             <tr>
-              <td>Вид документа</td>
-              <td><Field disabled={disabled} component={FSelect}  name={field+'doc_vid'}        value={P.doc_vid}     dataKey='doc_vid' /></td>
-              <td>Способ доставки</td>
-              <td><Field disabled={disabled} component={FSelect}  name={field+'delivery_type'}  value={P.delivery_type} dataKey='delivery_type' /></td>
+              <td>{M.DOC_VID.label}</td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+M.DOC_VID.name}        value={P[M.DOC_VID.name]}     dataKey={M.DOC_VID.key} /></td>
+              <td>{M.DELIV_TYPE.label}</td>
+              <td><Field disabled={disabled} component={FSelect}  name={field+M.DELIV_TYPE.name}  value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key} /></td>
             </tr>
             <tr>
-              <td>Кол-во листов</td>
-              <td><Field disabled={disabled} component={FInput}  name={field+'sheets_count'}       value={P.sheets_count}  /></td>
-              <td>Номер в ЭДО</td>
-              <td><Field disabled={disabled} component={FInput}  name={field+'edo_num'}  value={P.edo_num}    /></td>
+              <td>{M.SHEETS_COUNT.label}</td>
+              <td><Field disabled={disabled} component={FInput}  name={field+M.SHEETS_COUNT.name}       value={P[M.SHEETS_COUNT.name]}  /></td>
+              <td>{M.EDO_NUM.label}</td>
+              <td><Field disabled={disabled} component={FInput}  name={field+M.EDO_NUM.name}  value={P[M.EDO_NUM.name]}    /></td>
             </tr>
 
             <tr>
-              <td>Комментарий</td>
-              <td><Field disabled={disabled} component={FInput}  name={field+'comment'}    value={P.comment}   type="textarea" /></td>                 
+              <td>{M.COMMENT.name}</td>
+              <td><Field disabled={disabled} component={FInput}  name={field+M.COMMENT.name}    value={P[M.COMMENT.name]}   type="textarea" /></td>                 
             </tr>                    
           </tbody>
         </table>
 
-        <h1>Фабулы документов</h1>
+        <h1>{M.FAB_DOC.label}</h1>
 
         {disabled ? null :( 
         <Dropdown 
@@ -111,38 +114,38 @@ const OFRow = (props)=>{
           <tbody>
             <tr>
               <td>Тип:</td>
-              <td>Сопроводительное письмо</td>
-              <td><Button onClick={onFab('Сопроводительное письмо')}>Создать файл</Button></td> 
+              <td>{M.SOPR_LET.label}</td>
+              <td><Button onClick={onFab(M.SOPR_LET.label)}>Создать файл</Button></td> 
             </tr>
             <tr>
               <td>Тип:</td>
-              <td>Универсальный</td>
-              <td><Button onClick={onFab('Универсальный')}>Создать файл</Button></td> 
+              <td>{M.UNI_TYPE.label}</td>
+              <td><Button onClick={onFab(M.UNI_TYPE.label)}>Создать файл</Button></td> 
             </tr>
             <tr>
               <td>Тип:</td>
-              <td>Определение</td>
-              <td><Button onClick={onFab('Определение')}>Создать файл</Button></td> 
+              <td>{M.DEFIN.label}</td>
+              <td><Button onClick={onFab(M.DEFIN.label)}>Создать файл</Button></td> 
             </tr>
             <tr>
               <td>Тип:</td>
-              <td>Уведомление</td>
-              <td><Button onClick={onFab('Уведомление')}>Создать файл</Button></td> 
+              <td>{M.NOTIF.label}</td>
+              <td><Button onClick={onFab(M.NOTIF.label)}>Создать файл</Button></td> 
             </tr>
             <tr>
               <td>Тип:</td>
-              <td>Вызов</td>
-              <td><Button onClick={onFab('Вызов')}>Создать файл</Button></td> 
+              <td>{M.CALL.label}</td>
+              <td><Button onClick={onFab(M.CALL.label)}>Создать файл</Button></td> 
             </tr>
             <tr>
               <td>Тип:</td>
-              <td>Инициативное письмо</td>
-              <td><Button onClick={onFab('Инициативное письмо')}>Создать файл</Button></td> 
+              <td>{M.INIT_LETTER.label}</td>
+              <td><Button onClick={onFab(M.INIT_LETTER.label)}>Создать файл</Button></td> 
             </tr>
           </tbody>
         </table>}
 
-        <h1>Сформированные документы</h1>
+        <h1>{M.FORMED_DOCS.label}</h1>
         <table>
           <tbody>
             <tr>
@@ -272,11 +275,11 @@ class EIshDocList extends React.Component {
       [<table key='idl1'>
         <thead>
           <tr>
-            <th>Кому</th>
-            <th>Исх.номер</th>
-            <th>Исх.дата</th>
-            <th>Подписал</th>
-            <th>Статус</th>
+            <th>{M.DOC_TARGET.label}</th>
+            <th>{M.ISH_NUM.label}</th>
+            <th>{M.ISH_DATE.label}</th>
+            <th>{M.PODPISAL.label}</th>
+            <th>{M.STATUS.label}</th>
             <th></th>
           </tr>
         </thead>
