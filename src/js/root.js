@@ -19,9 +19,10 @@ import FabulasList from './markup/editable/fabulasList.js'
 import TipDocList from './markup/editable/tipDocList.js'
 import Outgoing from './markup/outgoing/outgoing.js'
 import DocLinker from './markup/outgoing/subForms/docLinker.js'
-
 import IncomingLetter from './markup/letter/inc/incomingLetter.js'
 import OutcomingLetter from './markup/letter/out/outcomingLetter.js'
+import  DiapSPI  from './markup/settings/diapSPI.js'
+import  Postage  from './markup/settings/postage.js'
 
 i18n.use(locale);
 
@@ -45,6 +46,7 @@ class Root extends React.Component {
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){
+      return <Postage />
       // return <AppealWizard />
       //return <Outgoing/>;
       //return <ListTest />
