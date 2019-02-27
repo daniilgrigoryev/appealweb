@@ -1,0 +1,137 @@
+@import "variables";
+
+.el-input__inner {
+  padding: 3px;
+  color: $color-input-text;
+  font-size: 13px;
+  border: none;
+  border-bottom: 1px solid $color-input-border;
+  border-radius: 0;
+
+  &::placeholder {
+    color: $color-input-placeholder;
+  }
+}
+
+.el-checkbox__input {
+  &.is-checked {
+    .el-checkbox__inner {
+      background-color: transparent !important;
+
+      &:after {
+        border-color: $color-blue-selected !important;
+      }
+    }
+  }
+}
+
+.el-input__icon {
+  top: -10px !important;
+  font-size: 10px !important;
+  width: 18px !important;
+  color: $color-input-icon !important;
+}
+
+.el-icon-caret-top {
+  top: 10px !important;
+  font-size: 8px !important;
+}
+
+
+.el-submenu__icon-arrow {
+  font-size: 8px !important;
+}
+
+
+.el-switch {
+  .el-switch__label {
+    display: none !important;
+  }
+
+  .el-switch__core {
+    border: 1px solid $color-input-border-blue;
+    background: transparent;
+  }
+
+  .el-switch__button {
+    top: -5px;
+    left: -4px;
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  &.is-checked {
+    .el-switch__core {
+      background-color: $color-blue-selected !important;
+    }
+  }
+}
+
+
+.el-radio {
+  .el-radio__input.is-checked .el-radio__inner {
+    background: transparent;
+  }
+
+  .el-radio__inner::after {
+    $size: 10px;
+    width: $size;
+    height: $size;
+    background-color: $color-blue-selected;
+  }
+
+  .el-radio__label {
+    font-size: $input-caption-font-size;
+    color: $color-text-base;
+  }
+}
+
+.el-button {
+  border-color: $color-input-border-blue;
+  color: $color-blue-selected;
+  text-transform: uppercase;
+}
+
+
+.el-autocomplete-suggestion {
+  z-index: $input-font-size !important;
+}
+
+.el-time-panel .el-time-panel__footer {
+  display: flex;
+}
+
+
+.el-input__inner {
+  height: 24px;
+}
+
+.el-textarea__inner {
+  font-size: $input-font-size;
+  color: $color-input-text;
+  border-color: $color-input-border;
+}
+
+.el-select-dropdown__item {
+  font-size: $input-font-size;
+}
+
+
+.el-autocomplete-suggestion {
+  z-index: 10 !important;
+}
+
+.el-menu {
+  background: transparent;
+}
+
+.el-card {
+  border: 1px solid $box-border-color !important;
+  box-shadow: none !important;
+}
+
+.el-card__header {
+  padding: 0 20px !important;
+  border-bottom-color: $color-input-border;
+}

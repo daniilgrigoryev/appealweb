@@ -1,25 +1,15 @@
+@import "variables";
+@import "element-overrides";
+@import "primefaces-overrides";
+
 body {
     //background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
     background-size: cover;
-    font-family: Montserrat;
-    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+    //overflow: hidden;
+	color: $color-text-base;
 }
 
-/*
-.el-tooltip{
-	&.validationErr	input {
-		border-color: red;
-	}
-
-	&.validationWarn input {
-		border-color: darkorange;
-	}
-
-	&.validationOk input {
-		border-color: green;
-	}	
-}
-*/
 
 
 div.tooltipWrap{
@@ -30,9 +20,17 @@ div.tooltipWrap{
 	height: 4px;
 	/*border: 1px solid transparent;*/
 
+	&:after {
+		content: '*';
+		position: relative;
+		font-size: 11px;
+		top: -10px;
+	}
+
 	&.validationErr {
-		border-color: red;
-		background: red; /*#FFC4C4;*/
+		color: red;
+		//border-color: red;
+		//background: red; /*#FFC4C4;*/
 	}
 
 	&.validationWarn {
@@ -59,11 +57,94 @@ div.tooltipWrap{
 }
 
 
+// Стили заголовков
 
 
+.ap-h1 {
+	font-size: 32px;
+	font-weight: 300;
+	letter-spacing: 0.36px;
+	line-height: 2;
+}
 
-/*
+.ap-h2 {
+	font-size: 24px;
+	font-weight: 400;
+	letter-spacing: 0.1px;
+	line-height: 2;
+}
 
-validationErr, validationWarn, validationOk
+.ap-h3 {
+	font-size: 20px;
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	line-height: 2;
+}
 
-*/
+.ap-h4 {
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 0.2px;
+	line-height: 2;
+}
+
+.ap-txt-big {
+	font-size: 15px;
+	letter-spacing: 0.1px;
+	line-height: 1.3px;
+}
+
+.ap-txt-small {
+	font-size: 10px;
+	letter-spacing: 0.1px;
+	line-height: 1.2px;
+}
+
+// Стили элементов форм
+.ap-input-caption {
+	padding-right: 20px;
+	font-size: $input-caption-font-size;
+	text-align: right;
+	vertical-align: top;
+}
+
+.ap-btn-cancel span {
+	color: $color-text-base;
+}
+
+.ap-btn-underlined span {
+	border-bottom: 1px dashed $color-blue-selected;
+	color: $color-blue-selected;
+}
+
+.ap-btn-link span {
+	color: $color-blue-selected;
+}
+
+.el-button--text {
+	text-transform: initial;
+	color: $color-text-base;
+}
+
+.ap-select-underlined {
+	.el-input__inner {
+		border-bottom: 1px dashed $color-blue-selected;
+		color: $color-blue-selected !important;
+	}
+
+	.el-input__icon {
+		color: $color-blue-selected !important;
+	}
+}
+
+.ap-input-comment {
+	font-size: 12px;
+	margin-top: -20px;
+	margin-bottom: 10px;
+	font-style: italic;
+}
+
+.ap-header {
+	background: white;
+	border-bottom: 1px solid $color-input-border;
+}

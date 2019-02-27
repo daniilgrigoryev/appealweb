@@ -8,6 +8,12 @@ import { Notification } from 'element-react'
 import { messagesErase } from './actions/common.js'
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
+<<<<<<< HEAD
+=======
+import {getSessionId,getMessages} from './selectors/common.js'
+import '@mapbox/assembly/dist/assembly.min.css'
+import '../scss/index.scss'
+>>>>>>> origin/design-1
 
 import {getSessionId,getMessages} from './selectors/common.js'
 import Login from './markup/login/login.js'
@@ -43,10 +49,7 @@ class Root extends React.Component {
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){
-      //return <IncomingLetter/>;
-      return <OutcomingLetter/>;
-      //return <DocLinker />
-      //return <AppealWizard />
+      // return <AppealWizard />
       //return <Outgoing/>;
       //return <ListTest />
       //return <FabulasList/>;
