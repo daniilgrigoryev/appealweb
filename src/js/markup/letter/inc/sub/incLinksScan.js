@@ -40,7 +40,7 @@ const scannedDocs = (props)=>{
             </table>);
 } //
 
-class IshLinkScan extends React.Component {
+class IncLinkScan extends React.Component {
   render() {  
     const {disabled} = this.props
     return (
@@ -57,4 +57,4 @@ export default reduxForm({
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate
-})(IshLinkScan)
+})(IncLinkScan)

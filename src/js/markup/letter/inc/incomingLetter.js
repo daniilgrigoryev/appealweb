@@ -7,8 +7,8 @@ import IncLetterBasic from './sub/incLetterBasic.js'
 import IncLetterPlus from './sub/incLetterPlus.js'
 import IncLetterPost from './sub/incLetterPost.js'
 import IncLetterIspoln from './sub/incLetterIspoln.js'
-import IshLinkInner from './sub/ishLinksInner.js'
-import IshLinkScan from './sub/ishLinksScan.js'
+import IncLinkInner from './sub/incLinksInner.js'
+import IncLinkScan from './sub/incLinksScan.js'
 
 export default class IncomingLetter extends React.Component {
 
@@ -20,8 +20,8 @@ export default class IncomingLetter extends React.Component {
         <IncLetterPlus/>
         <IncLetterPost/>
         <IncLetterIspoln/>
-        <IshLinkInner />
-        <IshLinkScan />
+        <IncLinkInner />
+        <IncLinkScan />
   		</div>
   	);
   } //

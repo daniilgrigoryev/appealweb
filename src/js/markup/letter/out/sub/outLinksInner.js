@@ -43,7 +43,7 @@ const linkedDocs = (props)=>{
             </table>);
 } //
 
-class IshLinkInner extends React.Component {
+class OutLinkInner extends React.Component {
 
   constructor(props){
     super(props);
@@ -101,8 +101,8 @@ class IshLinkInner extends React.Component {
 }
 
 export default reduxForm({
-  form: 'letter_incoming', // <------ same form name
+  form: 'letter_outcoming', // <------ same form name
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
   //validate
-})(IshLinkInner)
+})(OutLinkInner)

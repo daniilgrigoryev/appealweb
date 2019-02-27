@@ -19,6 +19,7 @@ import Outgoing from './markup/outgoing/outgoing.js'
 import DocLinker from './markup/outgoing/subForms/docLinker.js'
 
 import IncomingLetter from './markup/letter/inc/incomingLetter.js'
+import OutcomingLetter from './markup/letter/out/outcomingLetter.js'
 
 i18n.use(locale);
 
@@ -42,7 +43,8 @@ class Root extends React.Component {
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){
-      return <IncomingLetter/>;
+      //return <IncomingLetter/>;
+      return <OutcomingLetter/>;
       //return <DocLinker />
       //return <AppealWizard />
       //return <Outgoing/>;
