@@ -6,7 +6,7 @@ import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
 import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import {Button, Input, Card, Layout, Tag} from 'element-react'
+import {Button, Card, Layout, Tag} from 'element-react'
 
 import mapping from './mapping.js'
 
@@ -19,17 +19,17 @@ const BasicData = props => {
     return (
         <div className='px18 py18'>
             <Layout.Row gutter="20">
-                <Layout.Col span="12" offset="6">
+                <Layout.Col span="16" offset="4">
                     <Card className="box-card" header={
                         <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main py12'>
                             <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                 {headerTitle}
-                                <Tag type="gray" className='mx12'>1/3</Tag>
-                                </h3>
+                            </h3>
 
                             {disabled
                                 ? null
                                 : (<div>
+                                    <Tag type="gray" className='mx12'>1/8</Tag>
                                     <Button type="primary" size='small' onClick={nextPage}>
                                         Далее
                                         <i className="el-icon-arrow-right el-icon-right"/>

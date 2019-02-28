@@ -9,7 +9,8 @@ import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {ERadio, FRadio, getOptions} from '../../components/radio.js'
-import {Button, Input, Card, Layout, Tag} from 'element-react'
+import {Button, Card, Layout, Tag} from 'element-react'
+
 import mapping from './mapping.js'
 
 const headerTitle = 'Сведения о заявителе';
@@ -27,53 +28,59 @@ class ClaimantData extends React.Component {
         const isFL = content[M.ZAJAV_LIC.name] != 'UL';
 
         const ZAJAV_SOURCE = isFL
-            ? ([
-                <tr key='flFam'>
-                    <td className='ap-input-caption'>{M.FAM.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.FAM.name} component={FInput}/></td>
-                </tr>,
-                <tr key='flName'>
-                    <td className='ap-input-caption'>{M.NAME.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.NAME.name} component={FInput}/></td>
-                </tr>,
-                <tr key='flSurname'>
-                    <td className='ap-input-caption'>{M.SURNAME.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.SURNAME.name} component={FInput}/></td>
-                </tr>,
-                <tr key='flSex'>
-                    <td className='ap-input-caption'>{M.SEX.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.SEX.name} component={FRadio}
-                                           options={sexOptions}/></td>
-                </tr>
-            ])
-
-            : ([
-                <tr key='ulOrgName'>
-                    <td className='ap-input-caption'>{M.ORG_NAME.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.ORG_NAME.name} component={FInput}/></td>
-                </tr>,
-                <tr key='ulINN'>
-                    <td className='ap-input-caption'>{M.INN.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.INN.name} component={FInput}/></td>
-                </tr>,
-                <tr key='ulKPP'>
-                    <td className='ap-input-caption'>{M.KPP.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.KPP.name} component={FInput}/></td>
-                </tr>,
-                <tr key='ulIshNum'>
-                    <td className='ap-input-caption'>{M.ISH_NUMBER.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.ISH_NUMBER.name} component={FInput}/></td>
-                </tr>,
-                <tr key='ulIshDt'>
-                    <td className='ap-input-caption'>{M.ISH_DATE.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.ISH_DATE.name} component={FPicker}
-                                           datepicker='+'/></td>
-                </tr>,
-                <tr key='ulPodpis'>
-                    <td className='ap-input-caption'>{M.PODPIS.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.PODPIS.name} component={FInput}/></td>
-                </tr>
-            ]);
+            ? (
+                <table>
+                    <tbody>
+                    <tr key='flFam'>
+                        <td className='ap-input-caption'>{M.FAM.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.FAM.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='flName'>
+                        <td className='ap-input-caption'>{M.NAME.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.NAME.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='flSurname'>
+                        <td className='ap-input-caption'>{M.SURNAME.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.SURNAME.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='flSex'>
+                        <td className='ap-input-caption'>{M.SEX.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.SEX.name} component={FRadio}
+                                               options={sexOptions}/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            )
+            : (<table>
+                    <tbody>
+                    <tr key='ulOrgName'>
+                        <td className='ap-input-caption'>{M.ORG_NAME.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.ORG_NAME.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='ulINN'>
+                        <td className='ap-input-caption'>{M.INN.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.INN.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='ulKPP'>
+                        <td className='ap-input-caption'>{M.KPP.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.KPP.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='ulIshNum'>
+                        <td className='ap-input-caption'>{M.ISH_NUMBER.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.ISH_NUMBER.name} component={FInput}/></td>
+                    </tr>
+                    <tr key='ulIshDt'>
+                        <td className='ap-input-caption'>{M.ISH_DATE.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.ISH_DATE.name} component={FPicker}
+                                               datepicker='+'/></td>
+                    </tr>
+                    <tr key='ulPodpis'>
+                        <td className='ap-input-caption'>{M.PODPIS.label}</td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.PODPIS.name} component={FInput}/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            );
 
 
         const KVART = isFL
@@ -109,17 +116,18 @@ class ClaimantData extends React.Component {
         return (
             <div className='px18 py18'>
                 <Layout.Row gutter="20">
-                    <Layout.Col span="12" offset="6">
+                    <Layout.Col span="16" offset="4">
                         <Card className="box-card" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main py12'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                     {headerTitle}
-                                    <Tag type="gray" className='mx12'>2/3</Tag>
                                 </h3>
 
                                 {disabled
                                     ? null
                                     : (<div>
+                                        <Tag type="gray" className='mx12'>2/8</Tag>
+
                                         <Button.Group>
                                             <Button type="primary" size='small' icon="arrow-left" onClick={prevPage}/>
                                             <Button type="primary" size='small' onClick={nextPage}>
@@ -176,7 +184,7 @@ class ClaimantData extends React.Component {
                                 <hr className='txt-hr my18'/>
 
                                 <h4 className='ap-h4'>
-                                   Контактная информация
+                                    Контактная информация
                                 </h4>
 
                                 <table>

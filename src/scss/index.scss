@@ -58,6 +58,10 @@ div.tooltipWrap{
 
 
 // Стили заголовков
+.ap-header {
+	background: white;
+	border-bottom: 1px solid $color-input-border;
+}
 
 
 .ap-h1 {
@@ -149,7 +153,11 @@ div.tooltipWrap{
 	font-style: italic;
 }
 
-.ap-header {
-	background: white;
-	border-bottom: 1px solid $color-input-border;
+
+// Стили таблиц
+.ap-table-header {
+	font-size: 12px;
+	vertical-align: top;
+	font-weight: 400;
+	text-align: left;
 }
