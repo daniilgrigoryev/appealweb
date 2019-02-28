@@ -6,7 +6,9 @@ import {Button,Input,Radio} from 'element-react'
 import AppealTable from '../../../table/table.js'
 import {post} from '../../../../services/ajax.js'
 import {getSessionId} from '../../../../selectors/common.js'
+import mapping from '../mapping.js' 
 
+const M = mapping.docLinker;
 
 const desc = {
   alias: 'APPEAL_LIST'
@@ -79,24 +81,24 @@ class DocLinker extends React.Component {
           <table>
             <tbody>
               <tr>
-                <td>№ постановления</td>
-                <td><Input id='npost' value={S.npost} onChange={this.onInput('npost')} /></td>
-                <td>ФИО/Организация</td>
-                <td><Input id='fio' value={S.fio} onChange={this.onInput('fio')} /></td>
+                <td>{M.POST_NUMBER.label}</td>
+                <td><Input id={M.POST_NUMBER.name} value={S[M.POST_NUMBER.name]} onChange={this.onInput(M.POST_NUMBER.name)} /></td>
+                <td>{M.FIO_ORG.label}</td>
+                <td><Input id={M.FIO_ORG.name} value={S[M.FIO_ORG.name]} onChange={this.onInput(M.FIO_ORG.name)} /></td>
                 <td><Button onClick={this.onSearch}>Поиск</Button></td>
               </tr>
               <tr>
-                <td>Входящий №</td>
-                <td><Input id='numberIn' value={S.numberIn} onChange={this.onInput('numberIn')} /></td>
-                <td>Исходящий №</td>
-                <td><Input id='numberOut' value={S.numberOut} onChange={this.onInput('numberOut')} /></td>
+                <td>{M.INCOM_NUM.label}</td>
+                <td><Input id={M.INCOM_NUM.name} value={S[M.INCOM_NUM.name]} onChange={this.onInput(M.INCOM_NUM.name)} /></td>
+                <td>{M.OUTC_NUM.label}</td>
+                <td><Input id={M.OUTC_NUM.name} value={S[M.OUTC_NUM.name]} onChange={this.onInput(M.OUTC_NUM.name)} /></td>
                 <td><Button onClick={performLink}>Связать</Button></td>
               </tr>
               <tr>
                 <td>Поиск по</td>
-                <td><Radio value='IN_APPEAL'  checked={target === 'IN_APPEAL' } onChange={this.onSetTarget} >Входящим обращениям</Radio></td>
-                <td><Radio value='OUT_APPEAL' checked={target === 'OUT_APPEAL'} onChange={this.onSetTarget} >Исходящим обращениям</Radio></td>
-                <td><Radio value='INTRA_DOCS' checked={target === 'INTRA_DOCS'} onChange={this.onSetTarget} >Служебным документам</Radio></td>
+                <td><Radio value={M.IN_APPEAL.name}  checked={target === M.IN_APPEAL.name} onChange={this.onSetTarget} >{M.IN_APPEAL.label}</Radio></td>
+                <td><Radio value={M.OUT_APPEAL.name} checked={target === M.OUT_APPEAL.name} onChange={this.onSetTarget} >{M.OUT_APPEAL.label}</Radio></td>
+                <td><Radio value={M.INTRA_DOCS.name} checked={target === M.INTRA_DOCS.name} onChange={this.onSetTarget} >{M.INTRA_DOCS.label}</Radio></td>
                 <td><Button onClick={dialogClose}>Закрыть</Button></td>
               </tr>
             </tbody>

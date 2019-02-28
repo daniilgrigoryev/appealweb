@@ -4,6 +4,9 @@ import {FInput, EInput}  from '../../components/finput.js'
 import {ESelect,FSelect} from  '../../components/select.js'
 import {EPicker,FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
+import mapping from '../mapping.js' 
+
+const M = mapping.ishBasic;
 
  class IshBasic extends React.Component {
 
@@ -14,22 +17,22 @@ import * as _ from 'lodash'
         <table>
           <tbody>
             <tr>
-              <td>Вид документа</td>
-              <td colSpan='3'><Field disabled={disabled} component={FSelect} name='vidDoc' dataKey='doc_vid'  /></td>
+              <td>{M.VID_DOC.label}</td>
+              <td colSpan='3'><Field disabled={disabled} component={FSelect} name={M.VID_DOC.name} dataKey={M.VID_DOC.key}  /></td>
             </tr>
             <tr>
-              <td>Краткое содержание</td>
-              <td colSpan='3'><Field disabled={disabled} component={FInput} name='summary'   /></td>
+              <td>{M.SUMMARY.label}</td>
+              <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.SUMMARY.name}   /></td>
             </tr>
             <tr>
-              <td>Примечание</td>
-              <td colSpan='3'><Field disabled={disabled} component={FInput} name='notes' textarea='+'   /></td>
+              <td>{M.NOTES.label}</td>
+              <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.NOTES.name} textarea='+'   /></td>
             </tr>
             <tr>
-              <td>Способ доставки</td>
-              <td><Field disabled={disabled} component={FSelect} name='deliveryType' dataKey='delivery_type'    /></td>
-           	  <td>Кол-во листов</td>
-              <td><Field disabled={disabled} component={FInput} name='sheetsCount' /></td>
+              <td>{M.DELIV_TYPE.label}</td>
+              <td><Field disabled={disabled} component={FSelect} name={M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}    /></td>
+           	  <td>{M.SHEETS_COUNT.label}</td>
+              <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name} /></td>
             </tr>
           </tbody>
         </table>
