@@ -45,10 +45,12 @@ export class EOrganizationFrom extends React.Component {
                         datepicker='+'/>
                 </span>
             </td>
-            <td>{disabled ? null :
-                <Button type="danger" size="mini" onClick={rmv(i)}>
-                    <i className="el-icon-delete"/>
-                </Button>}
+            <td>
+                {disabled ? null :
+                    <Button type="danger" size="mini" onClick={rmv(i)}>
+                        <i className="el-icon-delete"/>
+                    </Button>
+                }
             </td>
         </tr>));
 
