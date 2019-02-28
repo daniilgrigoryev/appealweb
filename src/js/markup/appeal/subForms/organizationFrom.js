@@ -47,8 +47,8 @@ export class EOrganizationFrom extends React.Component {
             </td>
             <td>
                 {disabled ? null :
-                    <Button type="danger" size="mini" onClick={rmv(i)}>
-                        <i className="el-icon-delete"/>
+                    <Button type="text" onClick={rmv(i)}>
+                        <i className="el-icon-delete color-red-dark"/>
                     </Button>
                 }
             </td>
@@ -56,8 +56,10 @@ export class EOrganizationFrom extends React.Component {
 
         return (
             <React.Fragment>
-                <table>
-                    {!fields.length ? null :
+                {!fields.length ?
+                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных организаций</p>
+                    :
+                    <table>
                         <thead>
                         <tr>
                             <th className='ap-table-header'>{M.ORG_NAME.label}</th>
@@ -65,17 +67,18 @@ export class EOrganizationFrom extends React.Component {
                             <th className='ap-table-header'>{M.ISH_DATE.label}</th>
                         </tr>
                         </thead>
-                    }
 
-                    <tbody>
-                    {ROWS}
-                    </tbody>
-                </table>
+
+                        <tbody>
+                        {ROWS}
+                        </tbody>
+                    </table>
+                }
 
                 {disabled ? null :
-                    <Button type="success" size="mini" icon="plus" onClick={add}
-                            className="flex-parent mt-neg6 mb18"
-                            title='Добавить организацию'>Добавить</Button>
+                    <Button size="small" icon="plus" onClick={add}
+                            className="flex-parent mb18"
+                            title='Добавить тему'>Добавить</Button>
                 }
             </React.Fragment>
         )

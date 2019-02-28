@@ -44,7 +44,7 @@ export class EApnList extends React.Component {
                 </span>
             </td>
             <td>
-               <span className="ml12">
+               <span className="">
                     {disabled ? null :
                         <Button type="text" onClick={inf(i)}>
                             <i className="el-icon-information color-blue"/>
@@ -52,8 +52,8 @@ export class EApnList extends React.Component {
                     }
 
                    {disabled ? null :
-                       <Button type="danger" size="mini" onClick={rmv(i)}>
-                           <i className="el-icon-delete"/>
+                       <Button type="text" onClick={rmv(i)}>
+                           <i className="el-icon-delete color-red-dark"/>
                        </Button>
                    }
                </span>
@@ -62,24 +62,27 @@ export class EApnList extends React.Component {
 
         return (
             <React.Fragment>
+                {!fields.length ?
+                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных постановлений</p>
+                    :
                 <table>
-                    {!fields.length ? null :
                         <thead>
                         <tr>
                             <th colSpan='2' className='ap-table-header'>{M.POST_NUM.label}</th>
                             <th className='ap-table-header'>{M.DATE.label}</th>
                         </tr>
                         </thead>
-                    }
+
                     <tbody>
                     {ROWS}
                     </tbody>
                 </table>
+                }
 
                 {disabled ? null :
-                    <Button type="success" size="mini" icon="plus" onClick={add}
-                            className="flex-parent mt-neg6 mb18"
-                            title='Добавить № постановления'>Добавить</Button>
+                    <Button size="small" icon="plus" onClick={add}
+                            className="flex-parent mb18"
+                            title='Добавить тему'>Добавить</Button>
                 }
             </React.Fragment>
         );
