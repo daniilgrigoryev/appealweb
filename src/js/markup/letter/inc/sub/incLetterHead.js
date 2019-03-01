@@ -4,7 +4,9 @@ import {FInput, EInput}  from '../../../components/finput.js'
 import {ESelect,FSelect} from  '../../../components/select.js'
 import {EPicker,FPicker} from '../../../components/picker.js'
 import * as _ from 'lodash'
+import mapping from '../mapping.js' 
 
+const M = mapping.incLetterHead;
 
 const serData = ['78-10','78-11','78-21','78-20'];
 
@@ -34,17 +36,17 @@ const tdExpanded = (fld,el,i,disabled,rmv,expd)=>{
 		    	<table>
 		          <tbody>
 		          	<tr>
-		              <td>От кого</td>
-		              <td colSpan='6'><Field disabled={disabled} component={FInput} name={fld+'zajavSender'}  value={el.zajavSender}  /></td>
+		              <td>{M.ZAJAV_SENDER.label}</td>
+		              <td colSpan='6'><Field disabled={disabled} component={FInput} name={fld+M.ZAJAV_SENDER.name}  value={el[M.ZAJAV_SENDER.name]}  /></td>
 		            </tr>
 		            <tr>
-		              <td>№ документа</td>
-		              <td><Field disabled={disabled} component={FInput} name={fld+'zajavNDoc'}  value={el.zajavNDoc}    /></td>
+		              <td>{M.ZAJAV_NDOC.label}</td>
+		              <td><Field disabled={disabled} component={FInput} name={fld+M.ZAJAV_NDOC.name}  value={el[M.ZAJAV_NDOC.name]}    /></td>
 		           
-		              <td>Дата</td>
-		              <td><Field disabled={disabled} component={FPicker} name={fld+'zajavDate'}  value={el.zajavDate}  datepicker='+'   /></td>
-		              <td>Подписал</td>
-		              <td><Field disabled={disabled} component={FInput} name={fld+'zajavSigner'}  value={el.zajavSigner} /></td>
+		              <td>{M.ZAJAV_DATE.label}</td>
+		              <td><Field disabled={disabled} component={FPicker} name={fld+M.ZAJAV_DATE.name}  value={el[M.ZAJAV_DATE.name]}  datepicker='+'   /></td>
+		              <td>{M.ZAJAV_SIGNER.label}</td>
+		              <td><Field disabled={disabled} component={FInput} name={fld+M.ZAJAV_SIGNER.name}  value={el[M.ZAJAV_SIGNER.name]} /></td>
 		           	</tr>
 		           </tbody>
 		        </table>
@@ -69,7 +71,7 @@ const ZajavRows=(props)=>{
 			<table>
 				<tbody>
 					<tr>
-						<td><h2>Наименование организации/заявитель</h2></td>
+						<td><h2>{M.ORG_NAME.label}</h2></td>
 						<td><button onClick={add}>+</button></td>
 					</tr>
 				</tbody>
@@ -104,11 +106,11 @@ class IncLetterHead extends React.Component {
 	        <table>
 	        	<tbody>
 	        		<tr>
-	        			<td>Входящий №</td>
-	        			<td><Field disabled={disabled} component={FSelect} name='inc_ser' data={serData} /></td>
-	        			<td><Field disabled={disabled} component={FInput}  name='inc_num' /></td>
-	        			<td>Дата</td>
-	        			<td><Field disabled={disabled} component={FPicker} name='inc_dat' datepicker='+' /></td>
+	        			<td>{M.INC_NUM.label}</td>
+	        			<td><Field disabled={disabled} component={FSelect} name={M.SER_VH_DOC.name} data={serData} /></td>
+	        			<td><Field disabled={disabled} component={FInput}  name={M.NUM_VH_DOC.name} /></td>
+	        			<td>{M.INC_DAT.label}</td>
+	        			<td><Field disabled={disabled} component={FPicker} name={M.INC_DAT.name} datepicker='+' /></td>
 	        		</tr>
 	        	</tbody>
 	        </table>	

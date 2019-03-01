@@ -5,6 +5,9 @@ import {ESelect,FSelect} from  '../../../components/select.js'
 import {EPicker,FPicker} from '../../../components/picker.js'
 import {Button} from 'element-react'
 import * as _ from 'lodash'
+import mapping from '../mapping.js' 
+
+const M = mapping.outLetterHead;
 
 const serData = ['78-10','78-11','78-21','78-20'];
 
@@ -24,7 +27,7 @@ const ZajavRows=(props)=>{
     const TDS = fields.map((fld,i,arr)=>{
     	const el = arr.get(i);
     	return (<tr key={i}>
-			<td><Field disabled={disabled} component={FInput} name={fld+'zajavNDoc'}  value={el.zajavNDoc}    /></td>
+			<td><Field disabled={disabled} component={FInput} name={fld+M.ZAJAV_NDOC.name}  value={el[M.ZAJAV_NDOC.name]}    /></td>
 		    <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>     
     	</tr>);
     }); //
@@ -64,11 +67,11 @@ class OutLetterHead extends React.Component {
 	        <table>
 	        	<tbody>
 	        		<tr>
-	        			<td>№ документа</td>
-	        			<td><Field disabled={disabled} component={FSelect} name='inc_ser' data={serData} /></td>
-	        			<td><Field disabled={disabled} component={FInput}  name='inc_num' /></td>
-	        			<td>Дата</td>
-	        			<td><Field disabled={disabled} component={FPicker} name='inc_dat' datepicker='+' /></td>
+	        			<td>{M.ZAJAV_NDOC.label}</td>
+	        			<td><Field disabled={disabled} component={FSelect} name={M.SER_VH_DOC.name} data={serData} /></td>
+	        			<td><Field disabled={disabled} component={FInput}  name={M.NUM_VH_DOC.name} /></td>
+	        			<td>{M.ZAJAV_DATE.label}</td>
+	        			<td><Field disabled={disabled} component={FPicker} name={M.INC_DAT.name} datepicker='+' /></td>
 	        		</tr>
 	        	</tbody>
 	        </table>	
@@ -78,10 +81,10 @@ class OutLetterHead extends React.Component {
 	        <table>
 				<tbody>
 					<tr>
-	        		  <td>Подписал</td>
-		              <td><Field disabled={disabled} component={FPicker} name='signer'    /></td>
-		              <td>Исполнитель</td>
-		              <td><Field disabled={disabled} component={FInput} name='zajavSigner' datepicker='+'  /></td>
+	        		  <td>{M.SIGNER.label}</td>
+		              <td><Field disabled={disabled} component={FPicker} name={M.SIGNER.name}    /></td>
+		              <td>{M.ZAJAV_SIGNER.label}</td>
+		              <td><Field disabled={disabled} component={FInput} name={M.ZAJAV_SIGNER.name} datepicker='+'  /></td>
 		           	</tr>
 		        </tbody>
 		    </table>

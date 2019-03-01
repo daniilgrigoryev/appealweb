@@ -4,6 +4,9 @@ import {FInput, EInput}  from '../../../components/finput.js'
 import {ESelect,FSelect} from  '../../../components/select.js'
 import {EPicker,FPicker} from '../../../components/picker.js'
 import * as _ from 'lodash'
+import mapping from '../mapping.js' 
+
+const M = mapping.incLetterPlus;
 
 class IncLetterPlus extends React.Component {
 	
@@ -11,38 +14,38 @@ class IncLetterPlus extends React.Component {
 	    const {disabled} = this.props
 	    return (
 	      <div style={{background:'#fce9c2'}}>
-	      	<h2>Дополнительные сведения</h2>
+	      	<h2>{M.DOP_INF.label}</h2>
 	        <table>
 	          <tbody>
 	            <tr>
-	              <td>Номер протокола</td>
-	              <td><Field disabled={disabled} component={FInput} name='protN' /></td>
-	              <td>Дата</td>
-	              <td><Field disabled={disabled} component={FPicker} name='protDate' datepicker='+' /></td>
+	              <td>{M.PROT_N.label}</td>
+	              <td><Field disabled={disabled} component={FInput} name={M.PROT_N.name} /></td>
+	              <td>{M.PROT_DATE.label}</td>
+	              <td><Field disabled={disabled} component={FPicker} name={M.PROT_DATE.name} datepicker='+' /></td>
 	            </tr>
 	            <tr>
-	              <td>ФИО/Наименование нарушителя</td>
-	              <td colSpan='3'><Field disabled={disabled} component={FInput} name='violator'   /></td>
+	              <td>{M.VIOLATOR.label}</td>
+	              <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.VIOLATOR.name}   /></td>
 	            </tr>
 	            <tr>
-	              <td>Наименование суда</td>
-	              <td colSpan='3'><Field disabled={disabled} component={FInput} name='court' /></td>
+	              <td>{M.COURT.label}</td>
+	              <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.COURT.name} /></td>
 	            </tr>
 	            <tr>
-	            	<td>Решение районного суда</td>
-	            	<td><Field disabled={disabled} component={FSelect} name='decisionRegionalCourt' dataKey='decision_regional_court'    /></td>
-	            	<td>Дата решения</td>
-	            	<td><Field disabled={disabled} component={FPicker} name='decisionDate' datepicker='+' /></td>
+	            	<td>{M.DEC_REG_COURT.label}</td>
+	            	<td><Field disabled={disabled} component={FSelect} name={M.DEC_REG_COURT.name} dataKey={M.DEC_REG_COURT.key}    /></td>
+	            	<td>{M.DEC_DATE.label}</td>
+	            	<td><Field disabled={disabled} component={FPicker} name={M.DEC_DATE.name} datepicker='+' /></td>
 	            </tr>
 	            <tr>
-	            	<td>Обжалование в Мосгорсуд</td>
-	            	<td><Field disabled={disabled} component={FSelect} name='decisionMoscowCourt' dataKey='decision_moscow_court'    /></td>
-	            	<td>Вступление в законную силу</td>
-	            	<td><Field disabled={disabled} component={FPicker} name='effectDate' datepicker='+' /></td>
+	            	<td>{M.DEC_MSC_COURT.label}</td>
+	            	<td><Field disabled={disabled} component={FSelect} name={M.DEC_MSC_COURT.name} dataKey={M.DEC_MSC_COURT.key}    /></td>
+	            	<td>{M.EFFECT_DATE.label}</td>
+	            	<td><Field disabled={disabled} component={FPicker} name={M.EFFECT_DATE.name} datepicker='+' /></td>
 	            </tr>
 	            <tr>
-	              <td>Комментарий</td>
-	              <td colSpan='3'><Field disabled={disabled} component={FInput} name='note' type='textarea' /></td>
+	              <td>{M.NOTE.label}</td>
+	              <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.NOTE.name} type='textarea' /></td>
 	            </tr>
 	          </tbody>
 	        </table>

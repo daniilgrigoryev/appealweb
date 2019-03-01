@@ -4,8 +4,8 @@ import {Dialog,Select,Input,Collapse,Button} from 'element-react'
 import { connect } from 'react-redux'
 import {post} from '../../services/ajax.js'
 import {fetchSelect,fetchFabulasThemesMadi} from '../../services/api.js'
-
 import mapping from './appealContent/mapping.js'
+
 const M = mapping.fabulaDialog;
 
 const st = {
