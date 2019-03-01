@@ -9,6 +9,7 @@ import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
 import {getUser} from '../../selectors/common.js'
 
+
 class Login extends React.Component {
 
   constructor(props){
@@ -41,7 +42,7 @@ class Login extends React.Component {
     this.setState({[id]:value});
   }
 
-  onLogin(){ 
+  onLogin(){
     const {username,password,db} = this.state;
     const loginData = {
       user: username,

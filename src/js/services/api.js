@@ -13,11 +13,22 @@ const BASE_URL = URLS[MODE];
 AJ.setBase(BASE_URL)
 AJ.setMode(MODE)
 
-export function login(loginData){ 
+export function login(loginData){
 	if (MODE=='DESIGN'){
 		return new Promise((resolve)=>setTimeout(()=>resolve({data:{sessionID : 'a123',username : 'design'}}),1500))
 	}
-	return AJ.post('rest/login',loginData);
+	return loginData.externalSid
+		? AJ.post('externalLogin/getUserParams/'+loginData.externalSid,loginData)
+		: AJ.post('rest/login',loginData);
+}
+
+export function notifyAlive(sessionId,externalSid=false){ console.log('notifyAlive',sessionId,externalSid);
+	if (MODE=='DESIGN'){
+		return new Promise((resolve)=>setTimeout(()=>resolve({status:'ok'}),500))
+	}
+	return externalSid
+		? AJ.post('externalLogin/checkSession/',{sessionId,externalSid})
+		: AJ.post('rest/notify',{sessionId});
 }
 
 export function logout(sessionId){

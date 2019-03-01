@@ -9,7 +9,7 @@ const err = (err)=>console.error(err)
 export function* watchLogin(action) {   
     log(' in watchLogin : action taken');
     try{
-      const loggedData = yield call(api.login,action.loginData); 
+      const loggedData = yield call(api.login,action.loginData);
       log(' in watchLogin : logged');      
       let exc = 'Unknown login error';
       if (!loggedData || !loggedData.data || (exc=loggedData.data.error)) {

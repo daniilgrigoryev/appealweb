@@ -25,10 +25,7 @@ export default class Postage extends React.Component {
   render (){
     const S = this.state.post;
     const chg = (field)=>(value)=>this.onInput(field,value);
-    const nds = (field)=>{
-     debugger;
-      return (+S[field])*(1+get('nds')/100);
-    }
+    const nds = (field)=> ((+S[field])*(1+get('nds')/100) || 0).toFixed(2);
     const get = (field)=>(+S[field]) || 0;
 
     return (
@@ -65,24 +62,24 @@ export default class Postage extends React.Component {
               <tr>
                 <td colSpan='2'>Заказное письмо до 20 г, руб</td>
                 <td><InputNumber defaultValue={get('letter20under')} onChange={chg('letter20under')} /></td>
-                <td><InputNumber defaultValue={nds('letter20under')} disabled={true}                 /></td>
+                <td><InputNumber value={nds('letter20under')} disabled={true}                 /></td>
                 <td>НДС, %</td>
                 <td><InputNumber defaultValue={get('nds')}  onChange={chg('nds')}                   /></td>
               </tr>
               <tr>
                 <td colSpan='2'>за каждые последующие полные или неполные 20 г веса заказного письма, руб </td>
                 <td><InputNumber defaultValue={get('letter20over')} onChange={chg('letter20over')}   /></td>
-                <td><InputNumber defaultValue={nds('letter20over')} disabled={true}                  /></td>
+                <td><InputNumber value={nds('letter20over')} disabled={true}                  /></td>
               </tr>
               <tr>
                 <td colSpan='2'>Заказная бандероль весом 100 г, руб</td>
                 <td><InputNumber defaultValue={get('letter100under')} onChange={chg('letter100under')} /></td>
-                <td><InputNumber defaultValue={nds('letter100under')} disabled={true}                  /></td>
+                <td><InputNumber value={nds('letter100under')} disabled={true}                  /></td>
               </tr>
               <tr>
                 <td colSpan='2'>за каждые последующие полные или неполные 20 г веса заказной бандероли, руб </td>
                 <td><InputNumber defaultValue={get('letter100over')} onChange={chg('letter100over')}  /></td>
-                <td><InputNumber defaultValue={nds('letter100over')} disabled={true}                  /></td>
+                <td><InputNumber value={nds('letter100over')} disabled={true}                  /></td>
               </tr>
               <tr>
                 <td colSpan='2'>Регулярная выгрузка (архивы)</td>

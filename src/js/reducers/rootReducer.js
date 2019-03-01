@@ -1,4 +1,5 @@
 import * as A from '../actions/common.js'
+import * as PULSE from '../pulse.js'
 import Immutable from 'immutable'
 
 const im = (obj)=> Immutable.fromJS(obj)
@@ -12,6 +13,7 @@ const addMessage = (state,type,message)=>{
 const rootReducer = function(state, action){
   switch (action.type) {
   	case A.LOGOUT_DONE:
+      PULSE.stop();
   		window.location.reload(); 
       //window.location = window.location; 
       return state;
@@ -20,6 +22,9 @@ const rootReducer = function(state, action){
   	case A.MESSAGE_SET:
   		return addMessage(state,action.severity,action.message)
   	case A.LOGIN_DONE:
+      const {sessionID,externalSid} = action.loggedData;
+      PULSE.notifyAlive(sessionID,externalSid)
+      PULSE.start()
   		return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
     default: 
     	return state
@@ -29,6 +34,7 @@ const rootReducer = function(state, action){
 const initialState = Immutable.fromJS({
     general : {
       system: 'M',
+      externalLogin: true,
       messagesQueue: [],
       user : {
         username : '',

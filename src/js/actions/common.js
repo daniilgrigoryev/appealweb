@@ -16,7 +16,7 @@ export function messagesErase(){
 }
 
 export function loginRequest(loginData){
-	return {type: LOGIN_REQUEST, loginData }
+	return {type: LOGIN_REQUEST, loginData}
 }
 
 export function loginSuccess(loggedData){ /* loginSuccess action generator */

@@ -15,6 +15,8 @@ import TipDocList from '../editable/tipDocList.js'
 import Outgoing from '../outgoing/outgoing.js'
 import OutcomingLetter from '../letter/out/outcomingLetter.js'
 import IncomingLetter from '../letter/inc/incomingLetter.js'
+import DialSPI from '../settings/diapSPI.js'
+import Postage from '../settings/postage.js'
 
 import burger from '../../../images/burger.svg'
 
@@ -33,11 +35,15 @@ export default function App() {
                     <Route path='/explore' component={AppealExplorer}/>
                     <Route path='/letter_incoming' component={IncomingLetter}/>
                     <Route path='/letter_outgoing' component={OutcomingLetter}/>
-                    <Route path='/settings/fabulas' component={FabulasList}/>
-                    <Route path='/settings/decisions' component={DecisionsList}/>
-                    <Route path='/settings/categories' component={CategoriesList}/>
-                    <Route path='/settings/appeal_causes' component={AppealCauseList}/>
-                    <Route path='/settings/doc_types' component={TipDocList}/>
+                    <Route path='/sprav/fabulas' component={FabulasList}/>
+                    <Route path='/sprav/decisions' component={DecisionsList}/>
+                    <Route path='/sprav/categories' component={CategoriesList}/>
+                    <Route path='/sprav/appeal_causes' component={AppealCauseList}/>
+                    <Route path='/sprav/doc_types' component={TipDocList}/>
+
+                    <Route path='/settings/diapSPI' component={DialSPI} />
+                    <Route path='/settings/postage' component={Postage} />
+
                     <Route path='*' component={NotFoundPage}/>
                 </Switch>
             </LayoutConnected>
@@ -107,12 +113,18 @@ class LayoutMain extends React.Component {
                                     </Menu.SubMenu>
 
                                     <Menu.SubMenu index="3" title="Справочники">
-                                        <Menu.Item index="settings/fabulas">Фабулы</Menu.Item>
-                                        <Menu.Item index="settings/decisions">Решения</Menu.Item>
-                                        <Menu.Item index="settings/categories">Категории</Menu.Item>
-                                        <Menu.Item index="settings/appeal_causes">Причины жалоб</Menu.Item>
-                                        <Menu.Item index="settings/doc_types">Типы документов</Menu.Item>
+                                        <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
+                                        <Menu.Item index="sprav/decisions">Решения</Menu.Item>
+                                        <Menu.Item index="sprav/categories">Категории</Menu.Item>
+                                        <Menu.Item index="sprav/appeal_causes">Причины жалоб</Menu.Item>
+                                        <Menu.Item index="sprav/doc_types">Типы документов</Menu.Item>
                                     </Menu.SubMenu>
+
+                                    <Menu.SubMenu index="4" title="Настройки">
+                                        <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
+                                        <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
+                                    </Menu.SubMenu>
+
                                     <Menu.Item index="LOGOUT">Выход</Menu.Item>
                                 </Menu>
                             </nav>
