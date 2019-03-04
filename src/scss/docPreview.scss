@@ -1,0 +1,33 @@
+.formXZV {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  background-color: blue;
+
+  .docWrap {
+    background-color: aliceblue;
+    margin: 10px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .buttons {
+    margin-bottom: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 0;
+
+    button {
+      height: 32px;
+      width: 33.33333%;
+      font-size: 25px;
+      color: #000000;
+      background-color: #ffffff;
+      display: inline-block;
+      border: solid 0.1px;
+      text-align: center;
+    }
+  }
+}

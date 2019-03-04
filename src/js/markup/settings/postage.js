@@ -26,7 +26,6 @@ export default class Postage extends React.Component {
     const S = this.state.post;
     const chg = (field)=>(value)=>this.onInput(field,value);
     const nds = (field)=>{
-     debugger;
       return (+S[field])*(1+get('nds')/100);
     }
     const get = (field)=>(+S[field]) || 0;

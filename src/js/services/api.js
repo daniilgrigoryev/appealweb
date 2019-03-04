@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DEV_47'
+const MODE = 'DEV_152'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -12,6 +12,10 @@ const URLS = {
 const BASE_URL = URLS[MODE];
 AJ.setBase(BASE_URL)
 AJ.setMode(MODE)
+
+export function baseUrl(){
+	return BASE_URL;
+}
 
 export function login(loginData){ 
 	if (MODE=='DESIGN'){
