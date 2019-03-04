@@ -120,7 +120,7 @@ class LayoutMain extends React.Component {
                     </Layout.Row>
                 </header>
 
-                <main>{children}</main>
+                <main className='px18 py18'>{children}</main>
             </div>
         ); //
     }
