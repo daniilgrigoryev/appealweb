@@ -18,7 +18,6 @@ const passer = (cb,count)=>{
 
 const next = ()=>{
 	stop();
-	console.log('pulse tick')
 	for (let key in QUEUE){
 		try {
 			QUEUE[key]();

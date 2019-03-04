@@ -71,9 +71,9 @@ const TestElement2RF = props => {
                 <Layout.Col span="6">
                     <Card className="box-card" header={<h3 className='ap-h3'>Заголовки</h3>}>
                         <h1 className='ap-h1'>Header 1</h1>
-                        <h1 className='ap-h2'>Header 2</h1>
-                        <h1 className='ap-h3'>Header 3</h1>
-                        <h1 className='ap-h4'>Header 4</h1>
+                        <h2 className='ap-h2'>Header 2</h2>
+                        <h3 className='ap-h3'>Header 3</h3>
+                        <h4 className='ap-h4'>Header 4</h4>
                     </Card>
                 </Layout.Col>
                 <Layout.Col span="6">

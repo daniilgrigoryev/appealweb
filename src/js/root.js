@@ -1,4 +1,5 @@
 import 'element-theme-default';
+import '../scss/assembly.scss'
 import '../scss/index.scss'
 
 import React from 'react'
@@ -8,7 +9,6 @@ import { Notification } from 'element-react'
 import { messagesErase } from './actions/common.js'
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
-
 //import '@mapbox/assembly/dist/assembly.min.css'
 
 import {loginRequest} from './actions/common.js'

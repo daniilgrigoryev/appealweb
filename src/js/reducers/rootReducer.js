@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
-
 const addMessage = (state,type,message)=>{
 	const list = state.get('messagesQueue').push(im({type,message}));
   	return state.set('messagesQueue',list);
@@ -34,7 +33,7 @@ const rootReducer = function(state, action){
 const initialState = Immutable.fromJS({
     general : {
       system: 'M',
-      externalLogin: true,
+      externalLogin: false && true,
       messagesQueue: [],
       user : {
         username : '',

@@ -22,7 +22,7 @@ export function login(loginData){
 		: AJ.post('rest/login',loginData);
 }
 
-export function notifyAlive(sessionId,externalSid=false){ console.log('notifyAlive',sessionId,externalSid);
+export function notifyAlive(sessionId,externalSid=false){
 	if (MODE=='DESIGN'){
 		return new Promise((resolve)=>setTimeout(()=>resolve({status:'ok'}),500))
 	}
