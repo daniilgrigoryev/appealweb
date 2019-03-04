@@ -150,6 +150,10 @@
   border-bottom-color: $color-input-border;
 }
 
+.el-card__body {
+  min-height: 240px;
+}
+
 .el-collapse {
   border: none !important;
 }
