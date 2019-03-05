@@ -7,6 +7,8 @@ export const GET_ALL_APPEALS = 'GET_ALL_APPEALS'
 export const MESSAGE_SET   = 'MESSAGE_SET'
 export const MESSAGES_ERASE = 'MESSAGES_ERASE'
 
+export const APPEAL_LOAD = 'APPEAL_LOAD';
+
 export function messageSet(message, severity){
 	return {type: MESSAGE_SET, message, severity}
 }
@@ -29,4 +31,8 @@ export function logoutRequest(sessionId){
 
 export function logoutSuccess(){
 	return {type: LOGOUT_DONE }	
+}
+
+export function appealLoad(data){
+	return {type: APPEAL_LOAD,data}
 }

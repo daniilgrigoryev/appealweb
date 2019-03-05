@@ -13,18 +13,24 @@ const rootReducer = function(state, action){
   switch (action.type) {
   	case A.LOGOUT_DONE:
       PULSE.stop();
-  		window.location.reload(); 
-      //window.location = window.location; 
-      return state;
+      if (state.get('externalLogin')){
+        window.close();
+      } else {
+        window.location.reload();   
+      }
+  		return state;
   	case A.MESSAGES_ERASE:
       return state.set('messagesQueue',im([]));
   	case A.MESSAGE_SET:
   		return addMessage(state,action.severity,action.message)
   	case A.LOGIN_DONE:
-      const {sessionID,externalSid} = action.loggedData;
+      const {sessionID,externalSid} = action.loggedData;// debugger;
       PULSE.notifyAlive(sessionID,externalSid)
       PULSE.start()
   		return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
+    case A.APPEAL_LOAD:
+      //debugger;
+      return state.setIn(['form','appeal'],action.data);
     default: 
     	return state
   }

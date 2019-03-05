@@ -38,6 +38,11 @@ export function logout(sessionId){
 	return AJ.post('rest/logout',{sessionId});
 }
 
+export function push(sessionId,alias,data){
+	const dataJSON = typeof data=='string' ? data : JSON.stringify(data);
+	return AJ.post('rest/push',{sid:sessionId, alias,data:dataJSON});	
+}
+
 export function fetchAutocomplete(key,query){
 	return new Promise((resolve,reject)=>{
 		const resp = [

@@ -14,6 +14,7 @@ import IshDocsData from './appealContent/ishDocsData.js'
 import ArchiveData from './appealContent/archiveData.js'
 
 import {exportString} from '../../services/stringExporter.js'
+import {push} from '../../services/api.js'
 
 const styleWrap = {
 	display: 'flex',
@@ -25,12 +26,17 @@ class FullAppeal extends React.Component {
 	constructor(props){
 		super(props);
 		this.outCsv = this.outCsv.bind(this);
+		this.pushCsv = this.pushCsv.bind(this);
 	}
 
 	outCsv(){
 		const {content,id} = this.props;
-		;
 		exportString('Обращение ' + id,JSON.stringify(content));
+	}
+
+	pushCsv(){
+		const {content,id} = this.props;
+		push(-1,'testAlias',content)
 	}
 
 	render(){
@@ -46,6 +52,7 @@ class FullAppeal extends React.Component {
 				<ArchiveData       {...p} />
 
 				<Button onClick={this.outCsv}>Выгрузить CSV</Button>
+				<Button onClick={this.pushCsv}>На сервер CSV</Button>
 			</div>);
 	} //
 }
