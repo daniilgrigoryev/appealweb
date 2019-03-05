@@ -389,7 +389,7 @@ class EIshDocList extends React.Component {
                 {!fields.length ?
                     <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет исходящих документов</p>
                     :
-                    <table key='idl1' className='wmin600 mb18'>
+                    <table key='idl1' className='mb18'>
                         <thead>
                         <tr>
                             <th className='ap-table-header'>№</th>

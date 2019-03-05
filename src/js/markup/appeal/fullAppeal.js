@@ -33,11 +33,11 @@ class FullAppeal extends React.Component {
         return (
             <div className='mb60'>
                 <Layout.Row gutter="12">
-                    <Layout.Col md="12" sm='24'>
+                    <Layout.Col lg="8" md='24'>
                         <ClaimantData      {...p} />
                     </Layout.Col>
 
-                    <Layout.Col md="6" sm='24'>
+                    <Layout.Col lg="8" md='24'>
                         <BasicData         {...p} />
                         <div className='mt12'>
                             <OrganizationsData {...p} />
@@ -48,7 +48,7 @@ class FullAppeal extends React.Component {
                         </div>
                     </Layout.Col>
 
-                    <Layout.Col md="6" sm='24'>
+                    <Layout.Col lg="8" md='24'>
                         <TopicsData        {...p} />
 
                         <div className='mt12'>
@@ -70,7 +70,6 @@ class FullAppeal extends React.Component {
 }
 
 
-
 const mapStateToProps = (state) => {
     const V = state.getIn(['form', 'appeal', 'values']);
     return {
@@ -78,7 +77,7 @@ const mapStateToProps = (state) => {
         system: state.getIn(['general', 'system']),
         content: V ? V.toJS() : {}
     };
-}
+};
 
 export default compose(
     connect(mapStateToProps),
