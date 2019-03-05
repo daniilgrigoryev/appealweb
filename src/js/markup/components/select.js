@@ -18,7 +18,7 @@ class ASelect extends React.Component {
 	}
 
 	setData(d){
-		let data = {};
+		let data = {}; debugger;
 		if (d && d.length){
 			data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
 		}

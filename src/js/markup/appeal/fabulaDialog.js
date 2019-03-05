@@ -3,9 +3,10 @@ import React from 'react'
 import {Dialog,Select,Input,Collapse,Button, Tag} from 'element-react'
 import { connect } from 'react-redux'
 import {post} from '../../services/ajax.js'
-import {fetchSelect,fetchFabulasThemesMadi} from '../../services/api.js'
-import mapping from './appealContent/mapping.js'
+import {fetchSelect,fetchFabulasThemesMadi,baseUrl} from '../../services/api.js'
+import DocPreview from './subForms/docPreview.js'
 
+import mapping from './appealContent/mapping.js'
 const M = mapping.fabulaDialog;
 
 const st = {
@@ -32,7 +33,9 @@ class FabulaDialog extends React.Component {
 			cat: null, // {id,label}
 
 			themeList: null,
-			theme: null  // {category,fabulaTheme,decision,text}
+			theme: null,  // {category,fabulaTheme,decision,text}
+			showDialog: false,
+			link: null
 		}
 	}
 
@@ -81,8 +84,67 @@ class FabulaDialog extends React.Component {
 		this.setState({theme});
 	}
 
+	downloadDocx(e) {
+			const fabulaDoc = 'fabulaDoc'
+			const fabulaSection = 'fabulaSection' 
+
+			const params = new URLSearchParams()
+			params.append('fabulaDoc',fabulaDoc)
+			params.append('fabulaSection',fabulaSection)
+			params.append('ext','preview')
+			params.append('zajavId', '')
+
+			const link = baseUrl() + 'rest/preview?'+params.toString()
+	    	this.setState({showDialog : true, link});
+	}
+
+	closePreview() {
+		this.setState({showDialog : false});
+	}
+
+	download(href,filename){
+		var tempLink = document.createElement('a');
+        tempLink.href = href;
+        tempLink.setAttribute('download', filename);
+        tempLink.click();
+
+        setTimeout(()=>{
+          tempLink && (tempLink.remove());
+        },5000);
+	}
+
+	downloadDoc(){
+		const fabulaDoc = 'fabulaDoc'
+		const fabulaSection = 'fabulaSection' 
+		const ext = 'docx'
+
+		const params = new URLSearchParams()
+		params.append('fabulaDoc',fabulaDoc)
+		params.append('fabulaSection',fabulaSection)
+		params.append('ext','docx')
+		params.append('zajavId', '')
+
+		const link = baseUrl() + 'rest/get_docx?'+params.toString()
+		this.download(link,'docx.docx');
+	}
+
+	downloadPdf(){
+		const fabulaDoc = 'fabulaDoc'
+		const fabulaSection = 'fabulaSection' 
+		const ext = 'pdf'
+
+		const params = new URLSearchParams()
+		params.append('fabulaDoc',fabulaDoc)
+		params.append('fabulaSection',fabulaSection)
+		params.append('ext','pdf')
+		params.append('zajavId', '')
+
+		const link = baseUrl() + 'rest/get_docx?'+params.toString()
+		this.download(link,'pdf.pdf');
+	}
+
 	render() {
-		let {doc,docList,cat,catList} = this.state;
+		let {doc,docList,cat,catList,showDialog,link} = this.state;
 		const {cancel,done,title,zajav} = this.props;
 
 		if (!cat && _.size(catList)){
@@ -92,10 +154,26 @@ class FabulaDialog extends React.Component {
 		const activeName = cat ? cat.label : null;
 		const CATEGORIES = this.renderCategories();
 
+		const SHDIAL = !showDialog 
+      		? null 
+      		: ( <Dialog key='mku7'
+              title="Tips"
+       		  size="tiny"
+        	  visible={ true }
+        	  onCancel={ () => {}}>
+              <Dialog.Body>
+                <DocPreview 
+                	downloadDoc={this.downloadDoc.bind(this)}
+					downloadPdf={this.downloadPdf.bind(this)}
+                	closePreview={this.closePreview.bind(this)} document={link}/>
+              </Dialog.Body>
+          	</Dialog>); //
+
+
 		docList = docList || [];
 
-		return (
-	      <Dialog
+		return ( 
+	      [<Dialog
 	        title={title}
 	        size="tiny"
 	        visible={true}
@@ -142,7 +220,7 @@ class FabulaDialog extends React.Component {
 	        <Dialog.Footer className="dialog-footer">
 	          <Button onClick={cancel}>Отмена</Button>
 	        </Dialog.Footer>
-	      </Dialog>
+	      </Dialog>, SHDIAL]
 		);
 	}//
 
@@ -181,7 +259,7 @@ class FabulaDialog extends React.Component {
 								<td colSpan='2'><Input value={theme ? theme.text : null}  type="textarea" /></td>
 							</tr>	
 							<tr>
-								<td colSpan='2'><Button size="small"><i className="el-icon-upload el-icon--left"></i>Загрузить</Button></td>
+								<td colSpan='2'><Button size="small"  onClick={this.downloadDocx.bind(this)}><i className="el-icon-upload el-icon--left"></i>Загрузить</Button></td>
 							</tr>
 						</tbody>
 					</table>

@@ -13,6 +13,10 @@ const BASE_URL = URLS[MODE];
 AJ.setBase(BASE_URL)
 AJ.setMode(MODE)
 
+export function baseUrl(){
+	return BASE_URL;
+}
+
 export function login(loginData){
 	if (MODE=='DESIGN'){
 		return new Promise((resolve)=>setTimeout(()=>resolve({data:{sessionID : 'a123',username : 'design'}}),1500))
@@ -61,6 +65,10 @@ export function fetchAutocomplete(key,query){
 export function fetchSelect(key){
 	switch(key){
 		case 'REQUEST_TYPE':  return fetchAppealSource();
+		/*	const alias = 'REQUEST_TYPE';
+			debugger;
+			return AJ.post("rest/select",{alias})
+		*/
 		case 'RESPONSE_TYPE': return fetchAppealOut();
 		case 'delivery_type': return fetchAppeaVidDost();
 		case 'doc_vid':       return fetchAppeaVidDoc();

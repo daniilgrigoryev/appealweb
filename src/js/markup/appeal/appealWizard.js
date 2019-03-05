@@ -60,8 +60,8 @@ const NAVI = {
 export default class AppealWizard extends Component {
 
   constructor(props) {
-    super(props)
-    this.state = { page: props.page || 'testElements' ||'basicData' }
+    super(props);
+    this.state = { page: props.page /*|| 'testElements'*/ ||'basicData' }
   }
 
   toPage(page){

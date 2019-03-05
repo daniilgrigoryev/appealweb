@@ -2,6 +2,7 @@ import axios from 'axios'
 
 let MODE = '';
 let BASE_URL = '';
+let sessionId = null;
 
 const ajax = (method,url,payload,ajaxOpts) => {
 	let opts = {
@@ -13,6 +14,10 @@ const ajax = (method,url,payload,ajaxOpts) => {
 	opts.headers =  {
        	'Accept':       'application/json',
        	'Content-Type': 'application/json'//;charset=UTF-8',
+    }
+
+    if (sessionId){
+    	opts.data.sessionId = sessionId;
     }
 
 	if (MODE && MODE.indexOf('DEV')==0 ){ // mode starts with dev - CORS enabled
@@ -38,12 +43,14 @@ const ajax = (method,url,payload,ajaxOpts) => {
 	return new Promise((resolve, reject)=>axios(opts).then(resolve).catch(reject));
 }
 
-const	get     = (url,payload,ajaxOpts)=> ajax('GET',url,payload,ajaxOpts);
-const	post    = (url,payload,ajaxOpts)=> ajax('POST',url,payload,ajaxOpts);
-const	del     = (url,payload,ajaxOpts)=> ajax('DELETE',url,payload,ajaxOpts);
-const	put     = (url,payload,ajaxOpts)=> ajax('PUT',url,payload,ajaxOpts);
+const	get      = (url,payload,ajaxOpts)=> ajax('GET',url,payload,ajaxOpts);
+const	post     = (url,payload,ajaxOpts)=> ajax('POST',url,payload,ajaxOpts);
+const	del      = (url,payload,ajaxOpts)=> ajax('DELETE',url,payload,ajaxOpts);
+const	put      = (url,payload,ajaxOpts)=> ajax('PUT',url,payload,ajaxOpts);
 
-const	setBase = (newBase)=>{ BASE_URL = newBase; }
-const   setMode = (newMode)=>{ MODE = newMode;}
+const	setBase  = (newBase)=>{ BASE_URL = newBase; }
+const   setMode  = (newMode)=>{ MODE = newMode;}
+const	setSid   = (newSid) =>{ sessionId = newSid;}
+const	eraseSid = ()=>{ sessionId = null; }
 
-export {setBase,setMode,get,post,del,put};
+export {setBase,setMode,setSid,eraseSid,get,post,del,put};
