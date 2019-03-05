@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import React from 'react'
-import {Dialog,Select,Input,Collapse,Button} from 'element-react'
+import {Dialog,Select,Input,Collapse,Button, Tag} from 'element-react'
 import { connect } from 'react-redux'
 import {post} from '../../services/ajax.js'
 import {fetchSelect,fetchFabulasThemesMadi} from '../../services/api.js'
@@ -106,23 +106,27 @@ class FabulaDialog extends React.Component {
 	        lockScroll={true} >
 
 	        <Dialog.Body>
-	        	<table>
+	        	<table className='w-full'>
 	        		<tbody>
-		        		<tr>
-		        			<td>{M.DOCUMENT.label}</td>
+		        		<tr className='flex-parent flex-parent--center-cross'>
+		        			<td className='ap-input-caption'>{M.DOCUMENT.label}</td>
 		        			<td>
 		        				<Select value={this.state.doc} onChange={this.setDoc.bind(this)} >
 									{ docList.map(el =>(<Select.Option key={el.id} label={el.label} value={el}  />)) }
 								</Select>
 							</td>
 		        		</tr>
-		        		<tr>
-		        			<td>{M.ZAJAV_TYPE.label}</td>
-		        			<td>{zajav=='UL'?'ЮЛ':'ФЛ'}</td>
+		        		<tr className='flex-parent flex-parent--center-cross'>
+		        			<td className='ap-input-caption'>{M.ZAJAV_TYPE.label}</td>
+		        			<td>
+								<Tag type="gray" className='my6'>{zajav=='UL'?'ЮЛ':'ФЛ'}</Tag>
+							</td>
 		        		</tr>
-		        		<tr>
-		        			<td>{M.TEMPL_FILE.label}</td>
-		        			<td>{!doc ?null :(<a href={'fabulas/'+doc.fileName} >{doc.fileName}</a>)}</td>
+		        		<tr className='flex-parent flex-parent--center-cross'>
+		        			<td className='ap-input-caption'>{M.TEMPL_FILE.label}</td>
+		        			<td>
+                                <Tag type="gray" className='my6'>{!doc ? '<не выбран>' :(<a href={'fabulas/'+doc.fileName} >{doc.fileName}</a>)}</Tag>
+							</td>
 		        		</tr>
 		        		<tr>
 		        			<td colSpan='2'>
@@ -154,7 +158,7 @@ class FabulaDialog extends React.Component {
 		if (!hasDoc){
 			return null;
 		} else if (!existsCat){
-			return (<input type='button' value='Загрузить' />);
+			return (<Button size="small"><i className="el-icon-upload el-icon--left"></i>Загрузить</Button>);
 		}
 
 		return catList.map((x,i)=>
@@ -177,7 +181,7 @@ class FabulaDialog extends React.Component {
 								<td colSpan='2'><Input value={theme ? theme.text : null}  type="textarea" /></td>
 							</tr>	
 							<tr>
-								<td colSpan='2'><input type='button' value='Загрузить' /></td>
+								<td colSpan='2'><Button size="small"><i className="el-icon-upload el-icon--left"></i>Загрузить</Button></td>
 							</tr>
 						</tbody>
 					</table>

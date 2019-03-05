@@ -1,15 +1,28 @@
 @import "variables";
 
-.el-input__inner {
-  padding: 3px;
-  color: $color-input-text;
-  font-size: 13px;
-  border: none;
-  border-bottom: 1px solid $color-input-border;
-  border-radius: 0;
+.el-input {
+  .el-input__inner {
+    padding: 3px;
+    color: $color-input-text;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid $color-input-border;
+    border-radius: 0;
 
-  &::placeholder {
-    color: $color-input-placeholder;
+    &::placeholder {
+      color: $color-input-placeholder;
+    }
+  }
+
+  &.is-disabled {
+    .el-input__inner {
+      border-color: transparent !important;
+      background-color: transparent !important;
+    }
+
+    .el-icon-caret-top {
+      display: none !important;
+    }
   }
 }
 
@@ -148,4 +161,32 @@
 .el-card__header {
   padding: 0 20px !important;
   border-bottom-color: $color-input-border;
+}
+
+.el-card__body {
+  min-height: 240px;
+}
+
+.el-collapse {
+  border: none !important;
+}
+
+.el-collapse-item__wrap {
+  background: transparent !important;
+}
+
+.el-dropdown-menu {
+  font-size: 13px;
+}
+
+.el-dropdown-menu__item {
+  line-height: 30px;
+  color: $color-text-base;
+}
+
+.el-select-dropdown__item {
+  padding: 4px 10px;
+  height: 30px;
+  color: $color-text-base;
+  font-size: 13px;
 }
