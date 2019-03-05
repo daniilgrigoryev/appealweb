@@ -13,25 +13,28 @@ const M = mapping.ishBasic;
   render() {  
     const {disabled} = this.props
     return (
-      <div style={{background:'#ffe5f8'}}>
+      <div>
+        <hr className='txt-hr my18'/>
+        <h4 className='ap-h4'>Основные сведения:</h4>
+
         <table>
           <tbody>
             <tr>
-              <td>{M.VID_DOC.label}</td>
+              <td className='ap-input-caption'>{M.VID_DOC.label}</td>
               <td colSpan='3'><Field disabled={disabled} component={FSelect} name={M.VID_DOC.name} dataKey={M.VID_DOC.key}  /></td>
             </tr>
             <tr>
-              <td>{M.SUMMARY.label}</td>
+              <td className='ap-input-caption'>{M.SUMMARY.label}</td>
               <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.SUMMARY.name}   /></td>
             </tr>
             <tr>
-              <td>{M.NOTES.label}</td>
+              <td className='ap-input-caption'>{M.NOTES.label}</td>
               <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.NOTES.name} textarea='+'   /></td>
             </tr>
             <tr>
-              <td>{M.DELIV_TYPE.label}</td>
+              <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
               <td><Field disabled={disabled} component={FSelect} name={M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}    /></td>
-           	  <td>{M.SHEETS_COUNT.label}</td>
+           	  <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
               <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name} /></td>
             </tr>
           </tbody>

@@ -1,6 +1,8 @@
 import React from 'react';
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
+import {Loading} from 'element-react'
+
 
 import {get,post,del,put} from '../../services/ajax.js'
 
@@ -62,8 +64,9 @@ export default class AppealTable extends React.Component {
 		const END   = ROWS + FIRST;
 
 		if (!TABLE){
-			return (<span ref={(x)=>{ x && (this.offsetTop=x.offsetTop) }}>Loading...</span>);
-		} //
+			return (<div className='mt60 mb120'><Loading loading={true} text='Поиск данных...' /></div>);
+		}
+
 		const VAL = this.toSuitableVal(TABLE);
 		const scHeight = window.innerHeight - this.offsetTop - 88 - 22 + "px";
 		const head = "Записи с " + (FIRST + 1) + " до "+ (END > TABLE.size ? TABLE.size : END) + " из " + TABLE.size + " записей";
@@ -72,23 +75,27 @@ export default class AppealTable extends React.Component {
 		//console.log(S.selected)
 		//
 		return (
-			<DataTable  selectionMode="multiple"
-						metaKeySelection={false}
-						scrollable={true}
-						paginator={true} 						
-						rows={ROWS} 
-						first={FIRST} 
-						lazy={true} 
-						totalRecords={+TABLE.size} 
-						scrollHeight={scHeight}
-						value={VAL} 
-						onPage={this.onPage} 
-						header={head}
-						rowsPerPageOptions={[10,25,50,100,200,300]}
-						selection={S.selected} 
-						onSelectionChange={e => this.setState({selected: e.value})}>
-                {dynamicColumns}
-            </DataTable>
+
+                <DataTable  selectionMode="multiple"
+                            metaKeySelection={false}
+                            scrollable={true}
+                            paginator={true}
+                            rows={ROWS}
+                            first={FIRST}
+                            lazy={true}
+                            totalRecords={+TABLE.size}
+                            scrollHeight={scHeight}
+                            value={VAL}
+                            onPage={this.onPage}
+                            header={head}
+                            rowsPerPageOptions={[10,25,50,100,200,300]}
+                            selection={S.selected}
+                            onSelectionChange={e => this.setState({selected: e.value})}>
+                    {dynamicColumns}
+                </DataTable>
+
+
+
 		);
 	}//
 
