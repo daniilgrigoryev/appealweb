@@ -40,7 +40,7 @@ export class EQuestionList extends React.Component {
                 <span className='inline-block mr12'>
                     <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]}
                            dataKey={M.DEPART.key}/>
-                    </span>
+                </span>
             </td>
             <td>{disabled ? null :
                 <Button type="text" onClick={rmv(i)}>

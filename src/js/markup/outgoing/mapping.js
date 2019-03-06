@@ -30,13 +30,13 @@ export default {
 		DESC: 			{name: 'desc',					label: 'Описание'}
 	},
 	ishLinksPost: {
-		NPOST: 			{name: 'npost',					label: '№'},
+		NPOST: 			{name: 'npost',					label: 'Постановление'},
 		DATE: 			{name: 'date',					label: 'Дата'},
 		POSTS: 			{name: 'posts',					label: 'Постановления'}
 	},
 	ishLinksScan: {
 		ID: 			{name: 'dodId',					label: 'ID'},
 		DESC: 			{name: 'desc',					label: 'Описание'},
-		SCAN_DOC: 		{name: 'scannedDocs',			label: 'Скан-образы документов'}
+		SCAN_DOC: 		{name: 'scannedDocs',			label: 'Скан-образы документов:'}
 	}
 }

@@ -9,9 +9,6 @@ import { Notification } from 'element-react'
 import { messagesErase } from './actions/common.js'
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
-//import '@mapbox/assembly/dist/assembly.min.css'
-
-import {loginRequest} from './actions/common.js'
 import {getSessionId,getMessages} from './selectors/common.js'
 import Login from './markup/login/login.js'
 import AppealWizard from './markup/appeal/appealWizard.js'
@@ -58,8 +55,8 @@ class Root extends React.Component {
       if (sid && sid.length){
         window.location.hash = '';
         setTimeout(()=>this.doExternalLogin(sid),5)
-      }   
-    }       
+      }
+    }
   }
 
   doExternalLogin(sid){
@@ -68,7 +65,7 @@ class Root extends React.Component {
       version: '0',
       version_date: '0',
       sfp: new Fingerprint().get(),
-      wgl: webGlId(),  
+      wgl: webGlId(),
       platform  : navigator.platform,
       useragent : navigator.userAgent,
       cookie : navigator.cookieEnabled
@@ -78,7 +75,7 @@ class Root extends React.Component {
   }
 
 
-  render(){ 
+  render(){
     setTimeout(this.checkMessages.bind(this),0);
 
     if (true){

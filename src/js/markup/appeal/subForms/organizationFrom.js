@@ -67,8 +67,6 @@ export class EOrganizationFrom extends React.Component {
                             <th className='ap-table-header'>{M.ISH_DATE.label}</th>
                         </tr>
                         </thead>
-
-
                         <tbody>
                         {ROWS}
                         </tbody>
