@@ -52,11 +52,12 @@ export class EOrganizationControl extends React.Component {
                            datepicker='+'/>
                 </span>
             </td>
-            <td>{disabled ? null :
-                <Button type="text" onClick={rmv(i)}>
-                    <i className="el-icon-delete color-red-dark"/>
-                </Button>
-            }
+            <td>
+                {disabled ? null :
+                    <Button type="text" onClick={rmv(i)}>
+                        <i className="el-icon-delete color-red-dark"/>
+                    </Button>
+                }
             </td>
         </tr>)); //
 

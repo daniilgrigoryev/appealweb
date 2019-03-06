@@ -1,6 +1,7 @@
 import React from 'react'
 import * as _ from 'lodash'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
+import {Button, Input, Card, Layout} from 'element-react'
 
 import IncLetterHead from './sub/incLetterHead.js'
 import IncLetterBasic from './sub/incLetterBasic.js'
@@ -12,23 +13,25 @@ import IncLinkScan from './sub/incLinksScan.js'
 
 export default class IncomingLetter extends React.Component {
 
-  render() {  
-  	return(
-  		<div style={{display:'flex','flex-wrap':'wrap'}}>
-        <IncLetterHead/>
-        <IncLetterBasic/>
-        <IncLetterPlus/>
-        <IncLetterPost/>
-        <IncLetterIspoln/>
-        <IncLinkInner />
-        <IncLinkScan />
-  		</div>
-  	);
-  } //
+    render() {
+        return (
+            <Layout.Row gutter="20">
+                <Layout.Col span="24">
+                    <Card className="box-card mb60" header={
+                        <h3 className='ap-h3'>
+                            Новое входящее служебное письмо
+                        </h3>
+                    }>
+                        <IncLetterHead/>
+                        <IncLetterBasic/>
+                        <IncLetterPlus/>
+                        <IncLetterPost/>
+                        <IncLetterIspoln/>
+                        <IncLinkInner/>
+                        <IncLinkScan/>
+                    </Card>
+                </Layout.Col>
+            </Layout.Row>
+        );
+    }
 }
-
-/*
-export default connect((state) => {
-    debugger;
-    return {};
-})(IncomingLetter);*/

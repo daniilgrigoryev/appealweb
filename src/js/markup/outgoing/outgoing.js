@@ -17,7 +17,7 @@ export default class Outgoing extends React.Component {
             <Layout.Col span="24">
                 <Card className="box-card mb60" header={
                     <h3 className='ap-h3'>
-                        Новое исходящее сообщение
+                        Новое исходящее обращение
                     </h3>
                 }>
                     <IshHead />
@@ -28,8 +28,8 @@ export default class Outgoing extends React.Component {
                 </Card>
 
                 <div className="ap-footer">
-                    <Button size='small' type='primary' className='mr24'>Зарегистрировать</Button>
-                    <Button size='small' type='text'>Отменить</Button>
+                    <Button className='mr24'>Зарегистрировать</Button>
+                    <Button type='text'>Отменить</Button>
                 </div>
             </Layout.Col>
         </Layout.Row>

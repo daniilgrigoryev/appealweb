@@ -55,7 +55,6 @@ const scannedDocs = (props) => {
 
     return (
         <React.Fragment>
-
             {!fields.length ?
                 <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет сканированных документов</p>
                 :
@@ -117,6 +116,7 @@ class IshLinkScan extends React.Component {
             <div>
                 <hr className='txt-hr my18'/>
                 <h4 className='ap-h4'>{M.SCAN_DOC.label}</h4>
+
                 <FieldArray name={M.SCAN_DOC.name} component={scannedDocs} disabled={disabled}/>
             </div>
         )

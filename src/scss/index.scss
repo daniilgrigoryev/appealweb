@@ -85,11 +85,12 @@ div.tooltipWrap {
 }
 
 .ap-h4 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 2;
   margin-bottom: 10px;
-  color: #969696;
+  color: $color-text-headers;
+  letter-spacing: 0.25px;
 }
 
 .ap-txt-big {
@@ -160,10 +161,12 @@ div.tooltipWrap {
 
 // Стили таблиц
 .ap-table-header {
-  font-size: 12px;
+  font-size: 10.5px;
   vertical-align: top;
   font-weight: 400;
   text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
 }
 
 .ap-table-list-number {

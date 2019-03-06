@@ -9,7 +9,7 @@ export default {
 		INTRA_DOCS: 	 {name: 'INTRA_DOCS',	  		label: 'Служебным документам'}
 	},
 	incLetterBasic: { 	 
-		MAIN_INFO:  	 {name: 'MAIN_INFO', 	  		label: 'Основные сведения'},
+		MAIN_INFO:  	 {name: 'MAIN_INFO', 	  		label: 'Подробные сведения'},
 		VID_DOC: 		 {name: 'vidDoc',		  		label: 'Вид документа',	            key: 'doc_vid'},
 		SUMMARY: 		 {name: 'summary',		  		label: 'Краткое содержание'},
 		NOTES: 		     {name: 'notes',		  		label: 'Примечание'},
@@ -21,7 +21,7 @@ export default {
 		ZAJAV_NDOC:     {name: 'zajavNDoc',		 		label: '№ документа'},
 		ZAJAV_DATE:     {name: 'zajavDate',		  		label: 'Дата'},
 		ZAJAV_SIGNER: 	{name: 'zajavSigner',	 		label: 'Подписал'},
-		ORG_NAME: 		{name: 'ORG_NAME',		  		label: 'Наименование организации/заявитель'},
+		ORG_NAME: 		{name: 'ORG_NAME',		  		label: 'Список организаций/заявителей'},
 		INC_NUM: 		{name: 'INC_NUM',		  		label: 'Входящий №'},
 		SER_VH_DOC: 	{name: 'inc_ser',				label: 'Серия входящего документа'},
 		NUM_VH_DOC: 	{name: 'inc_num',				label: 'Номер входящего документа'},
