@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DESIGN'
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -64,16 +64,14 @@ export function fetchAutocomplete(key,query){
 
 export function fetchSelect(key){
 	switch(key){
-		case 'REQUEST_TYPE':  return fetchAppealSource();
-		/*	const alias = 'REQUEST_TYPE';
-			debugger;
-			return AJ.post("rest/select",{alias})
-		*/
-		case 'RESPONSE_TYPE': return fetchAppealOut();
+		case 'REQUEST_TYPE':
+		case 'RESPONSE_TYPE':
+		case 'QUESTIONS_LIST':
+		case 'DEPARTMENTS_LIST':
+		case 'EMPLOYEES':
+			return AJ.post("rest/selectList",{alias : key, listValueField : 'value'});
 		case 'delivery_type': return fetchAppeaVidDost();
 		case 'doc_vid':       return fetchAppeaVidDoc();
-		case 'questions':     return fetchQuestions();
-		case 'departments':   return fetchDepartments();
 		case 'fabulasDoc': 	  return fetchFabulasDoc();
 		case 'fabulasThemes': 	  return fetchFabulasThemes();
 		case 'fabulasCategories': return fetchFabulasCategories();

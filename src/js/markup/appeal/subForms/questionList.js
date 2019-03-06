@@ -28,9 +28,7 @@ export class EQuestionList extends React.Component {
         const rmv = (ind) => () => fields.remove(ind);
         const ROWS = fields.map((x, i) => (<tr key={i}>
             <td>
-                <span className='ap-table-list-number mr12'>
-                {i + 1}
-                 </span>
+                <span className='ap-table-list-number mr12'>{i + 1}</span>
             </td>
             <td>
                  <span className='inline-block mr12'>

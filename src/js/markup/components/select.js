@@ -17,8 +17,12 @@ class ASelect extends React.Component {
 		this.pushData2state();
 	}
 
-	setData(d){
-		let data = {}; debugger;
+	setData(arg){
+		let d = arg;
+		if (arg && arg.data){
+			d = arg.data;
+		}
+		let data = {};
 		if (d && d.length){
 			data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
 		}

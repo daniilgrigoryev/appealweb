@@ -121,8 +121,8 @@ export default {
 		ISH_DATE: 		 {name: 'date',		      label: 'Исходящая дата'}
 	},
 	questionList: {
-		QUEST: 			 {name: 'question',		  label: 'Тематика обращения',		    key: 'questions'},
-		DEPART: 		 {name: 'department', 	  label: 'Отдел', 						key: 'departments'}
+		QUEST: 			 {name: 'question',		  label: 'Тематика обращения',		    key: 'QUESTIONS_LIST'},
+		DEPART: 		 {name: 'department', 	  label: 'Отдел', 						key: 'DEPARTMENTS_LIST'}
 	}, 
 	fabulaDialog : {
 		DOCUMENT : 		 {name: 'DOCUMENT', 	  label: 'Документ'},
