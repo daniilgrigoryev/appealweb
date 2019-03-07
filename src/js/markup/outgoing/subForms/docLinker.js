@@ -78,7 +78,7 @@ class DocLinker extends React.Component {
             </div>)
             : (<AppealTable sid={this.props.sid} desc={Object.assign({}, searchDesc, desc)}
                             registerGetSelected={this.registerGetSelected}/>);
-
+        //
         return (
             <div>
                 <table>

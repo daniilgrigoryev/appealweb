@@ -109,6 +109,11 @@ class ClaimantData extends React.Component {
                     <td className='ap-input-caption'>{M.PRED_SURNAME.label}</td>
                     <td colSpan='3'><Field disabled={disabled} name={M.PRED_SURNAME.name} component={FInput}/></td>
                 </tr>
+                <tr>
+                    <td className='ap-input-caption'>{M.PRED_SEX.label}</td>
+                    <td colSpan='3'><Field disabled={disabled} name={M.PRED_SEX.name} component={FRadio}
+                                               options={sexOptions}/></td>
+                </tr>
                 </tbody>
             </table>
             : null;

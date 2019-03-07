@@ -42,9 +42,9 @@ export function logout(sessionId){
 	return AJ.post('rest/logout',{sessionId});
 }
 
-export function push(sessionId,alias,data){
+export function push(sessionId,alias,data,jsonMode=false){
 	const dataJSON = typeof data=='string' ? data : JSON.stringify(data);
-	return AJ.post('rest/push',{sid:sessionId, alias,data:dataJSON});	
+	return AJ.post('rest/push',{sid:sessionId, alias,data:dataJSON,jsonMode});	
 }
 
 export function fetchAutocomplete(key,query){
@@ -343,7 +343,7 @@ export function fetchDecisionsRegionalCourt(){
 
 export function fetchDecisionsMoscowCourt(){
 	return new Promise((resolve,reject)=>{
-		const resp =[
+		const resp = [
 			"МАДИ",
 			"заявитель"
 		];

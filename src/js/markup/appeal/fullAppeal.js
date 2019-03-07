@@ -32,7 +32,7 @@ class FullAppeal extends React.Component {
 
 	pushCsv(){
 		const {content,id} = this.props;
-		push(-1,'testAlias',content)
+		push(-1,'CLAIM_PUSH',content,true)
 	}
 
     render() {
@@ -94,3 +94,18 @@ export default compose(
         forceUnregisterOnUnmount: true // <------ unregister fields on unmount
     })
 )(FullAppeal)
+
+
+/*
+var js2pg = {
+    'string':'text',
+    'object':'jsonb',
+    'boolean':'boolean',
+    'number':'numeric'
+}
+
+_.chain(A).keys().map(fld=>{
+    const typ = js2pg[typeof A[fld]];
+    return {fld,typ}
+}).map(x=>'"'+x.fld+'" ' +x.typ).join(',\n').value()
+*/

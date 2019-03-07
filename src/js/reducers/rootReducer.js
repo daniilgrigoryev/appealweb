@@ -10,35 +10,43 @@ const addMessage = (state,type,message)=>{
   return state.set('messagesQueue',list);
 }
 
-const rootReducer = function(state, action){
-  switch (action.type) {
-  	case A.LOGOUT_DONE:
-      PULSE.stop();
-      AJAX.eraseSid();
-      if (state.get('externalLogin')){
-        window.close();
-      } else {
-        window.location.reload();   
-      }
-  		return state;
-  	case A.MESSAGES_ERASE:
-      return state.set('messagesQueue',im([]));
-  	case A.MESSAGE_SET:
-  		return addMessage(state,action.severity,action.message)
-  	case A.LOGIN_DONE:
-      const {sessionID,externalSid} = action.loggedData; debugger;
-      AJAX.setSid(sessionID);
-      PULSE.notifyAlive(sessionID,externalSid)
-      PULSE.start()
-  		return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
-    case A.APPEAL_LOAD:
-      return state.setIn(['form','appeal'],action.data);
-    default: 
-    	return state
+const reduceLogout = (state,action)=>{
+  PULSE.stop();
+  AJAX.eraseSid();
+  if (state.get('externalLogin')){
+    window.close();
+  } else {
+    window.location.reload();
   }
+  return state
 }
 
-const initialState = Immutable.fromJS({
+const reduceLogin = (state,action)=>{
+  const {sessionID,externalSid} = action.loggedData;
+  AJAX.setSid(sessionID);
+  PULSE.notifyAlive(sessionID,externalSid)
+  PULSE.start()
+  return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
+}
+
+const reduceMessagesErase = (state,action)=>state.set('messagesQueue',im([]));
+const reduceMessageSet    = (state,action)=>addMessage(state,action.severity,action.message);
+const reduceAppealLoad    = (state,action)=>state.setIn(['form','appeal'],action.data);
+
+const ROOT_ACTIONS = {
+  [A.LOGOUT_DONE]   : reduceLogout,
+  [A.MESSAGES_ERASE]: reduceMessagesErase,
+  [A.MESSAGE_SET]   : reduceMessageSet,
+  [A.LOGIN_DONE]    : reduceLogin,
+  [A.APPEAL_LOAD]   : reduceAppealLoad
+}
+
+const rootReducer = function(state, action){
+  const change = ROOT_ACTIONS[action.type];
+  return change ? change(state,action) : state;
+}
+
+const initialState = im({
     general : {
       system: 'M',
       externalLogin: false && true,

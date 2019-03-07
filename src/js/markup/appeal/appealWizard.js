@@ -61,7 +61,7 @@ export default class AppealWizard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { page: props.page /*|| 'testElements'*/ ||'basicData' }
+    this.state = { page: props.page || 'testElements' ||'basicData' }
   }
 
   toPage(page){
