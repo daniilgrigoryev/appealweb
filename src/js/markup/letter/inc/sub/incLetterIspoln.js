@@ -35,7 +35,8 @@ const postRows = (props) => {
             </td>
             <td>
                 <span className='inline-block mr12'>
-                   <Field disabled={disabled} component={FPicker} name={x + M.DATE.name} value={x[M.DATE.name]} date='+'/>
+                   <Field disabled={disabled} component={FPicker} name={x + M.DATE.name} value={x[M.DATE.name]}
+                          date='+'/>
                 </span>
             </td>
             <td>
@@ -50,18 +51,22 @@ const postRows = (props) => {
     return (
         <React.Fragment>
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет документов исполнительного производства</p>
+                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет документов исполнительного
+                    производства</p>
                 :
                 <table>
+                    <tbody>
                     <tr>
                         <td className='ap-input-caption'></td>
                         <td>
                             <table className='mb18'>
                                 <thead>
-                                <th className='ap-table-header'></th>
-                                <th className='ap-table-header'>{M.DESC.label}</th>
-                                <th className='ap-table-header'>{M.DATE.label}</th>
-                                <th className='ap-table-header'></th>
+                                <tr>
+                                    <th className='ap-table-header'></th>
+                                    <th className='ap-table-header'>{M.DESC.label}</th>
+                                    <th className='ap-table-header'>{M.DATE.label}</th>
+                                    <th className='ap-table-header'></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {ROWS}
@@ -69,10 +74,12 @@ const postRows = (props) => {
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             }
 
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -91,6 +98,7 @@ const postRows = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </React.Fragment>
     );

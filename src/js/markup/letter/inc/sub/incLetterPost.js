@@ -60,15 +60,18 @@ const postRows = (props) => {
                 <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных постановлений</p>
                 :
                 <table>
+                    <tbody>
                     <tr>
                         <td className='ap-input-caption'></td>
                         <td>
                             <table className='mb18'>
                                 <thead>
-                                <th className='ap-table-header'></th>
-                                <th className='ap-table-header'>{M.APN.label}</th>
-                                <th className='ap-table-header'>{M.DATE.label}</th>
-                                <th className='ap-table-header'></th>
+                                <tr>
+                                    <th className='ap-table-header'></th>
+                                    <th className='ap-table-header'>{M.APN.label}</th>
+                                    <th className='ap-table-header'>{M.DATE.label}</th>
+                                    <th className='ap-table-header'></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {ROWS}
@@ -76,10 +79,12 @@ const postRows = (props) => {
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             }
 
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -98,6 +103,7 @@ const postRows = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </React.Fragment>
     );

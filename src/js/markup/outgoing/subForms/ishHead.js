@@ -52,25 +52,29 @@ const addressee = (props) => {
                 <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных адресатов</p>
                 :
                 <table>
+                    <tbody>
                     <tr>
                         <td className='ap-input-caption'></td>
                         <td>
                             <table className='mb18'>
                                 <thead>
-                                <th className='ap-table-header'></th>
-                                <th colSpan='2' className='ap-table-header wmin360'>Кому:</th>
+                                <tr>
+                                    <th className='ap-table-header'></th>
+                                    <th colSpan='2' className='ap-table-header wmin360'>Кому:</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {ROWS}
-
                                 </tbody>
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             }
 
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -89,6 +93,7 @@ const addressee = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </React.Fragment>
     );

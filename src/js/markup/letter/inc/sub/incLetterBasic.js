@@ -45,7 +45,7 @@ class IncLetterBasic extends React.Component {
                 </table>
             </div>
         )
-    }//
+    }
 }
 
 export default reduxForm({

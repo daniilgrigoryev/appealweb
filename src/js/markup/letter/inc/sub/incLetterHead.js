@@ -141,17 +141,20 @@ const ZajavRows = (props) => {
 
                 :
                 <table>
+                    <tbody>
                     <tr>
                         <td className='ap-input-caption'></td>
                         <td>
                             <table className='wmin600 mb18'>
                                 <thead>
-                                <th className='ap-table-header'></th>
-                                <th className='ap-table-header'>{M.ZAJAV_NDOC.label}</th>
-                                <th className='ap-table-header'>{M.ZAJAV_SENDER.label}</th>
-                                <th className='ap-table-header'>{M.ZAJAV_DATE.label}</th>
-                                <th className='ap-table-header'>{M.ZAJAV_SIGNER.label}</th>
-                                <th></th>
+                                <tr>
+                                    <th className='ap-table-header'></th>
+                                    <th className='ap-table-header'>{M.ZAJAV_NDOC.label}</th>
+                                    <th className='ap-table-header'>{M.ZAJAV_SENDER.label}</th>
+                                    <th className='ap-table-header'>{M.ZAJAV_DATE.label}</th>
+                                    <th className='ap-table-header'>{M.ZAJAV_SIGNER.label}</th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {TDS}
@@ -159,9 +162,11 @@ const ZajavRows = (props) => {
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             }
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -180,6 +185,7 @@ const ZajavRows = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>);
 };

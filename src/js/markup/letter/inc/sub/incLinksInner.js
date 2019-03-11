@@ -65,6 +65,7 @@ const linkedDocs = (props) => {
             }
 
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -83,6 +84,7 @@ const linkedDocs = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </React.Fragment>);
 };

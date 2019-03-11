@@ -64,7 +64,7 @@ const OrganizationsData = props => {
             </Layout.Row>
         </div>
     )
-} //
+};
 
 const mapStateToProps = (state) => ({system: state.getIn(['general', 'system'])});
 

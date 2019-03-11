@@ -60,6 +60,7 @@ const scannedDocs = (props) => {
                 <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет сканированных документов</p>
                 :
                 <table>
+                    <tbody>
                     <tr>
                         <td className='ap-input-caption'></td>
                         <td>
@@ -78,10 +79,12 @@ const scannedDocs = (props) => {
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             }
 
             <table>
+                <tbody>
                 <tr>
                     <td className='ap-input-caption'></td>
                     <td>
@@ -106,6 +109,7 @@ const scannedDocs = (props) => {
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </React.Fragment>);
 };
