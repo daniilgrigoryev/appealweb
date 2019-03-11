@@ -3,10 +3,9 @@ import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {FInput, EInput} from '../../../components/finput.js'
 import {ESelect, FSelect} from '../../../components/select.js'
 import {EPicker, FPicker} from '../../../components/picker.js'
+import * as _ from 'lodash'
 import {Button} from 'element-react'
 
-
-import * as _ from 'lodash'
 import mapping from '../mapping.js'
 
 const M = mapping.incLinksScan;
@@ -18,7 +17,7 @@ const getRow = (npost, desc, docId, content) => {
         docId: docId || null,
         content: content || null
     }
-}
+};
 
 const scannedDocs = (props) => {
     const {fields, disabled} = props
@@ -108,7 +107,6 @@ const scannedDocs = (props) => {
                     </td>
                 </tr>
             </table>
-
         </React.Fragment>);
 };
 

@@ -29,7 +29,7 @@ const addressee = (props) => {
             <td>
                 <span className="ap-table-list-number mr12">{i + 1}</span>
             </td>
-            <td className='wmin360'>
+            <td>
                 <Field disabled={disabled} component={FInput}
                        name={x + M.ADDR.name}
                        value={x[M.ADDR.name]}
@@ -57,8 +57,8 @@ const addressee = (props) => {
                         <td>
                             <table className='mb18'>
                                 <thead>
-                                <th className='ap-table-header'>№</th>
-                                <th colSpan='2' className='ap-table-header'>Кому:</th>
+                                <th className='ap-table-header'></th>
+                                <th colSpan='2' className='ap-table-header wmin360'>Кому:</th>
                                 </thead>
                                 <tbody>
                                 {ROWS}

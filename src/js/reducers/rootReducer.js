@@ -26,7 +26,7 @@ const rootReducer = function(state, action){
   	case A.MESSAGE_SET:
   		return addMessage(state,action.severity,action.message)
   	case A.LOGIN_DONE:
-      const {sessionID,externalSid} = action.loggedData; debugger;
+      const {sessionID,externalSid} = action.loggedData;
       AJAX.setSid(sessionID);
       PULSE.notifyAlive(sessionID,externalSid)
       PULSE.start()

@@ -12,7 +12,7 @@ const M = mapping.docLinker;
 
 const desc = {
     alias: 'APPEAL_LIST'
-}
+};
 
 class DocLinker extends React.Component {
 
@@ -29,7 +29,7 @@ class DocLinker extends React.Component {
             selected: [],
 
             searchDesc: {}
-        }
+        };
 
         this.getSelected = null;
 

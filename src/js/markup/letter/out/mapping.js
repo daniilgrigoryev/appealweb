@@ -9,7 +9,7 @@ export default {
 		INTRA_DOCS: 	 {name: 'INTRA_DOCS',	  		label: 'Служебным документам'}
 	},
 	outLetterBasic: { 	 
-		MAIN_INFO:  	 {name: 'MAIN_INFO', 	  		label: 'Основные сведения'},
+		MAIN_INFO:  	 {name: 'MAIN_INFO', 	  		label: 'Подробные сведения'},
 		VID_DOC: 		 {name: 'vidDoc',		  		label: 'Вид документа',	            key: 'doc_vid'},
 		SUMMARY: 		 {name: 'summary',		  		label: 'Краткое содержание'},
 		NOTES: 		     {name: 'notes',		  		label: 'Примечание'},

@@ -25,7 +25,6 @@ export default class OutcomingLetter extends React.Component {
                     }>
                         <OutLetterHead/>
                         <OutLetterBasic/>
-
                         <OutLetterPost/>
                         <OutLetterIspoln/>
                         <OutLinkInner/>
