@@ -8,6 +8,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   //overflow: hidden;
   color: $color-text-base;
+  background: $color-page-bg;
 }
 
 div.tooltipWrap {
@@ -157,6 +158,23 @@ div.tooltipWrap {
 
 .ap-input--disabled {
   color: $color-text-base;
+}
+
+.ap-button-back {
+  $size: 36px;
+  width: $size;
+  height: $size;
+  display: inline-block;
+  border-radius: 100%;
+  border: 1px solid $color-input-border;
+  outline: none;
+  background: url("/src/images/arrow-back.svg") no-repeat center;
+  background-size: 26px;
+  transition: all 150ms linear;
+
+  &:hover {
+    border-color: $color-blue-selected;
+  }
 }
 
 // Стили таблиц

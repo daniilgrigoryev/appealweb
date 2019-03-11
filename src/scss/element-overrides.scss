@@ -117,6 +117,14 @@
   &.el-button--primary {
     color: white !important;
   }
+
+  &.is-disabled {
+    opacity: 0.25 !important;
+  }
+
+  span:empty {
+    display: none;
+  }
 }
 
 
@@ -153,18 +161,20 @@
 }
 
 .el-card {
-  border: 1px solid $box-border-color !important;
+  border: none !important;
   box-shadow: none !important;
   overflow-y: visible !important;
 }
 
 .el-card__header {
-  padding: 0 20px !important;
-  border-bottom-color: $color-input-border;
+  padding: 0 0 20px 0 !important;
+  border: none !important;
+  background: $color-page-bg;
 }
 
 .el-card__body {
-  min-height: 240px;
+  //min-height: 240px;
+  border: 1px solid $color-input-border !important;
 }
 
 .el-collapse {
