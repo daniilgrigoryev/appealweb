@@ -105,7 +105,7 @@ export default class CrudRow extends React.Component {
             <tr key={i}>
                 {x.map((f, j) => [
                     <td key={i + 'L' + j} className='ap-input-caption'>{f.header || f.field}</td>,
-                    <td key={i + 'V' + j}>{this.getChanger(i * count + j)}</td>
+                    <td key={i + 'V' + j} className='wmin300'>{this.getChanger(i * count + j)}</td>
                 ])}
             </tr>)
         );//
@@ -122,6 +122,16 @@ export default class CrudRow extends React.Component {
         return false;
     }
 
+    componentDidMount() {
+        // TODO - убрать! пока так избавился от лишнего дефолтного стиля
+        const fileInputHtml = this.refs['crudRow'].querySelector('input[type="file"]');
+
+        if (fileInputHtml) {
+            fileInputHtml.classList.remove('el-input__inner');
+            fileInputHtml.classList.add('ap-input-file');
+        }
+    }
+
     render() {
         const {row} = this.state;
         const {fields, editor, removeCrud, hideRow, saveCrud, columns} = this.props;
@@ -134,7 +144,7 @@ export default class CrudRow extends React.Component {
         const save = () => saveCrud(row);
 
         return (
-            <div>
+            <div ref='crudRow'>
                 <h4 className="flex-parent flex-parent--center-cross px18 pt18 ap-h4">
                     <button onClick={hideRow} className='ap-button-back mr12' title='Вернуться в список'/>
                     {NWR ? 'Создание новой записи' : 'Редактирование записи'}
@@ -147,31 +157,31 @@ export default class CrudRow extends React.Component {
                     </table>
                 </div>
 
-                <hr className='txt-hr my18'/>
+                {editor}
 
-                <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main px24 pb24'>
-                    <div className='flex-parent flex-parent--center-cross'>
-                        <Button onClick={save} disabled={!CHG}
-                                className="flex-parent">
-                            Сохранить
-                        </Button>
-
-                        <Button type="text" onClick={hideRow}
-                                className="ml24">
-                            Отмена
-                        </Button>
-                    </div>
-                    <div>
-                        {NWR ? null :
-                            <Button type="danger" onClick={removeCrud}
+                <div className="ap-footer">
+                    <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main px24'>
+                        <div className='flex-parent flex-parent--center-cross'>
+                            <Button onClick={save} disabled={!CHG}
                                     className="flex-parent">
-                                Удалить
+                                Сохранить
                             </Button>
-                        }
+
+                            <Button type="text" onClick={hideRow}
+                                    className="ml24">
+                                Отмена
+                            </Button>
+                        </div>
+                        <div>
+                            {NWR ? null :
+                                <Button type="danger" onClick={removeCrud}
+                                        className="flex-parent">
+                                    Удалить
+                                </Button>
+                            }
+                        </div>
                     </div>
                 </div>
-
-                {editor}
             </div>
         );
     }

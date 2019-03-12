@@ -97,7 +97,7 @@ const OFRow = (props) => {
                 </tr>
             </React.Fragment>);
         return [collapsed];
-    } //
+    }
 
     const PRIS_UCH = (!P[M.UCH_PRIS.name]) ? null : [
         <tr key='pu1'>

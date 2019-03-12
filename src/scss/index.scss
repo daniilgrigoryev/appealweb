@@ -112,6 +112,7 @@ div.tooltipWrap {
   padding-right: 20px;
   font-size: $input-caption-font-size;
   text-align: right;
+  line-height: 1.2;
   vertical-align: top;
 }
 
@@ -153,6 +154,11 @@ div.tooltipWrap {
 
 .ap-input {
   color: $color-input-text;
+  font-size: 13px;
+}
+
+.ap-input-file {
+  color: $color-text-base;
   font-size: 13px;
 }
 
