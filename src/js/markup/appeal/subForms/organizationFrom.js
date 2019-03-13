@@ -1,6 +1,8 @@
 import React from 'react'
 import {FInput, EInput} from '../../components/finput.js'
 import {Field, reduxForm} from 'redux-form/immutable'
+import {FSelect} from '../../components/select.js'
+import {FAutocomplete} from '../../components/fautocomplete.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
 import * as V from '../../../validators'
@@ -30,8 +32,7 @@ export class EOrganizationFrom extends React.Component {
         const ROWS = fields.map((x, i) => (<tr key={i}>
             <td>
                 <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FInput} name={x + M.ORG_NAME.name}
-                           value={x[M.ORG_NAME.name]}/>
+                    <Field disabled={disabled} component={FAutocomplete} name={x + M.ORG_NAME.name} value={x[M.ORG_NAME.name]}  dataKey={M.ORG_NAME.key} />
                 </span>
             </td>
             <td>
@@ -41,8 +42,7 @@ export class EOrganizationFrom extends React.Component {
             </td>
             <td>
                  <span className='inline-block mr12'>
-                 <Field disabled={disabled} component={FPicker} name={x + M.ISH_DATE.name} value={x[M.ISH_DATE.name]}
-                        datepicker='+'/>
+                 <Field disabled={disabled} component={FPicker} name={x + M.ISH_DATE.name} value={x[M.ISH_DATE.name]} datepicker='+'/>
                 </span>
             </td>
             <td>
@@ -53,7 +53,7 @@ export class EOrganizationFrom extends React.Component {
                 }
             </td>
         </tr>));
-
+        //
         return (
             <React.Fragment>
                 {!fields.length ?

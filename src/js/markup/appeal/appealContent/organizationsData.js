@@ -38,8 +38,7 @@ const OrganizationsData = props => {
                                     <Tag type="gray" className='mx12'>3/8</Tag>
 
                                     <Button.Group>
-                                        <Button type="primary" size='small' icon="arrow-left"
-                                                onClick={prevPage.bind(isMadi)}/>
+                                        <Button type="primary" size='small' icon="arrow-left" onClick={prevPage.bind(isMadi)}/>
                                         <Button type="primary" size='small' onClick={nextPage.bind(isMadi)}>
                                             <i className="el-icon-arrow-right el-icon-right"/>
                                         </Button>
@@ -55,9 +54,7 @@ const OrganizationsData = props => {
                             <hr className='txt-hr my18'/>
 
                             <h4 className='ap-h4'>{M.UNDER_CONTROL.label}</h4>
-                            <FieldArray name='organizationsControl' component={EOrganizationControl}
-                                        disabled={disabled}/>
-
+                            <FieldArray name='organizationsControl' component={EOrganizationControl} disabled={disabled}/>
                         </form>
                     </Card>
                 </Layout.Col>

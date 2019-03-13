@@ -18,22 +18,24 @@ class AAutocomplete extends React.Component {
 	}
 
 	componentDidMount(){
-		const {acKey,value} = this.props;
-		if (value){
-			getAcValue(acKey,value).then((value)=>this.setState({value}));
+		const {acKey,dataKey,value} = this.props;
+		if (value){ 
+			getAcValue(acKey||dataKey,value).then((value)=>this.setState({value}));
 		}
 	}
 
-	querySearch(queryString, cb) {
+	querySearch(queryString, cb){
 		const {filter} = this;
 		const {data} = this.state;
-		const key = this.props.acKey;
+		const {acKey,dataKey} = this.props;
+		const key = acKey || dataKey;
 	  	if (data){
 	  		cb(filter(data,queryString));
 	  	} else {
 	  		getAc(key).then((d)=>{
 	  			const value = this.state.value || null;
 	  			let data = {};
+				d = d.data ? d.data : d;
 				if (d && d.length){
 					data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
 				}
@@ -49,7 +51,7 @@ class AAutocomplete extends React.Component {
 			return data;
 		}
 		const upper = query.toUpperCase();
-		return data.filter(x=>x.value.toUpperCase().indexOf(upper)==0);
+		return data.filter(x=>x.value.toUpperCase().indexOf(upper) > -1);
 	}
 
 	handleSelect(item) {

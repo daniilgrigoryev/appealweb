@@ -24,8 +24,8 @@ const reduceLogout = (state,action)=>{
 const reduceLogin = (state,action)=>{
   const {sessionID,externalSid} = action.loggedData;
   AJAX.setSid(sessionID);
-  PULSE.notifyAlive(sessionID,externalSid)
-  PULSE.start()
+  PULSE.notifyAlive(sessionID,externalSid);
+  PULSE.start();
   return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
 }
 
@@ -34,11 +34,11 @@ const reduceMessageSet    = (state,action)=>addMessage(state,action.severity,act
 const reduceAppealLoad    = (state,action)=>state.setIn(['form','appeal'],action.data);
 
 const ROOT_ACTIONS = {
-  [A.LOGOUT_DONE]   : reduceLogout,
-  [A.MESSAGES_ERASE]: reduceMessagesErase,
-  [A.MESSAGE_SET]   : reduceMessageSet,
-  [A.LOGIN_DONE]    : reduceLogin,
-  [A.APPEAL_LOAD]   : reduceAppealLoad
+  [A.LOGOUT_DONE]    : reduceLogout,
+  [A.MESSAGES_ERASE] : reduceMessagesErase,
+  [A.MESSAGE_SET]    : reduceMessageSet,
+  [A.LOGIN_DONE]     : reduceLogin,
+  [A.APPEAL_LOAD]    : reduceAppealLoad
 }
 
 const rootReducer = function(state, action){
@@ -48,11 +48,11 @@ const rootReducer = function(state, action){
 
 const initialState = im({
     general : {
-      system: 'M',
+      system: 'A',
       externalLogin: false && true,
       messagesQueue: [],
       user : {
-        username : 'aleksandrov',
+        username : '',
         sessionId: ''
       }
     },

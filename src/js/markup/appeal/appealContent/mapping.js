@@ -30,7 +30,7 @@ export default {
 		PRED_SURNAME:    {name:  'PRED_SURNAME',  label: 'Представитель: Отчество'},
 		PRED_SEX:        {name:  'PRED_SEX',	  label: 'Пол'},
 		ZAJAV_LIC:       {name:  'zajavLic',      label: '#radiobutton#'},
-		ORG_NAME:        {name:  'ORG_NAME',      label: 'Название организации'},
+		ORG_NAME:        {name:  'ORG_NAME',      label: 'Название контролирующей организации',        key: 'ORG_LIST'},
 		INN:             {name:  'INN',           label: 'ИНН'},
 		KPP:             {name:  'KPP',           label: 'КПП'},
 		ISH_NUMBER:      {name:  'ISH_NUMBER',    label: 'Исходящий номер'},
@@ -68,13 +68,13 @@ export default {
 		VIOLATOR_REGNO:  {name: 'VIOLATOR_REGNO', label: 'ГРЗ нарушителя'},
 		APPEAL_CAUSE:    {name: 'APPEAL_CAUSE',   label: 'Причина обращения', key: 'APPEAL_CAUSE'},
 
-		DESISION_MAKER:  {name: 'DESISION_MAKER', label: 'Решение принял руководитель', key:'DESISION_MAKER'},
-		DECISION_THEME:  {name: 'DECISION_THEME', label: 'Решение по теме',             key:'DECISION_THEME'},
-		DECISION_BASIS:  {name: 'DECISION_BASIS', label: 'Основания для решения',       key: 'DECISION_BASIS'},
-		APPEAL_APN:      {name: 'APPEAL_APN',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)', key:'APPEAL_APN'},
+		DESISION_MAKER:  {name: 'DESISION_MAKER', label: 'Решение принял руководитель', key:'DECISION_MAKER'},
+		DECISION_THEME:  {name: 'DECISION_THEME', label: 'Решение по теме',             key:'APPEAL_DECISION'},
+		DECISION_BASIS:  {name: 'DECISION_BASIS', label: 'Основания для решения',       key: 'APPEAL_DECISION_BASIS'},
+		APPEAL_APN:      {name: 'APPEAL_APN',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)', key:'APPEAL_CAUSE'},
 		REL_DOCS: 		 {name: 'docs',		      label: 'Связанные документы'},
 
-		CAT: 			{name: 'category', 		  label: 'Категория'},
+		CAT: 			{name: 'category', 		  label: 'Категория',                   key:'CLAIM_CATEGORIES'},
 		POST_N: 		{name: 'post_n',		  label: '№ постановления' },
 		POST_DATE: 		{name: 'post_date',		  label: 'Дата'}
 	},
@@ -111,13 +111,13 @@ export default {
 
 	},
 	organizationControl: {
-		ORG_NAME: 		 {name: 'name',			  label: 'Наименование'},
+		ORG_NAME: 		 {name: 'name',			  label: 'Наименование',        key: 'ORG_LIST'},
 		ISH_NUM: 		 {name: 'num',			  label: 'Исх. номер'},
 		ISH_DATE: 		 {name: 'date',		      label: 'Исх. дата'},
 		CONTR_DATE: 	 {name: 'control_date',   label: 'Дата контроля'}
 	},
 	organizationFrom: {
-		ORG_NAME: 		 {name: 'name',			  label: 'Наименование'},
+		ORG_NAME: 		 {name: 'name',			  label: 'Наименование',        key: 'ORG_LIST'},
 		ISH_NUM: 		 {name: 'num',			  label: 'Исходящий номер'},
 		ISH_DATE: 		 {name: 'date',		      label: 'Исходящая дата'}
 	},

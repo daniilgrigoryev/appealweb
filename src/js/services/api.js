@@ -48,6 +48,9 @@ export function push(sessionId,alias,data,jsonMode=false){
 }
 
 export function fetchAutocomplete(key,query){
+	if (true){
+		return fetchSelect(key);
+	}
 	return new Promise((resolve,reject)=>{
 		const resp = [
 		  { "value": "vue", 		"property": "https://github.com/vuejs/vue" },
@@ -64,19 +67,20 @@ export function fetchAutocomplete(key,query){
 
 export function fetchSelect(key){
 	switch(key){
+		case 'delivery_type': return fetchAppeaVidDost();
+		case 'fabulasDoc': 	  return fetchFabulasDoc();
+		case 'fabulasCategories': return fetchFabulasCategories();
+		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
+		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
+		default: /*
 		case 'REQUEST_TYPE':
 		case 'RESPONSE_TYPE':
 		case 'QUESTIONS_LIST':
 		case 'DEPARTMENTS_LIST':
 		case 'EMPLOYEES':
+		case 'ORG_LIST':
+		case 'CLAIM_THEMES':*/
 			return AJ.post("rest/selectList",{alias : key, listValueField : 'value'});
-		case 'delivery_type': return fetchAppeaVidDost();
-		case 'doc_vid':       return fetchAppeaVidDoc();
-		case 'fabulasDoc': 	  return fetchFabulasDoc();
-		case 'fabulasThemes': 	  return fetchFabulasThemes();
-		case 'fabulasCategories': return fetchFabulasCategories();
-		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
-		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
 	}
 
 	return new Promise((resolve,reject)=>{
@@ -91,13 +95,6 @@ export function fetchSelect(key){
 		]
 		setTimeout(()=>resolve(resp),10);
 	});
-}
-
-export function fetchFabulasThemesM(){
-
-
-{category,theme,fabulaTheme,decision,text}
-
 }
 
 export function fetchDecisions(){

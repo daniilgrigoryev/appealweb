@@ -35,7 +35,9 @@ const OFRow = (props) => {
 
     const CCC = CC.filter(x => x && x.sys.indexOf(SYS) > -1).map(x => x.text);
     const cIndex = CCC.indexOf(P[M.CAT.name]);
-    const cRow = MM[cIndex];
+    const cRow = MM[cIndex+1]; // lead row offset
+
+    debugger;
     const cif = (field, el) => {
         if (!cRow) {
             return null;
@@ -142,7 +144,7 @@ const OFRow = (props) => {
                                 <span className='inline-block mr12'>
                                 <Field disabled={disabled} component={FSelect} name={field + M.CAT.name}
                                        placeholder={M.CAT.label}
-                                       data={CCC} value={P[M.CAT.name]}/>
+                                       dataKey={M.CAT.key} value={P[M.CAT.name]}/>
                                 </span>
                                 </td>
                                 <td>
@@ -254,7 +256,7 @@ const OFRow = (props) => {
                                                 <td className='ap-input-caption'>{M.APPEAL_CAUSE.label}</td>
                                                 <td><Field disabled={disabled} component={FSelect}
                                                            value={P[M.APPEAL_CAUSE.name]}
-                                                           name={field + M.APPEAL_CAUSE.name} key={M.APPEAL_CAUSE.key}/>
+                                                           name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
                                                 </td>
                                             </tr>)
                                         )}
@@ -264,7 +266,7 @@ const OFRow = (props) => {
                                                 <td><Field disabled={disabled} component={FSelect}
                                                            value={P[M.DESISION_MAKER.name]}
                                                            name={field + M.DESISION_MAKER.name}
-                                                           key={M.DESISION_MAKER.key}/>
+                                                           dataKey={M.DESISION_MAKER.key}/>
                                                 </td>
                                             </tr>)
                                         )}
@@ -274,7 +276,7 @@ const OFRow = (props) => {
                                                 <td><Field disabled={disabled} component={FSelect}
                                                            value={P[M.DECISION_THEME.name]}
                                                            name={field + M.DECISION_THEME.name}
-                                                           key={M.DECISION_THEME.key}/>
+                                                           dataKey={M.DECISION_THEME.key}/>
                                                 </td>
                                             </tr>)
                                         )}
@@ -284,7 +286,7 @@ const OFRow = (props) => {
                                                 <td><Field disabled={disabled} component={FSelect}
                                                            value={P[M.DECISION_BASIS.name]}
                                                            name={field + M.DECISION_BASIS.name}
-                                                           key={M.DECISION_BASIS.key}/>
+                                                           dataKey={M.DECISION_BASIS.key}/>
                                                 </td>
                                             </tr>)
                                         )}
@@ -293,7 +295,7 @@ const OFRow = (props) => {
                                                 <td className='ap-input-caption'>{M.APPEAL_APN.label}</td>
                                                 <td><Field disabled={disabled} component={FSelect}
                                                            value={P[M.APPEAL_APN.name]}
-                                                           name={field + M.APPEAL_APN.name} key={M.APPEAL_APN.key}/>
+                                                           name={field + M.APPEAL_APN.name} dataKey={M.APPEAL_APN.key}/>
                                                 </td>
                                             </tr>)
                                         )}
@@ -376,10 +378,6 @@ class ETopicList extends React.Component {
         return !_.size(acCateg)
             ? property
             : _.chain(acCateg).filter(x => x.property == property).first().get('value').value();
-    }
-
-    componentDidMount() {
-        getAc('key').then(data => this.setState({acCateg: data}));
     }
 
     onRemove(index) {
