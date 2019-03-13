@@ -99,7 +99,7 @@ const OFRow = (props) => {
                 </tr>
             </React.Fragment>);
         return [collapsed];
-    } //
+    }
 
     const PRIS_UCH = (!P[M.UCH_PRIS.name]) ? null : [
         <tr key='pu1'>
@@ -436,7 +436,7 @@ class ETopicList extends React.Component {
                 {!fields.length ?
                     <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных тем обращения</p>
                     :
-                    <table className='mb18'>
+                    <table className='wmin600 mb18'>
                         <thead>
                         <tr>
                             <th className='ap-table-header'>№</th>

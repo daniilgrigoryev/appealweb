@@ -36,4 +36,30 @@
     font-size: 14px !important;
     border: none !important;
   }
+
+  tr:not(.p-highlight, .p-datatable-emptymessage):not(.p-highlight-contextmenu):hover {
+    background-color: $box-bg-color-active !important;
+  }
+
+  .p-datatable-row:last-child {
+    border-bottom: none !important;
+  }
+
+  tr.p-datatable-emptymessage {
+    border-bottom: none !important;
+
+    &:hover {
+      cursor: initial !important;
+      background: initial !important;
+    }
+
+    td {
+      font-size: 18px !important;
+      line-height: 24px !important;
+      text-align: center;
+      border-bottom: none !important;
+      color: rgba(black, 0.1) !important;
+    }
+  }
+
 }

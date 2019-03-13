@@ -69,8 +69,8 @@ class FullAppeal extends React.Component {
                 </Layout.Row>
 
                 <div className="ap-footer">
-                    <Button size='small' onClick={this.outCsv}>Выгрузить CSV</Button>
-					<Button size='small' onClick={this.pushCsv}>На сервер CSV</Button>
+                    <Button onClick={this.outCsv}>Выгрузить CSV</Button>
+					<Button onClick={this.pushCsv}>На сервер CSV</Button>
                 </div>
             </div>
         );

@@ -2,12 +2,16 @@
 
 .el-input {
   .el-input__inner {
+    height: 24px;
     padding: 3px;
     color: $color-input-text;
     font-size: 13px;
     border: none;
-    border-bottom: 1px solid $color-input-border;
     border-radius: 0;
+
+    &:not([type='file']) {
+      border-bottom: 1px solid $color-input-border;
+    }
 
     &::placeholder {
       color: $color-input-placeholder;
@@ -24,6 +28,36 @@
       display: none !important;
     }
   }
+}
+
+.el-input-number {
+  span {
+    height: 22px;
+    width: initial;
+    border: none;
+    display: flex;
+    align-items: center;
+
+    &.el-input-number__decrease {
+      right: 20px ;
+    }
+
+    &.is-disabled {
+      opacity: 0.5;
+    }
+
+    &:hover:not(.is-disabled) {
+      i {
+        color: $color-blue-selected;
+      }
+    }
+
+    i {
+      font-size: 9px;
+      color: #ccc;
+    }
+  }
+
 }
 
 .el-checkbox__input {
@@ -50,11 +84,9 @@
   font-size: 8px !important;
 }
 
-
 .el-submenu__icon-arrow {
   font-size: 8px !important;
 }
-
 
 .el-switch {
   .el-switch__label {
@@ -62,15 +94,17 @@
   }
 
   .el-switch__core {
+    height: 18px;
     border: 1px solid $color-input-border-blue;
     background: transparent;
   }
 
   .el-switch__button {
+    $size: 22px;
     top: -5px;
-    left: -4px;
-    width: 24px;
-    height: 24px;
+    left: -3px;
+    width: $size;
+    height: $size;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   }
 
@@ -80,7 +114,6 @@
     }
   }
 }
-
 
 .el-radio {
   .el-radio__input.is-checked .el-radio__inner {
@@ -113,12 +146,18 @@
     background: rgba($color-input-border-blue, 0.15) !important;
   }
 
-
   &.el-button--primary {
     color: white !important;
   }
-}
 
+  &.is-disabled {
+    opacity: 0.25 !important;
+  }
+
+  span:empty {
+    display: none;
+  }
+}
 
 .el-autocomplete-suggestion {
   z-index: $input-font-size !important;
@@ -126,11 +165,6 @@
 
 .el-time-panel .el-time-panel__footer {
   display: flex;
-}
-
-
-.el-input__inner {
-  height: 24px;
 }
 
 .el-textarea__inner {
@@ -143,7 +177,6 @@
   font-size: $input-font-size;
 }
 
-
 .el-autocomplete-suggestion {
   z-index: 10 !important;
 }
@@ -153,18 +186,20 @@
 }
 
 .el-card {
-  border: 1px solid $box-border-color !important;
+  border: none !important;
   box-shadow: none !important;
   overflow-y: visible !important;
 }
 
 .el-card__header {
-  padding: 0 20px !important;
-  border-bottom-color: $color-input-border;
+  padding: 0 0 20px 0 !important;
+  border: none !important;
+  background: $color-page-bg;
 }
 
 .el-card__body {
-  min-height: 240px;
+  //min-height: 240px;
+  border: 1px solid $color-input-border !important;
 }
 
 .el-collapse {
@@ -191,6 +226,9 @@
   font-size: 13px;
 }
 
+.el-dialog__body {
+  color: inherit;
+}
 
 .el-dialog--small {
   min-width: 800px;

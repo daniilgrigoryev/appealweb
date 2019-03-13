@@ -17,7 +17,7 @@ class AppealExplorer extends React.Component {
         <AppealTable sid={this.props.sid} desc={desc} />
       </div>
     )
-  }//
+  }
 }
 
 const state2props = (state) => {

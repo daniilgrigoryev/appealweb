@@ -55,7 +55,7 @@ const NAVI = {
     nextPage: ()=>'fullAppeal',  
     prevPage: ()=>'archiveData'
   }
-}
+};
 
 export default class AppealWizard extends Component {
 
@@ -82,5 +82,5 @@ export default class AppealWizard extends Component {
         <Page.form {...props} />
       </div>
     )
-  }//
+  }
 }

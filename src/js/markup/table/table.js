@@ -81,6 +81,7 @@ export default class AppealTable extends React.Component {
                             scrollable={true}
                             paginator={true}
                             rows={ROWS}
+                            emptyMessage='Нет записей в таблице'
                             first={FIRST}
                             lazy={true}
                             totalRecords={+TABLE.size}

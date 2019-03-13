@@ -50,11 +50,12 @@ export class EOrganizationControl extends React.Component {
                     <Field disabled={disabled} component={FPicker} name={x + M.CONTR_DATE.name} value={x[M.CONTR_DATE.name]} datepicker='+'/>
                 </span>
             </td>
-            <td>{disabled ? null :
-                <Button type="text" onClick={rmv(i)}>
-                    <i className="el-icon-delete color-red-dark"/>
-                </Button>
-            }
+            <td>
+                {disabled ? null :
+                    <Button type="text" onClick={rmv(i)}>
+                        <i className="el-icon-delete color-red-dark"/>
+                    </Button>
+                }
             </td>
         </tr>)); //
 
