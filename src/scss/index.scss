@@ -115,9 +115,9 @@ div.tooltipWrap {
   line-height: 1.1;
   vertical-align: middle;
 
-  &:after {
-    content: ':';
-  }
+  //&:after {
+  //  content: ':';
+  //}
 }
 
 .ap-btn-cancel span {
@@ -225,4 +225,5 @@ div.tooltipWrap {
   justify-content: center;
   border-top: 1px solid $color-input-border;
   box-shadow: 0 0 8px rgba(86, 83, 83, 0.25);
+  z-index: 1;
 }

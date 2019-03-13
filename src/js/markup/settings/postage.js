@@ -11,7 +11,7 @@ export default class Postage extends React.Component {
             post: {
                 nds: 18
             }
-        }
+        };
 
         this.onInput = this.onInput.bind(this);
     }
@@ -165,9 +165,8 @@ export default class Postage extends React.Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td className='ap-input-caption'>за каждые последующие полные или неполные
-                                    20 г веса заказного письма,
-                                    руб
+                                <td className='ap-input-caption'>
+                                    За каждые последующие полные или неполные 20 г веса заказного письма, руб
                                 </td>
                                 <td>
                                     <span className='mr60'>
@@ -193,7 +192,7 @@ export default class Postage extends React.Component {
                             </tr>
                             <tr>
                                 <td className='ap-input-caption'>
-                                    за каждые последующие полные или неполные 20 г веса заказной бандероли, руб
+                                    За каждые последующие полные или неполные 20 г веса заказной бандероли, руб
                                 </td>
                                 <td>
                                     <span className='mr60'>
