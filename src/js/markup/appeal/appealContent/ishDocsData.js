@@ -1,4 +1,6 @@
 import React from 'react'
+import {compose} from 'redux'
+import {connect} from 'react-redux'
 import {FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../components/finput.js'
 import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
@@ -14,7 +16,7 @@ import {FTopicList} from "../subForms/topicList";
 const headerTitle = 'Исходящие документы';
 
 const IshDocsData = props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled} = props;
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled, categories} = props;
 
     return (
         <div>
@@ -45,7 +47,7 @@ const IshDocsData = props => {
                     }>
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>Список исходящих документов</h4>
-                            <FieldArray name='ishDocsData' component={FIshDocList} disabled={disabled}/>
+                            <FieldArray name='ishDocsData' component={FIshDocList} disabled={disabled} categories={categories}/>
                         </form>
                     </Card>
                 </Layout.Col>
@@ -54,9 +56,17 @@ const IshDocsData = props => {
     )
 } //
 
-export default reduxForm({
-    form: 'appeal', // <------ same form name                       disabled={pristine || submitting}
-    destroyOnUnmount: false, // <------ preserve form data
-    forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
-    //validate
-})(IshDocsData)
+const mapStateToProps = (state,props)=>{
+    const categories = _.map(state.getIn(['form','appeal','values','topicsData']).toJS(),(x,i)=>((i+1)+' => ' + x.category));
+    return {categories};
+}
+
+export default compose(
+    connect(mapStateToProps/*,mapDispatchToProps*/),
+    reduxForm({
+        form: 'appeal', // <------ same form name
+        destroyOnUnmount: false, // <------ preserve form data
+        forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+        //validate
+    })
+)(IshDocsData)

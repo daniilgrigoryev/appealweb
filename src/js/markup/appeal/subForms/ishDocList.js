@@ -40,6 +40,8 @@ const OFRow = (props) => {
     const onFab = (type) => () => onFabula(type, fabData);
     const commandFabula = (type, el) => onFabula(type, fabData);
 
+    const linkingThemes = props.categories;
+
     const P = value;
     if (!expanded) {
         const collapsed = (
@@ -128,7 +130,7 @@ const OFRow = (props) => {
                                             <td>
                                                 <Field disabled={disabled} component={FSelect}
                                                        name={field + M.REL_TOPIC.name}
-                                                       value={P[M.REL_TOPIC.name]} dataKey={M.REL_TOPIC.key}/>
+                                                       value={P[M.REL_TOPIC.name]} data={linkingThemes}/>
                                             </td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
                                             <td><Field disabled={disabled} component={FCheckbox}
@@ -374,11 +376,12 @@ class EIshDocList extends React.Component {
 
         const {fields, disabled} = this.props;
         const fabData = {};
-
+        const {categories} = this.props;
+debugger;
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id === this.state.expandedId}
                    onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData}
-                   disabled={disabled}>{x.value}
+                   disabled={disabled} categories={categories}>{x.value}
             </OFRow>)); //
 
         const add = (rowGetter) => () => fields.push(rowGetter());
