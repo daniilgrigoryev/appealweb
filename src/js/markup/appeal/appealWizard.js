@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
+import {compose} from 'redux'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {Field, reduxForm} from 'redux-form/immutable'
+
 import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
 import TestElement2RF from './appealContent/testElement2rf.js' 
@@ -8,8 +12,9 @@ import SummaryData from './appealContent/summaryData.js'
 import TopicsData from './appealContent/topicsData.js'
 import IshDocsData from './appealContent/ishDocsData.js'
 import ArchiveData from './appealContent/archiveData.js'
-
 import FullAppeal from './fullAppeal.js' 
+import {post} from '../../services/ajax.js'
+import {appealSetId} from '../../actions/common.js'
 
 const NAVI = {
   testElements: {
@@ -18,10 +23,12 @@ const NAVI = {
   },
   basicData : {
     form: BasicData,
+    alias: 'CLAIM_PUSH',
     nextPage: ()=>'claimantData'  
   },
   claimantData: {
     form: ClaimantData,
+    alias: 'CLAIM_PUSH',
     nextPage: ()=>'organizationsData',  
     prevPage: ()=>'basicData'
   },
@@ -47,6 +54,7 @@ const NAVI = {
   },
   archiveData: {
     form: ArchiveData,
+    alias: 'CLAIM_PUSH',
     nextPage: ()=>'fullAppeal',  
     prevPage: ()=>'ishDocsData'
   },
@@ -57,11 +65,11 @@ const NAVI = {
   }
 };
 
-export default class AppealWizard extends Component {
+class AppealWizard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { page: props.page || 'testElements' ||'basicData' }
+    this.state = { page: props.page || 'basicData' ||'basicData' }
   }
 
   toPage(page){
@@ -69,18 +77,59 @@ export default class AppealWizard extends Component {
   }
 
   render(){
+    const a = this;
     const { page } = this.state
     const toPage = this.toPage.bind(this);
 
     const Page = NAVI[page];
-    const nextPage = Page.nextPage && (function(){ toPage(Page.nextPage(this)); });
-    const prevPage = Page.prevPage && (function(){ toPage(Page.prevPage(this)); });
+
+    const slidePage  = function(toggler){ // ! NO ARROW FUNCTION, CONTEXT DEPENDED
+      return ()=>{
+        const {form,dispatch,change} = a.props;
+        const data = JSON.stringify(Object.assign({},form.values));
+        
+        const {alias} = Page;
+        const jsonMode = true;
+        
+        if (!alias){
+          return toggler(this); 
+        }
+
+        post('rest/push',{alias,data,jsonMode}).then(x=>{
+            const ID = x.data.rows[0][0].value; // the first column value of single row expected
+            dispatch(change('ID',ID)); //  !CASE SENSITIVE
+            toggler(this);
+        }).catch(x=>{
+            debugger;
+            a.forceUpdate();
+        });     
+      }
+    }
+    
+    const nextPage = Page.nextPage && slidePage(function(){ toPage(Page.nextPage(this)); });
+    const prevPage = Page.prevPage && slidePage(function(){ toPage(Page.prevPage(this)); });
     const props = {nextPage,prevPage};
 
     return (
       <div>
         <Page.form {...props} />
       </div>
-    )
+    );
   }
 }
+
+const mapStateToProps = (state,props)=>{
+    let form = state.getIn(['form','appeal']);
+    form && (form = form.toJS());
+    return {form};
+}
+
+export default compose(
+    connect(mapStateToProps),
+    reduxForm({
+        form: 'appeal', // <------ same form name
+        destroyOnUnmount: false, // <------ preserve form data
+        forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+        //validate
+    })
+)(AppealWizard)

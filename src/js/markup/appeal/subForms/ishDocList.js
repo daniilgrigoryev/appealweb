@@ -377,7 +377,7 @@ class EIshDocList extends React.Component {
         const {fields, disabled} = this.props;
         const fabData = {};
         const {categories} = this.props;
-debugger;
+
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id === this.state.expandedId}
                    onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData}

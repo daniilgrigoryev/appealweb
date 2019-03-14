@@ -37,7 +37,6 @@ const OFRow = (props) => {
     const cIndex = CCC.indexOf(P[M.CAT.name]);
     const cRow = MM[cIndex+1]; // lead row offset
 
-    debugger;
     const cif = (field, el) => {
         if (!cRow) {
             return null;

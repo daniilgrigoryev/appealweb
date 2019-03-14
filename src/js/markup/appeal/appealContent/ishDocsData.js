@@ -57,7 +57,7 @@ const IshDocsData = props => {
 } //
 
 const mapStateToProps = (state,props)=>{
-    const categories = _.map(state.getIn(['form','appeal','values','topicsData']).toJS(),(x,i)=>((i+1)+' => ' + x.category));
+    const categories = _.map(state.getIn(['form','appeal','values','topicsData'],{toJS: ()=>[]}).toJS(),(x,i)=>((i+1)+' => ' + x.category));
     return {categories};
 }
 

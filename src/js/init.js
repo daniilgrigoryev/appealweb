@@ -11,7 +11,7 @@ import rootSaga from './sagas/rootSaga.js'
 import Immutable from 'immutable'
 
 (()=>{
-	const immutableReducer = combineReducers({general : rootReducer, form : formReducer });
+	const immutableReducer = combineReducers({general : rootReducer, form : formReducer })
 	const sagaMiddleware = createSagaMiddleware()
 	const store = createStore(immutableReducer, initialState, applyMiddleware(sagaMiddleware))
 	sagaMiddleware.run(rootSaga)

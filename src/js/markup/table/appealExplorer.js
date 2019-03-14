@@ -18,7 +18,7 @@ class AppealExplorer extends React.Component {
       </div>
     )
   }
-}
+}//
 
 const state2props = (state) => {
   return {sid:getSessionId(state)};

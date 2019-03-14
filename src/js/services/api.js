@@ -5,11 +5,10 @@ const MODE = 'DEV_47'
 const URLS = {
 	'DESIGN' : 'DESIGN',
 	'DEV_152': 'https://172.20.255.152:8443/AppealAPI/',
-	'DEV_47' : 'https://172.20.255.47:8443/AppealAPI/',
-	'PROD'   : ''
+	'DEV_47' : 'https://172.20.255.47:8443/AppealAPI/'
 }
 
-const BASE_URL = URLS[MODE];
+const BASE_URL = URLS[MODE] || '';
 AJ.setBase(BASE_URL)
 AJ.setMode(MODE)
 
