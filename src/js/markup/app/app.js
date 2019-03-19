@@ -24,12 +24,14 @@ const relocate = (newPath) => {
     window.location.hash = ('#/' + newPath);
 }
 
+export {relocate}
+
 export default function App() {
     return (
         <HashRouter>
             <LayoutConnected>
                 <Switch>
-                    <Route exact path='/' component={Home}/>
+                    <Route exact path='/' component={AppealExplorer || Home}/>
                     <Route path='/appeal_incoming' component={AppealWizard}/>
                     <Route path='/appeal_outgoing' component={Outgoing}/>
                     <Route path='/explore' component={AppealExplorer}/>
@@ -97,7 +99,7 @@ class LayoutMain extends React.Component {
                         <Layout.Col span="20">
                             <nav>
                                 <Menu defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={onSelect}>
-                                    <Menu.Item index="">Главная</Menu.Item>
+                                    {false && <Menu.Item index="">Главная</Menu.Item>}
                                   
                                     <Menu.SubMenu index="1" title="Обращения">
                                         <Menu.Item index="appeal_incoming">Новое входящее</Menu.Item>
@@ -112,18 +114,19 @@ class LayoutMain extends React.Component {
                                         <Menu.Item index="explore">Поиск</Menu.Item>
                                     </Menu.SubMenu>
 
-                                    <Menu.SubMenu index="3" title="Справочники">
+                                    {false && <Menu.SubMenu index="3" title="Справочники">
                                         <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
                                         <Menu.Item index="sprav/decisions">Решения</Menu.Item>
                                         <Menu.Item index="sprav/categories">Категории</Menu.Item>
                                         <Menu.Item index="sprav/appeal_causes">Причины жалоб</Menu.Item>
                                         <Menu.Item index="sprav/doc_types">Типы документов</Menu.Item>
                                     </Menu.SubMenu>
+                                    }
 
-                                    <Menu.SubMenu index="4" title="Настройки">
+                                    {false && <Menu.SubMenu index="4" title="Настройки">
                                         <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
                                         <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
-                                    </Menu.SubMenu>
+                                    </Menu.SubMenu>}
 
                                     <Menu.Item index="LOGOUT">Выход</Menu.Item>
                                 </Menu>

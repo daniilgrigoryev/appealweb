@@ -9,9 +9,9 @@ import mapping from '../mapping.js'
 
 const M = mapping.ishLinksPost;
 
-const getRow = (npost, date) => {
+const getRow = (id,npost, date) => {
     return {
-        id: _.uniqueId('npost'),
+        id: id || null,
         npost: npost || '',
         date: date || null
     }

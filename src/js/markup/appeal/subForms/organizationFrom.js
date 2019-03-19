@@ -13,9 +13,9 @@ import mapping from '../appealContent/mapping.js'
 const M = mapping.organizationFrom;
 
 
-const getRow = (name, num, date) => {
+const getRow = (id,name, num, date) => {
     return {
-        id: _.uniqueId('orc'),
+        id: id || null,
         name: name || '',
         num: num || '',
         date: date || null

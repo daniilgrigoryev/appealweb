@@ -16,8 +16,8 @@ import {FTopicList} from "../subForms/topicList";
 const headerTitle = 'Исходящие документы';
 
 const IshDocsData = props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled, categories} = props;
-
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled, categories,claim_id} = props;
+    //debugger;
     return (
         <div>
             <Layout.Row gutter="20">
@@ -35,8 +35,7 @@ const IshDocsData = props => {
                                     <Tag type="gray" className='mx12'>6/8</Tag>
 
                                     <Button.Group>
-                                        <Button type="primary" size='small' icon="arrow-left"
-                                                onClick={prevPage}/>
+                                        <Button type="primary" size='small' onClick={prevPage} icon="arrow-left" />
                                         <Button type="primary" size='small' onClick={nextPage}>
                                             <i className="el-icon-arrow-right el-icon-right"/>
                                         </Button>
@@ -47,7 +46,7 @@ const IshDocsData = props => {
                     }>
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>Список исходящих документов</h4>
-                            <FieldArray name='ishDocsData' component={FIshDocList} disabled={disabled} categories={categories}/>
+                            <FieldArray name='ish_docs_data' component={FIshDocList} disabled={disabled} categories={categories} claim_id={claim_id}/>
                         </form>
                     </Card>
                 </Layout.Col>
@@ -57,8 +56,8 @@ const IshDocsData = props => {
 } //
 
 const mapStateToProps = (state,props)=>{
-    const categories = _.map(state.getIn(['form','appeal','values','topicsData'],{toJS: ()=>[]}).toJS(),(x,i)=>((i+1)+' => ' + x.category));
-    return {categories};
+    const claim_id = state.getIn(['form','appeal','values','id']);
+    return {claim_id};
 }
 
 export default compose(

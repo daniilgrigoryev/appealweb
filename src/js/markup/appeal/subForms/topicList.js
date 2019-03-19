@@ -337,9 +337,9 @@ const OFRow = (props) => {
 } //
 
 
-const getRow = (category, post_n, post_date, docs, cause, uch_pris, apn_adr, apn_date, description, owner, owner_adr, decision, decision_base, chief, decision_date, article, regno) => {
+const getRow = (id,category, post_n, post_date, docs, cause, uch_pris, apn_adr, apn_date, description, owner, owner_adr, decision, decision_base, chief, decision_date, article, regno) => {
     return {
-        id: _.uniqueId('tcl'),
+        id: id||null,
         category: category || '',
         post_n: post_n || '',
         post_date: post_date || null,

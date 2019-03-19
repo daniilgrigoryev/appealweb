@@ -12,9 +12,9 @@ const M = mapping.incLetterHead;
 
 const serData = ['78-10', '78-11', '78-21', '78-20'];
 
-const getRow = (zajavSender, zajavNDoc, zajavDate, zajavSigner) => {
+const getRow = (id,zajavSender, zajavNDoc, zajavDate, zajavSigner) => {
     return {
-        id: _.uniqueId('addr'),
+        id: id || null,
         zajavSender: zajavSender || '',
         zajavNDoc: zajavNDoc || '',
         zajavDate: zajavDate || null,

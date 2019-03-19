@@ -32,18 +32,13 @@ const reduceLogin = (state,action)=>{
 const reduceMessagesErase = (state,action)=>state.set('messagesQueue',im([]));
 const reduceMessageSet    = (state,action)=>addMessage(state,action.severity,action.message);
 const reduceAppealLoad    = (state,action)=>state.setIn(['form','appeal'],action.data);
-const reduceAppealSetId   = (state,action)=>{
- debugger;
- return state.setIn(['form','appeal','values','id'],action.data);
-}
 
 const ROOT_ACTIONS = {
   [A.LOGOUT_DONE]    : reduceLogout,
   [A.MESSAGES_ERASE] : reduceMessagesErase,
   [A.MESSAGE_SET]    : reduceMessageSet,
   [A.LOGIN_DONE]     : reduceLogin,
-  [A.APPEAL_LOAD]    : reduceAppealLoad,
-  [A.APPEAL_SETID]   : reduceAppealSetId
+  [A.APPEAL_LOAD]    : reduceAppealLoad
 }
 
 const rootReducer = function(state, action){
@@ -54,7 +49,7 @@ const rootReducer = function(state, action){
 const initialState = im({
     general : {
       system: 'M',
-      externalLogin: false && true,
+      externalLogin: true,
       messagesQueue: [],
       user : {
         username : '',

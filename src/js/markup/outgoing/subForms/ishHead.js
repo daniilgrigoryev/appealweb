@@ -13,9 +13,9 @@ const M = mapping.ishHead;
 
 const nDoc = ['78-08', '78-00']
 
-const getRow = (addr) => {
+const getRow = (id, addr) => {
     return {
-        id: _.uniqueId('addr'),
+        id: id || null,
         addr: addr || null
     }
 }

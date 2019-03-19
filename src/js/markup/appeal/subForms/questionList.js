@@ -11,9 +11,9 @@ import mapping from '../appealContent/mapping.js'
 
 const M = mapping.questionList;
 
-const getRow = (question, department) => {
+const getRow = (id,question, department) => {
     return {
-        id: _.uniqueId('qlr'),
+        id: id||null,
         question: question || null,
         department: department || null
     }
@@ -48,7 +48,7 @@ export class EQuestionList extends React.Component {
                 </Button>
             }
             </td>
-        </tr>));
+        </tr>)); //
 
         return (
             <React.Fragment>

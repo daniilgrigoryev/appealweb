@@ -38,8 +38,7 @@ const SummaryData = props => {
                                     <Tag type="gray" className='mx12'>4/8</Tag>
 
                                     <Button.Group>
-                                        <Button type="primary" size='small' icon="arrow-left"
-                                                onClick={prevPage}/>
+                                        <Button type="primary" size='small' onClick={prevPage} icon="arrow-left" />
                                         <Button type="primary" size='small' onClick={nextPage}>
                                             <i className="el-icon-arrow-right el-icon-right"/>
                                         </Button>

@@ -10,9 +10,9 @@ import mapping from '../mapping.js'
 
 const M = mapping.incLetterIspoln;
 
-const getRow = (desc, date) => {
+const getRow = (id,desc, date) => {
     return {
-        id: _.uniqueId('qlr'),
+        id: id || null,
         desc: desc || null,
         date: date || null
     }

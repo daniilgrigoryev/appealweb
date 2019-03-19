@@ -77,6 +77,7 @@ const BasicData = props => {
 export default reduxForm({
     form: 'appeal', // <------ same form name
     destroyOnUnmount: false, // <------ preserve form data
-    forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
+    forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+    enableReinitialize : true
     //validate
 })(BasicData)

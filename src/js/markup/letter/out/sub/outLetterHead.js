@@ -11,9 +11,9 @@ const M = mapping.outLetterHead;
 
 const serData = ['78-10', '78-11', '78-21', '78-20'];
 
-const getRow = (zajavTo) => {
+const getRow = (id,zajavTo) => {
     return {
-        id: _.uniqueId('addr'),
+        id: id || null,
         zajavTo: zajavTo || ''
     }
 }

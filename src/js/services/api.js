@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DEV_47'
+const MODE = 'PROD'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -66,7 +66,6 @@ export function fetchAutocomplete(key,query){
 
 export function fetchSelect(key){
 	switch(key){
-		case 'delivery_type': return fetchAppeaVidDost();
 		case 'fabulasDoc': 	  return fetchFabulasDoc();
 		case 'fabulasCategories': return fetchFabulasCategories();
 		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 

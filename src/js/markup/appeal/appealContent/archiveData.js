@@ -33,8 +33,7 @@ const ArchiveData = props => {
                                     <Tag type="gray" className='mx12'>7/8</Tag>
 
                                     <Button.Group>
-                                        <Button type="primary" size='small' icon="arrow-left"
-                                                onClick={prevPage}/>
+                                        <Button type="primary" size='small' onClick={prevPage}   icon="arrow-left" />
                                         <Button type="primary" size='small' onClick={nextPage}>
                                             <i className="el-icon-arrow-right el-icon-right"/>
                                         </Button>
@@ -48,14 +47,14 @@ const ArchiveData = props => {
 
                             <table>
                                 <tbody>
-                                <tr>
-                                    <td className='ap-input-caption'>{M.TOM.label}</td>
-                                    <td><Field disabled={disabled} name={M.TOM.name} component={FInput} /></td>
-                                </tr>
-                                <tr>
-                                    <td className='ap-input-caption'>{M.SHEETS.label}</td>
-                                    <td><Field disabled={disabled} name={M.SHEETS.name} component={FInput} /></td>
-                                </tr>
+                                    <tr>
+                                        <td className='ap-input-caption'>{M.TOM.label}</td>
+                                        <td><Field disabled={disabled} name={M.TOM.name} component={FInput} /></td>
+                                    </tr>
+                                    <tr>
+                                        <td className='ap-input-caption'>{M.SHEETS.label}</td>
+                                        <td><Field disabled={disabled} name={M.SHEETS.name} component={FInput} /></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </form>

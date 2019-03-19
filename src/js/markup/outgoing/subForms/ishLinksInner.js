@@ -11,9 +11,9 @@ import mapping from '../mapping.js'
 
 const M = mapping.ishLinksInner;
 
-const getRow = (npost, desc, docId) => {
+const getRow = (id,npost, desc, docId) => {
     return {
-        id: _.uniqueId('ldocs'),
+        id: id || null,
         desc: desc || '',
         docId: docId || null
     }

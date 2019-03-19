@@ -49,19 +49,19 @@ const OrganizationsData = props => {
                     }>
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>{M.SENT_FROM.label}</h4>
-                            <FieldArray name='organizationsFrom' component={EOrganizationFrom} disabled={disabled}/>
+                            <FieldArray name='organizations_from' component={EOrganizationFrom} disabled={disabled}/>
 
                             <hr className='txt-hr my18'/>
 
                             <h4 className='ap-h4'>{M.UNDER_CONTROL.label}</h4>
-                            <FieldArray name='organizationsControl' component={EOrganizationControl} disabled={disabled}/>
+                            <FieldArray name='organizations_control' component={EOrganizationControl} disabled={disabled}/>
                         </form>
                     </Card>
                 </Layout.Col>
             </Layout.Row>
         </div>
     )
-};
+}; //
 
 const mapStateToProps = (state) => ({system: state.getIn(['general', 'system'])});
 

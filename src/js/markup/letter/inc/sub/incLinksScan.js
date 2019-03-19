@@ -10,9 +10,9 @@ import mapping from '../mapping.js'
 
 const M = mapping.incLinksScan;
 
-const getRow = (npost, desc, docId, content) => {
+const getRow = (id,npost, desc, docId, content) => {
     return {
-        id: _.uniqueId('ldocs'),
+        id: id || null,
         desc: desc || '',
         docId: docId || null,
         content: content || null

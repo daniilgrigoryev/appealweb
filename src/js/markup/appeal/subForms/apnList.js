@@ -11,9 +11,9 @@ import mapping from '../appealContent/mapping.js'
 
 const M = mapping.apnList;
 
-const getRow = (apn, date) => {
+const getRow = (id,apn, date) => {
     return {
-        id: _.uniqueId('qlr'),
+        id: id || null,
         apn: apn || null,
         date: date || null
     }

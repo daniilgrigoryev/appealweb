@@ -14,8 +14,8 @@ import {Button, Card, Layout, Tag} from 'element-react'
 import mapping from './mapping.js'
 
 const headerTitle = 'Сведения о заявителе';
-const sexOptions = getOptions('M', 'мужской', 'F', 'женский');
-const zajavOptions = getOptions('FL', 'Физическое лицо', 'UL', 'Юридическое лицо');
+const sexOptions = getOptions(1, 'мужской', 2, 'женский');
+const zajavOptions = getOptions(1, 'Физическое лицо', 2, 'Юридическое лицо');
 const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 const M = mapping.claimantData;
 
@@ -45,8 +45,7 @@ class ClaimantData extends React.Component {
                     </tr>
                     <tr key='flSex'>
                         <td className='ap-input-caption'>{M.SEX.label}</td>
-                        <td colSpan='3'><Field disabled={disabled} name={M.SEX.name} component={FRadio}
-                                               options={sexOptions}/></td>
+                        <td colSpan='3'><Field disabled={disabled} name={M.SEX.name} component={FRadio} options={sexOptions}/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -111,8 +110,7 @@ class ClaimantData extends React.Component {
                 </tr>
                 <tr>
                     <td className='ap-input-caption'>{M.PRED_SEX.label}</td>
-                    <td colSpan='3'><Field disabled={disabled} name={M.PRED_SEX.name} component={FRadio}
-                                               options={sexOptions}/></td>
+                    <td colSpan='3'><Field disabled={disabled} name={M.PRED_SEX.name} component={FRadio} options={sexOptions}/></td>
                 </tr>
                 </tbody>
             </table>
@@ -197,13 +195,11 @@ class ClaimantData extends React.Component {
                                     <tbody>
                                     <tr>
                                         <td className='ap-input-caption'>{M.PHONE.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.PHONE.name}
-                                                               component={FInput} mask={phoneMask}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.PHONE.name} component={FInput} mask={phoneMask}/></td>
                                     </tr>
                                     <tr>
                                         <td className='ap-input-caption'>{M.EMAIL.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.EMAIL.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.EMAIL.name} component={FInput}/></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -218,24 +214,20 @@ class ClaimantData extends React.Component {
                                     <tbody>
                                     <tr>
                                         <td className='ap-input-caption'>{M.REGION.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.REGION.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.REGION.name} component={FInput}/></td>
                                     </tr>
                                     <tr>
                                         <td className='ap-input-caption'>{M.RAYON.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.RAYON.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.RAYON.name} component={FInput}/></td>
                                     </tr>
 
                                     <tr>
                                         <td className='ap-input-caption'>{M.NPUNKT.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.NPUNKT.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.NPUNKT.name} component={FInput}/></td>
                                     </tr>
                                     <tr>
                                         <td className='ap-input-caption'>{M.STREET.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.STREET.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.STREET.name} component={FInput}/></td>
                                     </tr>
 
                                     <tr>
@@ -251,8 +243,7 @@ class ClaimantData extends React.Component {
                                     </tr>
                                     <tr>
                                         <td className='ap-input-caption'>{M.PINDEX.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.PINDEX.name}
-                                                               component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.PINDEX.name} component={FInput}/></td>
                                     </tr>
                                     </tbody>
                                 </table>

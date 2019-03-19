@@ -3,7 +3,6 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Loading} from 'element-react'
 
-
 import {get,post,del,put} from '../../services/ajax.js'
 
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -65,13 +64,28 @@ export default class AppealTable extends React.Component {
 
 		if (!TABLE){
 			return (<div className='mt60 mb120'><Loading loading={true} text='Поиск данных...' /></div>);
-		}
+		}//
+
+		const {actionCol,selectable,mapping} = this.props;
+
+		let getField = (f)=>f; 
+		if (mapping){
+			getField = (f)=>mapping[f];
+		} 
 
 		const VAL = this.toSuitableVal(TABLE);
 		const scHeight = window.innerHeight - this.offsetTop - 88 - 22 + "px";
 		const head = "Записи с " + (FIRST + 1) + " до "+ (END > TABLE.size ? TABLE.size : END) + " из " + TABLE.size + " записей";
-		let dynamicColumns = TABLE.columns.map(col=><Column key={col.label} field={col.label} header={col.label} style = {{width: col.width}}/>); //
-		dynamicColumns.unshift(<Column key = "Sel" selectionMode="multiple" style={{width:'30px', textAlign: 'center', padding: '0px 3px 0px 3px' }}/>); //
+		let dynamicColumns = TABLE.columns.filter(col=>getField(col.label)).map(col=><Column key={col.label} field={col.label} header={getField(col.label)} style = {{width: col.width}}/>); //
+		
+		if (selectable){
+			dynamicColumns.unshift(<Column key = "Sel" selectionMode="multiple" style={{width:'30px', textAlign: 'center', padding: '0px 3px 0px 3px' }}/>); //
+		}
+		if (actionCol){
+			const {style,body} =actionCol; 
+			dynamicColumns.push(<Column body={body} style={style} />);			
+		}//
+
 		//console.log(S.selected)
 		//
 		return (

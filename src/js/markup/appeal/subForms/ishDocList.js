@@ -9,6 +9,7 @@ import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 import FabulaDialog from '../fabulaDialog.js'
 import mapping from '../appealContent/mapping.js'
+import {post} from '../../../services/ajax.js'
 
 const M = mapping.ishDocList;
 
@@ -30,8 +31,12 @@ const fTypes = [
     'Извещение о явке'
 ]
 
+const tLoad = (claim_id)=>{
+    return post("rest/selectList",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
+}
+
 const OFRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled} = props;
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id} = props;
     const {id} = value;
     const expanded = checkExpand(id);
     const onRmv = stopPg(onRemove, ind);
@@ -41,6 +46,7 @@ const OFRow = (props) => {
     const commandFabula = (type, el) => onFabula(type, fabData);
 
     const linkingThemes = props.categories;
+
 
     const P = value;
     if (!expanded) {
@@ -76,7 +82,9 @@ const OFRow = (props) => {
                 </tr>
             </React.Fragment>);
         return [collapsed];
-    }
+    } //
+
+    const tGetter = ()=>tLoad(claim_id);
 
     const editable = (
         <React.Fragment>
@@ -94,29 +102,25 @@ const OFRow = (props) => {
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table-header'>{M.DOC_TARGET.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name}
-                                           value={P[M.DOC_TARGET.name]}/>
+                                    <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} value={P[M.DOC_TARGET.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                          <p className='ap-table-header'>{M.ISH_NUM.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name}
-                                           value={P[M.ISH_NUM.name]}/>
+                                    <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} value={P[M.ISH_NUM.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                     <p className='ap-table-header'>{M.ISH_DATE.label}</p>
-                                    <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name}
-                                           value={P[M.ISH_DATE.name]} datepicker='+'/>
+                                    <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} value={P[M.ISH_DATE.name]} datepicker='+'/>
                                      </span>
                                 </td>
                                 <td colSpan='3'>
                                     <span className='inline-block mr12'>
                                     <p className='ap-table-header'>{M.PODPISAL.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name}
-                                           value={P[M.PODPISAL.name]}/>
+                                    <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name} value={P[M.PODPISAL.name]}/>
                                     </span>
                                 </td>
                             </tr>
@@ -128,40 +132,33 @@ const OFRow = (props) => {
                                         <tr>
                                             <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
                                             <td>
-                                                <Field disabled={disabled} component={FSelect}
-                                                       name={field + M.REL_TOPIC.name}
-                                                       value={P[M.REL_TOPIC.name]} data={linkingThemes}/>
+                                                <Field disabled={disabled} component={FSelect} name={field + M.REL_TOPIC.name}
+                                                       value={P[M.REL_TOPIC.name]} datagetter={tGetter}/>
                                             </td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
-                                            <td><Field disabled={disabled} component={FCheckbox}
-                                                       name={field + M.CRYPTO_SIGN.name}
+                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name}
                                                        value={P[M.CRYPTO_SIGN.name]}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect}
-                                                       name={field + M.DOC_VID.name}
+                                            <td><Field disabled={disabled} component={FSelect} name={field + M.DOC_VID.name}
                                                        value={P[M.DOC_VID.name]} dataKey={M.DOC_VID.key}/></td>
                                             <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect}
-                                                       name={field + M.DELIV_TYPE.name}
+                                            <td><Field disabled={disabled} component={FSelect} name={field + M.DELIV_TYPE.name}
                                                        value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput}
-                                                       name={field + M.SHEETS_COUNT.name}
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}
                                                        value={P[M.SHEETS_COUNT.name]}/></td>
                                             <td className='ap-input-caption'>{M.EDO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput}
-                                                       name={field + M.EDO_NUM.name}
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name}
                                                        value={P[M.EDO_NUM.name]}/></td>
                                         </tr>
 
                                         <tr>
                                             <td className='ap-input-caption'>{M.COMMENT.label}</td>
-                                            <td colSpan='3'><Field disabled={disabled} component={FInput}
-                                                                   name={field + M.COMMENT.name}
+                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name}
                                                                    value={P[M.COMMENT.name]} type="textarea"/></td>
                                         </tr>
                                         </tbody>
@@ -273,9 +270,9 @@ const OFRow = (props) => {
 
 
 const getRow = (doc_target, args = {}) => {
-    const {ish_num, ish_date, podpisal, status, related_topic, crypto_signature, doc_vid, delivery_type, sheets_count, edo_num, comment, soprovod, universal, opred, uvedom, vyzov, initiation} = args;
+    const {id,ish_num, ish_date, podpisal, status, related_topic, crypto_signature, doc_vid, delivery_type, sheets_count, edo_num, comment, soprovod, universal, opred, uvedom, vyzov, initiation,claim_id} = args;
     return {
-        id: _.uniqueId('idl'),
+        id: id || null,
         doc_target: doc_target,
         ish_num: ish_num || '',
         ish_date: ish_date || null,
@@ -296,7 +293,8 @@ const getRow = (doc_target, args = {}) => {
             vyzov: vyzov || [],
             initiation: initiation || []
         },
-        files: [] // {id,name}
+        files: [], // {id,name}
+        claim_id: claim_id || null
     }
 }
 
@@ -358,8 +356,6 @@ class EIshDocList extends React.Component {
     }
 
     onFileCreate(rowId, type) {
-
-
         ;
     }
 
@@ -374,13 +370,13 @@ class EIshDocList extends React.Component {
         const xpd = this.onExpand.bind(this);
         const fab = this.dialogOpenFabula.bind(this);
 
-        const {fields, disabled} = this.props;
+        const {fields, disabled,claim_id} = this.props;
         const fabData = {};
         const {categories} = this.props;
 
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id === this.state.expandedId}
-                   onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData}
+                   onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} claim_id={claim_id}
                    disabled={disabled} categories={categories}>{x.value}
             </OFRow>)); //
 
