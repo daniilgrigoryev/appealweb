@@ -105,15 +105,7 @@ const OFRow = (props) => {
             <td className='ap-input-caption'>{M.RASSMOTR_DATE.label}</td>
             <td>
                 <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name}
-                       value={P[M.RASSMOTR_DATE.name]} datepicker='+'/>
-            </td>
-        </tr>
-        ,
-        <tr key='pu2'>
-            <td className='ap-input-caption'>{M.RASSMOTR_TIME.label}</td>
-            <td>
-                <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_TIME.name}
-                       value={P[M.RASSMOTR_TIME.name]} timepicker='+'/>
+                       value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
             </td>
         </tr>
         ,
@@ -427,8 +419,8 @@ class ETopicList extends React.Component {
                    getValue={getV}
                    disabled={disabled}>
                 {x.value}
-            </OFRow>));
-        const add = () => fields.push(getRow());
+            </OFRow>)); //
+        const add = () => fields.push(getRow()); 
 
         return (
             <React.Fragment>
@@ -459,7 +451,7 @@ class ETopicList extends React.Component {
                 }
             </React.Fragment>
         )
-    };
+    }; //
 }
 
 const FTopicList = (props) => {

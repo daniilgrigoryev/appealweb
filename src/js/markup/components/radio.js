@@ -6,9 +6,11 @@ class ERadio extends React.Component {
 
   constructor(props) {
     super(props);
-    const {options,value} = this.props;
-    this.state = {
-      value: value || options[0].property
+    const {options,value} = this.props; 
+    this.state = {value};
+
+    if (''==value){
+      this.setState({value: options[0].property});
     }
   }
 
@@ -23,7 +25,11 @@ class ERadio extends React.Component {
 
   render() {
     const {options,disabled} = this.props;
-    const RADIOS = options.map(x=><Radio key={x.value} value={x.property} checked={this.state.value === x.property} onChange={this.onChange.bind(this)} disabled={disabled}>{x.value}</Radio>);
+    const RADIOS = options.map(x=><Radio key={x.value} 
+                                      value={x.property} 
+                                      checked={this.state.value == x.property} 
+                                      onChange={this.onChange.bind(this)} 
+                                      disabled={disabled}>{x.value}</Radio>);
 //
     return (<div>{RADIOS}</div>)
   }//

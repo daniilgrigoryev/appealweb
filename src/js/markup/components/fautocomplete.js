@@ -10,7 +10,7 @@ class AAutocomplete extends React.Component {
 	  super(props);
 
 	  const data     = props.data  || null;
-	  const value    = null;
+	  const value    = props.value;
 	  this.state     = {data,value};
 
 	  this.querySearch  = this.querySearch.bind(this);
@@ -19,8 +19,9 @@ class AAutocomplete extends React.Component {
 
 	componentDidMount(){
 		const {acKey,dataKey,value} = this.props;
+		const key = acKey || dataKey;
 		if (value){ 
-			getAcValue(acKey||dataKey,value).then((value)=>this.setState({value}));
+			getAcValue(acKey||dataKey,value).then((av)=>this.setState({value: av}));			
 		}
 	}
 

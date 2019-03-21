@@ -65,7 +65,7 @@ const getSl = (key)=>{
 
 const getValue = (listLoader,key,property)=>{
 	return new Promise((resolve,reject)=>{
-		const retCB = (data)=> _.chain(data).filter(x=>x.property==property).first().get('value').value() || '';
+		const retCB = (data)=> _.chain(data.data || data).filter(x=>x.property==property).first().get('value').value() || '';
 		listLoader(key).then((data=>resolve(retCB(data)))).catch(reject);
 	});
 }

@@ -17,8 +17,11 @@ import OutcomingLetter from '../letter/out/outcomingLetter.js'
 import IncomingLetter from '../letter/inc/incomingLetter.js'
 import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
+import Immutable from 'immutable'
 
 import burger from '../../../images/burger.svg'
+
+const im = (obj)=> Immutable.fromJS(obj)
 
 const relocate = (newPath) => {
     window.location.hash = ('#/' + newPath);
@@ -72,6 +75,8 @@ const NotFoundPage = ({match}) => {
 class LayoutMain extends React.Component {
 
     render() {
+        const a = this;
+
         const {children, dispatch, sessionId} = this.props;
 
         const onSelect = (newVal) => {
@@ -102,7 +107,7 @@ class LayoutMain extends React.Component {
                                     {false && <Menu.Item index="">Главная</Menu.Item>}
                                   
                                     <Menu.SubMenu index="1" title="Обращения">
-                                        <Menu.Item index="appeal_incoming">Новое входящее</Menu.Item>
+                                        <Menu.Item index="appeal_incoming?new">Новое входящее</Menu.Item>
                                         <Menu.Item index="appeal_outgoing">Новое исходящее</Menu.Item>
                                         <Menu.Item index="explore">Поиск</Menu.Item>
                                     </Menu.SubMenu>

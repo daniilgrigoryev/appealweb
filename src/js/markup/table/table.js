@@ -47,10 +47,11 @@ export default class AppealTable extends React.Component {
 	}
 
 	onPage(event) {
-		const {desc,sid} = this.props;
-		const data = Object.assign({},desc,event,{sid})
+		const {desc,sid,where} = this.props;
+		const JSON_W = JSON.stringify(where);
+		const data = Object.assign({},desc,event,{sid,JSON_W})
 		post('rest/select',data).then(x=>{
-			const s = Object.assign({},this.state,{table:x.data},event);
+			const s = Object.assign({},this.state,{table:x.data},event,where);
 			this.setState(s);			
 		});
     }
@@ -66,7 +67,7 @@ export default class AppealTable extends React.Component {
 			return (<div className='mt60 mb120'><Loading loading={true} text='Поиск данных...' /></div>);
 		}//
 
-		const {actionCol,selectable,mapping} = this.props;
+		const {actionCol,selectable,mapping,hdelta} = this.props;
 
 		let getField = (f)=>f; 
 		if (mapping){
@@ -74,7 +75,7 @@ export default class AppealTable extends React.Component {
 		} 
 
 		const VAL = this.toSuitableVal(TABLE);
-		const scHeight = window.innerHeight - this.offsetTop - 88 - 22 + "px";
+		const scHeight = window.innerHeight - this.offsetTop - 88 - hdelta + "px";
 		const head = "Записи с " + (FIRST + 1) + " до "+ (END > TABLE.size ? TABLE.size : END) + " из " + TABLE.size + " записей";
 		let dynamicColumns = TABLE.columns.filter(col=>getField(col.label)).map(col=><Column key={col.label} field={col.label} header={getField(col.label)} style = {{width: col.width}}/>); //
 		

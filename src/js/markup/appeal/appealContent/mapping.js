@@ -38,7 +38,7 @@ export default {
 		PODPIS:          {name:  'podpis',        label: 'Подписант'},
 		PHONE:           {name:  'phone',         label: 'Телефон'},
 		EMAIL:           {name:  'email',         label: 'Электронная почта'},
-		REGION:          {name:  'region',        label: 'Регион' },
+		REGION:          {name:  'region',        label: 'Регион',                                     key:'REGION_LIST' },
 		RAYON:           {name:  'rayon',         label: 'Район'},
 		NPUNKT:          {name:  'npunkt',        label: 'Населенный пункт' },
 		STREET:          {name:  'street',        label: 'Улица' },
@@ -131,5 +131,10 @@ export default {
 		TEMPL_FILE: 	 {name: 'templ_file', 	  label: 'Файл шаблона'},
 		FABULA: 		 {name: 'fabule', 		  label: 'Фабула'},
 		DECISION: 		 {name: 'decision', 	  label: 'Решение'}
+	},
+	status: {
+		DEPART: 		 {name: 'exec_org_key', 	   label: 'Отдел', 	     key: 'DEPARTMENTS_LIST'},
+		STATUS: 		 {name: 'processing_stage_id', label: 'Статус',      key: 'PROCESSING_STAGES'},
+		EXECUTOR: 		 {name: 'exec_emp_key', 	   label: 'Исполнитель', key: 'EMPLOYESS_LIST'}
 	}
 }

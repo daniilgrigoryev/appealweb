@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {reset} from 'redux-form';
 import {Field, reduxForm} from 'redux-form/immutable'
 import Immutable from 'immutable'
 
@@ -14,10 +15,15 @@ import TopicsData from './appealContent/topicsData.js'
 import IshDocsData from './appealContent/ishDocsData.js'
 import ArchiveData from './appealContent/archiveData.js'
 import FullAppeal from './fullAppeal.js' 
+import StatusData from './appealContent/statusData.js'
 import {post} from '../../services/ajax.js'
 import {appealSetId} from '../../actions/common.js'
 
+import {Button} from 'element-react'
+
 const im = (obj)=> Immutable.fromJS(obj)
+
+const hashCode = (s) =>(s||'').split('').reduce((hash, val) =>(((hash << 5) - hash) + val.charCodeAt(0))|0, 0);
 
 const NAVI = {
   testElements: {
@@ -77,13 +83,32 @@ class AppealWizard extends Component {
   constructor(props) {
     super(props);
     this.state = { page: props.page || 'basicData' ||'basicData' }
+    this.curHash = 0;
+  }
+
+  componentDidMount(){
+    const {formData} = this.props;
+    this.curHash = !formData ? 0 : hashCode(JSON.stringify(formData.values));
   }
 
   toPage(page){
+    this.curHash = hashCode(JSON.stringify(this.props.formData.values));
     this.setState({page});
   }
 
   render(){
+    const {dispatch,change,initialize} = this.props;
+    
+    try{
+      const h = window.location.hash.split('?');
+      if (h[1]=='new'){
+        window.location.hash = h[0];
+        setTimeout(()=>dispatch(initialize(im({}))),100);
+      }
+    } catch (exc) { 
+      //debugger;
+    }//
+
     const a = this;
     const {page} = this.state
     const toPage = this.toPage.bind(this);
@@ -91,8 +116,8 @@ class AppealWizard extends Component {
 
     const slidePage  = function(toggler){
       return function(){ // ! NO ARROW FUNCTION, CONTEXT DEPENDED
-        const {form,dispatch,change} = a.props;
-        const data = JSON.stringify(Object.assign({},form.values));
+        const {formData,dispatch,change} = a.props;
+        const data = JSON.stringify(Object.assign({},formData.values));
         
         const {alias} = Page;
         const jsonMode = true;
@@ -101,8 +126,13 @@ class AppealWizard extends Component {
           return toggler(this); 
         }
 
+        if (a.curHash == hashCode(data)){
+          //console.log('blind slide');
+          return toggler(this);
+        }
+
         post('rest/push',{alias,data,jsonMode}).then(x=>{
-            const F = form;
+            const F = formData;
             const V = F ? F.values : {};
 
             const json = x.data.rows[0][0].value; // the first column value of single row expected
@@ -141,7 +171,7 @@ class AppealWizard extends Component {
               }
             } catch (exc){
               console.error(exc);
-            }
+            } 
             toggler(this);
         }).catch(x=>{
             //debugger;
@@ -152,20 +182,21 @@ class AppealWizard extends Component {
     
     const nextPage = Page.nextPage && slidePage((a)=>toPage(Page.nextPage(a)));
     const prevPage = Page.prevPage && slidePage((a)=>toPage(Page.prevPage(a)));
-    const props = {nextPage,prevPage};
+    const pageProps = {nextPage,prevPage};
 
     return (
       <div>
-        <Page.form {...props} />
+        <Page.form {...pageProps} />
+        <StatusData />
       </div>
-    );
+    ); //
   }
 }
 
 const mapStateToProps = (state,props)=>{
-    let form = state.getIn(['form','appeal']);
-    form && (form = form.toJS());
-    return {form};
+    let formData = state.getIn(['form','appeal']);
+    formData && (formData = formData.toJS());
+    return {formData};
 }
 
 export default compose(
@@ -173,7 +204,8 @@ export default compose(
     reduxForm({
         form: 'appeal', // <------ same form name
         destroyOnUnmount: false, // <------ preserve form data
-        forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+        forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+        enableReinitialize: true
         //validate
     })
 )(AppealWizard)

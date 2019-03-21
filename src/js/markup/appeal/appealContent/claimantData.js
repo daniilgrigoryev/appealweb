@@ -14,8 +14,8 @@ import {Button, Card, Layout, Tag} from 'element-react'
 import mapping from './mapping.js'
 
 const headerTitle = 'Сведения о заявителе';
-const sexOptions = getOptions(1, 'мужской', 2, 'женский');
-const zajavOptions = getOptions(1, 'Физическое лицо', 2, 'Юридическое лицо');
+const sexOptions = getOptions('1', 'мужской', '2', 'женский');
+const zajavOptions = getOptions('1', 'Физическое лицо', '2', 'Юридическое лицо');
 const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 const M = mapping.claimantData;
 
@@ -214,7 +214,7 @@ class ClaimantData extends React.Component {
                                     <tbody>
                                     <tr>
                                         <td className='ap-input-caption'>{M.REGION.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.REGION.name} component={FInput}/></td>
+                                        <td colSpan='3'><Field disabled={disabled} name={M.REGION.name} component={FAutocomplete} dataKey={M.REGION.key}/></td>
                                     </tr>
                                     <tr>
                                         <td className='ap-input-caption'>{M.RAYON.label}</td>

@@ -8,9 +8,8 @@ class ASelect extends React.Component {
 
 	constructor(props) {
 	  super(props);
-	  this.state = {
-	  	data: []
-	  };
+	  const data = []//[{property:props.value, value:'Ждите...'}]
+	  this.state = {data};
 	}
 
 	componentDidMount(){
@@ -25,7 +24,7 @@ class ASelect extends React.Component {
 		let data = {};
 		if (d && d.length){
 			data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
-		}
+		} 
 		this.setState({data});
 	}
 
