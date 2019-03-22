@@ -122,7 +122,7 @@ class ClaimantData extends React.Component {
                     <Layout.Col span="24">
                     {/*<Layout.Col span="16" offset="4">*/}
                         <Card className="box-card" header={
-                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main py12'>
+                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                     {headerTitle}
                                 </h3>
