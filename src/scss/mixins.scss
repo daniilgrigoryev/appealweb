@@ -1,0 +1,25 @@
+@mixin custom-scrollbar() {
+  $color: rgba(28, 28, 28, 0.5);
+  $width: 8px;
+  transition: all 200ms ease-out;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+
+  &:hover {
+    scrollbar-color: $color transparent;
+  }
+
+  &::-webkit-scrollbar{
+    width: $width !important;
+    background-color: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $width;
+    background-color: transparent !important;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: $color !important;
+  }
+}
