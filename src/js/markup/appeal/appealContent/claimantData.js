@@ -13,8 +13,8 @@ import {Button, Card, Layout, Tag} from 'element-react'
 
 import mapping from './mapping.js'
 
-const headerTitle = 'Сведения о заявителе';
-const sexOptions = getOptions('1', 'мужской', '2', 'женский');
+const headerTitle  = 'Сведения о заявителе';
+const sexOptions   = getOptions('1', 'мужской', '2', 'женский');
 const zajavOptions = getOptions('1', 'Физическое лицо', '2', 'Юридическое лицо');
 const phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 const M = mapping.claimantData;
@@ -25,7 +25,7 @@ class ClaimantData extends React.Component {
         const {handleSubmit, nextPage, prevPage, pristine, submitting, header, content, disabled} = this.props;
 
         const isPred = !!content[M.PRED.name];
-        const isFL = content[M.ZAJAV_LIC.name] != 'UL';
+        const isFL = content[M.ZAJAV_LIC.name] != 2;
 
         const ZAJAV_SOURCE = isFL
             ? (

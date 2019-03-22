@@ -29,7 +29,7 @@ class AInput extends React.Component {
 		
 		if (reduxformfield){
 			const reduxFormOnChange = onChange;
-			;
+			
 			return <MaskedInput  
 					mask={mask} 
 					guide={maskGuideMode}

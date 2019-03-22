@@ -20,6 +20,8 @@ const MS = mapping.status;
 const MB = mapping.basicData;
 const MC = mapping.claimantData;
 
+const timeOfs = new Date().getTimezoneOffset()*60*1000;
+
 const im = (obj)=>Immutable.fromJS(obj)
 
 const desc = {
@@ -65,8 +67,17 @@ class AppealExplorer extends React.Component {
     }
   }
 
-  search(){
-    this.where = Object.assign({},this.state.search);
+  search(){ //debugger;
+    const w = Object.assign({},this.state.search);
+    /*for (var key in w){
+      if (w[key] instanceof Date){
+        w[key]= new Date(w[key].getTime()+timeOfs);
+      }
+    }*/
+    this.where = w;
+
+    //debugger;
+
     this.whereKey = 'k'+new Date().getTime();
     this.forceUpdate();  
   }

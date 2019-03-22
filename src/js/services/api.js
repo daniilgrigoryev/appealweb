@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'PROD'
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -58,19 +58,6 @@ export function fetchSelect(key){
 		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
 		default: return AJ.post("rest/selectList",{alias : key, listValueField : 'value'});
 	}
-
-	return new Promise((resolve,reject)=>{
-		const resp = [
-		  { "value": "Svue", 		"property": "Shttps://github.com/vuejs/vue" },
-	      { "value": "Selement", 	"property": "Shttps://github.com/ElemeFE/element" },
-	      { "value": "Scooking", 	"property": "Shttps://github.com/ElemeFE/cooking" },
-	      { "value": "Smint-ui", 	"property": "Shttps://github.com/ElemeFE/mint-ui" },
-	      { "value": "Svuex", 		"property": "Shttps://github.com/vuejs/vuex" },
-	      { "value": "Svue-router", "property": "Shttps://github.com/vuejs/vue-router" },
-	      { "value": "Sbabel", 		"property": "Shttps://github.com/babel/babel" }
-		]
-		setTimeout(()=>resolve(resp),10);
-	});
 }
 
 export function fetchFabulasDoc(){

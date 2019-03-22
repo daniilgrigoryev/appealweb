@@ -20,6 +20,7 @@ import {post} from '../../services/ajax.js'
 import {appealSetId} from '../../actions/common.js'
 
 import {Button} from 'element-react'
+import {messageSet} from '../../actions/common.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
@@ -103,6 +104,7 @@ class AppealWizard extends Component {
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
         window.location.hash = h[0];
+        this.toPage('basicData');
         setTimeout(()=>dispatch(initialize(im({}))),100);
       }
     } catch (exc) { 
@@ -135,6 +137,12 @@ class AppealWizard extends Component {
             const F = formData;
             const V = F ? F.values : {};
 
+            const {error} = x.data;
+            if (error){
+              let exc = error.split('Detail')[0];
+              throw exc;
+            }
+
             const json = x.data.rows[0][0].value; // the first column value of single row expected
             // debugger;
             try{
@@ -151,7 +159,7 @@ class AppealWizard extends Component {
                  const r = _.map(V.organizations_from,(x,i)=>(x.id=r_ids[i],x));
 
                  dispatch(change('organizations_control',im(c)));
-                 dispatch(change('organizations_from',im(r)  ));
+                 dispatch(change('organizations_from',   im(r)));
               } else if (R.apn_ids){ // upsert apns
                 const a_ids = R.apn_ids || [];
                 const a = _.map(V.apn_list, (x, i)=>(x.id = a_ids[i],x));
@@ -174,7 +182,8 @@ class AppealWizard extends Component {
             } 
             toggler(this);
         }).catch(x=>{
-            //debugger;
+            dispatch(messageSet(x,'error'));
+            console.error(x);
             a.forceUpdate();
         });     
       }
