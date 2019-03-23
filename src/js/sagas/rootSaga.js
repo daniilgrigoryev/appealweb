@@ -2,6 +2,7 @@ import { take, takeLeading, takeEvery, put, call, fork, select, all } from 'redu
 import * as actions from '../actions/common.js'
 import { getUserData } from '../selectors/common.js'
 import * as api from '../services/api.js'
+import {watchFileLoad} from './loadSagas'
 
 const log = ()=>{} //(msg)=>console.log(msg)
 const err = (err)=>console.error(err)
@@ -39,6 +40,7 @@ export function* watchLogout(action) {
 export default function* root() {
   yield all([
               takeLeading(actions.LOGIN_REQUEST, watchLogin),
-              takeLeading(actions.LOGOUT_REQUEST, watchLogout)
+              takeLeading(actions.LOGOUT_REQUEST, watchLogout),
+              takeLeading(actions.LOAD_REQUEST, watchFileLoad)
             ])
 }

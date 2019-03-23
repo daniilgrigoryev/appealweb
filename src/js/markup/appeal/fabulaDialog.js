@@ -40,7 +40,7 @@ class FabulaDialog extends React.Component {
 	}
 
 	componentDidMount(){
-		fetchSelect('fabulasDoc').then(docList=>this.setState({docList}));
+		fetchSelect('GET_FABULAS_THEMES').then(docList=>this.setState({docList}));
 	}
 
 	setDoc(doc){
@@ -64,6 +64,7 @@ class FabulaDialog extends React.Component {
 		const {catList} =  this.state;
 		const themeList = [];
 		const theme = void 0;
+		debugger; // cat
 		const cat = _.chain(categoryList)
 			.filter((x,i)=>!i)
 			.map(x=>(catList || []).filter(list=>list.label == x))
@@ -226,7 +227,10 @@ class FabulaDialog extends React.Component {
 
 	renderCategories(){
 		const {doc,docList,cat,catList,theme,themeList} = this.state;
-		
+
+		if (!((themeList||[]).map)){
+			debugger;
+		}
 		const hasDoc = !!doc;
 		const hasCat = !!cat;
 		const existsCat = catList!==null && _.size(catList);

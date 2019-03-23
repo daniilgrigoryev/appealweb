@@ -5,7 +5,8 @@ const MODE = 'DEV_47'
 const URLS = {
 	'DESIGN' : 'DESIGN',
 	'DEV_152': 'https://172.20.255.152:8443/AppealAPI/',
-	'DEV_47' : 'https://172.20.255.47:8443/AppealAPI/'
+	'DEV_47' : 'https://localhost:8443/AppealAPI/'
+	//'DEV_47' : 'https://172.20.255.47:8443/AppealAPI/'
 }
 
 const BASE_URL = URLS[MODE] || '';
@@ -44,6 +45,10 @@ export function logout(sessionId){
 export function push(sessionId,alias,data,jsonMode=false){
 	const dataJSON = typeof data=='string' ? data : JSON.stringify(data);
 	return AJ.post('rest/push',{sid:sessionId, alias,data:dataJSON,jsonMode});	
+}
+
+export function loadFile(file) { 
+	return AJ.postFile('rest/load_docx', file);
 }
 
 export function fetchAutocomplete(key,query){
@@ -140,21 +145,4 @@ export function fetchFabulasCategories(){
 
 		setTimeout(()=>resolve(resp),10);
 	});		
-}
-
-export function fetchFabulasThemes(){
-	return new Promise((resolve,reject)=>{
-		const resp =[];
-		const size = 2+Math.floor(Math.random()*8);
-
-		for (let i=0;i<size;i++){
-			const category = 'Категория ' + i;
-			const fabulaTheme = 'Тема '   + i;
-			const decision = 'Решение '   + i;
-			const text = 'ТЕКСТ' + i;
-			resp.push({category,fabulaTheme,decision,text});
-		}
-
-		setTimeout(()=>resolve(resp),10);
-	});	
 }

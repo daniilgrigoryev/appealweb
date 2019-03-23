@@ -55,7 +55,7 @@ class Root extends React.Component {
       const sid = hash.substr(sindex+MRK.length);
       if (sid && sid.length){
         window.location.hash = '';
-        setTimeout(()=>this.doExternalLogin(sid),5)
+        setTimeout(()=>this.doExternalLogin(sid),5);
       }
     }
   }

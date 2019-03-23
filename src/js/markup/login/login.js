@@ -1,13 +1,13 @@
 import './login.scss'
 
-import {loginRequest} from '../../actions/common.js'
+import {loginRequest, loadRequest} from '../../actions/common.js'
 import * as _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import {post,get} from '../../services/ajax.js'
 import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
-import {getUser} from '../../selectors/common.js'
+import {getUser, getFile} from '../../selectors/common.js'
 
 
 class Login extends React.Component {
@@ -23,6 +23,7 @@ class Login extends React.Component {
 
     this.onInput = this.onInput.bind(this);
     this.onLogin = this.onLogin.bind(this);
+    this.onFileLoad = this.onFileLoad.bind(this);
   }
 
   componentDidMount(){
@@ -60,6 +61,11 @@ class Login extends React.Component {
     this.props.dispatch(loginRequest(loginData));
   }
 
+  onFileLoad(e) {
+    const file = e.target.files[0];
+    const res = this.props.dispatch(loadRequest(file));
+  }
+
   render (){
     const {username,password} = this.state; 
     return (
@@ -70,6 +76,7 @@ class Login extends React.Component {
               <input type="text"     placeholder="Username" id="username" onChange={this.onInput} value={username}  />
               <input type="password" placeholder="Password" id="password" onChange={this.onInput} value={password}  />
               <button onClick={this.onLogin}>Submit</button>
+              <input type="file" name="file" onChange={this.onFileLoad} />
           </div>
         </div>
     ); //
