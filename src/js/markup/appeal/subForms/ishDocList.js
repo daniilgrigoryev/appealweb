@@ -322,8 +322,12 @@ class EIshDocList extends React.Component {
         const done = null;
         const title = 'Исходящие документы';
 
-        const props = Object.assign({}, {cancel, done, title, type}, data);
-        const dialog = <FabulaDialog key='idlf' {...props} />; ////
+        const claim_id = this.props.claim_id;
+        const props = Object.assign({}, {cancel, done, title, type,claim_id}, data);
+
+        const key = JSON.stringify(props);
+
+        const dialog = <FabulaDialog key={key} {...props} />; ////
 
         this.setState({dialog});
     } //
