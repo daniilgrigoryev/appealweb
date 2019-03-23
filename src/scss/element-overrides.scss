@@ -39,7 +39,7 @@
     align-items: center;
 
     &.el-input-number__decrease {
-      right: 20px ;
+      right: 20px;
     }
 
     &.is-disabled {
@@ -70,6 +70,11 @@
       }
     }
   }
+}
+
+.el-date-editor.el-input {
+  min-width: 120px !important;
+  width: 100% !important;
 }
 
 .el-input__icon {

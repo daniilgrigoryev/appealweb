@@ -1,14 +1,45 @@
 @import "variables";
+@import "mixins";
 
 .p-datatable {
-  background: white;
+  background: transparent;
+  //background: white;
+
+  .p-datatable-scrollable-wrapper {
+    background: white;
+    border: 1px solid #c8c8c8;
+  }
 
   .p-datatable-header, .p-datatable-footer {
     font-size: 12px !important;
     font-weight: 600 !important;
     color: $color-input-placeholder !important;
     background: transparent !important;
-    border: 1px solid $color-input-border !important;
+    border: none !important;
+  }
+
+  .p-column-title {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .p-datatable-scrollable-header-box {
+    margin: 0 !important;
+  }
+
+  .p-datatable-scrollable-header {
+    overflow-y: visible !important;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .p-datatable-scrollable-view {
+    overflow: hidden;
+  }
+
+  .p-datatable-scrollable-body {
+    @include custom-scrollbar();
   }
 
   .p-datatable-tbody > tr:nth-child(2n) {
@@ -62,4 +93,15 @@
     }
   }
 
+  .p-datatable-scrollable-body-table {
+    table-layout: initial !important;
+  }
+}
+
+.p-dropdown, .p-dropdown-label.p-inputtext, .p-dropdown-trigger {
+  background: transparent !important;
+}
+
+.p-paginator {
+  background: white !important;
 }
