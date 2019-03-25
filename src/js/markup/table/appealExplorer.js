@@ -31,13 +31,16 @@ const desc = {
 const style = {textAlign: 'center', width: '8em'};
 const mappingT = {
     //ID: 'ИД',
-    NUM: 'Регистрационный номер',
+    REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
     //DATE_CONTROL:'Дата контроля',  
+    NAME: 'Наименование',
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
-    PHONE: 'Телефон',
-    STAGE: 'Статус'
+    //PHONE: 'Телефон',
+    STAGE: 'Статус',
+    ISP_NAME: 'Исполнитель',
+    ISP_OTD: 'Отдел'
 }
 
 class AppealExplorer extends React.Component {
@@ -213,7 +216,7 @@ class AppealExplorer extends React.Component {
                 }
             </React.Fragment>
         )
-    }
+    } //
 }
 
 const state2props = (state) => {

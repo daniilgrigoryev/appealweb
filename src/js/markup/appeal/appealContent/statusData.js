@@ -18,9 +18,9 @@ const styleBtnWrap = {
     "position": 'fixed',
     "padding": '8px',
     "bottom": '60px',
-    right: '60px'
+    "right": '60px',
+    "outline": "none"
 };
-
 
 const styleBtn = {
     width: '52px',
@@ -91,9 +91,7 @@ class StatusData extends React.Component {
                     </button>
                 </Popover>
             </div>);
-
-
-    }
+    } //
 }
 
 export default reduxForm({

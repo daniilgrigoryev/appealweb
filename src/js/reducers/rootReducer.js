@@ -3,6 +3,7 @@ import * as AJAX from '../services/ajax.js'
 import * as PULSE from '../pulse.js'
 import Immutable from 'immutable'
 import {out} from '../services/ajax.js'
+import {relocate} from '../markup/app/app.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
@@ -27,6 +28,7 @@ const reduceLogin = (state,action)=>{
   AJAX.setSid(sessionID);
   PULSE.notifyAlive(sessionID,externalSid);
   PULSE.start();
+  setTimeout(()=>relocate('explore'),100);
   return addMessage(state,'info','Вход...').set('user', im(action.loggedData));
 }
 
@@ -50,7 +52,7 @@ const rootReducer = function(state, action){
 const initialState = im({
     general : {
       system: 'M',
-      externalLogin: false && true,
+      externalLogin: true,
       messagesQueue: [],
       user : {
         username : '',

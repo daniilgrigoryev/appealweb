@@ -84,7 +84,7 @@ export default class AppealTable extends React.Component {
 
         let getField = (f) => f;
         if (mapping) {
-            getField = (f) => mapping[f];
+            getField = (f) =>mapping[f];
         }
 
         const VAL = this.toSuitableVal(TABLE);
