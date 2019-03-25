@@ -7,7 +7,7 @@
 
   .p-datatable-scrollable-wrapper {
     background: white;
-    border: 1px solid #c8c8c8;
+    //border: 1px solid #c8c8c8;
   }
 
   .p-datatable-header, .p-datatable-footer {
@@ -56,8 +56,8 @@
     font-size: 15px !important;
     font-weight: 400 !important;
     color: $color-input-placeholder !important;
-    line-height: 26px !important;
-    background: white !important;
+    line-height: 1 !important;
+    background: #f8f8f8 !important;
     border: none !important;
   }
 
@@ -94,6 +94,10 @@
     }
   }
 
+  .p-datatable-scrollable-header-table {
+    //border-top: 1px solid #d1dbe5 !important;
+  }
+
   .p-datatable-scrollable-body-table {
     table-layout: initial !important;
   }
@@ -103,6 +107,8 @@
   background: transparent !important;
 }
 
-.p-paginator {
+body .p-paginator {
+  border: none !important;
+  border-top: 1px solid #d1dbe5 !important;
   background: white !important;
 }

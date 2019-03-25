@@ -100,7 +100,7 @@
 
   .el-switch__core {
     height: 18px;
-    border: 1px solid $color-input-border-blue;
+    border: 1px solid $color-blue;
     background: transparent;
   }
 
@@ -143,12 +143,12 @@
   transition: background-color 200ms linear;
 
   &.el-button--default {
-    border-color: $color-input-border-blue !important;
-    color: $color-input-border-blue !important;
+    border-color: $color-blue !important;
+    color: $color-blue !important;
   }
 
   &.el-button--default:hover {
-    background: rgba($color-input-border-blue, 0.15) !important;
+    background: rgba($color-blue, 0.15) !important;
   }
 
   &.el-button--primary {
@@ -191,20 +191,21 @@
 }
 
 .el-card {
-  border: none !important;
+  //border: none !important;
   box-shadow: none !important;
   overflow: visible !important;
 }
 
 .el-card__header {
-  padding: 0 0 20px 0 !important;
-  border: none !important;
-  background: $color-page-bg;
+  padding: 10px 20px;
+  //padding: 0 0 20px 0 !important;
+  //border: none !important;
+  //background: $color-page-bg;
 }
 
 .el-card__body {
   //min-height: 240px;
-  border: 1px solid $color-input-border !important;
+  //border: 1px solid $color-input-border !important;
 }
 
 .el-collapse {

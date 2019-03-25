@@ -19,44 +19,44 @@ import {push} from '../../services/api.js'
 
 class FullAppeal extends React.Component {
 
-   constructor(props){
-		super(props);
-		this.outCsv = this.outCsv.bind(this);
-		this.pushCsv = this.pushCsv.bind(this);
-	}
+    constructor(props) {
+        super(props);
+        this.outCsv = this.outCsv.bind(this);
+        this.pushCsv = this.pushCsv.bind(this);
+    }
 
-	outCsv(){
-		const {content,id} = this.props;
-		exportString('Обращение ' + id,JSON.stringify(content));
-	}
+    outCsv() {
+        const {content, id} = this.props;
+        exportString('Обращение ' + id, JSON.stringify(content));
+    }
 
-	pushCsv(){
-		const {content,id} = this.props;
-		push(-1,'CLAIM_PUSH',content,true)
-	}
+    pushCsv() {
+        const {content, id} = this.props;
+        push(-1, 'CLAIM_PUSH', content, true)
+    }
 
     render() {
         const p = this.props;
         return (
             <div className='mb60'>
                 <Layout.Row gutter="12">
-                    <Layout.Col lg="8" md='24'>
-                        <ClaimantData      {...p} />
-                    </Layout.Col>
-
-                    <Layout.Col lg="8" md='24'>
+                    <Layout.Col lg="9" sm='24'>
                         <BasicData         {...p} />
                         <div className='mt12'>
-                            <OrganizationsData {...p} />
+                            <ClaimantData      {...p} />
                         </div>
+                    </Layout.Col>
+
+                    <Layout.Col lg="15" sm='24'>
+                        <OrganizationsData {...p} />
 
                         <div className='mt12'>
                             <SummaryData       {...p} />
                         </div>
-                    </Layout.Col>
 
-                    <Layout.Col lg="8" md='24'>
-                        <TopicsData        {...p} />
+                        <div className='mt12'>
+                            <TopicsData        {...p} />
+                        </div>
 
                         <div className='mt12'>
                             <IshDocsData       {...p} />

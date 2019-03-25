@@ -5,7 +5,7 @@
 body {
   //background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
   background-size: cover;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
   //overflow: hidden;
   color: $color-text-base;
   background: $color-page-bg;
@@ -71,10 +71,10 @@ div.tooltipWrap {
 
 .ap-h2 {
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.1px;
   line-height: 2;
-  color: $color-text-headers;
+  //color: $color-text-headers;
 }
 
 .ap-h3 {
@@ -82,17 +82,21 @@ div.tooltipWrap {
   //font-size: 20px;
   font-weight: 400;
   letter-spacing: 0.2px;
-  line-height: 2;
-  color: $color-text-headers;
+  line-height: 1.5;
+  color: #7f7f7f;
 }
 
 .ap-h4 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 2;
   margin-bottom: 10px;
   color: $color-text-headers;
   letter-spacing: 0.25px;
+}
+
+.txt-h3 {
+  font-weight: 300;
 }
 
 .ap-txt-big {
