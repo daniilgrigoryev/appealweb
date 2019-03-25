@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'PROD'
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -109,7 +109,6 @@ export function fetchFabulasDoc(){
 		setTimeout(()=>resolve(resp),10);
 	});	
 }
-
 
 export function fetchDecisionsRegionalCourt(){
 	return new Promise((resolve,reject)=>{

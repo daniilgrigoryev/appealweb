@@ -29,7 +29,8 @@ const styleBtn = {
     display: "flex",
     'align-items': 'center',
     'justify-content': 'center',
-    'font-size': '18px'
+    'font-size': '18px',
+    'outline':'none'
 };
 
 class StatusData extends React.Component {

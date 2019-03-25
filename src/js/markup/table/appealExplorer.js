@@ -34,7 +34,7 @@ const mappingT = {
     REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
     //DATE_CONTROL:'Дата контроля',  
-    NAME: 'Наименование',
+    NAME: 'Обращенец',
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     //PHONE: 'Телефон',
@@ -59,18 +59,17 @@ class AppealExplorer extends React.Component {
     openRow(rowData, column) {
         const {dispatch, change, initialize} = this.props;
         const alias = 'CLAIM_GET';
-        return () => {
+        return async () => {
             const claim_id = rowData.ID;
-            post('rest/select', {alias, claim_id}).then(x => {
-                const raw = x.data.rows[0][0].value;
-                const js = JSON.parse(raw);
-                dispatch(initialize(im(js)));
-                relocate('appeal_incoming');
-            });
+            const x = await post('rest/select', {alias, claim_id});
+            const raw = x.data.rows[0][0].value;
+            const js = JSON.parse(raw);
+            dispatch(initialize(im(js)));
+            relocate('appeal_incoming');
         }
     }
 
-    search() { //debugger;
+    search() {
         const w = Object.assign({}, this.state.search);
         /*for (var key in w){
           if (w[key] instanceof Date){
@@ -197,7 +196,7 @@ class AppealExplorer extends React.Component {
 
                             <div className='mt12'>
                                 <Button type="primary" onClick={this.search}>Искать</Button>
-                                <Button type="text" className='ml24'>Очистить</Button>
+                                {false && <Button type="text" className='ml24'>Очистить</Button>}
                             </div>
                         </Card>
                     </Layout.Col>

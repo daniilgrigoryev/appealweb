@@ -166,7 +166,7 @@ class FabulasDocSections extends React.Component {
                 </tr>
             </React.Fragment>
         );
-    }
+    } //
 
     renderExpandedRow(stateRow, x) {
         const {categories, decisions, appeal_causes} = this.state;

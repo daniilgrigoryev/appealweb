@@ -49,7 +49,6 @@ export default class AppealTable extends React.Component {
         this.setState({tableHeight : window.innerHeight - this.offsetTop - 88 - this.props.hdelta + "px"});
     }
 
-
     toSuitableVal(table) {
         return table.rows.map(x => _.zipObject(this.state.table.columns.map(y => y.label), x.map(y => y.value)))
     }
@@ -59,14 +58,18 @@ export default class AppealTable extends React.Component {
         return [...selected];
     }
 
-    onPage(event) {
+    async onPage(event) {
         const {desc, sid, where} = this.props;
         const JSON_W = JSON.stringify(where);
-        const data = Object.assign({}, desc, event, {sid, JSON_W})
-        post('rest/select', data).then(x => {
-            const s = Object.assign({}, this.state, {table: x.data}, event, where);
+        const par = Object.assign({}, desc, event, {sid, JSON_W})
+        const x = await post('rest/select', par);
+        const {data} = x;
+        if (!data.rows){
+
+        } else {                
+            const s = Object.assign({}, this.state, {table: data}, event, where);
             this.setState(s);
-        });
+        }
     }
 
     render() {
@@ -101,7 +104,7 @@ export default class AppealTable extends React.Component {
         if (actionCol) {
             const {style, body} = actionCol;
             dynamicColumns.push(<Column body={body} style={style}/>);
-        }
+        } //
 
         return (
             <DataTable selectionMode="multiple"
@@ -122,9 +125,7 @@ export default class AppealTable extends React.Component {
                        onSelectionChange={e => this.setState({selected: e.value})}>
                 {dynamicColumns}
             </DataTable>
-
-
-        );
+        ); //
     }
 
 }

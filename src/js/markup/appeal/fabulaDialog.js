@@ -42,7 +42,7 @@ class FabulaDialog extends React.Component {
 	componentDidMount(){
 		const {type,system} = this.props
 		post("rest/selectList",{alias : 'GET_FABULAS_THEMES', listValueField : 'value', category:type,system})
-		.then(docList=>this.setState({docList: docList.data || docList}));
+			.then(docList=>this.setState({docList: docList.data || docList}));
 	}
 
 	setDoc(doc){
@@ -174,7 +174,7 @@ class FabulaDialog extends React.Component {
               title="Tips"
        		  size="tiny"
         	  visible={ true }
-        	  onCancel={ () => {}}>
+        	  onCancel={() => {}}>
               <Dialog.Body>
                 <DocPreview 
                 	downloadDoc={this.downloadDoc.bind(this)}
