@@ -197,7 +197,7 @@ class AppealExplorer extends React.Component {
 
                             <div className='mt12'>
                                 <Button type="primary" onClick={this.search}>Искать</Button>
-                                <Button type="text" className='ml24'>Очистить</Button>
+                                {/*<Button type="text" className='ml24'>Очистить</Button>*/}
                             </div>
                         </Card>
                     </Layout.Col>
