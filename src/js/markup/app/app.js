@@ -93,10 +93,12 @@ class LayoutMain extends React.Component {
             <div className='w-full'>
                 <header className='ap-header'>
                     <Layout.Row align='middle'>
-                        <Layout.Col span="4" className='flex-parent flex-parent--center-main flex-parent--center-cross mt3'>
-                            <Button type="text">
-                                <img src={burger} className='px12' alt="Переключение между модулями" />
-                            </Button>
+                        <Layout.Col span="4" className='flex-parent flex-parent--center-cross mt3 pl24'>
+                           {/*
+                           <Button type="text">
+                              <img src={burger} className='px12' alt="Переключение между модулями" />
+                           </Button>
+                           */}
 
                             <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
                         </Layout.Col>
