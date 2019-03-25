@@ -150,7 +150,8 @@ class AppealWizard extends Component {
 
               // ! CASE SENSITIVE changers
               if (R.claim_id){ /// upsert claim  
-                 dispatch(change('id',R.claim_id));
+                dispatch(change('registration_number',R.reg_num));
+                dispatch(change('id',R.claim_id));
               } else if (R.org_c || R.org_r){ // upsert organizations
                  const c_ids = R.org_c || [];
                  const r_ids = R.org_r || [];

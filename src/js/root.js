@@ -98,7 +98,7 @@ class Root extends React.Component {
     } else if (!externalLogin){
       return (<Login />);
     }
-    return (<span>Нет.</span>);
+    return (<span>Авторизация...</span>);
   } //
 };
 
