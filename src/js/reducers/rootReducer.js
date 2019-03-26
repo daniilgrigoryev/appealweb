@@ -5,7 +5,20 @@ import Immutable from 'immutable'
 import {out} from '../services/ajax.js'
 import {relocate} from '../markup/app/app.js'
 
-const im = (obj)=> Immutable.fromJS(obj)
+const im = (obj)=> Immutable.fromJS(obj);
+
+const VERSION_FE = '1';
+let VERSION_BE = null;
+let VERSION_DB = null;
+AJAX.get('rest/version').then(x=>VERSION_BE=(''+x.data));
+
+const getVersion = ()=>{
+  return {
+    backend:  VERSION_BE,
+    frontend: VERSION_FE,
+    database: VERSION_DB
+  }
+}
 
 const addMessage = (state,type,message)=>{
 	const list = state.get('messagesQueue').push(im({type,message}));
@@ -13,6 +26,7 @@ const addMessage = (state,type,message)=>{
 }
 
 const reduceLogout = (state,action)=>{
+  VERSION_DB = null;
   PULSE.stop();
   AJAX.eraseSid();
   if (state.get('externalLogin')){
@@ -24,7 +38,8 @@ const reduceLogout = (state,action)=>{
 }
 
 const reduceLogin = (state,action)=>{
-  const {sessionID,externalSid} = action.loggedData;
+  const {sessionID,externalSid,db_version} = action.loggedData;
+  VERSION_DB = db_version;
   AJAX.setSid(sessionID);
   PULSE.notifyAlive(sessionID,externalSid);
   PULSE.start();
@@ -64,4 +79,4 @@ const initialState = im({
 		//,   ...
 });
 
-export {initialState,rootReducer};
+export {initialState,rootReducer,getVersion};

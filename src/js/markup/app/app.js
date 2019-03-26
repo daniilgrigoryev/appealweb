@@ -21,6 +21,8 @@ import Immutable from 'immutable'
 
 import burger from '../../../images/burger.svg'
 
+import {getVersion} from '../../reducers/rootReducer.js'
+
 const im = (obj)=> Immutable.fromJS(obj)
 
 const relocate = (newPath) => {
@@ -72,7 +74,14 @@ const NotFoundPage = ({match}) => {
     );//
 };
 
+let versionString = null;
+
 class LayoutMain extends React.Component {
+
+    componentDidMount(){
+        const v = getVersion();
+        versionString = _.join([v.database,v.backend,v.frontend],'.');
+    }
 
     render() {
         const a = this;
@@ -88,6 +97,11 @@ class LayoutMain extends React.Component {
             }
         }
 
+        const versionStyle = {
+            'opacity': 0.3,
+            'marginLeft': '10px',
+            'marginTop': '10px'
+        }
         const stLogout = {'cursor': 'pointer'}
         return (
             <div className='w-full'>
@@ -101,6 +115,7 @@ class LayoutMain extends React.Component {
                            */}
 
                             <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
+                            <h1 style={versionStyle} title='Версия'>{versionString}</h1>
                         </Layout.Col>
 
                         <Layout.Col span="20">

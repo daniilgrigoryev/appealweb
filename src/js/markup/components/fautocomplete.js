@@ -25,7 +25,7 @@ class AAutocomplete extends React.Component {
 		}
 	}
 
-	querySearch(queryString, cb){
+	async querySearch(queryString, cb){
 		const {filter} = this;
 		const {data} = this.state;
 		const {acKey,dataKey} = this.props;
@@ -33,15 +33,16 @@ class AAutocomplete extends React.Component {
 	  	if (data){
 	  		cb(filter(data,queryString));
 	  	} else {
-	  		getAc(key).then((d)=>{
-	  			const value = this.state.value || null;
-	  			let data = {};
-				d = d.data ? d.data : d;
-				if (d && d.length){
-					data  = d.map(x=>((x.property && x.value) ? x : {property: x, value: x}));
-				}
-				this.setState({data,value},()=>cb(filter(data,queryString)));
-	  		});
+	  		let d = await getAc(key);
+	  		const value = this.state.value || null;
+	  		let data = {};
+			d = d.data ? d.data : d;
+			if (d && d.length){
+			data  =  (d[0].property && d[0].value) 
+				? d
+				: d.map(x=>({property: x, value: x}));
+			}
+			this.setState({data,value},()=>cb(filter(data,queryString)));
 	  	}
 	}
 

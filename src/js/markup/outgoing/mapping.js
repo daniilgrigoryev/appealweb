@@ -9,20 +9,20 @@ export default {
 		INTRA_DOCS: 	 {name: 'intra_docs',	  		label: 'Служебным документам'}
 	},
 	ishBasic: { 	 
-		VID_DOC: 		 {name: 'vid_doc',		  		label: 'Вид документа',	            key: 'doc_vid'},
+		VID_DOC: 		 {name: 'vid_doc',		  		label: 'Вид документа',	            key: 'DOC_VID'},
 		SUMMARY: 		 {name: 'summary',		  		label: 'Краткое содержание'},
 		NOTES: 		     {name: 'notes',		  		label: 'Примечание'},
-		DELIV_TYPE: 	 {name: 'delivery_type',  		label: 'Способ доставки',			key: 'delivery_type'},
+		DELIV_TYPE: 	 {name: 'delivery_type',  		label: 'Способ доставки',			key: 'DELIVERY_METHOD'},
 		SHEETS_COUNT: 	 {name: 'sheets_count',	  		label: 'Кол-во листов'}
 	},
 	ishHead: {
 		TO: 			 {name: 'to',					label: 'Кому:'},
 		ADDR: 			 {name: 'addr',	  				label: 'Адресаты:'},
 		ZAJAV_NDOC:      {name: 'zajav_ndoc',		 	label: '№ документа'},
-		SIGNER: 		 {name: 'signer',	 			label: 'Подписал'},
-		EXECUTOR: 		 {name: 'executor',				label: 'Исполнитель'},
-		DOC_NUM: 		 {name: 'doc_num',				label: 'Номер документа'},
-		ORDER_NUM: 		 {name: 'order_number',			label: 'Номер заказа'},
+		SIGNER: 		 {name: 'signer',	 			label: 'Подписал',                  key: 'DECISION_MAKER'},
+		EXECUTOR: 		 {name: 'executor',				label: 'Исполнитель',               key: 'EMPLOYESS_LIST'},
+		DOC_NUM: 		 {name: 'doc_prefix',			label: 'Номер документа - префикс'},
+		ORDER_NUM: 		 {name: 'doc_num',				label: 'Номер документа - суффикс'},
 		DOC_DAT: 		 {name: 'doc_date',		  		label: 'Дата'}
 	},
 	ishLinksInner: {

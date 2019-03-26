@@ -1,5 +1,6 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
+import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
 import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
@@ -134,13 +135,13 @@ class IshHead extends React.Component {
                         <td className='ap-input-caption'>{M.SIGNER.label}</td>
                         <td>
                     <span className='mr12'>
-                        <Field disabled={disabled} component={FInput} name={M.SIGNER.name}/>
+                        <Field disabled={disabled} component={FAutocomplete} name={M.SIGNER.name} dataKey={M.SIGNER.key} />
                     </span>
                         </td>
                         <td className='ap-input-caption wmin60'>{M.EXECUTOR.label}</td>
                         <td colSpan='2'>
                     <span className='mr12'>
-                        <Field disabled={disabled} component={FInput} name={M.EXECUTOR.name}/>
+                        <Field disabled={disabled} component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/>
                     </span>
                         </td>
                     </tr>
