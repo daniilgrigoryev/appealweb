@@ -69,7 +69,7 @@ const fields = [
 	{field: M.CODEX_ARTICLE.name , label: 'Статья кодекса'},
 	{field: M.OWNER_TS.name,       label: 'Владелец транспортного средства'},
 	{field: M.OWNER_TS_ADR.name,   label: 'Адрес владельца транспортного средства'},
-	{field: M.APPEAL_APN.name,     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отменены)'},
+	{field: M.APPEAL_APN.name,     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)'},
 	{field: M.UCH_PRIS.name,       label: 'Необходимо присутствие участника'},
 	{field: M.RASSMOTR_DATE.name,  label: 'Дата рассмотрения дела'},
 	{field: M.RASSMOTR_TIME.name,  label: 'Время рассмотрения дела'},

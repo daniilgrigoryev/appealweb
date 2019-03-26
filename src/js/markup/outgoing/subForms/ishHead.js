@@ -135,7 +135,7 @@ class IshHead extends React.Component {
                         <td className='ap-input-caption'>{M.SIGNER.label}</td>
                         <td>
                     <span className='mr12'>
-                        <Field disabled={disabled} component={FAutocomplete} name={M.SIGNER.name} dataKey={M.SIGNER.key} />
+                        <Field disabled={disabled} component={FInput} name={M.SIGNER.name} />
                     </span>
                         </td>
                         <td className='ap-input-caption wmin60'>{M.EXECUTOR.label}</td>

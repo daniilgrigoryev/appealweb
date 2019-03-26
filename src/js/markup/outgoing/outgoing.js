@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import {reset} from 'redux-form';
 import {Field, reduxForm} from 'redux-form/immutable'
 import {Button, Input, Card, Layout} from 'element-react'
+import {post} from '../../services/ajax.js'
 
 import IshHead from './subForms/ishHead.js'
 import IshBasic from './subForms/ishBasic.js'
@@ -13,6 +14,7 @@ import IshLinkInner from './subForms/ishLinksInner.js'
 import IshLinkScan from './subForms/ishLinksScan.js'
 
 import {exportString} from '../../services/stringExporter.js'
+const alias = 'CLAIM_OUT_PUSH'
 
 class Outgoing extends React.Component {
 
