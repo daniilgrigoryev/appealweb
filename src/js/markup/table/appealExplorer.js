@@ -70,16 +70,18 @@ class AppealExplorer extends React.Component {
     }
 
     search() {
-        const w = Object.assign({}, this.state.search);
-        /*for (var key in w){
+        const s = this.state.search;
+        const w = Object.assign({}, s);
+        
+        for (var key in s){
           if (w[key] instanceof Date){
             w[key]= new Date(w[key].getTime()+timeOfs);
+          } else if (!w[key] || w[key]=='void 0'){
+            delete w[key];
           }
-        }*/
+        }
         this.where = w;
-
-        //debugger;
-
+        
         this.whereKey = 'k' + new Date().getTime();
         this.forceUpdate();
     }
