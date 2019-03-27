@@ -3,7 +3,6 @@
 
 .p-datatable {
   background: transparent;
-  //background: white;
 
   .p-datatable-scrollable-wrapper {
     background: white;
@@ -23,9 +22,7 @@
     font-size: 12px;
   }
 
-  .p-datatable-scrollable-header-box {
-    margin: 0 !important;
-  }
+
 
   .p-datatable-scrollable-header {
     overflow-y: visible !important;
@@ -33,6 +30,7 @@
     position: relative;
     z-index: 1;
   }
+
 
   .p-datatable-scrollable-view {
     overflow: hidden;
@@ -42,16 +40,7 @@
     @include custom-scrollbar();
   }
 
-  .p-datatable-tbody > tr:nth-child(2n) {
-    background-color: initial !important;
-  }
-
-  tr {
-    border-bottom: 1px solid $color-input-border !important;
-  }
-
   .p-datatable-thead > tr > th {
-    padding: 20px !important;
     text-align: left !important;
     font-size: 15px !important;
     font-weight: 400 !important;
@@ -62,7 +51,18 @@
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 20px !important;
+    overflow: hidden;
+  }
+
+  .p-datatable-tbody > tr:nth-child(2n) {
+    background-color: initial !important;
+  }
+
+  tr {
+    border-bottom: 1px solid $color-input-border !important;
+  }
+
+  .p-datatable-tbody > tr > td {
     color: $color-input-text !important;
     font-size: 14px !important;
     border: none !important;
@@ -88,18 +88,9 @@
     td {
       font-size: 18px !important;
       line-height: 24px !important;
-      text-align: center;
       border-bottom: none !important;
       color: rgba(black, 0.1) !important;
     }
-  }
-
-  .p-datatable-scrollable-header-table {
-    //border-top: 1px solid #d1dbe5 !important;
-  }
-
-  .p-datatable-scrollable-body-table {
-    table-layout: initial !important;
   }
 }
 
