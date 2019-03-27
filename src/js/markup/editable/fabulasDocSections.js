@@ -295,7 +295,7 @@ class FabulasDocSections extends React.Component {
                 <h4 className="ap-h4">Фабулы секций документа</h4>
 
                 {!rows.length ?
-                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет документов</p>
+                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет документов</p>
                     :
                     <table className='wmin600 mb18'>
                         <thead>
@@ -313,7 +313,7 @@ class FabulasDocSections extends React.Component {
                     </table>
                 }
 
-                <Button size="small" icon="plus" onClick={this.addRow}
+                <Button size="small" icon="plus" onClick={this.addRow} type="success" plain={true}
                         className="flex-parent mb18"
                         title='Добавить тему'>
                     Добавить

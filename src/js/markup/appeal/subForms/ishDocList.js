@@ -390,7 +390,7 @@ class EIshDocList extends React.Component {
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет исходящих документов</p>
+                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет исходящих документов</p>
                     :
                     <table key='idl1' className='mb18'>
                         <thead>
@@ -412,12 +412,12 @@ class EIshDocList extends React.Component {
 
                 <div className='flex-parent'>
                     {disabled ? null :
-                        <Button size="small" icon="plus" onClick={add(getRowZajav)}
+                        <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowZajav)}
                                 className="flex-parent mb18"
                                 title='Добавить тему'>Документ заявителя</Button>
                     }
                     {disabled ? null :
-                        <Button size="small" icon="plus" onClick={add(getRowOrg)}
+                        <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowOrg)}
                                 className="flex-parent mb18"
                                 title='Добавить тему'>Документ организации</Button>
                     }

@@ -425,7 +425,7 @@ class ETopicList extends React.Component {
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных тем обращения</p>
+                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных тем обращения</p>
                     :
                     <table className='wmin600 mb18'>
                         <thead>
@@ -445,7 +445,7 @@ class ETopicList extends React.Component {
                 }
 
                 {disabled ? null :
-                    <Button size="small" icon="plus" onClick={add}
+                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
                             className="flex-parent mb18"
                             title='Добавить тему'>Добавить</Button>
                 }

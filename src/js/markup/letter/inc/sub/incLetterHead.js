@@ -137,7 +137,7 @@ const ZajavRows = (props) => {
             <h4 className="ap-h4">{M.ORG_NAME.label}</h4>
 
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных заявителей</p>
+                <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных заявителей</p>
 
                 :
                 <table>
@@ -175,7 +175,7 @@ const ZajavRows = (props) => {
                             <tr>
                                 <td colSpan='3'>
                                     {disabled ? null :
-                                        <Button size="small" icon="plus" onClick={add}
+                                        <Button size="small" icon="plus" type="success" plain={true} onClick={add}
                                                 className="flex-parent mb18"
                                                 title='Добавить заявителя'>Добавить</Button>
                                     }

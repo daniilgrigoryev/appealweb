@@ -11858,7 +11858,7 @@ input:checked + .switch--dot-transparent::after {
  * <div class='grid'>
  *   <div class='col col--3 color-gray-dark'>color-gray-dark</div>
  *   <div class='col col--3 color-gray'>color-gray</div>
- *   <div class='col col--3 color-gray-light'>color-gray-light</div>
+ *   <div class='col col--3 color-gray'>color-gray</div>
  *   <div class='col col--3 color-gray-faint'>color-gray-faint</div>
  *   <div class='col col--3 color-pink-dark'>color-pink-dark</div>
  *   <div class='col col--3 color-pink'>color-pink</div>
@@ -11910,7 +11910,7 @@ input:checked + .switch--dot-transparent::after {
   color: #666 !important;
 }
 
-.color-gray-light {
+.color-gray {
   color: #ccc !important;
 }
 
@@ -13135,9 +13135,9 @@ input:checked + .switch--dot-transparent::after {
   color: #666 !important;
 }
 
-.color-gray-light-on-hover:hover,
-.color-gray-light-on-active.is-active,
-.color-gray-light-on-active.is-active:hover {
+.color-gray-on-hover:hover,
+.color-gray-on-active.is-active,
+.color-gray-on-active.is-active:hover {
   color: #ccc !important;
 }
 

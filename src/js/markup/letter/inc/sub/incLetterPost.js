@@ -57,7 +57,7 @@ const postRows = (props) => {
     return (
         <React.Fragment>
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных постановлений</p>
+                <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных постановлений</p>
                 :
                 <table>
                     <tbody>

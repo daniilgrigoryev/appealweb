@@ -1,16 +1,20 @@
+$color-blue: #5578a7;
 $color-page-bg: #f2f2f2;
 $color-text-base: #797979;
-$color-text-headers: #7b95b7;
-$color-input-border: #DEDEDE;
-$color-blue: #1888CC;
-$color-input-text: #373737;
+$color-text-headers: $color-blue;
+$color-blue: #20a0ff;
+
+$color-border: #D9D9D9;
+$color-input-border: $color-border;
+$box-border-color: $color-border;
+
+$color-input-text: #48576a;
 $color-input-placeholder: #989898;
 $color-input-icon: #ccc;
-$color-blue-selected: #53A4D6;
-$input-caption-font-size: 12px;
+$color-blue-selected: $color-blue;
+$input-caption-font-size: 12.5px;
 $input-font-size: 13px;
 
-$box-border-color: $color-input-border;
 
 
 $box-bg-color-active: #e6f4ff;
