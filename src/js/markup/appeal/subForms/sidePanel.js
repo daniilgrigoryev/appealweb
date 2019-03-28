@@ -9,6 +9,9 @@ import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {Button, Card, Layout, Tag} from 'element-react'
+import {post} from '../../../services/ajax.js'
+import Immutable from 'immutable'
+import * as _ from 'lodash'
 
 import './sidePanel.scss'
 import mapping from './../appealContent/mapping.js'
@@ -17,8 +20,15 @@ const alias = 'CLAIM_PUSH_COMBO';
 const headerTitle = 'Основные сведения';
 const M = mapping.status;
 
+const im = (obj)=> Immutable.fromJS(obj)
 const hashCode = (s) =>(s||'').split('').reduce((hash, val) =>(((hash << 5) - hash) + val.charCodeAt(0))|0, 0);
 
+const scrollNavi = (attr)=>{
+    return ()=>{
+        const el = document.querySelector('div[scrollAnchor="'+attr+'"]');
+        el && el.scrollIntoView();
+    }
+}
 
 class SidePanel extends Component {
     
@@ -38,8 +48,9 @@ class SidePanel extends Component {
         return !formData ? 0 : hashCode(JSON.stringify(formData.values));
     }
     
-    save(){        
-        const {formData,dispatch,change} = this.props;
+    save(){    
+        const a = this;    
+        const {formData,dispatch,change,initialize} = this.props; 
         const data = JSON.stringify(Object.assign({},formData.values));
         const jsonMode = true;
         
@@ -54,15 +65,16 @@ class SidePanel extends Component {
             }
 
             const json = x.data.rows[0][0].value; // the first column value of single row expected
-            // debugger;
             try{
-                debugger;
               const R = JSON.parse(json); // ret holder
               dispatch(initialize(im(R)));
+              setTimeout(()=>{
+                a.curHash = a.getHash()
+                a.forceUpdate();
+                },1000);
             } catch (exc){
               console.error(exc);
-            } 
-            
+            }             
         }).catch(x=>{
             dispatch(messageSet(x,'error'));
             console.error(x);
@@ -71,10 +83,14 @@ class SidePanel extends Component {
     }
 
     render(){
-        const {disabled} = this.props;
+        const {disabled,formData} = this.props;
+        //debugger;
+                
         const noSave = this.curHash && this.curHash == this.getHash()
         const stateBtnText = noSave? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? ()=>{} : this.save;
+
+        const {checking_date,registration_number} = _.get(formData,'values',{});
 
         return (
             <div className='sidePanelWrap'>
@@ -85,6 +101,15 @@ class SidePanel extends Component {
 
                    <table className='w-full'>
                         <tbody>
+                            <tr>
+                                <td className='ap-input-caption w120'>{M.REG_NUM.label}</td>
+                                <td>{registration_number}</td>
+                            </tr>
+                            <tr>
+                                <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
+                                <td>{checking_date}</td>
+                            </tr>    
+
                             <tr>
                                 <td className='ap-input-caption w120'>{M.STATUS.label}</td>
                                 <td>
@@ -119,13 +144,13 @@ class SidePanel extends Component {
                     </table>
 
                     <ul>
-                        <li>Основные сведения</li>
-                        <li>Сведения о заявителе</li>
-                        <li>Организации</li>
-                        <li>Краткое содержание</li>
-                        <li>Темы обращения</li>
-                        <li>Исходящие документы</li>
-                        <li>Архивная информация</li>
+                        <li onClick={scrollNavi('basic')}>Основные сведения</li>
+                        <li onClick={scrollNavi('claimant')}>Сведения о заявителе</li>
+                        <li onClick={scrollNavi('organizations')}>Организации</li>
+                        <li onClick={scrollNavi('summary')}>Краткое содержание</li>
+                        <li onClick={scrollNavi('topics')}>Темы обращения</li>
+                        <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
+                        <li onClick={scrollNavi('archive')}>Архивная информация</li>
                     </ul>
 
                 </div>

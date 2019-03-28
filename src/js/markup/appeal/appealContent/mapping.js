@@ -100,7 +100,7 @@ export default {
 		SHEETS_COUNT:    {name: 'sheets_count',	  label: 'Кол-во листов'},
 		EDO_NUM: 		 {name:	'edo_num',		  label: 'Номер в ЭДО'},
 		COMMENT: 		 {name: 'comment',        label: 'Комментарий'},
-		FAB_DOC: 		 {name: 'fab_doc',		  label: 'Фабулы документов'},
+		FAB_DOC: 		 {name: 'fab_doc',		  label: 'Документы'},
 		SOPR_LET: 		 {name: 'sopr_let',		  label: 'Сопроводительное письмо'},
 		UNI_TYPE: 		 {name: 'uni_type', 	  label: 'Универсальный'},
 		DEFIN: 			 {name: 'defin', 		  label: 'Определение'},
@@ -135,6 +135,8 @@ export default {
 	status: {
 		DEPART: 		 {name: 'exec_org_key', 	   label: 'Отдел', 	     key: 'DEPARTMENTS_LIST'},
 		STATUS: 		 {name: 'processing_stage_id', label: 'Статус',      key: 'PROCESSING_STAGES'},
-		EXECUTOR: 		 {name: 'exec_emp_key', 	   label: 'Исполнитель', key: 'EMPLOYESS_LIST'}
+		EXECUTOR: 		 {name: 'exec_emp_key', 	   label: 'Исполнитель', key: 'EMPLOYESS_LIST'},
+		REG_NUM: 		 {name: 'registration_number', label: 'Регистрационный номер'},
+		CHK_DATE: 		 {name: 'checking_date', 	   label: 'Дата контроля'}
 	}
 }

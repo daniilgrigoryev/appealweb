@@ -118,7 +118,7 @@ class ClaimantData extends React.Component {
             : null;
 
         return (
-            <div>
+            <div scrollAnchor='claimant'>
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
                     {/*<Layout.Col span="16" offset="4">*/}

@@ -13,7 +13,12 @@ import {fields, categories, matrix} from './categories.js'
 
 const M = mapping.topicList;
 
-const data2str = (data) => (data ? data.toISOString() : '');
+const data2str = (data) =>{
+    if (data){
+        return (data instanceof Date) ? data.toISOString() : data; 
+    }
+    return '';
+} //(data ? data.toISOString() : '');
 const stopPg = (cb, id) => (evt) => {
     evt.stopPropagation();
     cb(id);
@@ -21,8 +26,9 @@ const stopPg = (cb, id) => (evt) => {
 }
 
 const OFRow = (props) => {
-    const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled} = props;
-    const {id} = value;
+    const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse} = props;
+    const id = value.get('id')
+    
     const expanded = checkExpand(id);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -46,6 +52,11 @@ const OFRow = (props) => {
     };
 
     if (!expanded) {
+
+
+
+        debugger;
+
         const collapsed = (
             <React.Fragment>
                 <tr key={id}>
@@ -56,17 +67,17 @@ const OFRow = (props) => {
                     </td>
                     <td>
                  <span className='inline-block mr12'>
-                {props.getValue(P[M.CAT.name])}
+                {P.get(M.CAT.name)}
                   </span>
                     </td>
                     <td>
                 <span className='inline-block mr12'>
-                {P[M.POST_N.name]}
+                {P.get(M.POST_N.name)}
                 </span>
                     </td>
                     <td>
                 <span className='inline-block mr12'>
-                {data2str(P[M.POST_DATE.name])}
+                {data2str(P.get(M.POST_DATE.name))}
                 </span>
                     </td>
                     <td colSpan='2' className='pr12 align-r'>
@@ -298,7 +309,7 @@ const OFRow = (props) => {
                         </table>
                         <hr className='txt-hr my18'/>
                         <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross'>
-                            <Button type="text" size="small">
+                            <Button type="text" size="small" onClick={collapse}>
                                 <span className='color-blue'>Свернуть</span>
                             </Button>
                             <div>
@@ -407,10 +418,14 @@ class ETopicList extends React.Component {
         const getV = this.getCategValue.bind(this);
 
         const {fields, disabled} = this.props;
+
+        debugger;
+
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i}
                    ind={i}
-                   checkExpand={(id) => id === this.state.expandedId}
+                   checkExpand={(id) => id == this.state.expandedId}
+                   collapse={()=>this.setState({expandedId:false})}
                    field={x}
                    value={arr.get(i)}
                    onRemove={rmv}

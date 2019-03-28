@@ -18,7 +18,7 @@ const BasicData = props => {
     const {nextPage, handleSubmit, prevPage, disabled} = props;
     const navi = !disabled && (nextPage||prevPage);
     return (
-        <div>
+        <div scrollAnchor='basic'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
                 {/*<Layout.Col span="16" offset="4">*/}

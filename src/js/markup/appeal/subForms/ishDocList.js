@@ -41,8 +41,8 @@ const tLoad = (claim_id)=>{
 }
 
 const OFRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id} = props;
-    const {id} = value;
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse} = props;
+    const id = value.get('id');
     const expanded = checkExpand(id);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -61,11 +61,11 @@ const OFRow = (props) => {
                     <td>
                         <span className='ap-table-list-number mr12'>{ind + 1}</span>
                     </td>
-                    <td>{P[M.DOC_TARGET.name]}</td>
-                    <td>{P[M.ISH_NUM.name]}</td>
-                    <td>{data2str(P[M.ISH_DATE.name])}</td>
-                    <td>{P[M.PODPISAL.name]}</td>
-                    <td>{P[M.STATUS.name]}</td>
+                    <td>{P.get(M.DOC_TARGET.name)}</td>
+                    <td>{P.get(M.ISH_NUM.name)}</td>
+                    <td>{data2str(P.get(M.ISH_DATE.name))}</td>
+                    <td>{P.get(M.PODPISAL.name)}</td>
+                    <td>{P.get(M.STATUS.name)}</td>
                     <td className='pr12 align-r'>
                         {disabled ? null :
                             <Button type="text" onClick={onXpd}>
@@ -181,7 +181,7 @@ const OFRow = (props) => {
                                                     {fTypes.map(x => <Dropdown.Item command={x}>{x}</Dropdown.Item>)}
                                                 </Dropdown.Menu>)}>
                                                 <Button size="small">
-                                                    Добавить тип фабулы
+                                                    Создать по шаблону
                                                     <i className="el-icon-arrow-down el-icon--right"></i>
                                                 </Button>
                                             </Dropdown>
@@ -250,7 +250,7 @@ const OFRow = (props) => {
                         </table>
                         <hr className='txt-hr my18'/>
                         <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross'>
-                            <Button type="text" size="small">
+                            <Button type="text" size="small" onClick={collapse}>
                                 <span className='color-blue'>Свернуть</span>
                             </Button>
                             <div>
@@ -384,9 +384,9 @@ class EIshDocList extends React.Component {
         const {categories} = this.props;
 
         const ROWS = fields.map((x, i, arr) => (
-            <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id === this.state.expandedId}
+            <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id == this.state.expandedId}
                    onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} claim_id={claim_id}
-                   disabled={disabled} categories={categories}>{x.value}
+                   disabled={disabled} categories={categories} collapse={()=>this.setState({expandedId:false})}>{x.value}
             </OFRow>)); //
 
         const add = (rowGetter) => () => fields.push(rowGetter());

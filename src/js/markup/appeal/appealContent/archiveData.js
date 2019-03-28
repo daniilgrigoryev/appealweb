@@ -19,7 +19,7 @@ const ArchiveData = props => {
     const navi = !disabled && (nextPage||prevPage);
     
     return (
-        <div>
+        <div scrollAnchor='archive'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
                 {/*<Layout.Col span="16" offset="4">*/}
