@@ -57,7 +57,7 @@ const scannedDocs = (props) => {
     return (
         <React.Fragment>
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет сканированных документов</p>
+                <p className='mt-neg18 mb18 txt-em color-gray'>Нет сканированных документов</p>
                 :
                 <table>
                     <tbody>
@@ -93,13 +93,13 @@ const scannedDocs = (props) => {
                             <tr>
                                 <td className='flex-parent flex-parent--center-cross'>
                                     {disabled ? null :
-                                        <Button size="small" icon="upload2" onClick={add}
+                                        <Button size="small" icon="upload2" type="success" plain={true} onClick={add}
                                                 className="flex-parent mb18 mr12"
                                                 title='Добавить постановление'>Загрузить</Button>
                                     }
 
                                     {disabled ? null :
-                                        <Button size="small" icon="picture" onClick={add}
+                                        <Button size="small" icon="picture" type="success" plain={true} onClick={add}
                                                 className="flex-parent mb18"
                                                 title='Добавить постановление'>Сканировать</Button>
                                     }

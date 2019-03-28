@@ -108,10 +108,10 @@ class AppealExplorer extends React.Component {
             <React.Fragment>
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                        <Card className="box-card mb24" header={
+                        <Card className="box-card" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    Настройки поиска
+                                    Поиск обращений
                                 </h3>
                             </div>
                         }>
@@ -212,13 +212,7 @@ class AppealExplorer extends React.Component {
                     <h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3>
                 </div>}
                 {!noTable &&
-                <Card className="box-card" bodyStyle={{ padding: '0' }} header={
-                    <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                        <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                            Найденные обращения
-                        </h3>
-                    </div>
-                }>
+                <Card className="box-card" bodyStyle={{ padding: '0' }}>
                     <AppealTable key={this.whereKey} sid={this.props.sid} desc={desc} actionCol={ac} mapping={mappingT}
                                  hdelta={'520'} where={this.where}/>
                 </Card>

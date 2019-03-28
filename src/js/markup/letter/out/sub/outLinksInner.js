@@ -39,7 +39,7 @@ const linkedDocs = (props) => {
     return (
         <React.Fragment>
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет связанных документов</p>
+                <p className='mt-neg18 mb18 txt-em color-gray'>Нет связанных документов</p>
                 :
                 <table>
                     <tbody>
@@ -74,7 +74,7 @@ const linkedDocs = (props) => {
                             <tr>
                                 <td colSpan='3'>
                                     {disabled ? null :
-                                        <Button size="small" icon="plus" onClick={add}
+                                        <Button size="small" icon="plus" onClick={add} type="success" plain={true}
                                                 className="flex-parent mb18"
                                                 title='Добавить адресата'>Добавить</Button>
                                     }

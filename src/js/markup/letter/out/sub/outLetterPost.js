@@ -57,7 +57,7 @@ const postRows = (props) => {
     return (
         <React.Fragment>
             {!fields.length ?
-                <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных постановлений</p>
+                <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных постановлений</p>
                 :
                 <table>
                     <tbody>
@@ -93,7 +93,7 @@ const postRows = (props) => {
                             <tr>
                                 <td colSpan='3'>
                                     {disabled ? null :
-                                        <Button size="small" icon="plus" onClick={add}
+                                        <Button size="small" type="success" plain={true} icon="plus" onClick={add}
                                                 className="flex-parent mb18"
                                                 title={M.ADD_POST_N.label}>Добавить</Button>
                                     }

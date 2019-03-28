@@ -57,7 +57,7 @@ export class EOrganizationFrom extends React.Component {
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg12 mb18 txt-em txt-s color-gray-light'>Нет добавленных организаций</p>
+                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных организаций</p>
                     :
                     <table>
                         <thead>
@@ -74,7 +74,7 @@ export class EOrganizationFrom extends React.Component {
                 }
 
                 {disabled ? null :
-                    <Button size="small" icon="plus" onClick={add}
+                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
                             className="flex-parent mb18"
                             title='Добавить тему'>Добавить</Button>
                 }
