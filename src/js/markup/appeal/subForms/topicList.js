@@ -52,11 +52,6 @@ const OFRow = (props) => {
     };
 
     if (!expanded) {
-
-
-
-        debugger;
-
         const collapsed = (
             <React.Fragment>
                 <tr key={id}>
@@ -418,8 +413,6 @@ class ETopicList extends React.Component {
         const getV = this.getCategValue.bind(this);
 
         const {fields, disabled} = this.props;
-
-        debugger;
 
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i}
