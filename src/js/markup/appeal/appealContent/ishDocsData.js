@@ -9,15 +9,17 @@ import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {EIshDocList, FIshDocList} from '../subForms/ishDocList.js'
-import mapping from './mapping.js'
 import {Button, Card, Layout, Tag} from 'element-react'
 import {FTopicList} from "../subForms/topicList";
+
+import mapping from './mapping.js'
 
 const headerTitle = 'Исходящие документы';
 
 const IshDocsData = props => {
     const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled, categories,claim_id} = props;
-    //debugger;
+    const navi = !disabled && (nextPage||prevPage);
+    
     return (
         <div>
             <Layout.Row gutter="20">
@@ -29,7 +31,7 @@ const IshDocsData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>6/8</Tag>

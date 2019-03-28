@@ -6,6 +6,7 @@ import {Menu, Layout, Button} from 'element-react'
 import {logoutRequest} from '../../actions/common.js'
 import {getSessionId} from '../../selectors/common.js'
 import AppealWizard from '../appeal/appealWizard.js'
+import ComboAppeal from '../appeal/comboAppeal.js'
 import AppealExplorer from '../table/appealExplorer.js'
 import FabulasList from '../editable/fabulasList.js'
 import DecisionsList from '../editable/decisionsList.js'
@@ -37,7 +38,7 @@ export default function App() {
             <LayoutConnected>
                 <Switch>
                     <Route exact path='/' component={AppealExplorer || Home}/>
-                    <Route path='/appeal_incoming' component={AppealWizard}/>
+                    <Route path='/appeal_incoming' component={ComboAppeal || AppealWizard}/>
                     <Route path='/appeal_outgoing' component={Outgoing}/>
                     <Route path='/explore' component={AppealExplorer}/>
                     <Route path='/letter_incoming' component={IncomingLetter}/>

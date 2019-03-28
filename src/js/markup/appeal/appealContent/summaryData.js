@@ -9,10 +9,10 @@ import {EPicker, FPicker} from '../../components/picker.js'
 import {EApnList} from '../subForms/apnList.js'
 import {EQuestionList} from '../subForms/questionList.js'
 import {Button, Card, Layout, Tag} from 'element-react'
-
-import mapping from './mapping.js'
 import {EOrganizationFrom} from "../subForms/organizationFrom";
 import {EOrganizationControl} from "../subForms/organizationControl";
+
+import mapping from './mapping.js'
 
 const headerTitle = 'Краткое содержание';
 
@@ -20,7 +20,8 @@ const M = mapping.SummaryData;
 
 const SummaryData = props => {
     const {nextPage, handleSubmit, prevPage, header, disabled} = props;
-
+    const navi = !disabled && (nextPage||prevPage);
+    
     return (
         <div>
             <Layout.Row gutter="20">
@@ -32,7 +33,7 @@ const SummaryData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>4/8</Tag>

@@ -7,9 +7,9 @@ import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {Button, Card, Layout, Tag, Popover} from 'element-react'
+import {FIshDocList} from "../subForms/ishDocList";
 
 import mapping from './mapping.js'
-import {FIshDocList} from "../subForms/ishDocList";
 
 const headerTitle = 'Архивная информация';
 const M = mapping.status;

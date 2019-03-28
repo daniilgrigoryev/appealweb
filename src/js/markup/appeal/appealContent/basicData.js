@@ -16,6 +16,7 @@ const M = mapping.basicData;
 
 const BasicData = props => {
     const {nextPage, handleSubmit, prevPage, disabled} = props;
+    const navi = !disabled && (nextPage||prevPage);
     return (
         <div>
             <Layout.Row gutter="20">
@@ -27,7 +28,7 @@ const BasicData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>1/8</Tag>

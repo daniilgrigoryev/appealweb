@@ -7,15 +7,17 @@ import {ESwitch,FSwitch} from '../../components/switch.js'
 import {ESelect,FSelect} from  '../../components/select.js'
 import {EPicker,FPicker} from '../../components/picker.js'
 import {Button, Card, Layout, Tag} from 'element-react'
+import {FIshDocList} from "../subForms/ishDocList";
 
 import mapping from './mapping.js'
-import {FIshDocList} from "../subForms/ishDocList";
 
 const headerTitle = 'Архивная информация';
 const M = mapping.archive;
     
 const ArchiveData = props => {
     const { handleSubmit, pristine, nextPage, prevPage, submitting, header,disabled } = props;
+    const navi = !disabled && (nextPage||prevPage);
+    
     return (
         <div>
             <Layout.Row gutter="20">
@@ -27,7 +29,7 @@ const ArchiveData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>7/8</Tag>

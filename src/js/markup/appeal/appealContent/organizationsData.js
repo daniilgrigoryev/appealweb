@@ -20,7 +20,8 @@ const M = mapping.organizationsData;
 const OrganizationsData = props => {
     const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled} = props
     const isMadi = system == 'M';
-
+    const navi = !disabled && (nextPage||prevPage);
+    
     return (
         <div>
             <Layout.Row gutter="20">
@@ -32,7 +33,7 @@ const OrganizationsData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>3/8</Tag>

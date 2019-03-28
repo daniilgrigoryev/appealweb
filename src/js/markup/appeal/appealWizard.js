@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {reset} from 'redux-form';
 import {Field, reduxForm} from 'redux-form/immutable'
 import Immutable from 'immutable'
-
 import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
 import TestElement2RF from './appealContent/testElement2rf.js' 
@@ -18,7 +17,6 @@ import FullAppeal from './fullAppeal.js'
 import StatusData from './appealContent/statusData.js'
 import {post} from '../../services/ajax.js'
 import {appealSetId} from '../../actions/common.js'
-
 import {Button} from 'element-react'
 import {messageSet} from '../../actions/common.js'
 
@@ -129,11 +127,10 @@ class AppealWizard extends Component {
         }
 
         if (a.curHash == hashCode(data)){
-          //console.log('blind slide');
           return toggler(this);
         }
 
-        post('rest/push',{alias,data,jsonMode}).then(x=>{
+        post('db/push',{alias,data,jsonMode}).then(x=>{
             const F = formData;
             const V = F ? F.values : {};
 

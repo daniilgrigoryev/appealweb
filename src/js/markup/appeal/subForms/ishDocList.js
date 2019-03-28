@@ -25,14 +25,19 @@ const fTypes = [
     'Универсальный',
     'Определение',
     'Уведомление',
+    'Решение',
     'Вызов',
     'Инициативное письмо',
     'Перенаправление',
     'Извещение о явке'
 ]
 
+const fabDocLoads  = ()=>{
+    return post("db/select",{alias:'DOC_LOAD',type});
+}
+
 const tLoad = (claim_id)=>{
-    return post("rest/selectList",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
+    return post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 }
 
 const OFRow = (props) => {

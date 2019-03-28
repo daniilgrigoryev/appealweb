@@ -10,16 +10,18 @@ import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {ETopicList, FTopicList} from '../subForms/topicList.js'
 import {Button, Card, Layout, Tag} from 'element-react'
-
-import mapping from './mapping.js'
 import {EOrganizationFrom} from "../subForms/organizationFrom";
 import {EOrganizationControl} from "../subForms/organizationControl";
+
+import mapping from './mapping.js'
 
 const headerTitle = 'Темы обращения';
 const M = mapping.TopicsData;
 
 const TopicsData = props => {
     const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled} = props;
+    const navi = !disabled && (nextPage||prevPage);
+    
     const isMadi = system == 'M';
 
     return (
@@ -33,7 +35,7 @@ const TopicsData = props => {
                                 {headerTitle}
                             </h3>
 
-                            {disabled
+                            {!navi
                                 ? null
                                 : (<div>
                                     <Tag type="gray" className='mx12'>5/8</Tag>

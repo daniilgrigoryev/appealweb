@@ -41,7 +41,7 @@ class FabulaDialog extends React.Component {
 
 	componentDidMount(){
 		const {type,system} = this.props
-		post("rest/selectList",{alias : 'GET_FABULAS_THEMES', listValueField : 'value', category:type,system})
+		post("db/select",{alias : 'GET_FABULAS_THEMES', listValueField : 'value', category:type,system})
 			.then(docList=>this.setState({docList: docList.data || docList}));
 	}
 
@@ -138,7 +138,7 @@ class FabulaDialog extends React.Component {
 		params.append('type',this.props.type)
 		
 
-		const link = baseUrl() + 'rest/get_docx?'+params.toString()
+		const link = baseUrl() + 'doc/get_docx?'+params.toString()
 		this.download(link,'docx.docx');
 	}
 
@@ -153,7 +153,7 @@ class FabulaDialog extends React.Component {
 		params.append('ext','pdf')
 		params.append('zajavId', '')
 
-		const link = baseUrl() + 'rest/get_docx?'+params.toString()
+		const link = baseUrl() + 'doc/get_docx?'+params.toString()
 		this.download(link,'pdf.pdf');
 	}
 

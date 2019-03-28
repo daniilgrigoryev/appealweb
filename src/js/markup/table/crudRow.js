@@ -27,8 +27,7 @@ export default class CrudRow extends React.Component {
 
     renderSelect(field, onChange, val) {
         const {selectKey, selectData, selectGetter} = field;
-        return <ESelect onChange={onChange} value={val} dataKey={selectKey} data={selectData}
-                        datagetter={selectGetter}/>;
+        return <ESelect onChange={onChange} value={val} dataKey={selectKey} data={selectData} datagetter={selectGetter}/>;
     } //
 
     renderAutocomplete(field, onChange, val) {

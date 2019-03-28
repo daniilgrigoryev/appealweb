@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DEV_152'
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -22,7 +22,7 @@ export function login(loginData){
 	}
 	return loginData.externalSid
 		? AJ.post('externalLogin/getUserParams/'+loginData.externalSid,loginData)
-		: AJ.post('rest/login',loginData);
+		: AJ.post('root/login',loginData);
 }
 
 export function notifyAlive(sessionId,externalSid=false){
@@ -31,23 +31,23 @@ export function notifyAlive(sessionId,externalSid=false){
 	}
 	return externalSid
 		? AJ.post('externalLogin/checkSession/',{sessionId,externalSid})
-		: AJ.post('rest/notify',{sessionId});
+		: AJ.post('root/notify',{sessionId});
 }
 
 export function logout(sessionId){
 	if (MODE=='DESIGN'){
 		return new Promise((resolve)=>setTimeout(()=>resolve({data:{status:200}}),1500))
 	}
-	return AJ.post('rest/logout',{sessionId});
+	return AJ.post('root/logout',{sessionId});
 }
 
 export function push(sessionId,alias,data,jsonMode=false){
 	const dataJSON = typeof data=='string' ? data : JSON.stringify(data);
-	return AJ.post('rest/push',{sid:sessionId, alias,data:dataJSON,jsonMode});	
+	return AJ.post('db/push',{sid:sessionId, alias,data:dataJSON,jsonMode});	
 }
 
 export function loadFile(file) { 
-	return AJ.postFile('rest/load_docx', file);
+	return AJ.postFile('doc/load_docx', file);
 }
 
 export function fetchAutocomplete(key,query){
@@ -60,7 +60,7 @@ export function fetchSelect(key){
 		case 'fabulasCategories': return fetchFabulasCategories();
 		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
 		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
-		default: return AJ.post("rest/selectList",{alias : key, listValueField : 'value'});
+		default: return AJ.post("db/select",{alias : key, listValueField : 'value'});
 	}
 }
 

@@ -10,7 +10,7 @@ const im = (obj)=> Immutable.fromJS(obj);
 const VERSION_FE = '1';
 let VERSION_BE = null;
 let VERSION_DB = null;
-AJAX.get('rest/version').then(x=>VERSION_BE=(''+x.data));
+AJAX.get('root/version').then(x=>VERSION_BE=(''+x.data));
 
 const getVersion = ()=>{
   return {

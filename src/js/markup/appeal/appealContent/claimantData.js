@@ -23,7 +23,8 @@ class ClaimantData extends React.Component {
 
     render() {
         const {handleSubmit, nextPage, prevPage, pristine, submitting, header, content, disabled} = this.props;
-
+        const navi = !disabled && (nextPage||prevPage);
+    
         const isPred = !!content[M.PRED.name];
         const isFL = content[M.ZAJAV_LIC.name] != 2;
 
@@ -127,7 +128,7 @@ class ClaimantData extends React.Component {
                                     {headerTitle}
                                 </h3>
 
-                                {disabled
+                                {!navi
                                     ? null
                                     : (<div>
                                         <Tag type="gray" className='mx12'>2/8</Tag>

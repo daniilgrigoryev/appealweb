@@ -61,7 +61,7 @@ class AppealExplorer extends React.Component {
         const alias = 'CLAIM_GET';
         return async () => {
             const claim_id = rowData.ID;
-            const x = await post('rest/select', {alias, claim_id});
+            const x = await post('db/select', {alias, claim_id});
             const raw = x.data.rows[0][0].value;
             const js = JSON.parse(raw);
             dispatch(initialize(im(js)));

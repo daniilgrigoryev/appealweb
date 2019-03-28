@@ -1,0 +1,16 @@
+.sidePanelWrap{
+
+	display: flex;
+	flex-wrap: nowrap;
+
+	.sidePanelLeft{
+		width: 320px;
+		flex-shrink: 0;
+    	flex-grow: 0;
+	}
+
+	.sidePanelContent{
+		display: flex;
+		flex-direction: column;
+	}
+}
