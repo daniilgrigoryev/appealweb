@@ -4,16 +4,23 @@ import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../components/finput.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
-import {ESelect, FSelect} from '../../components/select.js'
+import {FAutocomplete} from '../../components/fautocomplete.js'
 import {getAc} from '../../../services/acCacher.js'
 import * as _ from 'lodash'
 import FabulaDialog from '../fabulaDialog.js'
 import mapping from '../appealContent/mapping.js'
 import {post} from '../../../services/ajax.js'
+import Immutable from 'immutable'
 
+const im = (obj)=> Immutable.fromJS(obj);
 const M = mapping.ishDocList;
 
-const data2str = (data) => (data ? data.toISOString() : '');
+const data2str = (data) =>{
+    if (data){
+        return (data instanceof Date) ? data.toISOString() : data; 
+    }
+    return '';
+} 
 const stopPg = (cb, id) => (evt) => {
     evt.stopPropagation();
     cb(id);
@@ -42,12 +49,12 @@ const tLoad = (claim_id)=>{
 
 const OFRow = (props) => {
     const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse} = props;
-debugger;
+
     const id = value.get('id');
-    const expanded = checkExpand(id);
+    const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
-    const onXpd = () => onExpand(id);
+    const onXpd = () => onExpand(ind);
     const onFab = (type) => () => onFabula(type, fabData);
     const commandFabula = (type, el) => onFabula(type, fabData);
 
@@ -138,7 +145,7 @@ debugger;
                                         <tr>
                                             <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
                                             <td>
-                                                <Field disabled={disabled} component={FSelect} name={field + M.REL_TOPIC.name}
+                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name}
                                                        value={P[M.REL_TOPIC.name]} datagetter={tGetter}/>
                                             </td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
@@ -147,10 +154,10 @@ debugger;
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={field + M.DOC_VID.name}
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}
                                                        value={P[M.DOC_VID.name]} dataKey={M.DOC_VID.key}/></td>
                                             <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={field + M.DELIV_TYPE.name}
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name}
                                                        value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key}/></td>
                                         </tr>
                                         <tr>
@@ -304,8 +311,8 @@ const getRow = (doc_target, args = {}) => {
     }
 }
 
-const getRowZajav = (args) => getRow('zajav', args);
-const getRowOrg = (args) => getRow('org', args);
+const getRowZajav = (args) => im(getRow('zajav', args));
+const getRowOrg = (args) => im(getRow('org', args));
 
 // Element component
 class EIshDocList extends React.Component {
@@ -369,7 +376,6 @@ class EIshDocList extends React.Component {
         ;
     }
 
-
     onExpand(expandedId) {
         this.setState({expandedId})
     }
@@ -385,7 +391,7 @@ class EIshDocList extends React.Component {
         const {categories} = this.props;
 
         const ROWS = fields.map((x, i, arr) => (
-            <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(id) => id == this.state.expandedId}
+            <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
                    onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} claim_id={claim_id}
                    disabled={disabled} categories={categories} collapse={()=>this.setState({expandedId:false})}>{x.value}
             </OFRow>)); //

@@ -25,7 +25,9 @@ class AAutocomplete extends React.Component {
 		const key = acKey || dataKey;
 		const propValue = value;
 		if (propValue){ 
-			getAcValue(acKey||dataKey,propValue).then((av)=>this.setState({value: av,valueText:propValue}));			
+			getAcValue(acKey||dataKey,propValue).then((av)=>{
+				debugger;
+				this.setState({value: propValue,valueText:av}); });			
 		}
 	}
 
