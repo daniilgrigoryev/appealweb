@@ -112,7 +112,7 @@ class LayoutMain extends React.Component {
             <div className='w-full'>
                 <header className='ap-header flex-parent flex-parent--center-cross'>
                     <div className='flex-parent flex-parent--center-cross ml24 mr24'>
-                        <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
+                        <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения граждан</h2>
                         <h1 style={versionStyle} title='Версия'>{versionString}</h1>
                     </div>
 
