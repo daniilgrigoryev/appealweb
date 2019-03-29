@@ -49,8 +49,9 @@ export default class AppealTable extends React.Component {
         this.setState({tableHeight : window.innerHeight - this.offsetTop - 88 - this.props.hdelta + "px"});
     }
 
-    toSuitableVal(table) {
-        return table.rows.map(x => _.zipObject(this.state.table.columns.map(y => y.label), x.map(y => y.value)))
+    toSuitableVal(table) { 
+        const colFields = this.state.table.columns.map(y => y.label);
+        return table.rows.map(x => _.zipObject(colFields, x.map(y => y.value)))
     }
 
     getSelected() {
@@ -73,19 +74,21 @@ export default class AppealTable extends React.Component {
     }
 
     render() {
-        const S = this.state;
+        const S     = this.state;
         const TABLE = S.table;
         const FIRST = S.first;
-        const ROWS = S.rows;
-        const END = ROWS + FIRST;
+        const ROWS  = S.rows;
+        const END   = ROWS + FIRST;
 
         if (!TABLE) {
             return (<div className='mt60 mb120'><Loading loading={true} text='Поиск данных...'/></div>);
         }//
 
         const {actionCol, selectable, mapping, hdelta} = this.props;
+        const templating = this.props.templating || [];
 
         let getField = (f) => f;
+        let getTemplate = (t) => null;
         if (mapping) {
             getField = (f) =>mapping[f];
         }
@@ -95,11 +98,11 @@ export default class AppealTable extends React.Component {
         let dynamicColumns = TABLE.columns.filter(col => getField(col.label)).map(col => <Column key={col.label}
                                                                                                  field={col.label}
                                                                                                  header={getField(col.label)}
+                                                                                                 body={templating[col.label]}
                                                                                                  style={{width: col.width}}/>); //
 
         if (selectable) {
-            dynamicColumns.unshift(<Column key="Sel" selectionMode="multiple"
-                                           style={{width: '30px', textAlign: 'center', padding: '0px 3px 0px 3px'}}/>); //
+            dynamicColumns.unshift(<Column key="Sel" selectionMode="multiple" style={{width: '30px', textAlign: 'center', padding: '0px 3px 0px 3px'}}/>); //
         }
         if (actionCol) {
             const {style, body} = actionCol;

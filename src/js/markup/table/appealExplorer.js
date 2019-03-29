@@ -43,17 +43,19 @@ const mappingT = {
     ISP_OTD: 'Отдел'
 }
 
+const templatingT = {};
+
 class AppealExplorer extends React.Component {
 
     constructor(props) {
         super(props);
-        const search = {};
-        this.state = {search};
-        this.where = {};
+        const search  = {};
+        this.state    = {search};
+        this.where    = {};
         this.whereKey = 0;
 
         this.onChange = this.onChange.bind(this);
-        this.search = this.search.bind(this);
+        this.search   = this.search.bind(this);
     }
 
     openRow(rowData, column) {
@@ -95,14 +97,16 @@ class AppealExplorer extends React.Component {
     }
 
     render() {
+        const a = this;
         const S = this.state.search;
         const noTable = _.isEmpty(this.where);
         const chg = this.onChange;
 
-        const body = (rowData, column) => (<div>
-            <Button size="small" onClick={this.openRow.bind(this)(rowData, column)}>Открыть</Button>
-        </div>);
-        const ac = {style, body};
+        templatingT['REG_NUM'] = (rowData, column) => {
+            return <a onClick={a.openRow(rowData)}>{rowData.REG_NUM}</a>;
+        }//
+
+        const ac =  null && {style, body};
 
         return (
             <React.Fragment>
@@ -213,8 +217,9 @@ class AppealExplorer extends React.Component {
                 </div>}
                 {!noTable &&
                 <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                    <AppealTable key={this.whereKey} sid={this.props.sid} desc={desc} actionCol={ac} mapping={mappingT}
-                                 hdelta={'520'} where={this.where}/>
+                    <AppealTable key={this.whereKey} sid={this.props.sid} desc={desc} actionCol={ac} 
+                                 mapping={mappingT} templating={templatingT}
+                                 hdelta={'420'} where={this.where}/>
                 </Card>
                 }
             </React.Fragment>
