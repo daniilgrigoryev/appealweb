@@ -3,6 +3,8 @@ import withValidators from './tooltipper.js'
 import {AutoComplete} from 'element-react'
 import {getAc,getAcValue} from '../../services/acCacher.js'
 
+const noop = ()=>{}
+
 // Element component
 class AAutocomplete extends React.Component {
 
@@ -11,7 +13,8 @@ class AAutocomplete extends React.Component {
 
 	  const data     = props.data  || null;
 	  const value    = props.value;
-	  this.state     = {data,value};
+	  const valueText= null;
+	  this.state     = {data,value,valueText};
 
 	  this.querySearch  = this.querySearch.bind(this);
 	  this.handleSelect = this.handleSelect.bind(this);
@@ -20,8 +23,9 @@ class AAutocomplete extends React.Component {
 	componentDidMount(){
 		const {acKey,dataKey,value} = this.props;
 		const key = acKey || dataKey;
-		if (value){ 
-			getAcValue(acKey||dataKey,value).then((av)=>this.setState({value: av}));			
+		const propValue = value;
+		if (propValue){ 
+			getAcValue(acKey||dataKey,propValue).then((av)=>this.setState({value: av,valueText:propValue}));			
 		}
 	}
 
@@ -34,7 +38,7 @@ class AAutocomplete extends React.Component {
 	  		cb(filter(data,queryString));
 	  	} else {
 	  		let d = await getAc(key);
-	  		const value = this.state.value || null;
+	  		const {value,valueText} = this.state;
 	  		let data = {};
 			d = d.data ? d.data : d;
 			if (d && d.length){
@@ -58,17 +62,22 @@ class AAutocomplete extends React.Component {
 
 	handleSelect(item) {
 		const onChange = this.props.onChange;
-		const value = item ? item.value : null;
-		this.setState({value} || {value:''},()=>{
+		const value     = item ? item.property : null;
+		const valueText = item ? item.value    : null;
+		this.setState({value,valueText},()=>{
 			onChange && (onChange(item.property));
+			this.forceUpdate();
 		});
 	}
 
 	render() {
+	  const {value,valueText} = this.state;
 	  return (
 	 	<AutoComplete {...this.props}
-	 		  onChange={()=>{}}
-	          value={this.state.value}
+	 		  onChange={noop}
+	 		  onFocus={noop}
+	 		  onBlur={noop}
+	          value={valueText || value}
 	          fetchSuggestions={this.querySearch}
 	          onSelect={this.handleSelect}
 	        ></AutoComplete>)
