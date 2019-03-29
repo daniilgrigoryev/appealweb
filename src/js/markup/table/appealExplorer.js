@@ -110,7 +110,7 @@ class AppealExplorer extends React.Component {
 
         return (
             <React.Fragment>
-                <Layout.Row gutter="20">
+                <Layout.Row gutter="0">
                     <Layout.Col span="24">
                         <Card className="box-card" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
@@ -212,7 +212,7 @@ class AppealExplorer extends React.Component {
                     </Layout.Col>
                 </Layout.Row>
 
-                {noTable && <div className='mt120'>
+                {noTable && <div className='mt60'>
                     <h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3>
                 </div>}
                 {!noTable &&

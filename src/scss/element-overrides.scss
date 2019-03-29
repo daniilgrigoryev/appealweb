@@ -67,7 +67,7 @@
 .el-checkbox__input {
   &.is-checked {
     .el-checkbox__inner {
-      background-color: transparent !important;
+      background-color: white !important;
 
       &:after {
         border-color: $color-blue-selected !important;
@@ -207,14 +207,14 @@
 }
 
 .el-card__header {
-  padding: 10px 20px;
+  padding: 5px 20px;
   border-color: $color-border;
   background-color: white;
   border-radius: 4px 4px 0 0;
 }
 
 .el-card__body {
-  background-color: #f3f3f3;
+  background-color: #fafafa;
   //min-height: 240px;
   //border: 1px solid $color-input-border !important;
 }

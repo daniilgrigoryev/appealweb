@@ -2,7 +2,7 @@ import './app.scss'
 import React from 'react'
 import {connect} from 'react-redux'
 import {BrowserRouter, HashRouter, Route, Switch, NavLink, Link, withRouter} from 'react-router-dom'
-import {Menu, Layout, Button} from 'element-react'
+import {Menu, Button, Popover} from 'element-react'
 import {logoutRequest} from '../../actions/common.js'
 import {getSessionId} from '../../selectors/common.js'
 import AppealWizard from '../appeal/appealWizard.js'
@@ -20,11 +20,9 @@ import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
 import Immutable from 'immutable'
 
-import burger from '../../../images/burger.svg'
-
 import {getVersion} from '../../reducers/rootReducer.js'
 
-const im = (obj)=> Immutable.fromJS(obj)
+const im = (obj) => Immutable.fromJS(obj)
 
 const relocate = (newPath) => {
     window.location.hash = ('#/' + newPath);
@@ -49,8 +47,8 @@ export default function App() {
                     <Route path='/sprav/appeal_causes' component={AppealCauseList}/>
                     <Route path='/sprav/doc_types' component={TipDocList}/>
 
-                    <Route path='/settings/diapSPI' component={DialSPI} />
-                    <Route path='/settings/postage' component={Postage} />
+                    <Route path='/settings/diapSPI' component={DialSPI}/>
+                    <Route path='/settings/postage' component={Postage}/>
 
                     <Route path='*' component={NotFoundPage}/>
                 </Switch>
@@ -79,9 +77,9 @@ let versionString = null;
 
 class LayoutMain extends React.Component {
 
-    componentDidMount(){
+    componentDidMount() {
         const v = getVersion();
-        versionString = _.join([v.database,v.backend,v.frontend],'.');
+        versionString = _.join([v.database, v.backend, v.frontend], '.');
     }
 
     render() {
@@ -98,64 +96,76 @@ class LayoutMain extends React.Component {
             }
         }
 
+        const onLogout = () => {
+            relocate('');
+            dispatch(logoutRequest(sessionId));
+        }
+
         const versionStyle = {
-            'opacity': 0.3,
-            'marginLeft': '10px',
-            'marginTop': '10px'
+            opacity: 0.5,
+            marginLeft: '5px',
+            marginTop: '10px',
+            fontSize: '10px'
         }
         const stLogout = {'cursor': 'pointer'}
         return (
             <div className='w-full'>
-                <header className='ap-header'>
-                    <Layout.Row align='middle'>
-                        <Layout.Col span="4" className='flex-parent flex-parent--center-cross mt3 pl24'>
-                           {/*
-                           <Button type="text">
-                              <img src={burger} className='px12' alt="Переключение между модулями" />
-                           </Button>
-                           */}
-
-                            <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
-                            <h1 style={versionStyle} title='Версия'>{versionString}</h1>
-                        </Layout.Col>
-
-                        <Layout.Col span="20">
-                            <nav>
-                                <Menu defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={onSelect}>
-                                    {false && <Menu.Item index="">Главная</Menu.Item>}
-                                  
-                                    <Menu.SubMenu index="1" title="Обращения">
-                                        <Menu.Item index="appeal_incoming?new">Новое входящее</Menu.Item>
-                                        <Menu.Item index="appeal_outgoing">Новое исходящее</Menu.Item>
-                                        <Menu.Item index="explore">Поиск</Menu.Item>
-                                    </Menu.SubMenu>
+                <header className='ap-header flex-parent flex-parent--center-cross'>
+                    <div className='flex-parent flex-parent--center-cross ml24 mr24'>
+                        <h2 className='ap-h2 txt-uppercase color-dark-light'>Обращения</h2>
+                        <h1 style={versionStyle} title='Версия'>{versionString}</h1>
+                    </div>
 
 
-                                    <Menu.SubMenu index="2" title="Служебные письма">
-                                        <Menu.Item index="letter_incoming">Новое входящее</Menu.Item>
-                                        <Menu.Item index="letter_outgoing">Новое исходящее</Menu.Item>
-                                        <Menu.Item index="explore">Поиск</Menu.Item>
-                                    </Menu.SubMenu>
+                    <Menu defaultActive="1" className="mx-auto" mode="horizontal" onSelect={onSelect}>
+                        {false && <Menu.Item index="">Главная</Menu.Item>}
 
-                                    {false && <Menu.SubMenu index="3" title="Справочники">
-                                        <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
-                                        <Menu.Item index="sprav/decisions">Решения</Menu.Item>
-                                        <Menu.Item index="sprav/categories">Категории</Menu.Item>
-                                        <Menu.Item index="sprav/appeal_causes">Причины жалоб</Menu.Item>
-                                        <Menu.Item index="sprav/doc_types">Типы документов</Menu.Item>
-                                    </Menu.SubMenu>
-                                    }
+                        <Menu.SubMenu index="1" title="Обращения">
+                            <Menu.Item index="appeal_incoming?new">Новое входящее</Menu.Item>
+                            <Menu.Item index="appeal_outgoing">Новое исходящее</Menu.Item>
+                            <Menu.Item index="explore">Поиск</Menu.Item>
+                        </Menu.SubMenu>
 
-                                    {false && <Menu.SubMenu index="4" title="Настройки">
-                                        <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
-                                        <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
-                                    </Menu.SubMenu>}
 
-                                    <Menu.Item index="LOGOUT">Выход</Menu.Item>
-                                </Menu>
-                            </nav>
-                        </Layout.Col>
-                    </Layout.Row>
+                        <Menu.SubMenu index="2" title="Служебные письма">
+                            <Menu.Item index="letter_incoming">Новое входящее</Menu.Item>
+                            <Menu.Item index="letter_outgoing">Новое исходящее</Menu.Item>
+                            <Menu.Item index="explore">Поиск</Menu.Item>
+                        </Menu.SubMenu>
+
+                        {false && <Menu.SubMenu index="3" title="Справочники">
+                            <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
+                            <Menu.Item index="sprav/decisions">Решения</Menu.Item>
+                            <Menu.Item index="sprav/categories">Категории</Menu.Item>
+                            <Menu.Item index="sprav/appeal_causes">Причины жалоб</Menu.Item>
+                            <Menu.Item index="sprav/doc_types">Типы документов</Menu.Item>
+                        </Menu.SubMenu>
+                        }
+
+                        {false && <Menu.SubMenu index="4" title="Настройки">
+                            <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
+                            <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
+                        </Menu.SubMenu>}
+
+                        {/*<Menu.Item index="LOGOUT">Выход</Menu.Item>*/}
+                    </Menu>
+
+                    <div className='mx-auto mr24'>
+                        <Popover placement='left-end' offset='5' width='80' trigger="click" content={(
+                            <div>
+                                <Button className='block w-full align-l' type="text" onClick={onLogout}
+                                        title='Меню пользователя'>Выйти</Button>
+                                <hr className='border-b border--gray-light'/>
+                                <Button className='block w-full align-l' type="text">Другое</Button>
+                                <Button className='block w-full align-l ml0' type="text">Третье</Button>
+                            </div>
+                        )}>
+                            <Button type="text" className="ap-user-menu-toggle">
+                            </Button>
+                        </Popover>
+                    </div>
+
+
                 </header>
 
                 <main>{children}</main>

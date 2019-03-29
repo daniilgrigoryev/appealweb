@@ -57,7 +57,7 @@ div.tooltipWrap {
 
 // Стили заголовков
 .ap-header {
-  background: white;
+  background: #EFF2F7;
   border-bottom: 1px solid $color-input-border;
 }
 
@@ -74,11 +74,11 @@ div.tooltipWrap {
   font-weight: 300;
   letter-spacing: 0.1px;
   line-height: 2;
-  //color: $color-text-headers;
+  color: $color-text-headers;
 }
 
 .ap-h3 {
-  font-size: 18px;
+  font-size: 16px;
   //font-size: 20px;
   font-weight: 400;
   letter-spacing: 0.2px;
@@ -133,7 +133,6 @@ div.tooltipWrap {
 .ap-btn-link span {
   color: $color-blue-selected;
 }
-
 
 .ap-select-underlined {
   .el-input__inner {
@@ -223,4 +222,18 @@ div.tooltipWrap {
   border-top: 1px solid $color-input-border;
   box-shadow: 0 0 8px rgba(86, 83, 83, 0.25);
   z-index: 1;
+}
+
+.ap-user-menu-toggle {
+  $size: 42px;
+  width: $size;
+  height: $size;
+  background: url("/src/images/user.svg") no-repeat center;
+  background-size: contain;
+  opacity: 0.65;
+  transition: all 100ms linear;
+
+  &:hover {
+    opacity: 0.85;
+  }
 }
