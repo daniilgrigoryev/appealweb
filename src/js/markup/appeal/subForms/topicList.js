@@ -27,7 +27,8 @@ const stopPg = (cb, id) => (evt) => {
 
 const OFRow = (props) => {
     const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse} = props;
-    const id = value.get('id')
+    debugger;
+    const {id} = value;
     
     const expanded = checkExpand(id);
     const onRmv = stopPg(onRemove, ind);
@@ -52,6 +53,7 @@ const OFRow = (props) => {
     };
 
     if (!expanded) {
+        debugger;
         const collapsed = (
             <React.Fragment>
                 <tr key={id}>
@@ -62,17 +64,17 @@ const OFRow = (props) => {
                     </td>
                     <td>
                  <span className='inline-block mr12'>
-                {P.get(M.CAT.name)}
+                {props.getValue(P[M.CAT.name])}
                   </span>
                     </td>
                     <td>
                 <span className='inline-block mr12'>
-                {P.get(M.POST_N.name)}
+                {P[M.POST_N.name]}
                 </span>
                     </td>
                     <td>
                 <span className='inline-block mr12'>
-                {data2str(P.get(M.POST_DATE.name))}
+                {data2str(P[M.POST_DATE.name])}
                 </span>
                     </td>
                     <td colSpan='2' className='pr12 align-r'>
@@ -372,6 +374,7 @@ class ETopicList extends React.Component {
 
     getCategValue(property) {
         const {acCateg} = this.state;
+        debugger;
         return !_.size(acCateg)
             ? property
             : _.chain(acCateg).filter(x => x.property == property).first().get('value').value();

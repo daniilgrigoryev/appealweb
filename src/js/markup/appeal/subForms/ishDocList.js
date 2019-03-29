@@ -42,6 +42,7 @@ const tLoad = (claim_id)=>{
 
 const OFRow = (props) => {
     const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse} = props;
+debugger;
     const id = value.get('id');
     const expanded = checkExpand(id);
     const onRmv = stopPg(onRemove, ind);
