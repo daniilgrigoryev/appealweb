@@ -136,7 +136,7 @@ export default {
 		DEPART: 		 {name: 'exec_org_key', 	   label: 'Отдел', 	     key: 'DEPARTMENTS_LIST'},
 		STATUS: 		 {name: 'processing_stage_id', label: 'Статус',      key: 'PROCESSING_STAGES'},
 		EXECUTOR: 		 {name: 'exec_emp_key', 	   label: 'Исполнитель', key: 'EMPLOYESS_LIST'},
-		REG_NUM: 		 {name: 'registration_number', label: 'Регистрационный номер'},
+		REG_NUM: 		 {name: 'registration_number', label: 'Рег. номер'},
 		CHK_DATE: 		 {name: 'checking_date', 	   label: 'Дата контроля'}
 	}
 }

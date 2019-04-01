@@ -130,7 +130,7 @@ const OFRow = (props) => {
         <React.Fragment>
             <tr>
                 <td colSpan='6'>
-                    <div className='px12 py12 my6 ml-neg12 border round border--gray-light shadow-darken10'>
+                    <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                         <table className='wmax600'>
                             <tbody>
                             <tr key={id + 'e1'}>

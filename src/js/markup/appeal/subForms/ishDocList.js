@@ -96,7 +96,7 @@ debugger;
         <React.Fragment>
             <tr>
                 <td colSpan='7'>
-                    <div className='px12 py12 my6 ml-neg12 border round border--gray-light shadow-darken10'>
+                    <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                         <table>
                             <tbody>
                             <tr key={id + 'e1'}>
