@@ -31,7 +31,7 @@ const ajax = (method,url,payload,ajaxOpts) => {
 
 	if (ajaxOpts){
 		(typeof ajaxOpts == 'function') && (ajaxOpts = ajaxOpts());
-		(typeof ajaxOpts == 'object')   && (Object.assign(opts,ajaxOpts,{method,url,data}));
+		(typeof ajaxOpts == 'object')   && (Object.assign(opts,ajaxOpts,{method,url,data: opts.data}));
 	}
 
 	if (method=='GET'){
