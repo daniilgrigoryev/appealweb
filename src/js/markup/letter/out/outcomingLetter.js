@@ -43,27 +43,28 @@ class OutcomingLetter extends React.Component {
 
     render() {
         return (
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card mb60" header={
-                        <h3 className='ap-h3'>
-                            Новое исходящее служебное письмо
-                        </h3>
-                    }>
-                        <OutLetterHead/>
-                        <OutLetterBasic/>
-                        <OutLetterPost/>
-                        <OutLetterIspoln/>
-                        <OutLinkInner/>
-                        <OutLinkScan/>
-                    </Card>
-                    <div className="ap-footer">
-                    <Button className='mr24' onClick={this.register}>Зарегистрировать</Button>
-                    </div>
-                </Layout.Col>
-            </Layout.Row>
-        )//
-    }
+            <div className='ap-side-panel-wrap'>
+                <div className='ap-side-panel-content'>
+                    <Layout.Row gutter="20">
+                        <Layout.Col span="24">
+                            <Card className="box-card mb60" header={
+                                <h3 className='ap-h3' onClick={this.register} >
+                                    Новое исходящее служебное письмо
+                                </h3>
+                            }>
+                                <OutLetterHead/>
+                                <OutLetterBasic/>
+                                <OutLetterPost/>
+                                <OutLetterIspoln/>
+                                <OutLinkInner/>
+                                <OutLinkScan/>
+                            </Card>
+                        </Layout.Col>
+                    </Layout.Row>
+                </div>
+            </div>
+        )
+    } //
 }
 
 const mapStateToProps = (state) => {

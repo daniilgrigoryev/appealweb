@@ -26,7 +26,7 @@ class PlusDocs   extends Component {
         const pdfBlob = await scanPdf();
 
 
-        debugger;
+        //debugger;
 
         /*
         const reader = new FileReader(); // чтение файла в браузере без загрузки на сервер

@@ -66,7 +66,7 @@ const rootReducer = function(state, action){
 
 const initialState = im({
     general : {
-      system: 'M',
+      system: 'A',
       externalLogin: false && true,
       messagesQueue: [],
       user : {

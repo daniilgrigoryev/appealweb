@@ -44,7 +44,7 @@ const ArchiveData = props => {
                             }
                         </div>
                     }>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className='pb24'>
                             <h4 className="ap-h4 mr18">Сведения об архивном хранении заявления</h4>
 
                             <table>

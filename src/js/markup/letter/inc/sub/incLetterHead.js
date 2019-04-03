@@ -57,7 +57,7 @@ const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
         <React.Fragment>
             <tr key={i}>
                 <td colSpan='6'>
-                    <div className='px12 py12 my6 ml-neg12 border round border--gray-light shadow-darken10'>
+                    <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                         <table className=''>
                             <tbody>
                             <tr>

@@ -5,6 +5,7 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Dialog, Button, Input, Select} from 'element-react'
 import {EInput} from '../components/finput.js'
+import {EFileInput} from '../components/fileInput.js'
 import {EAutocomplete} from '../components/fautocomplete.js'
 import {ECheckbox} from '../components/checkbox.js'
 import {ESwitch} from '../components/switch.js'
@@ -37,25 +38,25 @@ export default class CrudRow extends React.Component {
 
     renderPicker(field, onChange, val) {
         if (F.isTime(field)) {
-            return <EPicker onChange={onChange} value={val} timepicker='+'/>
+            return <EPicker onChange={onChange} value={val} timepicker='+' />
         } else if (F.isDate(field)) {
-            return <EPicker onChange={onChange} value={val} datepicker='+'/>
+            return <EPicker onChange={onChange} value={val} datepicker='+' />
         } else if (F.isDateTime(field)) {
-            return <EPicker onChange={onChange} value={val} datetimepicker='+'/>
+            return <EPicker onChange={onChange} value={val} datetimepicker='+' />
         }
     } //
 
     renderRadiobutton(field, onChange, val) {
         const radioOptions = field.radio;
-        return <ERadio value={val} onChange={onChange} options={radioOptions}/>;
+        return <ERadio value={val} onChange={onChange} options={radioOptions} />;
     } //
 
     renderCheckbox(field, onChange, val) {
-        return <ECheckbox onChange={onChange} value={val}/>;
+        return <ECheckbox onChange={onChange} value={val} />;
     } //
 
     renderString(field, onChange, val) {
-        return <EInput onChange={onChange} value={val} mask={field.mask} maskguide={field.maskguide}/>;
+        return <EInput onChange={onChange} value={val} mask={field.mask} maskguide={field.maskguide} />;
     } //
 
     updateProperty(field, newVal) {

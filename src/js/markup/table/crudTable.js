@@ -58,6 +58,9 @@ export default class CrudTable extends React.Component {
     save(row) {
         const newRow = row || this.state.row;
         let rows = [...this.state.rows];
+
+        debugger;
+
         if (this.newrow) {
             rows.push(newRow);
         } else {
@@ -118,7 +121,6 @@ export default class CrudTable extends React.Component {
 
     saveCrud(newRow) {
         setTimeout(() => {
-            newRow.id = _.uniqueId('row');
             this.save(newRow);
         }, 100);
     }

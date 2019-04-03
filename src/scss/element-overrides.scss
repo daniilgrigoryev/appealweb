@@ -67,7 +67,7 @@
 .el-checkbox__input {
   &.is-checked {
     .el-checkbox__inner {
-      background-color: transparent !important;
+      background-color: white !important;
 
       &:after {
         border-color: $color-blue-selected !important;
@@ -207,14 +207,18 @@
 }
 
 .el-card__header {
-  padding: 10px 20px;
+  padding: 3px 20px;
   border-color: $color-border;
-  background-color: white;
-  border-radius: 4px 4px 0 0;
+  background-color: $color-bg-blue-faint;
+  border-radius: 0;
+
+  &.el-card__header--top-border {
+    border-top: 1px solid $color-border;
+  }
 }
 
 .el-card__body {
-  background-color: #f3f3f3;
+  background-color: #fafafa;
   //min-height: 240px;
   //border: 1px solid $color-input-border !important;
 }
@@ -258,4 +262,8 @@
 .el-button--text {
   text-transform: initial;
   color: $color-text-base;
+}
+
+.el-date-table td {
+  vertical-align: middle;
 }

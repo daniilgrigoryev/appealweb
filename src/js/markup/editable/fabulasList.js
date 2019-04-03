@@ -15,8 +15,8 @@ const fields = [
 	F.str('type','Тип'),
 	F.dat('changed','Дата изменения',{ noEdit:true}),
 	F.radStr('zajav','Заявитель',    { noTable:true,
-									   radio:[  {value: 'Физическое лицо' ,property: 'FL'},
-										        {value: 'Юридическое лицо',property: 'UL'}
+									   radio:[  {value: 'Физическое лицо' ,property: '1'},
+										        {value: 'Юридическое лицо',property: '2'}
 	]}),
 	F.fil('templ','Файл шаблона', { noTable:true})
 ]
