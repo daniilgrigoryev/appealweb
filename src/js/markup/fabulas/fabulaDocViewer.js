@@ -55,25 +55,31 @@ class FabulaDocViewer extends React.Component {
 
   	render() {
   		const {rows} = this.state;
+  		const styleDoc = {
+  			height: 'calc(100vh - 60px)',
+    		overflow: 'auto'
+  		}
 
   		const ROWS = _.isEmpty(rows) 
   			? <tr><td colSpan='3'>Нет строк для отображения</td></tr>  
   			: rows.map(this.getRow);
 
-  		return <table>
-  			<tbody>
-  				<tr>
-  					<td colSpan='2'>Фабулы документа</td>
-  					<td><Button onClick={()=>this.addRow()}>Добавить</Button></td>
-  				</tr>
-  				<tr>
-  					<td>Тип документа</td>
-  					<td>Заявитель</td>
-  					<td>Наименование</td>
-  				</tr>
-  				{ROWS}
-  			</tbody>
-  		</table>;
+  		return <div style={styleDoc}> 
+	  		<table>
+	  			<tbody>
+	  				<tr>
+	  					<td colSpan='2'>Фабулы документа</td>
+	  					<td><Button onClick={()=>this.addRow()}>Добавить</Button></td>
+	  				</tr>
+	  				<tr>
+	  					<td>Тип документа</td>
+	  					<td>Заявитель</td>
+	  					<td>Наименование</td>
+	  				</tr>
+	  				{ROWS}
+	  			</tbody>
+	  		</table>
+	  	</div>;
   	}//
 
   	getRow(x){
@@ -85,7 +91,9 @@ class FabulaDocViewer extends React.Component {
   		const id = x.ID || -1;
   		const {expandedRowId} = this.state;
   		if (id==expandedRowId){
-  			return (<td colSpan='3' style={styleTD3}><FabulaDocEditor fabDoc={x} reloadParent={this.reload} /></td>);
+  			return (<td colSpan='3' style={styleTD3}>
+  						<FabulaDocEditor cancelEdit={()=>this.selectRow(void 0)} fabDoc={x} reloadParent={this.reload} />
+  					</td>);
   		} //
 
   		return (<tr key={id}>

@@ -7,6 +7,7 @@ import {EInput} from '../components/finput.js'
 import {getSessionId,getSystem} from '../../selectors/common.js'
 import {mpt,get} from '../../services/ajax.js'
 import {baseUrl} from '../../services/api.js'
+import FabulaSecViewer from './fabulaSecViewer.js' 
 
 class FabulaDocEditor extends React.Component {
   
@@ -55,7 +56,7 @@ class FabulaDocEditor extends React.Component {
     }
 
   	render(){
-      const {sys} = this.props; 
+      const {sys,cancelEdit} = this.props; 
       const s = this.state;
 
       const dataKeyTipDoc = 'FAB_DOC_TYPES_' + sys;
@@ -86,6 +87,15 @@ class FabulaDocEditor extends React.Component {
           <tr>
             <td colSpan="4"></td>            
             <td><Button onClick={()=>this.loadFile(s.ID)}>Получить docx</Button></td>
+          </tr>
+          <tr>
+            <td colSpan="4"></td>            
+            <td><Button onClick={cancelEdit}>Отмена</Button></td>
+          </tr>
+          <tr>
+            <td colSpan="5">
+              <FabulaSecViewer doc_id={s.ID} />
+            </td>
           </tr>
         </tbody>
       </table>);
