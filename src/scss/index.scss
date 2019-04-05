@@ -12,6 +12,11 @@ body {
   overflow: hidden;
 }
 
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 div.tooltipWrap {
   background: white;
   border-radius: 100%;
@@ -88,12 +93,13 @@ div.tooltipWrap {
 }
 
 .ap-h4 {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 2;
   margin-bottom: 10px;
   color: $color-text-headers;
   letter-spacing: 0.25px;
+  text-shadow: 1px 1px 0 white;
 }
 
 .txt-h3 {
@@ -185,8 +191,41 @@ div.tooltipWrap {
 }
 
 // Стили таблиц
-.ap-table-header {
-  font-size: 10.5px;
+.ap-table {
+  .ap-table__th {
+    padding: 10px 20px;
+  }
+
+  .ap-table__td {
+    padding: 5px 20px;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  tbody {
+    .ap-table__tr {
+      transition: background-color 150ms linear;
+
+      &:hover {
+        background-color: #e6f4ff;
+      }
+    }
+  }
+
+  &.ap-table--bordered {
+    .ap-table__th {
+      border-bottom: 1px solid $color-border;
+    }
+
+    .ap-table__td {
+      border-bottom: 1px solid $color-border;
+    }
+  }
+}
+
+
+.ap-table__header {
+  font-size: 11.5px;
   vertical-align: top;
   font-weight: 400;
   text-align: left;
@@ -282,7 +321,18 @@ div.tooltipWrap {
         cursor: pointer;
       }
     }
-
   }
+}
 
+.ap-form-bg {
+  background: $color-page-bg;
+}
+
+.ap-form__footer {
+  background: $color-page-bg;
+  margin-top: -1px;
+  padding: 12px 18px;
+
+  border-top: 1px solid $color-input-border;
+  border-bottom: 1px solid $color-input-border;
 }

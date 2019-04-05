@@ -300,11 +300,11 @@ class FabulasDocSections extends React.Component {
                     <table className='wmin600 mb18'>
                         <thead>
                         <tr>
-                            <th className='ap-table-header'></th>
-                            <th className='ap-table-header'>Название</th>
-                            <th className='ap-table-header'>Категория</th>
-                            <th className='ap-table-header'>Решение</th>
-                            <th className='ap-table-header align-r'>Операции</th>
+                            <th className='ap-table__header'></th>
+                            <th className='ap-table__header'>Название</th>
+                            <th className='ap-table__header'>Категория</th>
+                            <th className='ap-table__header'>Решение</th>
+                            <th className='ap-table__header align-r'>Операции</th>
                         </tr>
                         </thead>
                         <tbody>
