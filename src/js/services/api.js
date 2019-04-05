@@ -50,17 +50,17 @@ export function loadFile(file) {
 	return AJ.postFile('doc/load_docx', file);
 }
 
-export function fetchAutocomplete(key,query){
-	return fetchSelect(key);
+export function fetchAutocomplete(key,dataWhere){
+	return fetchSelect(key,dataWhere);
 }
 
-export function fetchSelect(key){
+export function fetchSelect(key,dataWhere){
 	switch(key){
 		case 'fabulasDoc': 	  return fetchFabulasDoc();
 		case 'fabulasCategories': return fetchFabulasCategories();
 		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
 		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
-		default: return AJ.post("db/select",{alias : key, listValueField : 'value'});
+		default: return AJ.post("db/select",{alias : key, listValueField : 'value', dataWhere});
 	}
 }
 

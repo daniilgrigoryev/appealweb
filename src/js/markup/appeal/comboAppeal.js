@@ -7,6 +7,7 @@ import {Field, reduxForm} from 'redux-form/immutable'
 import Immutable from 'immutable'
 import BasicData from './appealContent/basicData.js'
 import ClaimantData from './appealContent/claimantData.js'
+import AddressData from './appealContent/addressData.js'
 import TestElement2RF from './appealContent/testElement2rf.js' 
 import OrganizationsData from './appealContent/organizationsData.js'
 import SummaryData from './appealContent/summaryData.js'
@@ -26,7 +27,7 @@ const im = (obj)=> Immutable.fromJS(obj)
 class ComboAppeal extends Component {
 
   render(){
-    const {dispatch,change,initialize} = this.props;
+    const {dispatch,change,initialize,formData} = this.props;
     
     try{
       const h = window.location.hash.split('?');
@@ -38,10 +39,12 @@ class ComboAppeal extends Component {
       //debugger;
     }//
 
+    const fl = _.get(formData, ['values','zajav_lic']);
     return (
       <SidePanel>
 	    <BasicData    />
 	    <ClaimantData />
+      <AddressData fl={fl} />
 	    <OrganizationsData />
 	    <SummaryData  />
 	    <TopicsData   />

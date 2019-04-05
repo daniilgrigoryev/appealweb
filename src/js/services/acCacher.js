@@ -18,7 +18,7 @@ const cache = {
 
 const now = ()=> new Date().getTime();
 
-const getAc = (key,query)=>{
+const getAc = (key,dataWhere)=>{
 	return new Promise((resolve,reject)=>{
 		try{
 			const cached = cache[key]; 
@@ -26,7 +26,7 @@ const getAc = (key,query)=>{
 				cached.lastAccess = now();
 				resolve(cached.data);
 			} else {
-				fetchAutocomplete(key,query).then(data=>{
+				fetchAutocomplete(key,null && dataWhere).then(data=>{
 					const lastAccess = now();
 					cache[key] = {data,lastAccess};
 					resolve(data);
@@ -39,8 +39,8 @@ const getAc = (key,query)=>{
 	});
 }
 
-const getAcNoCache = (key,query)=>{
-	return fetchAutocomplete(key,query);
+const getAcNoCache = (key,dataWhere)=>{
+	return fetchAutocomplete(key,dataWhere);
 }
 
 const getSl = (key)=>{
