@@ -198,6 +198,10 @@
   background: transparent;
 }
 
+.el-menu--horizontal .el-menu {
+  padding: 0 !important;
+}
+
 .el-card {
   //border: none !important;
   box-shadow: none !important;
@@ -219,8 +223,11 @@
 
 .el-card__body {
   background-color: $color-form-bg;
-  //min-height: 240px;
-  //border: 1px solid $color-input-border !important;
+
+
+  .ap-card-white-bg & {
+    background: white;
+  }
 }
 
 .el-collapse {

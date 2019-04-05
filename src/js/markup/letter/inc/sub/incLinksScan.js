@@ -67,9 +67,9 @@ const scannedDocs = (props) => {
                             <table className='wmin360'>
                                 <thead>
                                 <tr>
-                                    <td className='ap-table-header'></td>
-                                    <td className='ap-table-header'>{M.ID.label}</td>
-                                    <td className='ap-table-header'>{M.DESC.label}</td>
+                                    <td className='ap-table__header'></td>
+                                    <td className='ap-table__header'>{M.ID.label}</td>
+                                    <td className='ap-table__header'>{M.DESC.label}</td>
                                     <td></td>
                                 </tr>
                                 </thead>

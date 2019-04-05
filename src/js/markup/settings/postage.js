@@ -149,8 +149,8 @@ export default class Postage extends React.Component {
                             </tr>
                             <tr>
                                 <td></td>
-                                <td className='ap-table-header'>Значение без НДС</td>
-                                <td className='ap-table-header'>Значение с НДС</td>
+                                <td className='ap-table__header'>Значение без НДС</td>
+                                <td className='ap-table__header'>Значение с НДС</td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption'>Заказное письмо до 20 г, руб</td>

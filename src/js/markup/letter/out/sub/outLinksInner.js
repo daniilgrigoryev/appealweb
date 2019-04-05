@@ -50,8 +50,8 @@ const linkedDocs = (props) => {
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th className='ap-table-header'>{M.ID.label}</th>
-                                    <th className='ap-table-header'>{M.DESC.label}</th>
+                                    <th className='ap-table__header'>{M.ID.label}</th>
+                                    <th className='ap-table__header'>{M.DESC.label}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

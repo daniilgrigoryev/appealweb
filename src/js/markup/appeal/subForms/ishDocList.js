@@ -114,25 +114,25 @@ const OFRow = (props) => {
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
-                                        <p className='ap-table-header'>{M.DOC_TARGET.label}</p>
+                                        <p className='ap-table__header'>{M.DOC_TARGET.label}</p>
                                     <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} value={P[M.DOC_TARGET.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
-                                         <p className='ap-table-header'>{M.ISH_NUM.label}</p>
+                                         <p className='ap-table__header'>{M.ISH_NUM.label}</p>
                                     <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} value={P[M.ISH_NUM.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
-                                    <p className='ap-table-header'>{M.ISH_DATE.label}</p>
+                                    <p className='ap-table__header'>{M.ISH_DATE.label}</p>
                                     <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} value={P[M.ISH_DATE.name]} datepicker='+'/>
                                      </span>
                                 </td>
                                 <td colSpan='3'>
                                     <span className='inline-block mr12'>
-                                    <p className='ap-table-header'>{M.PODPISAL.label}</p>
+                                    <p className='ap-table__header'>{M.PODPISAL.label}</p>
                                     <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name} value={P[M.PODPISAL.name]}/>
                                     </span>
                                 </td>
@@ -243,7 +243,7 @@ const OFRow = (props) => {
                                                  {ind + 1}
                                                  </span>
                                             </td>
-                                            <td className='ap-table-header'>наименование документа</td>
+                                            <td className='ap-table__header'>наименование документа</td>
                                             <td>
                                                 <Button type="text">
                                                     <i className="el-icon-delete color-red-dark ml18"/>
@@ -407,12 +407,12 @@ class EIshDocList extends React.Component {
                     <table key='idl1' className='mb18'>
                         <thead>
                         <tr>
-                            <th className='ap-table-header'>№</th>
-                            <th className='ap-table-header'>{M.DOC_TARGET.label}</th>
-                            <th className='ap-table-header'>{M.ISH_NUM.label}</th>
-                            <th className='ap-table-header'>{M.ISH_DATE.label}</th>
-                            <th className='ap-table-header'>{M.PODPISAL.label}</th>
-                            <th className='ap-table-header'>{M.STATUS.label}</th>
+                            <th className='ap-table__header'>№</th>
+                            <th className='ap-table__header'>{M.DOC_TARGET.label}</th>
+                            <th className='ap-table__header'>{M.ISH_NUM.label}</th>
+                            <th className='ap-table__header'>{M.ISH_DATE.label}</th>
+                            <th className='ap-table__header'>{M.PODPISAL.label}</th>
+                            <th className='ap-table__header'>{M.STATUS.label}</th>
                             <th></th>
                         </tr>
                         </thead>

@@ -29,8 +29,8 @@ const tdCollapsed = (fld, el, i, disabled, rmv, expd) => {
                 <td>
                     <span className="ap-table-list-number mr12">{i + 1}</span>
                 </td>
-                <td className='ap-table-header'>{el.zajavSender}</td>
-                <td className='ap-table-header'>{el.zajavDate}</td>
+                <td className='ap-table__header'>{el.zajavSender}</td>
+                <td className='ap-table__header'>{el.zajavDate}</td>
                 <td></td>
                 <td></td>
                 <td className='pr12 align-r'>
@@ -148,11 +148,11 @@ const ZajavRows = (props) => {
                             <table className='wmin600 mb18'>
                                 <thead>
                                 <tr>
-                                    <th className='ap-table-header'></th>
-                                    <th className='ap-table-header'>{M.ZAJAV_NDOC.label}</th>
-                                    <th className='ap-table-header'>{M.ZAJAV_SENDER.label}</th>
-                                    <th className='ap-table-header'>{M.ZAJAV_DATE.label}</th>
-                                    <th className='ap-table-header'>{M.ZAJAV_SIGNER.label}</th>
+                                    <th className='ap-table__header'></th>
+                                    <th className='ap-table__header'>{M.ZAJAV_NDOC.label}</th>
+                                    <th className='ap-table__header'>{M.ZAJAV_SENDER.label}</th>
+                                    <th className='ap-table__header'>{M.ZAJAV_DATE.label}</th>
+                                    <th className='ap-table__header'>{M.ZAJAV_SIGNER.label}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
