@@ -13,7 +13,7 @@ export default {
 		VID_DOC: 		 {name: 'vid_doc',		  		label: 'Вид документа',	            key: 'doc_vid'},
 		SUMMARY: 		 {name: 'summary',		  		label: 'Краткое содержание'},
 		NOTES: 		     {name: 'notes',		  		label: 'Примечание'},
-		DELIV_TYPE: 	 {name: 'delivery_type',	  	label: 'Вид доставки',				key: 'delivery_type'},
+		DELIV_TYPE: 	 {name: 'delivery_type',	  	label: 'Вид доставки',				key: 'delivery_method'},
 		SHEETS_COUNT: 	 {name: 'sheets_count', 	  	label: 'Кол-во листов'}
 	},
 	incLetterHead: {

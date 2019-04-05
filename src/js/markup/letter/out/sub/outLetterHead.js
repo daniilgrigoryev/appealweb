@@ -1,6 +1,7 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {FInput, EInput} from '../../../components/finput.js'
+import {EAutocomplete, FAutocomplete} from '../../../components/fautocomplete.js'
 import {ESelect, FSelect} from '../../../components/select.js'
 import {EPicker, FPicker} from '../../../components/picker.js'
 import {Button} from 'element-react'
@@ -150,9 +151,10 @@ class OutLetterHead extends React.Component {
                     <tbody>
                     <tr>
                         <td className='ap-input-caption'>{M.SIGNER.label}</td>
-                        <td><Field disabled={disabled} component={FPicker} name={M.SIGNER.name}/></td>
+                        <td><Field disabled={disabled} component={FInput} name={M.SIGNER.name}/></td>
+
                         <td className='ap-input-caption'>{M.ZAJAV_SIGNER.label}</td>
-                        <td><Field disabled={disabled} component={FInput} name={M.ZAJAV_SIGNER.name} datepicker='+'/>
+                        <td><Field disabled={disabled} component={FAutocomplete} name={M.ZAJAV_SIGNER.name} dataKey={M.ZAJAV_SIGNER.key}/>
                         </td>
                     </tr>
                     </tbody>

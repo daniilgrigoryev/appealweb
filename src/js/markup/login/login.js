@@ -9,7 +9,6 @@ import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
 import {getUser, getFile} from '../../selectors/common.js'
 
-
 class Login extends React.Component {
 
   constructor(props){
@@ -24,18 +23,6 @@ class Login extends React.Component {
     this.onInput = this.onInput.bind(this);
     this.onLogin = this.onLogin.bind(this);
     this.onFileLoad = this.onFileLoad.bind(this);
-  }
-
-  componentDidMount(){
-    /*post('https://172.20.255.47:8443/AppealAPI/root/db_list',this.state).then((resp)=>{
-      const arr = resp.data;
-      if (!_.size(arr)){
-        return;
-      }
-      const db = arr[0].key;
-      const list = _.reduce(arr,(memo,it)=>(memo[it.key]=it.val,memo),{});
-      //;
-    });*/
   }
 
   onInput(evt){

@@ -2,6 +2,7 @@ import React from 'react'
 import withValidators from './tooltipper.js'
 import {Select} from 'element-react'
 import {getSl} from '../../services/acCacher.js'
+import {EAutocomplete,FAutocomplete} from './fautocomplete.js'
 
 // Element component
 class ASelect extends React.Component {
@@ -49,11 +50,14 @@ class ASelect extends React.Component {
 	} //
 }
 
-const ESelect = withValidators(ASelect);
+const ESelect_old = withValidators(ASelect);
 
-const FSelect = (props) => {
+const FSelect_old = (props) => {
 	const {input,meta} = props;
 	return <ESelect {...props} {...input} {...meta} />
 }  //
+
+const ESelect = EAutocomplete;
+const FSelect = FAutocomplete;
 
 export {ESelect,FSelect};

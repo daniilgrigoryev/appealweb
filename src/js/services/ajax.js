@@ -31,7 +31,7 @@ const ajax = (method,url,payload,ajaxOpts) => {
 
 	if (ajaxOpts){
 		(typeof ajaxOpts == 'function') && (ajaxOpts = ajaxOpts());
-		(typeof ajaxOpts == 'object')   && (Object.assign(opts,ajaxOpts,{method,url,data}));
+		(typeof ajaxOpts == 'object')   && (Object.assign(opts,ajaxOpts,{method,url,data: opts.data}));
 	}
 
 	if (method=='GET'){
@@ -45,6 +45,16 @@ const ajax = (method,url,payload,ajaxOpts) => {
 		opts.data = data;
 		opts.headers['Content-Type'] = 'multipart/form-data';
 		delete opts.headers['Accept'];
+	} else if(method=='MULTIPART'){
+		opts.method = 'POST';
+		opts.headers['Content-Type'] = 'multipart/form-data';		    
+	
+		const data = new FormData();
+		for (let key in payload){
+			data.append(key, payload[key]);
+		}
+		data.append('sessionId',sessionId);
+		opts.data = data;
 	} else {
 		opts.data = JSON.stringify(opts.data);
 	} 	
@@ -56,6 +66,7 @@ const	post    = (url,payload,ajaxOpts)=> ajax('POST',url,payload,ajaxOpts);
 const	postFile= (url,payload,ajaxOpts)=> ajax('POST_FILE',url,payload,ajaxOpts);
 const	del     = (url,payload,ajaxOpts)=> ajax('DELETE',url,payload,ajaxOpts);
 const	put     = (url,payload,ajaxOpts)=> ajax('PUT',url,payload,ajaxOpts);
+const	mpt 	= (url,payload,ajaxOpts)=> ajax('MULTIPART',url,payload,ajaxOpts);
 
 const	setBase  = (newBase)=>{ BASE_URL = newBase; }
 const   setMode  = (newMode)=>{ MODE = newMode;}
@@ -81,4 +92,4 @@ const	out = (res) => {
     return warn;
 }
 
-export {setBase,setMode,get,post,postFile,del,put,out,setSid,eraseSid};
+export {setBase,setMode,get,post,postFile,del,put,out,setSid,eraseSid,mpt};

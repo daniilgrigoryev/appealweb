@@ -43,28 +43,30 @@ const mappingT = {
     ISP_OTD: 'Отдел'
 }
 
+const templatingT = {};
+
 class AppealExplorer extends React.Component {
 
     constructor(props) {
         super(props);
-        const search = {};
-        this.state = {search};
-        this.where = {};
+        const search  = {};
+        this.state    = {search};
+        this.where    = {};
         this.whereKey = 0;
 
         this.onChange = this.onChange.bind(this);
-        this.search = this.search.bind(this);
+        this.search   = this.search.bind(this);
     }
 
     openRow(rowData, column) {
         const {dispatch, change, initialize} = this.props;
         const alias = 'CLAIM_GET';
+        const orphan = true;
         return async () => {
             const claim_id = rowData.ID;
-            const x = await post('db/select', {alias, claim_id});
-            const raw = x.data.rows[0][0].value;
-            const js = JSON.parse(raw);
-            dispatch(initialize(im(js)));
+
+            const x = await post('db/select', {alias, claim_id,orphan});
+            dispatch(initialize(im(x.data)));
             relocate('appeal_incoming');
         }
     }
@@ -95,18 +97,20 @@ class AppealExplorer extends React.Component {
     }
 
     render() {
+        const a = this;
         const S = this.state.search;
         const noTable = _.isEmpty(this.where);
         const chg = this.onChange;
 
-        const body = (rowData, column) => (<div>
-            <Button size="small" onClick={this.openRow.bind(this)(rowData, column)}>Открыть</Button>
-        </div>);
-        const ac = {style, body};
+        templatingT['REG_NUM'] = (rowData, column) => {
+            return <a onClick={a.openRow(rowData)}>{rowData.REG_NUM}</a>;
+        }//
+
+        const ac =  null && {style, body};
 
         return (
             <React.Fragment>
-                <Layout.Row gutter="20">
+                <Layout.Row gutter="0">
                     <Layout.Col span="24">
                         <Card className="box-card" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
@@ -208,13 +212,14 @@ class AppealExplorer extends React.Component {
                     </Layout.Col>
                 </Layout.Row>
 
-                {noTable && <div className='mt120'>
+                {noTable && <div className='mt60'>
                     <h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3>
                 </div>}
                 {!noTable &&
                 <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                    <AppealTable key={this.whereKey} sid={this.props.sid} desc={desc} actionCol={ac} mapping={mappingT}
-                                 hdelta={'520'} where={this.where}/>
+                    <AppealTable key={this.whereKey} sid={this.props.sid} desc={desc} actionCol={ac} 
+                                 mapping={mappingT} templating={templatingT}
+                                 hdelta={'420'} where={this.where}/>
                 </Card>
                 }
             </React.Fragment>

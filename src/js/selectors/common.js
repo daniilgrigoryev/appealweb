@@ -13,3 +13,7 @@ export function getMessages(state){
 export function getSessionId(state){
 	return getGeneral(state).getIn(['user','sessionID'])
 }
+
+export function getSystem(state){
+	return state.getIn(['general','system'])
+}

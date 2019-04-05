@@ -8,7 +8,8 @@ body {
   font-family: 'Open Sans', sans-serif !important;
   //overflow: hidden;
   color: $color-text-base;
-  background: #fafafa;
+  background: $color-form-bg;
+  overflow: hidden;
 }
 
 div.tooltipWrap {
@@ -57,8 +58,9 @@ div.tooltipWrap {
 
 // Стили заголовков
 .ap-header {
+  height: $ap-header-height;
   background: white;
-  border-bottom: 1px solid $color-input-border;
+  border-bottom: 1px solid $color-border;
 }
 
 .ap-h1 {
@@ -71,16 +73,15 @@ div.tooltipWrap {
 
 .ap-h2 {
   font-size: 24px;
-  font-weight: 300;
-  letter-spacing: 0.1px;
   line-height: 2;
-  //color: $color-text-headers;
+  color: $color-text-headers;
+  opacity: 0.65;
 }
 
 .ap-h3 {
-  font-size: 18px;
-  //font-size: 20px;
-  font-weight: 400;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 500;
   letter-spacing: 0.2px;
   line-height: 1.5;
   color: $color-text-headers;
@@ -133,7 +134,6 @@ div.tooltipWrap {
 .ap-btn-link span {
   color: $color-blue-selected;
 }
-
 
 .ap-select-underlined {
   .el-input__inner {
@@ -223,4 +223,66 @@ div.tooltipWrap {
   border-top: 1px solid $color-input-border;
   box-shadow: 0 0 8px rgba(86, 83, 83, 0.25);
   z-index: 1;
+  transition: all 250ms ease-in;
+
+  &.hidden {
+    bottom: -72px;
+  }
+}
+
+.ap-user-menu-toggle {
+  $size: 42px;
+  width: $size;
+  height: $size;
+  background: url("/src/images/user.svg") no-repeat center;
+  background-size: contain;
+  opacity: 0.65;
+  transition: all 100ms linear;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.ap-side-panel-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.ap-side-panel-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - #{$ap-header-height});
+}
+
+.ap-side-panel-left {
+  width: 320px;
+  font-size: 13px;
+  color: $color-blue-dark;
+  border-right: 1px solid $color-border;
+  background: white;
+
+  .ap-side-panel-left__statuses {
+    margin-top: 20px;
+    vertical-align: middle;
+  }
+
+  .ap-side-panel-left__nav {
+    li {
+      padding-left: 20px;
+      border-left: 4px solid transparent;
+
+      &:hover, &.active {
+        color: $color-blue;
+        border-left-color: $color-blue;
+        cursor: pointer;
+      }
+    }
+
+  }
+
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../components/finput.js'
-import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
 import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
@@ -10,7 +9,10 @@ import * as _ from 'lodash'
 import {Button, Card, Layout, Tag} from 'element-react'
 import mapping from '../appealContent/mapping.js'
 import {fields, categories, matrix} from './categories.js'
+import {post} from '../../../services/ajax.js'
+import Immutable from 'immutable'
 
+const im = (obj)=> Immutable.fromJS(obj);
 const M = mapping.topicList;
 
 const data2str = (data) =>{
@@ -27,13 +29,13 @@ const stopPg = (cb, id) => (evt) => {
 
 const OFRow = (props) => {
     const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse} = props;
-    const id = value.get('id')
+    const id = value.get('id');
     
-    const expanded = checkExpand(id);
+    const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
 
-    const onXpd = () => onExpand(id);
+    const onXpd = () => onExpand(ind);
     const P = value;
 
     const SYS = 'M';
@@ -62,7 +64,7 @@ const OFRow = (props) => {
                     </td>
                     <td>
                  <span className='inline-block mr12'>
-                {P.get(M.CAT.name)}
+                {props.getValue(P.get(M.CAT.name))}
                   </span>
                     </td>
                     <td>
@@ -128,7 +130,7 @@ const OFRow = (props) => {
         <React.Fragment>
             <tr>
                 <td colSpan='6'>
-                    <div className='px12 py12 my6 ml-neg12 border round border--gray-light shadow-darken10'>
+                    <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                         <table className='wmax600'>
                             <tbody>
                             <tr key={id + 'e1'}>
@@ -139,7 +141,7 @@ const OFRow = (props) => {
                                 </td>
                                 <td>
                                 <span className='inline-block mr12'>
-                                <Field disabled={disabled} component={FSelect} name={field + M.CAT.name}
+                                <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
                                        placeholder={M.CAT.label}
                                        dataKey={M.CAT.key} value={P[M.CAT.name]}/>
                                 </span>
@@ -251,7 +253,7 @@ const OFRow = (props) => {
                                         {cif(M.APPEAL_CAUSE.name,
                                             (<tr>
                                                 <td className='ap-input-caption'>{M.APPEAL_CAUSE.label}</td>
-                                                <td><Field disabled={disabled} component={FSelect}
+                                                <td><Field disabled={disabled} component={FAutocomplete}
                                                            value={P[M.APPEAL_CAUSE.name]}
                                                            name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
                                                 </td>
@@ -260,7 +262,7 @@ const OFRow = (props) => {
                                         {cif(M.DESISION_MAKER.name,
                                             (<tr>
                                                 <td className='ap-input-caption'>{M.DESISION_MAKER.label}</td>
-                                                <td><Field disabled={disabled} component={FSelect}
+                                                <td><Field disabled={disabled} component={FAutocomplete}
                                                            value={P[M.DESISION_MAKER.name]}
                                                            name={field + M.DESISION_MAKER.name}
                                                            dataKey={M.DESISION_MAKER.key}/>
@@ -270,7 +272,7 @@ const OFRow = (props) => {
                                         {cif(M.DECISION_THEME.name,
                                             (<tr>
                                                 <td className='ap-input-caption'>{M.DECISION_THEME.label}</td>
-                                                <td><Field disabled={disabled} component={FSelect}
+                                                <td><Field disabled={disabled} component={FAutocomplete}
                                                            value={P[M.DECISION_THEME.name]}
                                                            name={field + M.DECISION_THEME.name}
                                                            dataKey={M.DECISION_THEME.key}/>
@@ -280,7 +282,7 @@ const OFRow = (props) => {
                                         {cif(M.DECISION_BASIS.name,
                                             (<tr>
                                                 <td className='ap-input-caption'>{M.DECISION_BASIS.label}</td>
-                                                <td><Field disabled={disabled} component={FSelect}
+                                                <td><Field disabled={disabled} component={FAutocomplete}
                                                            value={P[M.DECISION_BASIS.name]}
                                                            name={field + M.DECISION_BASIS.name}
                                                            dataKey={M.DECISION_BASIS.key}/>
@@ -290,7 +292,7 @@ const OFRow = (props) => {
                                         {cif(M.APPEAL_APN.name,
                                             (<tr>
                                                 <td className='ap-input-caption'>{M.APPEAL_APN.label}</td>
-                                                <td><Field disabled={disabled} component={FSelect}
+                                                <td><Field disabled={disabled} component={FAutocomplete}
                                                            value={P[M.APPEAL_APN.name]}
                                                            name={field + M.APPEAL_APN.name} dataKey={M.APPEAL_APN.key}/>
                                                 </td>
@@ -370,6 +372,15 @@ class ETopicList extends React.Component {
         };
     }
 
+    componentDidMount(){
+        const alias = 'CLAIM_CATEGORIES';
+        const listValueField = 'value';
+        post('db/select',{alias,listValueField}).then(x=>{
+            let acCateg = x.data;
+            this.setState({acCateg})
+        });
+    }
+
     getCategValue(property) {
         const {acCateg} = this.state;
         return !_.size(acCateg)
@@ -417,7 +428,7 @@ class ETopicList extends React.Component {
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i}
                    ind={i}
-                   checkExpand={(id) => id == this.state.expandedId}
+                   checkExpand={(x) => x == this.state.expandedId}
                    collapse={()=>this.setState({expandedId:false})}
                    field={x}
                    value={arr.get(i)}
@@ -428,7 +439,7 @@ class ETopicList extends React.Component {
                    disabled={disabled}>
                 {x.value}
             </OFRow>)); //
-        const add = () => fields.push(getRow()); 
+        const add = () => fields.push(im(getRow())); 
 
         return (
             <React.Fragment>
