@@ -6,11 +6,6 @@ import {getSessionId,getSystem} from '../../selectors/common.js'
 import {post} from '../../services/ajax.js'
 import FabulaSecEditor from './fabulaSecEditor.js'
 
-const parse = (str)=>{
-  return (typeof str=="string")
-   ? JSON.parse(str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t"))
-   : str;
-}
 class FabulaSecViewer extends React.Component {
   
 	constructor(props){
@@ -35,9 +30,7 @@ class FabulaSecViewer extends React.Component {
 		const {doc_id,sys} = this.props; 
 		const alias = 'FABULA_SEC_GET';
 		const denormalize = true;
-		post('db/select',{alias,denormalize,doc_id,sys}).then(x=>{
-      this.setState({rows:parse(x.data)})
-    });
+		post('db/select',{alias,denormalize,doc_id,sys}).then(x=>this.setState({rows:x.data}));
 	}
 
 	hasNewRow(){

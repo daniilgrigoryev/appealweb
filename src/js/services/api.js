@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = ''
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -56,7 +56,6 @@ export function fetchAutocomplete(key,query){
 
 export function fetchSelect(key){
 	switch(key){
-		case 'fabulasCategories': return fetchFabulasCategories();
 		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
 		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
 		default: return AJ.post("db/select",{alias : key, listValueField : 'value'});
@@ -83,19 +82,4 @@ export function fetchDecisionsMoscowCourt(){
 		];
 		setTimeout(()=>resolve(resp),10);
 	});	
-}
-
-export function fetchFabulasCategories(){
-	return new Promise((resolve,reject)=>{
-		const resp =[];
-		const size = Math.floor(Math.random()*4);
-
-		for (let i=0;i<size;i++){
-			const id = i;
-			const label = 'Категория ' + i;
-			resp.push({id,label});
-		}
-
-		setTimeout(()=>resolve(resp),10);
-	});		
 }

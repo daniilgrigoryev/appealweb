@@ -176,7 +176,7 @@ class LayoutMain extends React.Component {
     }
 }
 
-const LayoutConnected = withRouter(connect((state, props) => {
+const LayoutConnected = withRouter(connect((state, props) => { debugger;
     const sessionId = getSessionId(state);
     return {...props, sessionId};
 })(LayoutMain));

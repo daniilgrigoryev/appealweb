@@ -61,12 +61,12 @@ class AppealExplorer extends React.Component {
     openRow(rowData, column) {
         const {dispatch, change, initialize} = this.props;
         const alias = 'CLAIM_GET';
+        const orphan = true;
         return async () => {
             const claim_id = rowData.ID;
-            const x = await post('db/select', {alias, claim_id});
-            const raw = x.data.rows[0][0].value;
-            const js = JSON.parse(raw);
-            dispatch(initialize(im(js)));
+
+            const x = await post('db/select', {alias, claim_id,orphan});
+            dispatch(initialize(im(x.data)));
             relocate('appeal_incoming');
         }
     }
