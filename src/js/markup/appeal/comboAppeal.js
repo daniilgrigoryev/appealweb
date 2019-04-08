@@ -45,7 +45,7 @@ class ComboAppeal extends Component {
       <SidePanel>
 	    <BasicData    />
 	    <ClaimantData />
-      <AddressData fl={fl} />
+      <AddressData fl={fl}  />
 	    <OrganizationsData />
 	    <SummaryData  />
 	    <TopicsData   />
@@ -59,6 +59,7 @@ class ComboAppeal extends Component {
 const mapStateToProps = (state,props)=>{
     let formData = state.getIn(['form','appeal']);
     formData && (formData = formData.toJS());
+    debugger;
     return {formData};
 }
 
@@ -72,3 +73,6 @@ export default compose(
         //validate
     })
 )(ComboAppeal)
+
+
+//line_adr={}

@@ -15,14 +15,36 @@ const im = (obj)=> Immutable.fromJS(obj)
 const headerTitle = 'Адрес';
 const M = mapping.claimantData;
 
+const toDataStr = () => {
+
+}
 
 const AddressData = props => {
+
+
+    debugger;
+
     const {fl,formData} = props;
     const [isStr, setIsStr] = useState(true);
-    const [strData, setStrData] = useState('');
+    const [dataStr, setDataStr] = useState('');
 
     const addrData = _.pick(formData, [M.REGION.name, M.RAYON.name, M.NPUNKT.name, M.STREET.name]);
-    const formDataStr = JSON.stringify(Object.assign({}, addrData));
+    
+    const onSelect = (newPropertyVal,fieldName)=>{
+        const {dispatch,change} = props;
+        if (fieldName==M.REGION.name){
+            dispatch(change(M.RAYON.name, ""));
+            dispatch(change(M.NPUNKT.name, ""));
+            dispatch(change(M.STREET.name, ""));
+        }
+        if (fieldName==M.RAYON.name) {
+            dispatch(change(M.NPUNKT.name, ""));
+            dispatch(change(M.STREET.name, ""));
+        }
+        if (fieldName==M.NPUNKT.name) {
+            dispatch(change(M.STREET.name, ""));
+        }
+    }
     
     const isFL = +fl!= 2
 
@@ -39,28 +61,28 @@ const AddressData = props => {
     const ADDRESS = isStr
             ? ([<tr>
                     <td className='ap-input-caption'>{M.ADDRESS.label}</td>
-                    <td><Field name={M.ADDRESS.name} component={FInput} value={strData}/></td>
+                    <td>{dataStr}</td>
                     <td><Button size="small" icon="plus" type="success" plain={true}
                             className="flex-parent mb18"
-                            title='Раскрыть' onClick={()=>setIsStr(false)}>Раскрыть</Button></td>
+                            title='Раскрыть' onClick={()=>setIsStr(false)}>Редактировать</Button></td>
                 </tr>
             ]) 
             :   ([
                 <React.Fragment><tr>
                     <td className='ap-input-caption'>{M.REGION.label}</td>
-                    <td colSpan='3'><Field name={M.REGION.name} component={FAutocomplete} dataWhere={formDataStr} dataKey={M.REGION.key} onSelect={onSelect} /></td>
+                    <td colSpan='3'><Field name={M.REGION.name} component={FAutocomplete} dataKey={M.REGION.key} onSelect={onSelect} /></td>
                 </tr>
                 <tr>
                     <td className='ap-input-caption'>{M.RAYON.label}</td>
-                    <td colSpan='3'><Field name={M.RAYON.name} component={FAutocomplete}  dataWhere={formDataStr} dataKey={M.RAYON.key} onSelect={onSelect} /></td>
+                    <td colSpan='3'><Field name={M.RAYON.name} component={FAutocomplete}  dataWhere={_.pick(addrData, [M.REGION.name])} dataKey={M.RAYON.key} onSelect={onSelect} /></td>
                 </tr>
                 <tr>
                     <td className='ap-input-caption'>{M.NPUNKT.label}</td>
-                    <td colSpan='3'><Field name={M.NPUNKT.name} component={FAutocomplete} dataWhere={formDataStr} dataKey={M.NPUNKT.key} onSelect={onSelect} /></td>
+                    <td colSpan='3'><Field name={M.NPUNKT.name} component={FAutocomplete} dataWhere={_.pick(addrData, [M.REGION.name,M.RAYON.name])} dataKey={M.NPUNKT.key} onSelect={onSelect} /></td>
                 </tr>
                 <tr>
                     <td className='ap-input-caption'>{M.STREET.label}</td>
-                    <td colSpan='3'><Field name={M.STREET.name} component={FAutocomplete} dataWhere={formDataStr} dataKey={M.STREET.key} onSelect={onSelect} /></td>
+                    <td colSpan='3'><Field name={M.STREET.name} component={FAutocomplete} dataWhere={_.pick(addrData, [M.REGION.name,M.RAYON.name,M.NPUNKT.name])} dataKey={M.STREET.key} onSelect={onSelect} /></td>
                 </tr>
                 <tr>
                     <td className='ap-input-caption'>{M.DOM.label}</td>
@@ -110,21 +132,6 @@ const AddressData = props => {
 
     //
 
-    const onSelect = (newPropertyVal,fieldName)=>{
-        const {dispatch,change} = props;
-        if (fieldName==M.REGION.name){
-            dispatch(change(M.RAYON.name, ""));
-            dispatch(change(M.NPUNKT.name, ""));
-            dispatch(change(M.STREET.name, ""));
-        }
-        if (fieldName==M.RAYON.name) {
-            dispatch(change(M.NPUNKT.name, ""));
-            dispatch(change(M.STREET.name, ""));
-        }
-        if (fieldName==M.NPUNKT.name) {
-            dispatch(change(M.STREET.name, ""));
-        }
-    }
 
 
     return (
