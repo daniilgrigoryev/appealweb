@@ -22,15 +22,12 @@
     font-size: 12px;
   }
 
-
-
   .p-datatable-scrollable-header {
     overflow-y: visible !important;
     box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 1;
   }
-
 
   .p-datatable-scrollable-view {
     overflow: hidden;
@@ -103,3 +100,42 @@ body .p-paginator {
   border-top: 1px solid #d1dbe5 !important;
   background: white !important;
 }
+
+.p-autocomplete {
+  margin-bottom: 16px !important;
+  outline: none !important;
+
+  .p-inputtext {
+    width: 100% !important;
+    padding: 0 3px !important;
+    height: 24px !important;
+    border-radius: 0 !important;
+    border: 1px solid $color-border !important;
+    font-size: 13px !important;
+    color: $color-input-text !important;
+    box-shadow: none !important;
+
+    &:focus {
+      border: 1px solid $color-blue !important;
+    }
+  }
+
+  .p-autocomplete-dropdown {
+    position: absolute !important;
+    height: 24px !important;
+    right: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 10px !important;
+    color: #ccc !important;
+  }
+}
+
+.p-autocomplete-panel {
+  .p-autocomplete-list-item {
+    padding: 2px 8px !important;
+    color: $color-input-text !important;
+    font-size: 13px !important;
+  }
+}
+
