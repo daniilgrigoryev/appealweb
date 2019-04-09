@@ -30,6 +30,10 @@ const stopPg = (cb, id) => (evt) => {
 const OFRow = (props) => {
     const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse} = props;
     const id = value.get('id');
+
+    const apnPromise = ()=>{
+        return post("db/select",{alias : 'APN', listValueField : 'value', id:props.claim_id});
+    }
     
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
@@ -58,45 +62,26 @@ const OFRow = (props) => {
             <React.Fragment>
                 <tr key={id}>
                     <td>
-                <span className='ap-table-list-number mr12'>
-                {ind + 1}
-                 </span>
+                        <span className='ap-table-list-number mr12'>{ind + 1}</span>
                     </td>
                     <td>
-                 <span className='inline-block mr12'>
-                {props.getValue(P.get(M.CAT.name))}
-                  </span>
+                        <span className='inline-block mr12'>{props.getValue(P.get(M.CAT.name))}</span>
                     </td>
                     <td>
-                <span className='inline-block mr12'>
-                {P.get(M.POST_N.name)}
-                </span>
+                        <span className='inline-block mr12'>{P.get(M.POST_N.name)}</span>
                     </td>
                     <td>
-                <span className='inline-block mr12'>
-                {data2str(P.get(M.POST_DATE.name))}
-                </span>
+                        <span className='inline-block mr12'>{data2str(P.get(M.POST_DATE.name))}</span>
                     </td>
                     <td colSpan='2' className='pr12 align-r'>
-               <span className="ml12">
-                    {disabled ? null :
-                        <Button type="text" onClick={onXpd}>
-                            <i className="el-icon-edit color-green"/>
-                        </Button>
-                    }
-
-                   {disabled ? null :
-                       <Button type="text" onClick={onInf}>
-                           <i className="el-icon-information color-blue"/>
-                       </Button>
-                   }
-
-                   {disabled ? null :
-                       <Button type="text" onClick={onRmv}>
-                           <i className="el-icon-delete color-red-dark"/>
-                       </Button>
-                   }
-               </span>
+                       <span className="ml12">
+                           {disabled ? null 
+                               : <Button type="text" onClick={onXpd}><i className="el-icon-edit color-green"/></Button>}
+                           {disabled ? null 
+                               : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
+                           {disabled ? null 
+                               : <Button type="text" onClick={onRmv}><i className="el-icon-delete color-red-dark"/></Button>}
+                       </span>
                     </td>
                 </tr>
                 <tr>
@@ -112,8 +97,7 @@ const OFRow = (props) => {
         <tr key='pu1'>
             <td className='ap-input-caption'>{M.RASSMOTR_DATE.label}</td>
             <td>
-                <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name}
-                       value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
+                <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
             </td>
         </tr>
         ,
@@ -148,9 +132,9 @@ const OFRow = (props) => {
                                 </td>
                                 <td>
                                 <span className='inline-block mr12'>
-                                    <Field disabled={disabled} component={FInput} name={field + M.POST_N.name}
+                                    <Field disabled={disabled} component={FAutocomplete} name={field + M.POST_N.name}
                                            placeholder={M.POST_N.label}
-                                           value={P[M.POST_N.name]}/>
+                                           datapromise={apnPromise} value={P[M.POST_N.name]}/>
                                  </span>
                                 </td>
                                 <td>
@@ -423,11 +407,12 @@ class ETopicList extends React.Component {
         const xpd = this.onExpand.bind(this);
         const getV = this.getCategValue.bind(this);
 
-        const {fields, disabled} = this.props;
+        const {fields, disabled,claim_id} = this.props;
 
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i}
                    ind={i}
+                   claim_id={claim_id}
                    checkExpand={(x) => x == this.state.expandedId}
                    collapse={()=>this.setState({expandedId:false})}
                    field={x}

@@ -311,8 +311,8 @@ const getRow = (doc_target, args = {}) => {
     }
 }
 
-const getRowZajav = (args) => im(getRow('zajav', args));
-const getRowOrg = (args) => im(getRow('org', args));
+const getRowZajav = (args) => im(getRow('Заявитель ФЛ', args));
+const getRowOrg = (args) => im(getRow('Организация', args));
 
 // Element component
 class EIshDocList extends React.Component {

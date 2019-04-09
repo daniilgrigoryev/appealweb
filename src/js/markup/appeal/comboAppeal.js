@@ -14,6 +14,7 @@ import TopicsData from './appealContent/topicsData.js'
 import IshDocsData from './appealContent/ishDocsData.js'
 import PlusDocs from './appealContent/plusDocs.js'
 import ArchiveData from './appealContent/archiveData.js'
+import DocsLink from './appealContent/docsLink.js'
 import FullAppeal from './fullAppeal.js' 
 import StatusData from './appealContent/statusData.js'
 import {post} from '../../services/ajax.js'
@@ -25,6 +26,21 @@ import SidePanel from './subForms/sidePanel.js'
 const im = (obj)=> Immutable.fromJS(obj)
 
 class ComboAppeal extends Component {
+
+  constructor(props){
+    super(props);
+    this.reloadRow = this.reloadRow.bind(this);      
+  }
+
+  async reloadRow() {
+    const {dispatch, change, initialize,id} = this.props;
+    const alias = 'CLAIM_GET';
+    const orphan = true;
+    const claim_id = id;
+    const x = await post('db/select', {alias, claim_id,orphan});
+    dispatch(initialize(im(x.data)));
+  }
+
 
   render(){
     const {dispatch,change,initialize} = this.props;
@@ -41,22 +57,22 @@ class ComboAppeal extends Component {
 
     return (
       <SidePanel>
-	    <BasicData    />
-	    <ClaimantData />
-	    <OrganizationsData />
-	    <SummaryData  />
-	    <TopicsData   />
-	    <IshDocsData  />
-	    <ArchiveData  />
+  	    <BasicData    />
+  	    <ClaimantData />
+  	    <OrganizationsData />
+  	    <SummaryData  />
+  	    <TopicsData   />
+  	    <IshDocsData  />
+        <DocsLink reloadRow={this.reloadRow} />
+  	    <ArchiveData  />
       </SidePanel>
     ); //
   }
 }
 
 const mapStateToProps = (state,props)=>{
-    let formData = state.getIn(['form','appeal']);
-    formData && (formData = formData.toJS());
-    return {formData};
+    let id = state.getIn(['form','appeal','values','id']);
+    return {id};
 }
 
 export default compose(

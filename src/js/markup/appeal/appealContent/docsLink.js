@@ -1,39 +1,43 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm, arrayPush} from 'redux-form/immutable'
-import {Dialog, Button} from 'element-react'
+import {Dialog, Button, Card, Layout, Ta} from 'element-react'
 import * as _ from 'lodash'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import DocLinker from './docLinker.js'
+import {post,response} from '../../../services/ajax.js'
+import DocLinker from '../../outgoing/subForms/docLinker.js'
 import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import mapping from '../mapping.js'
+import {messageSet} from '../../../actions/common.js'
+import mapping from './mapping.js'
 
 const M = mapping.ishLinksInner;
 
-const getRow = (id,npost, desc, docId) => {
-    return {
-        id: id || null,
-        desc: desc || '',
-        docId: docId || null
-    }
-}
-
 const linkedDocs = (props) => {
-    const {fields, disabled, hideLinker, showLinker} = props
+    const {fields, disabled, hideLinker, showLinker,dispatch} = props
     const add = showLinker;
 
-    const rmv = (ind) => () => fields.remove(ind); // replace with db call needed
+    const rmv = (indx) => async () => { // replace with db call needed
+       const alias = 'REMOVE_LINK_TABLE';
+       try {
+            const LINK_ID = fields.get(indx).get('link_id');
+            response(await post('db/select',{alias,LINK_ID}));
+            fields.remove(indx);
+       } catch (exc){
+            dispatch(messageSet(ecx,'error'));
+       }
+    } 
     const inf = (ind) => () => fields.remove(ind); // ! replace me
     const ROWS = fields.map((x, i)=>(
         <tr key={i}>
-            <td><Field component={FInput} name={x + M.ID.name}   value={x[M.ID.name]}   disabled={true}/></td>
-            <td><Field component={FInput} name={x + M.DESC.name} value={x[M.DESC.name]} disabled={true}/></td>
-            <td>{disabled ? null : <button type='button' onClick={inf(i)}>i</button>}</td>
-            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>x</button>}</td>
+            <td><Field component={FInput} name={x + 'name'}                value={x.name}                disabled={true}/></td>
+            <td><Field component={FInput} name={x + 'registration_number'} value={x.registration_number} disabled={true}/></td>
+            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>Удалить</button>}</td>
         </tr>)); //
 
+    //<td>{disabled ? null : <button type='button' onClick={inf(i)}>I</button>}</td>
+            
     return (
         <React.Fragment>
             {!fields.length 
@@ -46,9 +50,8 @@ const linkedDocs = (props) => {
                             <table>
                                 <thead>
                                 <tr>
-                                    <th></th>
-                                    <th className='ap-table-header'>{M.ID.label}</th>
-                                    <th className='ap-table-header'>{M.DESC.label}</th>
+                                    <th className='ap-table-header'>Документ</th>
+                                    <th className='ap-table-header'>Регистрационный номер</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,7 +90,7 @@ const linkedDocs = (props) => {
     ); //
 }
 
-class IshLinkInner extends React.Component {
+class DocsLink extends React.Component {
 
     constructor(props) {
         super(props);
@@ -109,14 +112,17 @@ class IshLinkInner extends React.Component {
     }
 
     render() {
-        const {disabled, array, dispatch,id} = this.props
+        const {disabled, array, dispatch,id,reloadRow} = this.props
         const {linkerVisible} = this.state;
 
-        if (!id){
-            return (<div>
+        const CONTENT = (!id) 
+            ? (<div>
                     <span>Связывание возможно только для зарегистрированных документов</span>
-                </div>);
-        } //
+                </div>) 
+            : (<div key='ili'>
+                    <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
+                </div>)
+        
 
         const LINKER = !linkerVisible
             ? null
@@ -130,35 +136,46 @@ class IshLinkInner extends React.Component {
                        lockScroll={true} >
 
                 <Dialog.Body>
-                    <DocLinker dialogClose={this.hideLinker} root_id={id} root_doc={'CLAIM'} root_dir={'OUT'}/>
+                    <DocLinker dialogClose={this.hideLinker} reloadRow={reloadRow} root_id={id} root_doc={'CLAIM'} root_dir={'IN'}/>
                 </Dialog.Body>
             </Dialog>); //
 
-        return [
-            <div key='ili'>
-                <hr className='txt-hr my18'/>
-                <h4 className='ap-h4'>Связанные документы:</h4>
 
-                <FieldArray name='linkedDocs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
-            </div>,
-            LINKER
-        ]
+            return [
+                <div scrollAnchor='links' key='ili'>
+                    <Layout.Row gutter="20">
+                        <Layout.Col span="24">
+                        {/*<Layout.Col span="16" offset="4">*/}
+                            <Card className="box-card" header={
+                                <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                                    <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
+                                        Связанные документы:
+                                    </h3>                                    
+                                </div>
+                            }>
+                                {CONTENT}
+                            </Card>
+                        </Layout.Col>
+                    </Layout.Row>
+                </div>,
+                LINKER
+                ];
     };
 } //
 
 
 const mapStateToProps = (state, props) => {
-    let formData = state.getIn(['form', 'outgoing', 'values']);
-    let id = state.getIn(['form', 'outgoing', 'values','id']);
+    let formData = state.getIn(['form', 'appeal', 'values']);
+    let id = state.getIn(['form', 'appeal', 'values','id']);
     return {formData,id};
 }
 
 export default compose(
     connect(mapStateToProps),
     reduxForm({
-        form: 'outgoing', // <------ same form name
+        form: 'appeal', // <------ same form name
         destroyOnUnmount: false, // <------ preserve form data
         forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
         //validate
     })
-)(IshLinkInner)
+)(DocsLink)

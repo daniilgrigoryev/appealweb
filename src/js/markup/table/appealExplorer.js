@@ -64,7 +64,6 @@ class AppealExplorer extends React.Component {
         const orphan = true;
         return async () => {
             const claim_id = rowData.ID;
-
             const x = await post('db/select', {alias, claim_id,orphan});
             dispatch(initialize(im(x.data)));
             relocate('appeal_incoming');
@@ -241,5 +240,3 @@ export default compose(
         //validate
     })
 )(AppealExplorer)
-
-//export default connect(state2props)(AppealExplorer);

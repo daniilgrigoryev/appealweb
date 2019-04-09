@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {Button, Input, Card, Layout} from 'element-react'
 import {post} from '../../services/ajax.js'
 import Immutable from 'immutable'
+import {messageSet} from '../../actions/common.js'
 
 import IshHead from './subForms/ishHead.js'
 import IshBasic from './subForms/ishBasic.js'
@@ -27,10 +28,10 @@ class Outgoing extends React.Component {
     checkIn() {
         const a = this;
         const {formData, dispatch, change, initialize} = a.props;
-        const data = JSON.stringify(Object.assign({}, formData.values));
+        const data = JSON.stringify(formData);
 
         const jsonMode = true;
-        post('rest/push', {alias, data, jsonMode}).then(x => {
+        post('db/push', {alias, data, jsonMode}).then(x => {
             const F = formData;
             const V = F ? F.values : {};
             const {error} = x.data;
@@ -46,23 +47,17 @@ class Outgoing extends React.Component {
                 }
                 if (R.posts) {
                     const p_ids = R.posts || [];
-                    const p = _.map(V.posts, function (x, i) {
-                        return x.id = p_ids[i], x;
-                    });
-                    dispatch(change('posts', im(p)));
+                    const p = _.map(V.posts,(x, i)=>(x.id = p_ids[i], x));
+                    dispatch(change('posts',im(p)));
                 }
                 if (R.addr) {
                     const ad_ids = R.addr || [];
-                    const ad = _.map(V.addressee, function (x, i) {
-                        return x.id = ad_ids[i], x;
-                    });
+                    const ad = _.map(V.addressee, (x, i)=>(x.id = ad_ids[i], x));
                     dispatch(change('addressee', im(ad)));
                 }
-            }
-            catch (exc) {
+            } catch (exc) {
                 console.error(exc);
             }
-
         }).catch(x => {
             dispatch(messageSet(x, 'error'));
             console.error(x);
@@ -70,8 +65,11 @@ class Outgoing extends React.Component {
         });
     }
 
-
     render() {
+        const {formData} = this.props;
+        const id = !formData? null : formData.get('id');
+        const saveText = id ? 'Сохранить' : 'Зарегистрировать';
+
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-content'>
@@ -90,7 +88,7 @@ class Outgoing extends React.Component {
                             </Card>
 
                             <div className="ap-footer">
-                                <Button className='mr24' onClick={this.checkIn}>Зарегистрировать</Button>
+                                <Button className='mr24' onClick={this.checkIn}>{saveText}</Button>
                                 <Button type='text'>Отменить</Button>
                             </div>
                         </Layout.Col>
@@ -102,8 +100,7 @@ class Outgoing extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    let formData = state.getIn(['form', 'outgoing']);
-    formData && (formData = formData.toJS());
+    let formData = state.getIn(['form', 'outgoing', 'values']);
     return {formData};
 }
 

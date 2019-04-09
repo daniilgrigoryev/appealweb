@@ -12,6 +12,7 @@ import {Button, Card, Layout, Tag} from 'element-react'
 import {post} from '../../../services/ajax.js'
 import Immutable from 'immutable'
 import * as _ from 'lodash'
+import {messageSet} from '../../../actions/common.js'
 
 import mapping from './../appealContent/mapping.js'
 
@@ -44,7 +45,7 @@ class SidePanel extends Component {
 
     getHash() {
         const {formData} = this.props;
-        return !formData ? 0 : hashCode(JSON.stringify(formData.values));
+        return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.values,['linked_docs'])));
     }
 
     save() {
@@ -68,7 +69,7 @@ class SidePanel extends Component {
                 const R = JSON.parse(json); // ret holder
                 dispatch(initialize(im(R)));
                 setTimeout(() => {
-                    a.curHash = a.getHash()
+                    a.curHash = a.getHash();
                     a.forceUpdate();
                 }, 1000);
             } catch (exc) {

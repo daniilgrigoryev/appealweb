@@ -124,6 +124,10 @@ export default {
 	questionList: {
 		QUEST: 			 {name: 'question',		  label: 'Тематика обращения',		    key: 'QUESTIONS_LIST'},
 		DEPART: 		 {name: 'department', 	  label: 'Отдел', 						key: 'DEPARTMENTS_LIST'}
+	},
+	ishLinksInner: {
+		ID: 			{name: 'dod_id',				label: 'ID'},
+		DESC: 			{name: 'desc',					label: 'Описание'}
 	}, 
 	fabulaDialog : {
 		DOCUMENT : 		 {name: 'document', 	  label: 'Документ'},

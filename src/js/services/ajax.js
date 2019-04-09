@@ -73,6 +73,17 @@ const   setMode  = (newMode)=>{ MODE = newMode;}
 const	setSid   = (newSid) =>{ sessionId = newSid;}
 const	eraseSid = ()=>{ sessionId = null; }
 
+const	response = (resp)=>{
+	if (resp){
+		if (resp.error){
+			throw resp.error;
+		} else if (resp.data && resp.data.error){
+			throw resp.data.error;
+		}
+	}
+	return resp.data ? resp.data : resp;
+}
+
 const	out = (res) => {
     let filename = (res.headers['content-type'] || "").replace("attachment; filename=", "");
     filename = decodeURI(filename);
@@ -92,4 +103,4 @@ const	out = (res) => {
     return warn;
 }
 
-export {setBase,setMode,get,post,postFile,del,put,out,setSid,eraseSid,mpt};
+export {setBase,setMode,get,post,postFile,del,put,out,setSid,eraseSid,mpt,response};

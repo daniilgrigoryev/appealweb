@@ -16,8 +16,16 @@ class EAutocomplete extends React.Component {
 
 	    this.change=this.change.bind(this);
 	    this.select=this.select.bind(this);
+	    this.getDatas=this.getDatas.bind(this);
 	    this.suggestData=this.suggestData.bind(this);
 	}
+
+	componentDidUpdate(prevData) { 
+	    const {value} = this.props;
+	    if (value != prevData.value && (value=='' || value ==null)){ 
+	      this.setState({data: null, dataKeyed:null, value: ""});
+	    }
+	  }
 
 	componentDidMount(){
 		const {acKey,dataKey,value} = this.props;
@@ -29,34 +37,42 @@ class EAutocomplete extends React.Component {
 		if (_.size(this.state.data)){ // ac has data
 	   		return this.filter(value);	
 	   	} // else - loading needs...
+	   	const d = await this.getDatas();
+		return this.filter(value,d.data,d.dataKeyed)
+	}
 
-	   	let d = null;
-		{ // search list source
-			const {data,acKey,dataKey,datagetter} = this.props;
-			if (datagetter){
-		   		d = datagetter();
-		   	} else if (data){
-		   		d = data;
-		   	} else {
-		   		d = await getAc(acKey || dataKey);
-		  	}
-	  		d = d.data ? d.data : d;
+	async getDatas(){
+		let d = null;
+		
+		const {data,acKey,dataKey,datagetter,datapromise} = this.props;
+		if (datagetter){
+			d = datagetter();
+		} else if (datapromise){
+			d = await datapromise();
+		} else if (data){
+			d = data;
+		} else {
+			d = await getAc(acKey || dataKey);
 		}
+		d = d.data ? d.data : d;
 		
 		let dataKeyed = d;
-	  	let data = d;
+		let dataLabels = d;
 		if (d && d.length){
 			if (d[0].property && d[0].value){
-				data = d.map(x=>x.value);
+				dataLabels = d.map(x=>x.value);
 			} else {
 				dataKeyed = null; //d.map(x=>({property: x, value: x}));
 			}
 		}
-		this.filter(value,data,dataKeyed)
+		return {data:dataLabels,dataKeyed};
 	}
 
 	filter(queryLow,data,dataKeyed){
 		const d = this.state.data || data;
+		if (!d){
+			return;
+		}
 		const dataSuggestions = d.filter((row)=>row.toLowerCase().indexOf(queryLow)>-1);
 		const dState = {dataSuggestions};
 		if (data && data.length){

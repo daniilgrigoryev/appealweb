@@ -1,14 +1,15 @@
 import './app.scss'
-import React from 'react'
+import React,{ Suspense, lazy } from 'react'
 import {connect} from 'react-redux'
 import {BrowserRouter, HashRouter, Route, Switch, NavLink, Link, withRouter} from 'react-router-dom'
 import {Menu, Button, Popover} from 'element-react'
 import {logoutRequest} from '../../actions/common.js'
 import {getSessionId} from '../../selectors/common.js'
+import Immutable from 'immutable'
+
 import AppealWizard from '../appeal/appealWizard.js'
 import ComboAppeal from '../appeal/comboAppeal.js'
 import AppealExplorer from '../table/appealExplorer.js'
-import FabulasList from '../editable/fabulasList.js'
 import DecisionsList from '../editable/decisionsList.js'
 import CategoriesList from '../editable/categoriesList.js'
 import AppealCauseList from '../editable/appealCauseList.js'
@@ -19,7 +20,6 @@ import IncomingLetter from '../letter/inc/incomingLetter.js'
 import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
 import FabulaDocViewer from '../fabulas/fabulaDocViewer.js'
-import Immutable from 'immutable'
 
 import {getVersion} from '../../reducers/rootReducer.js'
 
@@ -35,24 +35,25 @@ export default function App() {
     return (
         <HashRouter>
             <LayoutConnected>
-                <Switch>
-                    <Route exact path='/' component={AppealExplorer || Home}/>
-                    <Route path='/appeal_incoming' component={ComboAppeal || AppealWizard}/>
-                    <Route path='/appeal_outgoing' component={Outgoing}/>
-                    <Route path='/explore' component={AppealExplorer}/>
-                    <Route path='/letter_incoming' component={IncomingLetter}/>
-                    <Route path='/letter_outgoing' component={OutcomingLetter}/>
-                    <Route path='/sprav/fabulas' component={FabulaDocViewer}/>
-                    <Route path='/sprav/decisions' component={DecisionsList}/>
-                    <Route path='/sprav/categories' component={CategoriesList}/>
-                    <Route path='/sprav/appeal_causes' component={AppealCauseList}/>
-                    <Route path='/sprav/doc_types' component={TipDocList}/>
+               
+                    <Switch>
+                        <Route exact path='/' component={AppealExplorer || Home}/>
+                        <Route path='/appeal_incoming' component={ComboAppeal || AppealWizard}/>
+                        <Route path='/appeal_outgoing' component={Outgoing}/>
+                        <Route path='/explore' component={AppealExplorer}/>
+                        <Route path='/letter_incoming' component={IncomingLetter}/>
+                        <Route path='/letter_outgoing' component={OutcomingLetter}/>
+                        <Route path='/sprav/fabulas' component={FabulaDocViewer}/>
+                        <Route path='/sprav/decisions' component={DecisionsList}/>
+                        <Route path='/sprav/categories' component={CategoriesList}/>
+                        <Route path='/sprav/appeal_causes' component={AppealCauseList}/>
+                        <Route path='/sprav/doc_types' component={TipDocList}/>
 
-                    <Route path='/settings/diapSPI' component={DialSPI}/>
-                    <Route path='/settings/postage' component={Postage}/>
+                        <Route path='/settings/diapSPI' component={DialSPI}/>
+                        <Route path='/settings/postage' component={Postage}/>
 
-                    <Route path='*' component={NotFoundPage}/>
-                </Switch>
+                        <Route path='*' component={NotFoundPage}/>
+                    </Switch>
             </LayoutConnected>
         </HashRouter>
     ); //
@@ -176,7 +177,7 @@ class LayoutMain extends React.Component {
     }
 }
 
-const LayoutConnected = withRouter(connect((state, props) => { debugger;
+const LayoutConnected = withRouter(connect((state, props) => {
     const sessionId = getSessionId(state);
     return {...props, sessionId};
 })(LayoutMain));
