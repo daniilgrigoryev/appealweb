@@ -67,10 +67,10 @@ export class EOrganizationControl extends React.Component {
                     <table>
                         <thead>
                         <tr>
-                            <th className='ap-table-header'>{M.ORG_NAME.label}</th>
-                            <th className='ap-table-header'>{M.ISH_NUM.label}</th>
-                            <th className='ap-table-header'>{M.ISH_DATE.label}</th>
-                            <th className='ap-table-header'>{M.CONTR_DATE.label}</th>
+                            <th className='ap-table__header'>{M.ORG_NAME.label}</th>
+                            <th className='ap-table__header'>{M.ISH_NUM.label}</th>
+                            <th className='ap-table__header'>{M.ISH_DATE.label}</th>
+                            <th className='ap-table__header'>{M.CONTR_DATE.label}</th>
                         </tr>
                         </thead>
 

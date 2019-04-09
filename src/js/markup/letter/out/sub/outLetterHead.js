@@ -63,9 +63,9 @@ const ZajavRows = (props) => {
                             <table className='mb18'>
                                 <thead>
                                 <tr>
-                                    <th className='ap-table-header'></th>
-                                    <th className='ap-table-header wmin360'>Кому:</th>
-                                    <th className='ap-table-header'></th>
+                                    <th className='ap-table__header'></th>
+                                    <th className='ap-table__header wmin360'>Кому:</th>
+                                    <th className='ap-table__header'></th>
                                 </tr>
                                 </thead>
                                 <tbody>

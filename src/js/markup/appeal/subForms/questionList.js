@@ -58,9 +58,9 @@ export class EQuestionList extends React.Component {
                     <table>
                         <thead>
                         <tr>
-                            <th className='ap-table-header'>№</th>
-                            <th className='ap-table-header'>{M.QUEST.label}</th>
-                            <th className='ap-table-header'>{M.DEPART.label}</th>
+                            <th className='ap-table__header'>№</th>
+                            <th className='ap-table__header'>{M.QUEST.label}</th>
+                            <th className='ap-table__header'>{M.DEPART.label}</th>
                         </tr>
                         </thead>
                         <tbody>

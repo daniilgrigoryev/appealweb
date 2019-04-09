@@ -68,8 +68,8 @@ export class EApnList extends React.Component {
                 <table>
                         <thead>
                         <tr>
-                            <th colSpan='2' className='ap-table-header'>{M.POST_NUM.label}</th>
-                            <th className='ap-table-header'>{M.DATE.label}</th>
+                            <th colSpan='2' className='ap-table__header'>{M.POST_NUM.label}</th>
+                            <th className='ap-table__header'>{M.DATE.label}</th>
                         </tr>
                         </thead>
 

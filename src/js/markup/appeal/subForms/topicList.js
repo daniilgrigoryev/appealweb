@@ -434,10 +434,10 @@ class ETopicList extends React.Component {
                     <table className='wmin600 mb18'>
                         <thead>
                         <tr>
-                            <th className='ap-table-header'>№</th>
-                            <th className='ap-table-header'>{M.CAT.label}</th>
-                            <th className='ap-table-header'>{M.POST_N.label}</th>
-                            <th className='ap-table-header'>{M.POST_DATE.label}</th>
+                            <th className='ap-table__header'>№</th>
+                            <th className='ap-table__header'>{M.CAT.label}</th>
+                            <th className='ap-table__header'>{M.POST_N.label}</th>
+                            <th className='ap-table__header'>{M.POST_DATE.label}</th>
                             <th></th>
                             <th></th>
                         </tr>

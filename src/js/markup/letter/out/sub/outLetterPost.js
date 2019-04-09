@@ -67,10 +67,10 @@ const postRows = (props) => {
                             <table className='mb18'>
                                 <thead>
                                  <tr>
-                                     <th className='ap-table-header'></th>
-                                     <th className='ap-table-header'>{M.APN.label}</th>
-                                     <th className='ap-table-header'>{M.DATE.label}</th>
-                                     <th className='ap-table-header'></th>
+                                     <th className='ap-table__header'></th>
+                                     <th className='ap-table__header'>{M.APN.label}</th>
+                                     <th className='ap-table__header'>{M.DATE.label}</th>
+                                     <th className='ap-table__header'></th>
                                  </tr>
                                 </thead>
                                 <tbody>

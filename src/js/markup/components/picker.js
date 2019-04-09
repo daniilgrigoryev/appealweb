@@ -31,7 +31,25 @@ class APicker extends React.Component {
 
         const datePickerFormatToday = () => {
             requestAnimationFrame(() => {
-                document.querySelector('.available.today').textContent = new Date().getDate();
+                let today = new Date().getDate().toString(),
+                    pickerEl = 'el-picker-panel',
+                    todayEl = 'today',
+                    cfg = {subtree: true, attributes: true},
+                    observer = new MutationObserver((mutations) => {
+                        mutations.forEach(function (mutation) {
+                            let t = mutation.target;
+                            if (!t.classList.contains(todayEl)) return;
+                            observer.disconnect();
+                            t.textContent = today;
+                            requestAnimationFrame(() => observer.observe(document.querySelector(`.${pickerEl}`), cfg))
+                        });
+                    });
+
+                if (!!document.querySelector(`.${pickerEl} .${todayEl}`)) {
+                    document.querySelector(`.${pickerEl} .${todayEl}`).textContent = today;
+                }
+
+                observer.observe(document.querySelector(`.${pickerEl}`), cfg);
             })
         };
 

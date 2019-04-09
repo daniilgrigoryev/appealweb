@@ -96,11 +96,11 @@ export default class DiapSPI extends React.Component {
                         <table>
                             <thead>
                             <tr>
-                                <td className='ap-table-header'>Индекс предприятия связи</td>
-                                <td className='ap-table-header'>Дата</td>
-                                <td className='ap-table-header'>Начало диапазона</td>
-                                <td className='ap-table-header'>Конец диапазона</td>
-                                <td className='ap-table-header'>Состояние</td>
+                                <td className='ap-table__header'>Индекс предприятия связи</td>
+                                <td className='ap-table__header'>Дата</td>
+                                <td className='ap-table__header'>Начало диапазона</td>
+                                <td className='ap-table__header'>Конец диапазона</td>
+                                <td className='ap-table__header'>Состояние</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -113,7 +113,7 @@ export default class DiapSPI extends React.Component {
                     </Card>
 
                     <div className="ap-footer">
-                        <Button>Сохранить</Button>
+                        <Button size="small">Сохранить</Button>
                     </div>
                 </Layout.Col>
             </Layout.Row>
