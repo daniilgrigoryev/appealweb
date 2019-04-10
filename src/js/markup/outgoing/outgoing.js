@@ -23,6 +23,16 @@ class Outgoing extends React.Component {
     constructor(props) {
         super(props);
         this.checkIn = this.checkIn.bind(this);
+        this.reloadRow = this.reloadRow.bind(this);
+    }
+
+    async reloadRow() {
+        const {dispatch,change,initialize,formData} = this.props;
+        const alias = 'CLAIM_OUT_GET';
+        const orphan = true;
+        const claim_id = formData.get('id');
+        const x = await post('db/select', {alias, claim_id,orphan});
+        dispatch(initialize(im(x.data)));
     }
 
     checkIn() {
@@ -39,22 +49,14 @@ class Outgoing extends React.Component {
                 let exc = error.split('Detail')[0];
                 throw exc;
             }
+            
             const ID = x.data.rows[0][0].value; // the first column value of single row expected
             try {
                 const R = JSON.parse(ID);
                 if (R.claim_id) { /// upsert claim
                     dispatch(change('id', R.claim_id)); //  !CASE SENSITIVE
-                }
-                if (R.posts) {
-                    const p_ids = R.posts || [];
-                    const p = _.map(V.posts,(x, i)=>(x.id = p_ids[i], x));
-                    dispatch(change('posts',im(p)));
-                }
-                if (R.addr) {
-                    const ad_ids = R.addr || [];
-                    const ad = _.map(V.addressee, (x, i)=>(x.id = ad_ids[i], x));
-                    dispatch(change('addressee', im(ad)));
-                }
+                    setTimeout(()=>this.reloadRow(),500);
+                }                                
             } catch (exc) {
                 console.error(exc);
             }
@@ -83,7 +85,7 @@ class Outgoing extends React.Component {
                                 <IshHead/>
                                 <IshBasic/>
                                 <IshLinksPost/>
-                                <IshLinkInner/>
+                                <IshLinkInner   reloadRow={this.reloadRow}    />
                                 <IshLinkScan/>
                             </Card>
 

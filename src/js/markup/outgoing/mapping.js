@@ -1,15 +1,4 @@
 export default {
-	docLinker: {
-		POST_NUMBER:       {name: 'npost',          	label: '№ постановления'},
-		NUM: 	 	 	   {name: 'number',		  		label: '№ обращения/письма'},
-		FIO_ORG:  		   {name: 'fio',			  	label: 'ФИО/Организация'},
-		SEARCH_DIR:  	   {name: 'search_dir',	  		label: 'Направление'},
-		SEARCH_DIR_IN: 	   {name: 'IN',					label: 'Входящие'},
-		SEARCH_DIR_OUT:	   {name: 'OUT',				label: 'Исходящие'},
-		SEARCH_DOC: 	   {name: 'search_doc',	  		label: 'По документам'},
-		SEARCH_DOC_CLAIM:  {name: 'CLAIM',				label: 'Жалобы'},
-		SEARCH_DOC_LETTER: {name: 'LETTER',				label: 'Письма'}
-	},
 	ishBasic: { 	 
 		VID_DOC: 		 {name: 'vid_doc',		  		label: 'Вид документа',	            key: 'DOC_VID'},
 		SUMMARY: 		 {name: 'summary',		  		label: 'Краткое содержание'},

@@ -4,12 +4,14 @@ import {Dialog, Button} from 'element-react'
 import * as _ from 'lodash'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import DocLinker from './docLinker.js'
+//import DocLinker from './docLinker.js'
 import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import mapping from '../mapping.js'
 
+import DocLinker from '../../common/docLinker.js'
+/*
 const M = mapping.ishLinksInner;
 
 const getRow = (id,npost, desc, docId) => {
@@ -144,9 +146,9 @@ class IshLinkInner extends React.Component {
             LINKER
         ]
     };
-} //
+} */
 
-
+/*
 const mapStateToProps = (state, props) => {
     let formData = state.getIn(['form', 'outgoing', 'values']);
     let id = state.getIn(['form', 'outgoing', 'values','id']);
@@ -161,4 +163,22 @@ export default compose(
         forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
         //validate
     })
-)(IshLinkInner)
+)(IshLinkInner)*/
+
+
+const mapStateToProps = (state, props) => {
+    let id = state.getIn(['form', 'outgoing', 'values','id']);
+    const root_doc = 'CLAIM';
+    const root_dir = 'OUT';
+    return {id,root_doc,root_dir};
+}
+
+export default compose(
+    connect(mapStateToProps),
+    reduxForm({
+        form: 'outgoing', // <------ same form name
+        destroyOnUnmount: false, // <------ preserve form data
+        forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
+        //validate
+    })
+)(DocLinker)

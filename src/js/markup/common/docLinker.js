@@ -1,22 +1,12 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm, arrayPush} from 'redux-form/immutable'
-/*import {Dialog, Button, Card, Layout, Ta} from 'element-react'
-import * as _ from 'lodash'*/
-import {compose} from 'redux'
-import {connect} from 'react-redux'
-//import DocLinker from '../../outgoing/subForms/docLinker.js'
-/*
-import {post,response} from '../../../services/ajax.js'
-import {FInput, EInput} from '../../components/finput.js'
-import {ESelect, FSelect} from '../../components/select.js'
-import {EPicker, FPicker} from '../../components/picker.js'
-import {messageSet} from '../../../actions/common.js'
-import mapping from './mapping.js'
-*/
+import {Dialog, Button, Card, Layout} from 'element-react'
+import * as _ from 'lodash'
+import {post,response} from '../../services/ajax.js'
+import LinkerSearch from './linkerSearch.js'
+import {FInput, EInput} from '../components/finput.js'
+import {EPicker, FPicker} from '../components/picker.js'
 
-import DocLinker from '../../common/docLinker.js'
-/*
-const M = mapping.ishLinksInner;
 
 const linkedDocs = (props) => {
     const {fields, disabled, hideLinker, showLinker,dispatch} = props
@@ -94,7 +84,7 @@ const linkedDocs = (props) => {
     ); //
 }
 
-class DocsLink extends React.Component {
+class DocLinker extends React.Component {
 
     constructor(props) {
         super(props);
@@ -127,7 +117,6 @@ class DocsLink extends React.Component {
                     <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
                 </div>)
         
-
         const LINKER = !linkerVisible
             ? null
             : (<Dialog key='ilid'
@@ -140,7 +129,7 @@ class DocsLink extends React.Component {
                        lockScroll={true} >
 
                 <Dialog.Body>
-                    <DocLinker dialogClose={this.hideLinker} reloadRow={reloadRow} root_id={id} root_doc={root_doc} root_dir={root_dir}/>
+                    <LinkerSearch dialogClose={this.hideLinker} reloadRow={reloadRow} root_id={id} root_doc={root_doc} root_dir={root_dir}/>
                 </Dialog.Body>
             </Dialog>); //
 
@@ -149,6 +138,7 @@ class DocsLink extends React.Component {
                 <div scrollAnchor='links' key='ili'>
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
+                        {/*<Layout.Col span="16" offset="4">*/}
                             <Card className="box-card" header={
                                 <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                     <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
@@ -164,23 +154,6 @@ class DocsLink extends React.Component {
                 LINKER
                 ];
     };
-} 
-*/
+} //
 
-const mapStateToProps = (state, props) => {
-    let id = state.getIn(['form', 'appeal', 'values','id']);
-    const root_doc = 'CLAIM';
-    const root_dir = 'IN';
-    return {id,root_doc,root_dir};
-}
-
-export default compose(
-    connect(mapStateToProps),
-    reduxForm({
-        form: 'appeal', // <------ same form name
-        destroyOnUnmount: false, // <------ preserve form data
-        forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
-        //validate
-    })
-)(DocLinker)
-//)(DocsLink)
+export default DocLinker;

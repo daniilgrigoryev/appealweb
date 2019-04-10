@@ -21,20 +21,14 @@ module.exports = {
                       "regenerator": true
                     }]]
                 }
-            },
-
-
-            {
+            },{
                 test: /(\.css$)/,
                 include: /node_modules/,
                 loaders: ['style-loader', 'css-loader', "sass-loader"]
             },{
                 test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
                 loader: 'url-loader?limit=100000'
-            }
-
-
-            ,{
+            },{
                 test: /\.scss$/,
                 exclude: /node_modules/,
                 use: [
@@ -46,4 +40,3 @@ module.exports = {
         ]
     }
 };
-
