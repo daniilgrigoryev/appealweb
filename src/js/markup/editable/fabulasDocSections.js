@@ -153,8 +153,8 @@ class FabulasDocSections extends React.Component {
                              <i className="el-icon-edit color-green"/>
                          </Button>
 
-                         <Button type="text">
-                           <i className="el-icon-delete color-red-dark"/>
+                         <Button  size="small" type="text">
+                           <i className="el-icon-close color-red-dark"/>
                        </Button>
                         </span>
                     </td>
@@ -237,8 +237,8 @@ class FabulasDocSections extends React.Component {
 
                             <div>
                                 {NEW ? null :
-                                    <Button type="text" onClick={this.removeRow}>
-                                        <i className="el-icon-delete color-red-dark"/>
+                                    <Button size="small" type="text" onClick={this.removeRow}>
+                                        <i className="el-icon-close color-red-dark"/>
                                     </Button>
                                 }
                             </div>

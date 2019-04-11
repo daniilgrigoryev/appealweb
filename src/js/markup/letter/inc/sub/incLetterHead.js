@@ -38,8 +38,8 @@ const tdCollapsed = (fld, el, i, disabled, rmv, expd) => {
                         <i className="el-icon-edit color-green"/>
                     </Button>
 
-                    <Button type="text" onClick={rmv(i)}>
-                        <i className="el-icon-delete color-red-dark"/>
+                    <Button size="small" type="text" onClick={rmv(i)}>
+                        <i className="el-icon-close color-red-dark"/>
                     </Button>
                 </td>
             </tr>
@@ -103,8 +103,8 @@ const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
                             </Button>
                             <div>
                                 {disabled ? null :
-                                    <Button type="text" onClick={rmv(i)}>
-                                        <i className="el-icon-delete color-red-dark"/>
+                                    <Button size="small" type="text" onClick={rmv(i)}>
+                                        <i className="el-icon-close color-red-dark"/>
                                     </Button>
                                 }
                             </div>
