@@ -7,7 +7,8 @@ body {
   background-size: cover;
   font-family: 'Open Sans', sans-serif !important;
   //overflow: hidden;
-  color: $color-text-base;
+  color: $color-input-text;
+  //color: $color-text-base;
   background: $color-form-bg;
   overflow: hidden;
 }
@@ -126,6 +127,7 @@ div.tooltipWrap {
   text-align: right;
   line-height: 1.1;
   font-weight: 600;
+  //#606060
 }
 
 .ap-btn-cancel span {
