@@ -29,6 +29,12 @@ class ComboAppeal extends Component {
 
   render(){
     const {dispatch,change,initialize,formData} = this.props;
+
+    const cBack = (kvart, cdr, lineAddr) => {
+        kvart && dispatch(change('kvart', kvart));
+        cdr && dispatch(change('cdr_address_id', cdr));
+        lineAddr && dispatch(change('line_adr', lineAddr));
+    }
     
     try{
       const h = window.location.hash.split('?');
@@ -41,11 +47,17 @@ class ComboAppeal extends Component {
     }//
 
     const fl = _.get(formData, ['values','zajav_lic']);
+    const cdr = _.get(formData, ['values', 'cdr_address_id']);
+    const kvart = _.get(formData, ['values', 'kvart'])
+    const line_adr = _.get(formData,['values','line_adr'],'');
+
     return (
       <SidePanel>
 	    <BasicData    />
 	    <ClaimantData />
-      <AddressData fl={fl}  />
+      <AddressData fl={fl} key={cdr} cdr={cdr} kvart={kvart} cBack={cBack}>
+          {line_adr + (kvart ? (' кв.' + kvart):'')}
+      </AddressData>
 	    <OrganizationsData />
 	    <SummaryData  />
 	    <TopicsData   />
@@ -57,9 +69,9 @@ class ComboAppeal extends Component {
 }
 
 const mapStateToProps = (state,props)=>{
+    debugger;
     let formData = state.getIn(['form','appeal']);
     formData && (formData = formData.toJS());
-    debugger;
     return {formData};
 }
 
@@ -73,6 +85,3 @@ export default compose(
         //validate
     })
 )(ComboAppeal)
-
-
-//line_adr={}
