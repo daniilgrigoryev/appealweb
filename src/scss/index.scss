@@ -64,6 +64,7 @@ div.tooltipWrap {
 
 // Стили заголовков
 .ap-header {
+  min-width: 960px;
   height: $ap-header-height;
   background: white;
   border-bottom: 1px solid $color-border;
