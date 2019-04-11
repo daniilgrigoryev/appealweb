@@ -5,7 +5,7 @@ import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
-import {Button} from 'element-react'
+import {Button, Card, Layout} from 'element-react'
 
 import mapping from '../mapping.js'
 
@@ -27,18 +27,19 @@ const addressee = (props) => {
     const rmv = (ind) => () => fields.remove(ind);
     const ROWS = fields.map((x, i) => (
         <tr key={i}>
-            <td>
-                <span className="ap-table-list-number mr12">{i + 1}</span>
+            <td className="align-r pr6 w24">
+                <span className="ap-table-list-number">{i + 1}</span>
             </td>
             <td>
-                <Field disabled={disabled} component={FInput}
-                       name={x + M.ADDR.name}
-                       value={x[M.ADDR.name]}
-                       placeholder='Имя адресата'/></td>
-            <td>
+                <span>
+                    <Field disabled={disabled} component={FInput}
+                           name={x + M.ADDR.name}
+                           value={x[M.ADDR.name]}
+                           placeholder='Имя адресата'/>
+                </span>
                 {disabled ? null :
-                    <Button type="text" onClick={rmv(i)}>
-                        <i className="el-icon-delete color-red-dark"/>
+                    <Button size="small" className="absolute mt-neg2"  type="text" onClick={rmv(i)}>
+                        <i className="el-icon-close color-red-dark ml6"/>
                     </Button>
                 }
             </td>
@@ -46,56 +47,34 @@ const addressee = (props) => {
 
     return (
         <React.Fragment>
-            <hr className='txt-hr my18'/>
+            <hr className='txt-hr my6'/>
             <h4 className='ap-h4'>Список адресатов:</h4>
 
             {!fields.length ?
                 <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных адресатов</p>
                 :
-                <table>
-                    <tbody>
-                    <tr>
-                        <td className='ap-input-caption'></td>
-                        <td>
-                            <table className='mb18'>
-                                <thead>
-                                <tr>
-                                    <th className='ap-table__header'></th>
-                                    <th colSpan='2' className='ap-table__header wmin360'>Кому:</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {ROWS}
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            }
-
-            <table>
-                <tbody>
-                <tr>
-                    <td className='ap-input-caption'></td>
-                    <td>
-                        <table className='wmin300'>
-                            <tbody>
+                <Layout.Row gutter="0">
+                    <Layout.Col xs="24" md="12" lg="10">
+                        <table className='mb18 w-full'>
+                            <thead>
                             <tr>
-                                <td colSpan='3'>
-                                    {disabled ? null :
-                                        <Button size="small" icon="plus" onClick={add} type="success" plain={true}
-                                                className="flex-parent mb18"
-                                                title='Добавить адресата'>Добавить</Button>
-                                    }
-                                </td>
+                                <th className='ap-table__header'></th>
+                                <th colSpan='2' className='ap-table__header wmin360'>Кому:</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            {ROWS}
                             </tbody>
                         </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </Layout.Col>
+                </Layout.Row>
+            }
+
+            {disabled ? null :
+                <Button size="small" icon="plus" onClick={add} type="success" plain={true}
+                        className="flex-parent mb18"
+                        title='Добавить адресата'>Добавить</Button>
+            }
         </React.Fragment>
     );
 };
@@ -105,51 +84,64 @@ class IshHead extends React.Component {
     render() {
         const {disabled} = this.props
         return (
-            <div>
-                <table className=''>
-                    <tbody>
-                    <tr>
-                        <td className='ap-input-caption'>
-                            {M.ZAJAV_NDOC.label}
-                        </td>
-                        <td>
-                   <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FSelect} name={M.DOC_NUM.name} data={nDoc}/>
-                   </span>
-                        </td>
-                        <td>
-                  <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FInput} name={M.ORDER_NUM.name}/>
-                  </span>
-                        </td>
-                        <td className='ap-input-caption wmin60'>
-                            {M.DOC_DAT.label}
-                        </td>
-                        <td>
-                  <span className='inline-block'>
-                     <Field disabled={disabled} component={FPicker} name={M.DOC_DAT.name} datepicker='+'/>
-                  </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.SIGNER.label}</td>
-                        <td>
-                    <span className='mr12'>
-                        <Field disabled={disabled} component={FInput} name={M.SIGNER.name} />
-                    </span>
-                        </td>
-                        <td className='ap-input-caption wmin60'>{M.EXECUTOR.label}</td>
-                        <td colSpan='2'>
-                    <span className='mr12'>
-                        <Field disabled={disabled} component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/>
-                    </span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <React.Fragment>
+                <Layout.Row gutter="0">
+                    <Layout.Col xs="24" md="12" lg="10">
+                        <table className='w-full'>
+                            <tbody>
+                            <tr>
+                                <td className='ap-input-caption wmin180'>
+                                    {M.ZAJAV_NDOC.label}
+                                </td>
+                                <td className='w120 pr6'>
+                                    <Field disabled={disabled} component={FSelect} name={M.DOC_NUM.name} data={nDoc}/>
+                                </td>
+                                <td>
+                                    <Field disabled={disabled} component={FInput} name={M.ORDER_NUM.name}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className='ap-input-caption wmin180'>
+                                    {M.DOC_DAT.label}
+                                </td>
+                                <td className='w120 pr6'>
+                                    <Field disabled={disabled} component={FPicker} name={M.DOC_DAT.name}
+                                           datepicker='+'/>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </Layout.Col>
+                    <Layout.Col xs="24" md="12" lg="10">
+                        <table className='w-full'>
+                            <tbody>
+                            <tr>
+                                <td className='ap-input-caption wmin180'>
+                                    {M.SIGNER.label}
+                                </td>
+                                <td colSpan='2' className='w120'>
+                                    <Field disabled={disabled} component={FInput} name={M.SIGNER.name}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className='ap-input-caption wmin180'>
+                                    {M.EXECUTOR.label}
+                                </td>
+                                <td colSpan='2' className='w120'>
+                                    <Field disabled={disabled} component={FAutocomplete} name={M.EXECUTOR.name}
+                                           dataKey={M.EXECUTOR.key}/>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </Layout.Col>
+                </Layout.Row>
 
                 <FieldArray name='addressee' component={addressee} disabled={disabled}/>
-            </div>
+            </React.Fragment>
         )
     }
 }

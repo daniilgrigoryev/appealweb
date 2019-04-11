@@ -4,12 +4,12 @@ import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
-import {Button} from 'element-react'
+import {Button, Card, Layout} from 'element-react'
 import mapping from '../mapping.js'
 
 const M = mapping.ishLinksScan;
 
-const getRow = (id,npost, desc, docId, content) => {
+const getRow = (id, npost, desc, docId, content) => {
     return {
         id: id || null,
         desc: desc || '',
@@ -25,29 +25,32 @@ const scannedDocs = (props) => {
     const inf = (ind) => () => fields.remove(ind); // ! replace me
     const ROWS = fields.map((x, i) => (
         <tr key={i}>
-            <td>
-              <span className='ap-table-list-number mr12'>
+            <td className="align-r pr6 w24">
+              <span className='ap-table-list-number'>
                  {i + 1}
              </span>
             </td>
             <td>
+                <span className='inline-block mr12 w-full pr6'>
                 <Field component={FInput} name={x + M.ID.name} value={x[M.ID.name]}
-                       disabled={true}/>
+                       disabled={disabled}/>
+                </span>
             </td>
             <td>
+                <span className='inline-block w-full'>
                 <Field component={FInput} name={x + M.DESC.name} value={x[M.DESC.name]}
-                       disabled={true}/>
-            </td>
-            <td>
-                {disabled ? null :
+                       disabled={disabled}/>
+                </span>
+
+                {/*  {disabled ? null :
                     <Button type="text" onClick={inf(i)}>
                         <i className="el-icon-information color-blue"/>
                     </Button>
-                }
+                }*/}
 
                 {disabled ? null :
-                    <Button type="text" onClick={rmv(i)}>
-                        <i className="el-icon-delete color-red-dark"/>
+                    <Button size="small" className="absolute mt-neg2" type="text" onClick={rmv(i)}>
+                        <i className="el-icon-close color-red-dark ml6"/>
                     </Button>
                 }
             </td>
@@ -58,58 +61,38 @@ const scannedDocs = (props) => {
             {!fields.length ?
                 <p className='mt-neg18 mb18 txt-em color-gray'>Нет сканированных документов</p>
                 :
-                <table>
-                    <tbody>
-                    <tr>
-                        <td className='ap-input-caption'></td>
-                        <td>
-                            <table className='wmin360'>
-                                <thead>
-                                <tr>
-                                    <td className='ap-table__header'>№</td>
-                                    <td className='ap-table__header'>{M.ID.label}</td>
-                                    <td className='ap-table__header'>{M.DESC.label}</td>
-                                    <td></td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {ROWS}
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            }
-
-            <table>
-                <tbody>
-                <tr>
-                    <td className='ap-input-caption'></td>
-                    <td>
-                        <table>
-                            <tbody>
+                <Layout.Row gutter="0">
+                    <Layout.Col xs="24" md="12" lg="10">
+                        <table className='mb18 w-full'>
+                            <thead>
                             <tr>
-                                <td className='flex-parent flex-parent--center-cross'>
-                                    {disabled ? null :
-                                        <Button size="small" icon="upload2" onClick={add} type="success" plain={true}
-                                                className="flex-parent mb18 mr12"
-                                                title='Добавить постановление'>Загрузить</Button>
-                                    }
-
-                                    {disabled ? null :
-                                        <Button size="small" icon="picture" onClick={add} type="success" plain={true}
-                                                className="flex-parent mb18"
-                                                title='Добавить постановление'>Сканировать</Button>
-                                    }
-                                </td>
+                                <th className='ap-table__header'></th>
+                                <th className='ap-table__header'>{M.ID.label}</th>
+                                <th className='ap-table__header'>{M.DESC.label}</th>
+                                <th></th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            {ROWS}
                             </tbody>
                         </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </Layout.Col>
+                </Layout.Row>
+            }
+
+            <div className='flex-parent flex-parent--center-cross'>
+                {disabled ? null :
+                    <Button size="small" icon="upload2" onClick={add} type="success" plain={true}
+                            className="flex-parent mb18 mr12"
+                            title='Добавить постановление'>Загрузить</Button>
+                }
+
+                {disabled ? null :
+                    <Button size="small" icon="picture" onClick={add} type="success" plain={true}
+                            className="flex-parent mb18"
+                            title='Добавить постановление'>Сканировать</Button>
+                }
+            </div>
         </React.Fragment>);
 };
 

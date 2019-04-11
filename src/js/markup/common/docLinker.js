@@ -1,6 +1,6 @@
 import React from 'react'
 import {Field, FieldArray, reduxForm, arrayPush} from 'redux-form/immutable'
-import {Dialog, Button, Card, Layout} from 'element-react'
+import {Dialog, Button, Card, Layout, Alert} from 'element-react'
 import * as _ from 'lodash'
 import {post,response} from '../../services/ajax.js'
 import LinkerSearch from './linkerSearch.js'
@@ -110,9 +110,12 @@ class DocLinker extends React.Component {
         const {linkerVisible} = this.state;
 
         const CONTENT = (!id) 
-            ? (<div>
-                    <span>Связывание возможно только для зарегистрированных документов</span>
-                </div>) 
+            ? (<Alert title="Связывание возможно только для зарегистрированных обращений"
+                      type="warning"
+                      description="Вначале сохраните документ, нажав кнопку 'Зарегистрировать' "
+                      showIcon={true}
+                      closable={false}
+            />)
             : (<div key='ili'>
                     <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
                 </div>)
@@ -138,16 +141,10 @@ class DocLinker extends React.Component {
                 <div scrollAnchor='links' key='ili'>
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
-                        {/*<Layout.Col span="16" offset="4">*/}
-                            <Card className="box-card" header={
-                                <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                    <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                        Связанные документы:
-                                    </h3>                                    
-                                </div>
-                            }>
+                            <hr className='txt-hr my6'/>
+                            <h4 className='ap-h4'>Связанные документы</h4>
+
                                 {CONTENT}
-                            </Card>
                         </Layout.Col>
                     </Layout.Row>
                 </div>,
