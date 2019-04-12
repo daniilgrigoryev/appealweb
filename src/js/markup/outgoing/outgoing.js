@@ -41,7 +41,7 @@ class Outgoing extends React.Component {
         const data = JSON.stringify(formData);
 
         const jsonMode = true;
-        post('db/push', {alias, data, jsonMode}).then(x => {
+        post('db/select', {alias, data, jsonMode}).then(x => {
             const F = formData;
             const V = F ? F.values : {};
             const {error} = x.data;

@@ -130,7 +130,7 @@ class AppealWizard extends Component {
           return toggler(this);
         }
 
-        post('db/push',{alias,data,jsonMode}).then(x=>{
+        post('db//select',{alias,data,jsonMode}).then(x=>{
             const F = formData;
             const V = F ? F.values : {};
 

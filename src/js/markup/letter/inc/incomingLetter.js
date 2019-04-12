@@ -29,10 +29,10 @@ class IncomingLetter extends React.Component {
         const a = this;
 
         const {formData,dispatch,change} = a.props;
-        const data = JSON.stringify(Object.assign({},formData.values));
+        const data = JSON.stringify(Object.assign({},formData.toJS().values));
         const jsonMode = true;
 
-        post('db/push', {alias,data,jsonMode}).then(x => {
+        post('db/select', {alias,data,jsonMode}).then(x => {
         }).catch(x=>{
             dispatch(messageSet(x,'error'));
             console.error(x);
@@ -69,8 +69,7 @@ class IncomingLetter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    let formData = state.getIn(['form','letter_incoming']);
-    formData && (formData = formData.toJS());
+    const formData = state.getIn(['form','letter_incoming']);
     return {formData};
 }
 

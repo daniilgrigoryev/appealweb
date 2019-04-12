@@ -144,7 +144,7 @@ class FabulaDocEditor extends React.Component {
                 </div>
             </React.Fragment>
         );
-    }
+    } //
 }
 
 const state2props = (state) => {

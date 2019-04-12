@@ -25,8 +25,13 @@ class ClaimantData extends React.Component {
         const {handleSubmit, nextPage, prevPage, pristine, submitting, header, content, disabled} = this.props;
         const navi = !disabled && (nextPage||prevPage);
     
-        const isPred = !!content[M.PRED.name];
-        const isFL = content[M.ZAJAV_LIC.name] != 2;
+        let isPred = false;
+        let isFL = false;
+
+        if (content){
+            isPred = !!content.get(M.PRED.name);
+            isFL = content.get(M.ZAJAV_LIC.name) != 2;
+        }
 
         const ZAJAV_SOURCE = isFL
             ? (
@@ -118,10 +123,9 @@ class ClaimantData extends React.Component {
             : null;
 
         return (
-            <div scrollAnchor='claimant'>
+            <div scrollanchor='claimant'>
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                    {/*<Layout.Col span="16" offset="4">*/}
                         <Card className="box-card" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
@@ -258,8 +262,8 @@ class ClaimantData extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const V = state.getIn(['form', 'appeal', 'values']);
-    return {content: V ? V.toJS() : {}};
+    const content = state.getIn(['form', 'appeal', 'values']);
+    return {content};
 }
 
 export default compose(

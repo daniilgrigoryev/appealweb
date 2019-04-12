@@ -10,6 +10,7 @@ import * as _ from 'lodash'
 import FabulaDialog from '../fabulaDialog.js'
 import mapping from '../appealContent/mapping.js'
 import {post} from '../../../services/ajax.js'
+import {getSessionId, getSystem} from '../../../selectors/common.js'
 import Immutable from 'immutable'
 
 const im = (obj)=> Immutable.fromJS(obj);
@@ -21,47 +22,45 @@ const data2str = (data) =>{
     }
     return '';
 } 
+
 const stopPg = (cb, id) => (evt) => {
     evt.stopPropagation();
     cb(id);
     return false;
 }
 
-const fTypes = [
-    'Сопроводительное письмо',
-    'Универсальный',
-    'Определение',
-    'Уведомление',
-    'Решение',
-    'Вызов',
-    'Инициативное письмо',
-    'Перенаправление',
-    'Извещение о явке'
-]
+const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
-const fabDocLoads  = ()=>{
-    return post("db/select",{alias:'DOC_LOAD',type});
-}
-
-const tLoad = (claim_id)=>{
-    return post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
-}
-
-const OFRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse} = props;
+const IshFileRow = (props) => {
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes} = props;
 
     const id = value.get('id');
+    const related_topic = value.get('related_topic');
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
     const onXpd = () => onExpand(ind);
-    const onFab = (type) => () => onFabula(type, fabData);
-    const commandFabula = (type, el) => onFabula(type, fabData);
+    const commandFabula = (type, el) => onFabula(type, fabData,related_topic,id);
 
     const linkingThemes = props.categories;
 
-
     const P = value;
+
+    const hasTopic = !_.isEmpty(related_topic);
+    let DOC_MAKER = null;
+    if (!disabled){
+        if (hasTopic){
+            DOC_MAKER = (<Dropdown onCommand={commandFabula} menu={
+                            (<Dropdown.Menu>
+                                {fTypes.map(x => <Dropdown.Item command={x.property}>{x.value}</Dropdown.Item>)}
+                            </Dropdown.Menu>)}>
+                            <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
+                        </Dropdown>);
+        } else { //
+            DOC_MAKER = (<span>Конструктор шаблонов доступен после связывания документа с темой</span>);
+        }
+    } //
+
     if (!expanded) {
         const collapsed = (
             <React.Fragment>
@@ -78,8 +77,7 @@ const OFRow = (props) => {
                         {disabled ? null :
                             <Button type="text" onClick={onXpd}>
                                 <i className="el-icon-edit color-green"/>
-                            </Button>
-                        }
+                            </Button>}
 
                         {disabled ? null :
                             <Button type="text" onClick={onRmv}>
@@ -97,7 +95,7 @@ const OFRow = (props) => {
         return [collapsed];
     } //
 
-    const tGetter = ()=>tLoad(claim_id);
+    const tGetter = ()=>themesLoad(claim_id);
 
     const editable = (
         <React.Fragment>
@@ -108,32 +106,30 @@ const OFRow = (props) => {
                             <tbody>
                             <tr key={id + 'e1'}>
                                 <td>
-                                <span className='ap-table-list-number mr12'>
-                                 {ind + 1}
-                                 </span>
+                                    <span className='ap-table-list-number mr12'>{ind + 1}</span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.DOC_TARGET.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} value={P[M.DOC_TARGET.name]}/>
+                                        <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} value={P[M.DOC_TARGET.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
-                                         <p className='ap-table__header'>{M.ISH_NUM.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} value={P[M.ISH_NUM.name]}/>
+                                        <p className='ap-table__header'>{M.ISH_NUM.label}</p>
+                                        <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} value={P[M.ISH_NUM.name]}/>
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
-                                    <p className='ap-table__header'>{M.ISH_DATE.label}</p>
-                                    <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} value={P[M.ISH_DATE.name]} datepicker='+'/>
-                                     </span>
+                                        <p className='ap-table__header'>{M.ISH_DATE.label}</p>
+                                        <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} value={P[M.ISH_DATE.name]} datepicker='+'/>
+                                    </span>
                                 </td>
                                 <td colSpan='3'>
                                     <span className='inline-block mr12'>
-                                    <p className='ap-table__header'>{M.PODPISAL.label}</p>
-                                    <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name} value={P[M.PODPISAL.name]}/>
+                                        <p className='ap-table__header'>{M.PODPISAL.label}</p>
+                                        <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name} value={P[M.PODPISAL.name]}/>
                                     </span>
                                 </td>
                             </tr>
@@ -145,34 +141,27 @@ const OFRow = (props) => {
                                         <tr>
                                             <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
                                             <td>
-                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name}
-                                                       value={P[M.REL_TOPIC.name]} datagetter={tGetter}/>
+                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name}   value={P[M.REL_TOPIC.name]} datapromise={tGetter}/>
                                             </td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
-                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name}
-                                                       value={P[M.CRYPTO_SIGN.name]}/></td>
+                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name}  value={P[M.CRYPTO_SIGN.name]}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}
-                                                       value={P[M.DOC_VID.name]} dataKey={M.DOC_VID.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  value={P[M.DOC_VID.name]} dataKey={M.DOC_VID.key}/></td>
                                             <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name}
-                                                       value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name}   value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}
-                                                       value={P[M.SHEETS_COUNT.name]}/></td>
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}    value={P[M.SHEETS_COUNT.name]}/></td>
                                             <td className='ap-input-caption'>{M.EDO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name}
-                                                       value={P[M.EDO_NUM.name]}/></td>
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} value={P[M.EDO_NUM.name]}/></td>
                                         </tr>
 
                                         <tr>
                                             <td className='ap-input-caption'>{M.COMMENT.label}</td>
-                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name}
-                                                                   value={P[M.COMMENT.name]} type="textarea"/></td>
+                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} value={P[M.COMMENT.name]} type="textarea"/></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -180,57 +169,9 @@ const OFRow = (props) => {
                                     <hr className='txt-hr my18'/>
 
                                     <div className='flex-parent flex-parent--center-cross'>
-                                        <h4 className="ap-h4 mr18 mb0">{M.FAB_DOC.label}</h4>
-
-                                        {disabled ? null : (
-                                            <Dropdown
-                                                onCommand={commandFabula}
-                                                menu={(<Dropdown.Menu>
-                                                    {fTypes.map(x => <Dropdown.Item command={x}>{x}</Dropdown.Item>)}
-                                                </Dropdown.Menu>)}>
-                                                <Button size="small">
-                                                    Создать по шаблону
-                                                    <i className="el-icon-arrow-down el-icon--right"></i>
-                                                </Button>
-                                            </Dropdown>
-
-                                        )}
+                                        <h4 className="ap-h4 mr18 mb0">{'' && M.FAB_DOC.label}</h4>
+                                        {DOC_MAKER}
                                     </div>
-
-                                    {null && <table>
-                                        <tbody>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.SOPR_LET.label}</td>
-                                            <td><Button onClick={onFab(M.SOPR_LET.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.UNI_TYPE.label}</td>
-                                            <td><Button onClick={onFab(M.UNI_TYPE.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.DEFIN.label}</td>
-                                            <td><Button onClick={onFab(M.DEFIN.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.NOTIF.label}</td>
-                                            <td><Button onClick={onFab(M.NOTIF.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.CALL.label}</td>
-                                            <td><Button onClick={onFab(M.CALL.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Тип:</td>
-                                            <td>{M.INIT_LETTER.label}</td>
-                                            <td><Button onClick={onFab(M.INIT_LETTER.label)}>Создать файл</Button></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>}
 
                                     <hr className='txt-hr my18'/>
                                     <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
@@ -239,9 +180,7 @@ const OFRow = (props) => {
                                         <tbody>
                                         <tr className='flex-parent flex-parent--center-cross'>
                                             <td>
-                                                <span className='ap-table-list-number mr12'>
-                                                 {ind + 1}
-                                                 </span>
+                                                <span className='ap-table-list-number mr12'>{ind + 1}</span>
                                             </td>
                                             <td className='ap-table__header'>наименование документа</td>
                                             <td>
@@ -265,8 +204,7 @@ const OFRow = (props) => {
                                 {disabled ? null :
                                     <Button type="text" onClick={onRmv}>
                                         <i className="el-icon-delete color-red-dark"/>
-                                    </Button>
-                                }
+                                    </Button>}
                             </div>
                         </div>
                     </div>
@@ -280,7 +218,6 @@ const OFRow = (props) => {
         </React.Fragment>);
     return editable;
 } //
-
 
 const getRow = (doc_target, args = {}) => {
     const {id,ish_num, ish_date, podpisal, status, related_topic, crypto_signature, doc_vid, delivery_type, sheets_count, edo_num, comment, soprovod, universal, opred, uvedom, vyzov, initiation,claim_id} = args;
@@ -298,21 +235,13 @@ const getRow = (doc_target, args = {}) => {
         sheets_count: sheets_count || '',
         edo_num: edo_num || '',
         comment: comment || '',
-        fabulas: {
-            soprovod: soprovod || [],
-            universal: universal || [],
-            opred: opred || [],
-            uvedom: uvedom || [],
-            vyzov: vyzov || [],
-            initiation: initiation || []
-        },
         files: [], // {id,name}
         claim_id: claim_id || null
     }
 }
 
 const getRowZajav = (args) => im(getRow('Заявитель ФЛ', args));
-const getRowOrg = (args) => im(getRow('Организация', args));
+const getRowOrg   = (args) => im(getRow('Организация', args));
 
 // Element component
 class EIshDocList extends React.Component {
@@ -330,18 +259,14 @@ class EIshDocList extends React.Component {
         this.setState({dialog: null});
     }
 
-    dialogOpenFabula(type, data) {
+    dialogOpenFabula(doc_type_id, data,related_topic_id,ish_doc_id) { 
         const cancel = this.dialogClose.bind(this);
         const done = null;
         const title = 'Исходящие документы';
 
         const claim_id = this.props.claim_id;
-        const props = Object.assign({}, {cancel, done, title, type,claim_id}, data);
-
-        const key = JSON.stringify(props);
-
-        const dialog = <FabulaDialog key={key} {...props} />; ////
-
+        const props = {...data, cancel, done, title, doc_type_id,claim_id,related_topic_id,ish_doc_id};
+        const dialog = <FabulaDialog key={JSON.stringify(props)} {...props} />; ////
         this.setState({dialog});
     } //
 
@@ -371,34 +296,27 @@ class EIshDocList extends React.Component {
         }
         this.setState({expandedId: newExpandedId});
     }
-
-    onFileCreate(rowId, type) {
-        ;
-    }
-
+   
     onExpand(expandedId) {
         this.setState({expandedId})
     }
 
     render() {
         const rmv = this.onRemove.bind(this);
-        const crf = this.onFileCreate.bind(this);
         const xpd = this.onExpand.bind(this);
-        const fab = this.dialogOpenFabula.bind(this);
+        const dialogOpenFabula = this.dialogOpenFabula.bind(this);
 
-        const {fields, disabled,claim_id} = this.props;
+        const {fields, disabled,claim_id,fTypes,categories} = this.props;
         const fabData = {};
-        const {categories} = this.props;
-
-        const ROWS = fields.map((x, i, arr) => (
-            <OFRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
-                   onRemove={rmv} onExpand={xpd} onFabula={fab} fabData={fabData} claim_id={claim_id}
-                   disabled={disabled} categories={categories} collapse={()=>this.setState({expandedId:false})}>{x.value}
-            </OFRow>)); //
-
-        const add = (rowGetter) => () => fields.push(rowGetter());
         const DIALOG = this.state.dialog;
 
+        const add = (rowGetter) => () => fields.push(rowGetter());
+        const ROWS = fields.map((x, i, arr) => (
+            <IshFileRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
+                   onRemove={rmv} onExpand={xpd} onFabula={dialogOpenFabula} fabData={fabData} claim_id={claim_id} fTypes={fTypes}
+                   disabled={disabled} categories={categories} collapse={()=>this.setState({expandedId:false})}>{x.value}
+            </IshFileRow>)); //
+        
         return (
             <React.Fragment>
                 {!fields.length ?
@@ -426,13 +344,12 @@ class EIshDocList extends React.Component {
                     {disabled ? null :
                         <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowZajav)}
                                 className="flex-parent mb18"
-                                title='Добавить тему'>Документ заявителя</Button>
-                    }
+                                title='Добавить тему'>Документ заявителя</Button>}
+
                     {disabled ? null :
                         <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowOrg)}
                                 className="flex-parent mb18"
-                                title='Добавить тему'>Документ организации</Button>
-                    }
+                                title='Добавить тему'>Документ организации</Button>}
                 </div>
                 {DIALOG}
             </React.Fragment>

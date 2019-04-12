@@ -175,7 +175,7 @@ class LayoutMain extends React.Component {
             </React.Fragment>
         );
     }
-}
+} //
 
 const LayoutConnected = withRouter(connect((state, props) => {
     const sessionId = getSessionId(state);

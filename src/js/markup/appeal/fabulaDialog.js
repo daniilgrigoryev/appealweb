@@ -4,22 +4,14 @@ import {Dialog,Select,Input,Collapse,Button, Tag} from 'element-react'
 import { connect } from 'react-redux'
 import {post} from '../../services/ajax.js'
 import {fetchSelect,fetchFabulasThemesMadi,baseUrl} from '../../services/api.js'
+import {getSessionId, getSystem} from '../../selectors/common.js'
 import DocPreview from './subForms/docPreview.js'
 
 import mapping from './appealContent/mapping.js'
+
 const M = mapping.fabulaDialog;
 
-const st = {
-	width: '200px',
-    display: 'inline-block'
-}
-
-const generateTitle = (cat,theme)=>(
-	<div style={st}>
-		<span>Категория: {cat}</span>
-		<span>Тема: {theme}</span>
-	</div>
-);//
+const st = {width: '200px',display: 'inline-block'}
 
 class FabulaDialog extends React.Component {
 
@@ -28,84 +20,35 @@ class FabulaDialog extends React.Component {
 		this.state={
 			docList: null, // null==not initialized, []==empty
 			doc: null, // {fabulaDoc, fileName, fileId}
-
-			catList: null,
-			cat: null, // {id,label}
-
-			themeList: null,
-			theme: null,  // {category,fabulaTheme,decision,text}
+			secList: null,
+			
 			showDialog: false,
-			link: null
+			downloadDocLink: null
 		}
 	}
 
 	componentDidMount(){
-		const {type,system} = this.props
-		post("db/select",{alias : 'GET_FABULAS_THEMES', listValueField : 'value', category:type,system})
-			.then(docList=>this.setState({docList: docList.data || docList}));
+		const {doc_type_id} = this.props; 
+		const alias = 'GET_FAB_DOC';
+		const listValueField = 'value' ;
+		post("db/select",{alias,listValueField,doc_type_id}).then(x=>this.setState({docList: x.data||x}));
 	}
 
-	setDoc(doc){
-		const catList = [];
-		const cat = void 0;
-		const themeList = [];
-		const theme = void 0;
-		
-		this.setState({doc,catList,cat,themeList,theme}); // clear depencies	
-		if (!doc){
-			return;
-		}
-		this.downloadDoc(doc);
-		//fetchSelect('fabulasCategories').then((catList=[])=>this.setState({catList: catList.data || catList}));
-	}
-
-	setCategory(categoryList){
-		if (categoryList[0]==''){ // ignore closing
-			this.forceUpdate();
-			return;
-		}
-
-		const {catList} =  this.state;
-		const themeList = [];
-		const theme = void 0;
-		//debugger; // cat
-		const cat = _.chain(categoryList)
-			.filter((x,i)=>!i)
-			.map(x=>(catList || []).filter(list=>list.label == x))
-			.flatten()
-			.first()
-			.value();
-
-		if (this.state.cat!=cat){
-			this.setState({cat,themeList,theme}); // clear depencies	
-			if (!cat){
-				return;
-			}
-			//debugger;
-			const category = cat;
-			fetchSelect('fabulasThemes',category).then((themeList=[])=>this.setState({themeList}));	
+	async setDoc(doc){		
+		const theme_id = this.props.related_topic_id || null;
+		const alias    = 'GET_FAB_SEC';
+		const listValueField = 'value' ;
+		const secResp  = await post('db/select',{alias,doc_id: doc.property,theme_id,listValueField});
+		const secList = secResp.data || [];
+		this.setState({doc,secList});			
+		if (_.isEmpty(secList)){
+			this.downloadDoc('docx',doc);
 		}
 	}
 
-	setTheme(theme){
-		this.setState({theme});
-	}
-
-	downloadDocx(e) {
-			const {type,system} = this.props
-			const fabulaDoc = 'fabulaDoc'
-			const fabulaSection = 'fabulaSection' 
-
-			const params = new URLSearchParams()
-			params.append('fabulaDoc',fabulaDoc)
-			params.append('fabulaSection',fabulaSection)
-			params.append('ext','preview')
-			params.append('zajavId', '')
-			params.append('system',system)
-			params.append('type',type)
-
-			const link = baseUrl() + 'rest/preview?'+params.toString()
-	    	this.setState({showDialog : true, link});
+	setSection(sec){
+		const {doc} = this.state;
+		this.downloadDoc('docx',doc,sec);
 	}
 
 	closePreview() {
@@ -123,23 +66,41 @@ class FabulaDialog extends React.Component {
         },5000);
 	}
 
-	downloadDoc(doc){
-		const fabulaDoc = doc.property || 'fabulaDoc'
-		const fabulaSection = null && 'fabulaSection' 
-		const ext = 'docx'
+
+	downloadDocx(e) {
+			const {type,system} = this.props
+			const fabulaDoc = 'fabulaDoc'
+			const fabulaSection = 'fabulaSection' 
+
+			const params = new URLSearchParams()
+			params.append('fabulaDoc',fabulaDoc)
+			params.append('fabulaSection',fabulaSection)
+			params.append('ext','preview')
+			params.append('zajavId', '')
+			params.append('system',system)
+			params.append('type',type)
+
+			const downloadDocLink = baseUrl() + 'rest/preview?'+params.toString()
+	    	this.setState({showDialog : true, downloadDocLink});
+	}
+
+	downloadDoc(ext,doc={},section={}){
+		const document_id = doc.property;
+		const fabula_section_id = section.property;
+
+		const {i_claim_id,i_claim_theme_id,sessionId,i_claim_ishdoc} = this.props;
 
 		const params = new URLSearchParams()
-		params.append('fabulaDoc',fabulaDoc)
-		params.append('fabulaSection',fabulaSection)
-		params.append('ext','docx')
-		params.append('zajavId', this.props.claim_id)
-		params.append('file',doc.property)
-		params.append('system',this.props.system)
-		params.append('type',this.props.type)
-		
+		params.append('sessionid',sessionId)
+		params.append('i_claim_id',i_claim_id);
+		params.append('i_claim_theme_id',i_claim_theme_id);
+		params.append('i_claim_ishdoc',i_claim_ishdoc);
+		params.append('document_id',document_id);
+		params.append('fabula_section_id',fabula_section_id||null);
+		params.append('ext',ext);
 
-		const link = baseUrl() + 'doc/get_docx?'+params.toString()
-		this.download(link,'docx.docx');
+		const downloadDocLink = baseUrl() + 'doc/get_docx?'+params.toString()
+		this.download(downloadDocLink,'docx.docx');
 	}
 
 	downloadPdf(){
@@ -153,20 +114,16 @@ class FabulaDialog extends React.Component {
 		params.append('ext','pdf')
 		params.append('zajavId', '')
 
-		const link = baseUrl() + 'doc/get_docx?'+params.toString()
-		this.download(link,'pdf.pdf');
+		const downloadDocLink = baseUrl() + 'doc/get_docx?'+params.toString()
+		this.download(downloadDocLink,'pdf.pdf');
 	}
 
+
+
+
 	render() {
-		let {doc,docList,cat,catList,showDialog,link} = this.state;
+		let {doc,docList,secList,showDialog,downloadDocLink} = this.state;
 		const {cancel,done,title,zajav} = this.props;
-
-		if (!cat && _.size(catList)){
-			cat = catList[0];
-		}
-
-		const activeName = cat ? cat.label : null;
-		const CATEGORIES = this.renderCategories();
 
 		const SHDIAL = !showDialog 
       		? null 
@@ -179,7 +136,7 @@ class FabulaDialog extends React.Component {
                 <DocPreview 
                 	downloadDoc={this.downloadDoc.bind(this)}
 					downloadPdf={this.downloadPdf.bind(this)}
-                	closePreview={this.closePreview.bind(this)} document={link}/>
+                	closePreview={this.closePreview.bind(this)} document={downloadDocLink}/>
               </Dialog.Body>
           	</Dialog>); //
 
@@ -199,33 +156,23 @@ class FabulaDialog extends React.Component {
 	        <Dialog.Body>
 	        	<table className='w-full'>
 	        		<tbody>
-		        		<tr className='flex-parent flex-parent--center-cross'>
-		        			<td className='ap-input-caption'>{M.DOCUMENT.label}</td>
+		        		<tr>
+		        			<td className='ap-input-caption'>Выбор документа</td>
 		        			<td>
 		        				<Select value={this.state.doc} onChange={this.setDoc.bind(this)} >
 									{ docList.map(el =>(<Select.Option key={el.property} label={el.value} value={el}  />)) }
 								</Select>
 							</td>
 		        		</tr>
-		        		<tr className='flex-parent flex-parent--center-cross'>
-		        			<td className='ap-input-caption'>{M.ZAJAV_TYPE.label}</td>
-		        			<td>
-								<Tag type="gray" className='my6'>{zajav=='UL'?'ЮЛ':'ФЛ'}</Tag>
-							</td>
-		        		</tr>
-		        		{false && <tr className='flex-parent flex-parent--center-cross'>
-		        			<td className='ap-input-caption'>{M.TEMPL_FILE.label}</td>
-		        			<td>
-                                <Tag type="gray" className='my6'>{!doc ? '<не выбран>' :(<a href={'fabulas/'+doc.fileName} >{doc.fileName}</a>)}</Tag>
-							</td>
-		        		</tr>}
-		        		<tr>
-		        			<td colSpan='2'>
-				        		<Collapse value={activeName} onChange={this.setCategory.bind(this)} accordion>
-							      {CATEGORIES}
-							    </Collapse>
-							</td>
-						</tr>
+		        		{_.isEmpty(secList) ? null
+		        			: (<tr>
+				        			<td className='ap-input-caption'>Выбор секции</td>
+				        			<td>
+				        				<Select value={this.state.sec} onChange={this.setSection.bind(this)} >
+											{ secList.map(el =>(<Select.Option key={el.property} label={el.value} value={el}  />)) }
+										</Select>
+									</td>
+								</tr>)}
 	        		</tbody>
 	        	</table>
 	        </Dialog.Body>
@@ -236,54 +183,15 @@ class FabulaDialog extends React.Component {
 	      </Dialog>, SHDIAL]
 		);
 	}//
-
-	renderCategories(){
-		const {doc,docList,cat,catList,theme,themeList} = this.state;
-
-		const hasDoc = !!doc;
-		const hasCat = !!cat;
-		const existsCat = catList!==null && _.size(catList);
-		
-		const ready = hasDoc && (!existsCat || hasCat);
-		
-		if (!hasDoc){
-			return null;
-		} else if (!existsCat){
-			return null && (<Button size="small"><i className="el-icon-upload el-icon--left"></i>Загрузить</Button>);
-		}
-
-		return catList.map((x,i)=>
-				<Collapse.Item key={i} title={generateTitle('заголовок','тема')} name={'Категория '+i} >
-					<table>
-						<tbody>
-							<tr>
-								<td>{M.FABULA.label}</td>
-								<td>
-									<Select value={this.state.cat} onChange={this.setTheme.bind(this)}>
-									 	{ (themeList||[]).map(el =>(<Select.Option key={el.fabulaTheme} label={el.fabulaTheme} value={el} />)) }
-								    </Select>
-								</td>
-							</tr>
-							<tr>
-								<td>{M.DECISION.label}</td>
-								<td>{theme ? theme.decision : ''}</td>
-							</tr>
-							<tr>
-								<td colSpan='2'><Input value={theme ? theme.text : null}  type="textarea" /></td>
-							</tr>	
-							<tr>
-								<td colSpan='2'><Button size="small"  onClick={this.downloadDocx.bind(this)}><i className="el-icon-upload el-icon--left"></i>Загрузить</Button></td>
-							</tr>
-						</tbody>
-					</table>
-				</Collapse.Item>);
-	}//
 };
 
-const mapStateToProps = (state)=>{
-	const system = state.getIn(['general','system']);
-	const zajav = state.getIn(['form','appeal','values','zajavLic']);
-	return {system,zajav};
+const mapStateToProps = (state,props)=>{
+	const sessionId = getSessionId(state);
+	const i_claim_id = state.getIn(['form','appeal','values','id']);
+	const i_claim_theme_id = props.related_topic_id;
+	const i_claim_ishdoc = props.ish_doc_id;            
+            
+	return {sessionId,i_claim_id,i_claim_theme_id,i_claim_ishdoc};
 }
 
 export default connect(mapStateToProps)(FabulaDialog);

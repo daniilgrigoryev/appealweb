@@ -25,7 +25,7 @@ const hashCode = (s) => (s || '').split('').reduce((hash, val) => (((hash << 5) 
 
 const scrollNavi = (attr) => {
     return () => {
-        const el = document.querySelector('div[scrollAnchor="' + attr + '"]');
+        const el = document.querySelector('div[scrollanchor="' + attr + '"]');
         el && el.scrollIntoView();
     }
 }
@@ -45,17 +45,17 @@ class SidePanel extends Component {
 
     getHash() {
         const {formData} = this.props;
-        return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.values,['linked_docs'])));
+        return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.toJS().values,['linked_docs'])));
     }
 
     save() {
         const a = this;
         const {formData, dispatch, change, initialize} = this.props;
-        const data = JSON.stringify(Object.assign({}, formData.values));
+        const data = JSON.stringify(Object.assign({}, formData.toJS().values));
         const jsonMode = true;
 
-        post('db/push', {alias, data, jsonMode}).then(x => {
-            const F = formData;
+        post('db/select', {alias, data, jsonMode}).then(x => {
+            const F = formData.toJS();
             const V = F ? F.values : {};
 
             const {error} = x.data;
@@ -83,15 +83,14 @@ class SidePanel extends Component {
     }
 
     render() {
+        const noop = () => {};
         const {disabled, formData} = this.props;
-        //debugger;
-
-        const noSave = this.curHash && this.curHash == this.getHash()
+        
+        const noSave = !!(this.curHash && this.curHash == this.getHash())
         const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
-        const stateBtnClick = noSave ? () => {
-        } : this.save;
+        const stateBtnClick = noSave ? noop : this.save;
 
-        const {checking_date, registration_number} = _.get(formData, 'values', {});
+        const {checking_date, registration_number} = _.get(formData ? formData.toJS():{}, 'values', {});
 
         return (
             <div className='ap-side-panel-wrap'>
@@ -158,7 +157,6 @@ class SidePanel extends Component {
                         </table>
                     </div>
 
-
                     <div className="el-card__header el-card__header--top-border">
                         <h3 className="ap-h3">Список подразделов</h3>
                     </div>
@@ -170,6 +168,7 @@ class SidePanel extends Component {
                         <li onClick={scrollNavi('summary')}>Краткое содержание</li>
                         <li onClick={scrollNavi('topics')}>Темы обращения</li>
                         <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
+                        <li onClick={scrollNavi('links')}>Связанные документы</li>
                         <li onClick={scrollNavi('archive')}>Архивная информация</li>
                     </ul>
                 </div>
@@ -186,8 +185,7 @@ class SidePanel extends Component {
 } //
 
 const mapStateToProps = (state, props) => {
-    let formData = state.getIn(['form', 'appeal']);
-    formData && (formData = formData.toJS());
+    const formData = state.getIn(['form', 'appeal']);
     return {formData};
 }
 

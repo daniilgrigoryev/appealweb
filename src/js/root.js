@@ -31,8 +31,8 @@ i18n.use(locale);
 class Root extends React.Component {
 
   checkMessages(){
-    const messages = this.props.messagesQueue;
-    if (messages && messages.length){
+    let messages = this.props.messagesQueue;
+    if (messages && (messages=messages.toJS()) && messages.length){
       try{
         messages.forEach(m=>{
           const {type,message} = m; //types: info,success,warning,error
@@ -103,7 +103,7 @@ class Root extends React.Component {
 };
 
 export default connect((state) => { //;
-   const messagesQueue = getMessages(state).toJS();
+   const messagesQueue = getMessages(state);
    const loggedIn  = getSessionId(state);
    const externalLogin = state.getIn(['general','externalLogin']);
    return {loggedIn, messagesQueue, externalLogin};

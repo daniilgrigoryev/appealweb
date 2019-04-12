@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = ''
+const MODE = 'DEV_47'
 
 const URLS = {
 	'DESIGN' : 'DESIGN',
@@ -43,7 +43,7 @@ export function logout(sessionId){
 
 export function push(sessionId,alias,data,jsonMode=false){
 	const dataJSON = typeof data=='string' ? data : JSON.stringify(data);
-	return AJ.post('db/push',{sid:sessionId, alias,data:dataJSON,jsonMode});	
+	return AJ.post('db/select',{sid:sessionId, alias,data:dataJSON,jsonMode});	
 }
 
 export function loadFile(file) { 

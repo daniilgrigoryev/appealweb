@@ -135,7 +135,7 @@ class DocLinker extends React.Component {
 
 
             return [
-                <div scrollAnchor='links' key='ili'>
+                <div scrollanchor='links' key='ili'>
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
                         {/*<Layout.Col span="16" offset="4">*/}

@@ -23,10 +23,9 @@ const SummaryData = props => {
     const navi = !disabled && (nextPage||prevPage);
     
     return (
-        <div scrollAnchor='summary'>
+        <div scrollanchor='summary'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
-                {/*<Layout.Col span="16" offset="4">*/}
                     <Card className="box-card" header={
                         <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                             <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
