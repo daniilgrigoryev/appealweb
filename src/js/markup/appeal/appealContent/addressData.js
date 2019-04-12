@@ -14,7 +14,7 @@ const im = (obj)=> Immutable.fromJS(obj)
 
 const headerTitle = 'Адрес';
 const M = mapping.claimantData;
-
+const alias = "ADDR_PUSH";
 
 class AddressData extends React.Component {
 
@@ -22,36 +22,12 @@ class AddressData extends React.Component {
         super(props);
         this.state = {
             isStr : true,
-            fullAddr: {}
+            fullAddr: this.props.fullAddr
         }
-
         this.changeMode = this.changeMode.bind(this);
         this.save = this.save.bind(this);
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onListChange = this.onListChange.bind(this);
-    }
-
-    componentDidMount() {
-        const {cdr} = this.props;
-        if (cdr) {
-            this.selectByCdr(cdr);
-        }
-    }
-
-    selectByCdr(cdr) {
-        if (cdr) {
-            const {sid, cBack, kvart} = this.props;
-            const orphan = true;
-            const alias = "GET_ADDRESS";
-            post('db/select',{alias,cdr,sid,orphan}).then(x=>{
-                if (x.data && !x.data.error) {
-                    let temp = x.data;
-                    let fullAddr = Object.assign({},temp,{kvart});
-                    this.setState({fullAddr});
-                    cBack(null, fullAddr['cdr_address_id'], fullAddr['line_adr']);
-                }
-            });
-        }
     }
 
     changeMode() {
@@ -60,36 +36,42 @@ class AddressData extends React.Component {
     }
 
     save() {
-        const {cdr, sid, cBack} = this.props;
-        const alias = "ADDR_PUSH";
-        const orphan = true;
+        const {sid, cBack} = this.props;
         const FULL = this.state.fullAddr;
-        let data = {
+
+        let dat = {
             country_code_i: null,
-            street : FULL.street,
+            street_id : FULL.street_id || null,
             street_name_i : null,
-            npunkt : FULL.npunkt,
+            city_id : FULL.city_id || null,
             npunkt_tip_kod_i : null,
             npunkt_name_i : null,
-            rayon : FULL.rayon,
+            rayon_id : FULL.rayon_id || null,
             rayon_name_i : null,
-            region : FULL.region,
+            region : FULL.region || null,
             region_kod_i : null,
-            dom : FULL.dom,
-            korpus : FULL.korpus,
-            str : FULL.str,
-            pindex : FULL.pindex,
+            dom : FULL.dom || null,
+            korpus : FULL.korpus || null,
+            str : FULL.str || null,
+            pindex : FULL.pindex || null,
             okato_i: null,
+            kvart: FULL.kvart || null
         }
-        data = JSON.stringify(data);
-        post('db/push',{alias,cdr,sid,orphan,data}).then(x=>{
-            if (x.data && !x.data.error) {  
-                this.selectByCdr(x.data);
+        let data = JSON.stringify(dat);
+        let arrayAgg = _.reduce(_.toPairs(dat), (res, val) => (res.push({name : val[0], value : val[1]}),res),[]);
+
+        post('db/push',{alias,sid,data}).then(x=>{
+            const D = x.data;
+            if (D && !D.error && D.rows && D.rows[0]) {
+                const [CDR,lineAddr] = D.rows[0];
+                if (CDR && lineAddr) {
+                    arrayAgg.push({name : 'cdr_address_id', value : CDR.value || ''}); 
+                    arrayAgg.push({name : 'line_adr', value : lineAddr.value || ''});
+                    cBack(arrayAgg);
+                }
             }
         });
-        
-        FULL[M.KVART.name] && cBack(FULL[M.KVART.name]);
-        
+
         const isS = !this.state.isStr;
         this.setState({isStr : isS});
     }
@@ -97,16 +79,16 @@ class AddressData extends React.Component {
     onListChange(val,field) {
         let newState = Object.assign({},this.state);
         if (field==M.REGION.name){
-            newState.fullAddr[M.RAYON.name] = "";
-            newState.fullAddr[M.NPUNKT.name] = "";
-            newState.fullAddr[M.STREET.name] = "";
+            newState.fullAddr['rayon_id'] = '';
+            newState.fullAddr['city_id'] = '';
+            newState.fullAddr['street_id'] = '';
         }
-        if (field==M.RAYON.name) {
-            newState.fullAddr[M.NPUNKT.name] = "";
-            newState.fullAddr[M.STREET.name] = "";
+        if (field=='rayon_id') {
+            newState.fullAddr['city_id'] = '';
+            newState.fullAddr['street_id'] = '';
         }
-        if (field==M.NPUNKT.name) {
-            newState.fullAddr[M.STREET.name] = "";
+        if (field=='city_id') {
+            newState.fullAddr['street_id'] = '';
         }
         newState.fullAddr[field] = val;
         this.setState(newState);
@@ -115,7 +97,7 @@ class AddressData extends React.Component {
     onFieldChange(field,value){
         let newState = Object.assign({},this.state);
         newState.fullAddr[field] = value;
-        this.setState({newState});
+        this.setState(newState);
     }
 
     render() {
@@ -146,19 +128,19 @@ class AddressData extends React.Component {
                 :   ([
                     <React.Fragment><tr>
                         <td className='ap-input-caption'>{M.REGION.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F[M.REGION.name]} onChange={(val)=>this.onListChange(val,M.REGION.name)} dataKey={M.REGION.key} /></td>
+                        <td colSpan='3'><EAutocomplete value={F[M.REGION.name]} key={F[M.REGION.name]} onChange={(val)=>this.onListChange(val,M.REGION.name)} dataKey={M.REGION.key} /></td>
                     </tr>
                     <tr>
                         <td className='ap-input-caption'>{M.RAYON.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F[M.RAYON.name]} onChange={(val)=>this.onListChange(val,M.RAYON.name)} dataWhere={_.pick(F, [M.REGION.name])} dataKey={M.RAYON.key} /></td>
+                        <td colSpan='3'><EAutocomplete value={F['rayon_id']} key={F['rayon_id']} onChange={(val)=>this.onListChange(val,'rayon_id')} dataWhere={_.pick(F, [M.REGION.name])} dataKey={M.RAYON.key} /></td>
                     </tr>
                     <tr>
                         <td className='ap-input-caption'>{M.NPUNKT.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F[M.NPUNKT.name]} onChange={(val)=>this.onListChange(val,M.NPUNKT.name)} dataWhere={_.pick(F, [M.REGION.name, M.RAYON.name])} dataKey={M.NPUNKT.key}  /></td>
+                        <td colSpan='3'><EAutocomplete value={F['city_id']} key={F['city_id']} onChange={(val)=>this.onListChange(val,'city_id')} dataWhere={_.pick(F, [M.REGION.name, 'rayon_id'])} dataKey={M.NPUNKT.key}  /></td>
                     </tr>
                     <tr>
                         <td className='ap-input-caption'>{M.STREET.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F[M.STREET.name]} onChange={(val)=>this.onListChange(val,M.STREET.name)} dataWhere={_.pick(F, [M.REGION.name,M.RAYON.name,M.NPUNKT.name])} dataKey={M.STREET.key}  /></td>
+                        <td colSpan='3'><EAutocomplete value={F['street_id']} key={F['street_id']} onChange={(val)=>this.onListChange(val,'street_id')} dataWhere={_.pick(F, [M.REGION.name,'rayon_id','city_id'])} dataKey={M.STREET.key}  /></td>
                     </tr>
                     <tr>
                         <td className='ap-input-caption'>{M.DOM.label}</td>

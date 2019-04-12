@@ -28,14 +28,9 @@ const im = (obj)=> Immutable.fromJS(obj)
 class ComboAppeal extends Component {
 
   render(){
-    const {dispatch,change,initialize,formData} = this.props;
+    const {dispatch,change,initialize,formData} = this.props;    
+    const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value)));
 
-    const cBack = (kvart, cdr, lineAddr) => {
-        kvart && dispatch(change('kvart', kvart));
-        cdr && dispatch(change('cdr_address_id', cdr));
-        lineAddr && dispatch(change('line_adr', lineAddr));
-    }
-    
     try{
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
@@ -46,17 +41,32 @@ class ComboAppeal extends Component {
       //debugger;
     }//
 
+    let fullAddr = {};
+    if (formData && formData.values) {
+      fullAddr = _.pick(formData.values, [
+        'cdr_address_id', 
+        'dom', 
+        'korpus', 
+        'kvart',
+        'line_adr', 
+        'city_id', 
+        'pindex', 
+        'rayon_id', 
+        'region', 
+        'str', 
+        'street_id']);
+    }
+
     const fl = _.get(formData, ['values','zajav_lic']);
-    const cdr = _.get(formData, ['values', 'cdr_address_id']);
-    const kvart = _.get(formData, ['values', 'kvart'])
-    const line_adr = _.get(formData,['values','line_adr'],'');
+    const line_adr = _.get(formData, ['values','line_adr'],'');
+    
 
     return (
       <SidePanel>
 	    <BasicData    />
 	    <ClaimantData />
-      <AddressData fl={fl} key={cdr} cdr={cdr} kvart={kvart} cBack={cBack}>
-          {line_adr + (kvart ? (' кв.' + kvart):'')}
+      <AddressData fl={fl} key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}>
+          {line_adr}
       </AddressData>
 	    <OrganizationsData />
 	    <SummaryData  />
@@ -69,7 +79,6 @@ class ComboAppeal extends Component {
 }
 
 const mapStateToProps = (state,props)=>{
-    debugger;
     let formData = state.getIn(['form','appeal']);
     formData && (formData = formData.toJS());
     return {formData};
