@@ -41,8 +41,8 @@ const postRows = (props) => {
             </td>
             <td>
                 {disabled ? null :
-                    <Button type="text" onClick={rmv(i)}>
-                        <i className="el-icon-delete color-red-dark"/>
+                    <Button size="small" type="text" onClick={rmv(i)}>
+                        <i className="el-icon-close color-red-dark"/>
                     </Button>
                 }
             </td>

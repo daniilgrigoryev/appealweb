@@ -80,8 +80,8 @@ const IshFileRow = (props) => {
                             </Button>}
 
                         {disabled ? null :
-                            <Button type="text" onClick={onRmv}>
-                                <i className="el-icon-delete color-red-dark"/>
+                            <Button size="small" type="text" onClick={onRmv}>
+                                <i className="el-icon-close color-red-dark"/>
                             </Button>}
                     </td>
                 </tr>
@@ -184,8 +184,8 @@ const IshFileRow = (props) => {
                                             </td>
                                             <td className='ap-table__header'>наименование документа</td>
                                             <td>
-                                                <Button type="text">
-                                                    <i className="el-icon-delete color-red-dark ml18"/>
+                                                <Button size="small" type="text">
+                                                    <i className="el-icon-close color-red-dark ml18"/>
                                                 </Button>
                                             </td>
                                         </tr>

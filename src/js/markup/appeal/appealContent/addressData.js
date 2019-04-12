@@ -57,16 +57,15 @@ class AddressData extends React.Component {
             okato_i: null,
             kvart: FULL.kvart || null
         }
-        let data = JSON.stringify(dat);
-        let arrayAgg = _.reduce(_.toPairs(dat), (res, val) => (res.push({name : val[0], value : val[1]}),res),[]);
-
-        post('db/push',{alias,sid,data}).then(x=>{
+        
+        post('db/select',{alias,sid,...dat}).then(x=>{ debugger;
             const D = x.data;
             if (D && !D.error && D.rows && D.rows[0]) {
                 const [CDR,lineAddr] = D.rows[0];
                 if (CDR && lineAddr) {
-                    arrayAgg.push({name : 'cdr_address_id', value : CDR.value || ''}); 
-                    arrayAgg.push({name : 'line_adr', value : lineAddr.value || ''});
+                    let arrayAgg = _.reduce(_.toPairs(dat), (res, val) => (res.push({name:val[0],value:val[1]}),res),[]);
+                    arrayAgg.push({name : 'cdr_address_id', value : CDR.value}); 
+                    arrayAgg.push({name : 'line_adr', value : lineAddr.value});
                     cBack(arrayAgg);
                 }
             }

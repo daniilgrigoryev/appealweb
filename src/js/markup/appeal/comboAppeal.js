@@ -45,7 +45,7 @@ class ComboAppeal extends Component {
 
   render(){
     const {dispatch,change,initialize,formData} = this.props;    
-    const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value)));
+    const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
 
     try{
       const h = window.location.hash.split('?');
@@ -58,8 +58,12 @@ class ComboAppeal extends Component {
     }//
 
     let fullAddr = {};
-    if (formData && formData.values) {
-      fullAddr = _.pick(formData.values, [
+    let fl = false;
+    let line_adr = '';
+    if (formData) {
+      fl       = formData.get('zajav_lic')|| false;
+      line_adr = formData.get('line_adr') || '';
+      fullAddr = _.pick(formData.toJS(), [
         'cdr_address_id', 
         'dom', 
         'korpus', 
@@ -73,9 +77,6 @@ class ComboAppeal extends Component {
         'street_id']);
     }
 
-    const fl = _.get(formData, ['values','zajav_lic']);
-    const line_adr = _.get(formData, ['values','line_adr'],'');
-    
     return (
       <SidePanel>
   	    <BasicData    />
@@ -96,7 +97,8 @@ class ComboAppeal extends Component {
 
 const mapStateToProps = (state,props)=>{
     let id = state.getIn(['form','appeal','values','id']);
-    return {id};
+    let formData = state.getIn(['form','appeal','values']);
+    return {id,formData};
 }
 
 export default compose(

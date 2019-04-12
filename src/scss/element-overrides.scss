@@ -85,6 +85,10 @@
   background: rgba(32, 160, 255, 0.1);
 }
 
+.w-full .el-date-editor {
+  width: 100%;
+}
+
 .el-input__icon {
   top: -8px !important;
   font-size: 10px !important;
@@ -273,4 +277,14 @@
 
 .el-date-table td {
   vertical-align: middle;
+}
+
+.el-alert {
+  $color: rgba(0, 0, 0, 0.4);
+  color: $color;
+
+  .el-alert__description {
+    color: $color;
+    line-height: 1.2;
+  }
 }

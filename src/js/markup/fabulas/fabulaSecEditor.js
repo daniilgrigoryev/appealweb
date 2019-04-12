@@ -85,9 +85,9 @@ class FabulaSecEditor extends React.Component {
                        <Button type='text' onClick={cancelEdit} className='ml24'>Отмена</Button>
                    </div>
                     <div>
-                        <Button type="text" onClick={() => this.ajax('FABULA_SEC_REMOVE')}>
-                                <i className="el-icon-delete color-red-dark"/>
-                            </Button>
+                        <Button size="small" type="text" onClick={() => this.ajax('FABULA_SEC_REMOVE')}>
+                                <i className="el-icon-close color-red-dark"/>
+                        </Button>
 
                     </div>
                 </div>

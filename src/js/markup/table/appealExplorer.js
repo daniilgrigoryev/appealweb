@@ -151,7 +151,7 @@ class AppealExplorer extends React.Component {
                                                 <EPicker className="w-full" value={S['date_from']} datepicker='+'
                                                          onChange={chg('date_from')}/>
                                             </td>
-                                            <td className='ap-input-caption w60'>до</td>
+                                            <td className='ap-input-caption w36'>до</td>
                                             <td>
                                                 <EPicker className="w-full" value={S['date_to']} datepicker='+'
                                                          onChange={chg('date_to')}/>
@@ -160,7 +160,7 @@ class AppealExplorer extends React.Component {
                                         </tbody>
                                     </table>
                                 </Layout.Col>
-                                <Layout.Col xs="24" md="12" lg="8">
+                                <Layout.Col xs="24" md="12" lg="12">
                                     <table className='w-full'>
                                         <tbody>
                                         <tr>
@@ -183,7 +183,7 @@ class AppealExplorer extends React.Component {
                                         </tbody>
                                     </table>
                                 </Layout.Col>
-                                <Layout.Col xs="24" md="12" lg="8">
+                                <Layout.Col xs="24" md="12" lg="12">
                                     <table className='w-full'>
                                         <tbody>
                                         <tr>

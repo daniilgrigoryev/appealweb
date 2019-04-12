@@ -80,7 +80,7 @@ const OFRow = (props) => {
                            {disabled ? null 
                                : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
                            {disabled ? null 
-                               : <Button type="text" onClick={onRmv}><i className="el-icon-delete color-red-dark"/></Button>}
+                               : <Button size="small" type="text" onClick={onRmv}><i className="el-icon-close color-red-dark"/></Button>}
                        </span>
                     </td>
                 </tr>
@@ -301,8 +301,8 @@ const OFRow = (props) => {
                                 }
 
                                 {disabled ? null :
-                                    <Button type="text" onClick={onRmv}>
-                                        <i className="el-icon-delete color-red-dark"/>
+                                    <Button size="small" type="text" onClick={onRmv}>
+                                        <i className="el-icon-close color-red-dark"/>
                                     </Button>
                                 }
                             </div>

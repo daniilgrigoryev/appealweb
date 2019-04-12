@@ -27,11 +27,11 @@ class Outgoing extends React.Component {
     }
 
     async reloadRow() {
-        const {dispatch,change,initialize,formData} = this.props;
+        const {dispatch, change, initialize, formData} = this.props;
         const alias = 'CLAIM_OUT_GET';
         const orphan = true;
         const claim_id = formData.get('id');
-        const x = await post('db/select', {alias, claim_id,orphan});
+        const x = await post('db/select', {alias, claim_id, orphan});
         dispatch(initialize(im(x.data)));
     }
 
@@ -49,14 +49,14 @@ class Outgoing extends React.Component {
                 let exc = error.split('Detail')[0];
                 throw exc;
             }
-            
+
             const ID = x.data.rows[0][0].value; // the first column value of single row expected
             try {
                 const R = JSON.parse(ID);
                 if (R.claim_id) { /// upsert claim
                     dispatch(change('id', R.claim_id)); //  !CASE SENSITIVE
-                    setTimeout(()=>this.reloadRow(),500);
-                }                                
+                    setTimeout(() => this.reloadRow(), 500);
+                }
             } catch (exc) {
                 console.error(exc);
             }
@@ -69,7 +69,7 @@ class Outgoing extends React.Component {
 
     render() {
         const {formData} = this.props;
-        const id = !formData? null : formData.get('id');
+        const id = !formData ? null : formData.get('id');
         const saveText = id ? 'Сохранить' : 'Зарегистрировать';
 
         return (
@@ -85,13 +85,13 @@ class Outgoing extends React.Component {
                                 <IshHead/>
                                 <IshBasic/>
                                 <IshLinksPost/>
-                                <IshLinkInner   reloadRow={this.reloadRow}    />
+                                <IshLinkInner reloadRow={this.reloadRow}/>
                                 <IshLinkScan/>
                             </Card>
 
                             <div className="ap-footer">
-                                <Button className='mr24' onClick={this.checkIn}>{saveText}</Button>
-                                <Button type='text'>Отменить</Button>
+                                <Button type="success" size="small" plain={true} className='mr18' onClick={this.checkIn}>{saveText}</Button>
+                                <Button size="small" type='text'>Отменить</Button>
                             </div>
                         </Layout.Col>
                     </Layout.Row>
