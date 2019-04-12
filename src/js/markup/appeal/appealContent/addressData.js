@@ -58,7 +58,7 @@ class AddressData extends React.Component {
             kvart: FULL.kvart || null
         }
         
-        post('db/select',{alias,sid,...dat}).then(x=>{ debugger;
+        post('db/select',{alias,sid,...dat}).then(x=>{
             const D = x.data;
             if (D && !D.error && D.rows && D.rows[0]) {
                 const [CDR,lineAddr] = D.rows[0];
