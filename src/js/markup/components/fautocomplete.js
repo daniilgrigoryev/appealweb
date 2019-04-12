@@ -1,7 +1,7 @@
 import React from 'react'
 import withValidators from './tooltipper.js'
 import {AutoComplete} from 'primereact/autocomplete';
-import {getAc,getAcValue} from '../../services/acCacher.js'
+import {getAc,getAcValue,getAcNoCache} from '../../services/acCacher.js'
 
 class EAutocomplete extends React.Component {
 
@@ -14,10 +14,13 @@ class EAutocomplete extends React.Component {
 	    	dataKeyed : null
 	    };
 
+	    this.dataWhere = null;
+
 	    this.change=this.change.bind(this);
 	    this.select=this.select.bind(this);
 	    this.getDatas=this.getDatas.bind(this);
 	    this.suggestData=this.suggestData.bind(this);
+
 	}
 
 	componentDidUpdate(prevData) { 
@@ -28,8 +31,35 @@ class EAutocomplete extends React.Component {
 	  }
 
 	componentDidMount(){
-		const {acKey,dataKey,value} = this.props;
-		value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
+		const {acKey,dataKey,value,dataWhere} = this.props;
+		//value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
+		if (value){ 
+			const key = acKey || dataKey;
+			const hasWhere = !_.isEmpty(dataWhere);
+			if (!hasWhere){
+				getAcValue(key,value).then((value)=>{this.setState({value});});			
+			} else {
+				this.dataWhere = dataWhere;
+				getAcNoCache(key,JSON.stringify(dataWhere)).then((result)=>{
+					const rows = result.data;
+					let findVal;
+					if (rows && !rows.error) { 
+						findVal = _.find(rows, x => x.property && x.property == value);
+					}
+					const val = findVal ? findVal.value : 0; 
+					this.setState({value : val});
+				});
+			}
+		}
+	}
+
+	componentDidUpdate(prevData) { 
+		const {dataWhere} = this.props;
+		const prevDW = prevData.dataWhere;
+		const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere,prevDW);
+		if (dataWhereChanged){
+			this.setState({data: null, dataKeyed:null, dataSuggestions: null, value: ""});
+		}		
 	}
 
 	async suggestData(event) {
@@ -44,17 +74,23 @@ class EAutocomplete extends React.Component {
 	async getDatas(){
 		let d = null;
 		
-		const {data,acKey,dataKey,datagetter,datapromise} = this.props;
-		if (datagetter){
-			d = datagetter();
-		} else if (datapromise){
-			d = await datapromise();
-		} else if (data){
-			d = data;
-		} else {
-			d = await getAc(acKey || dataKey);
+	   	{ // search list source
+			const {data,acKey,dataKey,datagetter,dataWhere,datapromise} = this.props;
+			if (datagetter){
+		   		d = datagetter();
+		   	} else if (datapromise){
+				d = await datapromise();
+			} else if (data){
+		   		d = data;
+		   	} else {
+		   		const hasWhere = !_.isEmpty(dataWhere);
+		   		const key = acKey || dataKey;
+	  			d = hasWhere
+			  		? await getAcNoCache(key,JSON.stringify(dataWhere))
+			  		: await getAc(key); // докинуть дополнительные параметры (из пропсов)  
+		  	}
+	  		d = d.data ? d.data : d;
 		}
-		d = d.data ? d.data : d;
 		
 		let dataKeyed = d;
 		let dataLabels = d;
@@ -70,8 +106,8 @@ class EAutocomplete extends React.Component {
 
 	filter(queryLow,data,dataKeyed){
 		const d = this.state.data || data;
-		if (!d){
-			return;
+		if (!d || d.error){
+			return [];
 		}
 		const dataSuggestions = d.filter((row)=>row.toLowerCase().indexOf(queryLow)>-1);
 		const dState = {dataSuggestions};
@@ -111,9 +147,12 @@ class EAutocomplete extends React.Component {
 	}
 
 	select(event){
-		const {onChange} = this.props;
-		const cb = !onChange ? null : ()=>onChange(this.getKey(event.value));
-		this.change(event,cb);		
+		const {onChange,onSelect,name} = this.props;
+		const cb = !onChange ? null : ()=>{
+			onChange(this.getKey(event.value));
+			onSelect && (onSelect(event.value, name));
+		};
+		this.change(event,cb);	
 	}
 
 	render() {

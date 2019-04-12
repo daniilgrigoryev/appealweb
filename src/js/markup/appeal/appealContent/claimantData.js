@@ -208,50 +208,6 @@ class ClaimantData extends React.Component {
                                     </tr>
                                     </tbody>
                                 </table>
-
-                                <hr className='txt-hr my18'/>
-
-                                <h4 className='ap-h4'>
-                                    Адрес
-                                </h4>
-
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.REGION.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.REGION.name} component={FAutocomplete} dataKey={M.REGION.key}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.RAYON.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.RAYON.name} component={FInput}/></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.NPUNKT.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.NPUNKT.name} component={FInput}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.STREET.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.STREET.name} component={FInput}/></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.DOM.label}</td>
-                                        <td><Field disabled={disabled} name={M.DOM.name} component={FInput}/></td>
-                                        <td className='ap-input-caption'>{M.KORPUS.label}</td>
-                                        <td><Field disabled={disabled} name={M.KORPUS.name} component={FInput}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.STR.label}</td>
-                                        <td><Field disabled={disabled} name={M.STR.name} component={FInput}/></td>
-                                        {KVART}
-                                    </tr>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.PINDEX.label}</td>
-                                        <td colSpan='3'><Field disabled={disabled} name={M.PINDEX.name} component={FInput}/></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                             </form>
                         </Card>
                     </Layout.Col>
