@@ -344,12 +344,12 @@ class EIshDocList extends React.Component {
                     {disabled ? null :
                         <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowZajav)}
                                 className="flex-parent mb18"
-                                title='Добавить тему'>Документ заявителя</Button>}
+                                title='Добавить тему'>Проект документов для заявителя</Button>}
 
                     {disabled ? null :
                         <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowOrg)}
                                 className="flex-parent mb18"
-                                title='Добавить тему'>Документ организации</Button>}
+                                title='Добавить тему'>Проект документов для организации</Button>}
                 </div>
                 {DIALOG}
             </React.Fragment>

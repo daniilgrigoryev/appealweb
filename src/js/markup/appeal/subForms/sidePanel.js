@@ -168,7 +168,7 @@ class SidePanel extends Component {
                         <li onClick={scrollNavi('summary')}>Краткое содержание</li>
                         <li onClick={scrollNavi('topics')}>Темы обращения</li>
                         <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
-                        <li onClick={scrollNavi('links')}>Связанные документы</li>
+                        <li onClick={scrollNavi('links')}>Связанные обращения/письма</li>
                         <li onClick={scrollNavi('archive')}>Архивная информация</li>
                     </ul>
                 </div>

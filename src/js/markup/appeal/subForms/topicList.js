@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
+import { change } from 'redux-form'
+import {Switch} from 'element-react'
 import {EInput, FInput} from '../../components/finput.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
@@ -28,12 +30,12 @@ const stopPg = (cb, id) => (evt) => {
 }
 
 const OFRow = (props) => {
-    const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse} = props;
+    const [manualPostLink, setManualPostLink] = useState(false);
+
+    const {ind, field,fields, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse,claim_id,dispatch,apn_list} = props;
     const id = value.get('id');
 
-    const apnPromise = ()=>{
-        return post("db/select",{alias : 'APN', listValueField : 'value', id:props.claim_id});
-    }
+    const apnPromise = ()=>post("db/select",{alias : 'APN', listValueField : 'value', id: claim_id});
     
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
@@ -91,7 +93,7 @@ const OFRow = (props) => {
                 </tr>
             </React.Fragment>);
         return [collapsed];
-    }
+    } //
 
     const PRIS_UCH = (!P[M.UCH_PRIS.name]) ? null : [
         <tr key='pu1'>
@@ -110,6 +112,23 @@ const OFRow = (props) => {
             </td>
         </tr>];
 //
+    const postSelect = (args)=>{
+        const AL = apn_list;
+        const fld = field + M.POST_DATE.name;
+        const newDateStr = _.chain(AL.toJS()||[]).filter(x=>+x.id==+args.key).first().get('date').value();
+        const newVal = !newDateStr ? null : new Date(Date.parse(newDateStr));
+
+        dispatch(change(`appeal`, fld, newVal));
+    }
+
+    const postClear = ()=>{
+        const fldN = field + M.POST_N.name;
+        const fldD = field + M.POST_DATE.name;
+
+        dispatch(change(`appeal`, fldN, null));
+        dispatch(change(`appeal`, fldD, null));
+    }
+
     const editable =
         <React.Fragment>
             <tr>
@@ -130,22 +149,41 @@ const OFRow = (props) => {
                                        dataKey={M.CAT.key} value={P[M.CAT.name]}/>
                                 </span>
                                 </td>
+
+                                {manualPostLink
+                                    ? (<td>
+                                        <span className='inline-block mr12'>
+                                            <Field disabled={disabled} component={FInput} name={field + M.POST_N.name}
+                                                   placeholder={M.POST_N.label}
+                                                   value={P[M.POST_N.name]}/>
+                                         </span>
+                                        </td>)
+                                    : (<td>
+                                        <span className='inline-block mr12'>
+                                            <Field disabled={disabled} component={FAutocomplete} name={field + M.POST_N.name}
+                                                   placeholder={M.POST_N.label} onSelect={postSelect}
+                                                   datapromise={apnPromise} value={P[M.POST_N.name]}/>
+                                         </span>
+                                        </td>)}                                
+
                                 <td>
                                 <span className='inline-block mr12'>
-                                    <Field disabled={disabled} component={FAutocomplete} name={field + M.POST_N.name}
-                                           placeholder={M.POST_N.label}
-                                           datapromise={apnPromise} value={P[M.POST_N.name]}/>
-                                 </span>
-                                </td>
-                                <td>
-                                <span className='inline-block mr12'>
-                                    <Field disabled={disabled} component={FPicker} name={field + M.POST_DATE.name}
-                                           placeholder={M.POST_DATE.label}
-                                           value={P[M.POST_DATE.name]} datepicker='+'/>
+                                    <Field disabled={!manualPostLink} isDisabled={!manualPostLink} component={FPicker}
+                                        name={field + M.POST_DATE.name} placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
                                 </span>
                                 </td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                     <Switch
+                                        value={manualPostLink}
+                                        onValue={true}
+                                        offValue={false}
+                                        onChange={(value)=>{
+                                            setManualPostLink(value);
+                                            postClear(); 
+                                        }}>
+                                      </Switch>
+                                </td>
+                                <td>Ручной ввод</td>
                             </tr>
 
                             <tr>
@@ -297,14 +335,12 @@ const OFRow = (props) => {
                                 {disabled ? null :
                                     <Button type="text" onClick={onInf}>
                                         <i className="el-icon-information color-blue"/>
-                                    </Button>
-                                }
+                                    </Button>}
 
                                 {disabled ? null :
                                     <Button size="small" type="text" onClick={onRmv}>
                                         <i className="el-icon-close color-red-dark"/>
-                                    </Button>
-                                }
+                                    </Button>}
                             </div>
                         </div>
                     </div>
@@ -407,15 +443,18 @@ class ETopicList extends React.Component {
         const xpd = this.onExpand.bind(this);
         const getV = this.getCategValue.bind(this);
 
-        const {fields, disabled,claim_id} = this.props;
+        const {fields, disabled,claim_id,dispatch,apn_list} = this.props;
 
         const ROWS = fields.map((x, i, arr) => (
             <OFRow key={i}
                    ind={i}
+                   apn_list={apn_list}
                    claim_id={claim_id}
+                   dispatch={dispatch}
                    checkExpand={(x) => x == this.state.expandedId}
                    collapse={()=>this.setState({expandedId:false})}
                    field={x}
+                   fields={fields}
                    value={arr.get(i)}
                    onRemove={rmv}
                    onInfo={inf}
@@ -462,6 +501,5 @@ const FTopicList = (props) => {
     const {input, meta} = props;
     return <ETopicList {...props} {...input} {...meta} reduxformfield="true"/>
 };
-
 
 export {ETopicList, FTopicList};

@@ -66,7 +66,7 @@ class IshDocsData extends React.Component {
                             </div>
                         }>
                             <form onSubmit={handleSubmit}>
-                                <h4 className='ap-h4'>Список исходящих документов</h4>
+                                <h4 className='ap-h4'>Проекты документов</h4>
                                 <FieldArray name='ish_docs_data' component={FIshDocList} disabled={disabled} categories={categories} claim_id={claim_id} fTypes={fTypes}/>
                             </form>
                         </Card>

@@ -149,8 +149,10 @@ class EAutocomplete extends React.Component {
 	select(event){
 		const {onChange,onSelect,name} = this.props;
 		const cb = !onChange ? null : ()=>{
-			onChange(this.getKey(event.value));
-			onSelect && (onSelect(event.value, name));
+			const {value} = event;
+			const key     = this.getKey(value);
+			onChange(key); 
+			onSelect && (onSelect({value,key,name}));
 		};
 		this.change(event,cb);	
 	}

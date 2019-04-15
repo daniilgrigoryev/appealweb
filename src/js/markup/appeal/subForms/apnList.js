@@ -27,6 +27,7 @@ export class EApnList extends React.Component {
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
         const inf = (ind) => () => fields.remove(ind);
+
         const ROWS = fields.map((x, i) => (<tr key={i}>
             <td>
                 <span className='ap-table-list-number mr12'>
@@ -48,24 +49,21 @@ export class EApnList extends React.Component {
                     {disabled ? null :
                         <Button type="text" onClick={inf(i)}>
                             <i className="el-icon-information color-blue"/>
-                        </Button>
-                    }
+                        </Button>}
 
                    {disabled ? null :
                        <Button size="small" type="text" onClick={rmv(i)}>
                            <i className="el-icon-close color-red-dark"/>
-                       </Button>
-                   }
+                       </Button>}
                </span>
             </td>
         </tr>));
 
         return (
             <React.Fragment>
-                {!fields.length ?
-                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных постановлений</p>
-                    :
-                <table>
+                {!fields.length 
+                    ? <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных постановлений</p>
+                    : <table>
                         <thead>
                         <tr>
                             <th colSpan='2' className='ap-table__header'>{M.POST_NUM.label}</th>
@@ -82,8 +80,7 @@ export class EApnList extends React.Component {
                 {disabled ? null :
                     <Button size="small" icon="plus" type="success" plain={true} onClick={add}
                             className="flex-parent mb18"
-                            title='Добавить тему'>Добавить</Button>
-                }
+                            title='Добавить тему'>Добавить</Button>}
             </React.Fragment>
         );
     }//

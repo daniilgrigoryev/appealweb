@@ -123,7 +123,7 @@ class DocLinker extends React.Component {
         const LINKER = !linkerVisible
             ? null
             : (<Dialog key='ilid'
-                       title="Связанные документы"
+                       title="Связанные обращения/письма"
                        showClose={false}
                        closeOnClickModal={false}
                        closeOnPressEscape={false}
@@ -142,7 +142,7 @@ class DocLinker extends React.Component {
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
                             <hr className='txt-hr my6'/>
-                            <h4 className='ap-h4'>Связанные документы</h4>
+                            <h4 className='ap-h4'>Связанные обращения/письма</h4>
 
                                 {CONTENT}
                         </Layout.Col>

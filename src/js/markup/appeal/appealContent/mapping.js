@@ -80,7 +80,7 @@ export default {
 		DECISION_THEME:  {name: 'decision_theme', label: 'Решение по теме',             key:'APPEAL_DECISION'},
 		DECISION_BASIS:  {name: 'decision_basis', label: 'Основания для решения',       key: 'APPEAL_DECISION_BASIS'},
 		APPEAL_APN:      {name: 'appeal_apn',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)', key:'APPEAL_CAUSE'},
-		REL_DOCS: 		 {name: 'docs',		      label: 'Связанные документы'},
+		REL_DOCS: 		 {name: 'docs',		      label: 'Сформированные документы'},
 
 		CAT: 			{name: 'category', 		  label: 'Категория',                   key:'CLAIM_CATEGORIES'},
 		POST_N: 		{name: 'post_n',		  label: '№ постановления' },
