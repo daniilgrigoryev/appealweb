@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import {EInput} from '../../components/finput.js'
-import {EAutocomplete} from '../../components/fautocomplete.js'
-import {Card, Layout, Button} from 'element-react'
 import Immutable from 'immutable'
-import {getAc,getAcValue,getAcNoCache} from '../../../services/acCacher.js'
-import {post} from '../../../services/ajax.js'
+import {Card, Layout, Button} from 'element-react'
+import {EInput} from '../components/finput.js'
+import {EAutocomplete} from '../components/fautocomplete.js'
+import {getAc,getAcValue,getAcNoCache} from '../../services/acCacher.js'
+import {post} from '../../services/ajax.js'
 
-import mapping from './mapping.js'
+import mapping from '../appeal/mapping.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
@@ -114,16 +114,17 @@ class AddressData extends React.Component {
                     <td key='kvUl1' className='ap-input-caption'>{M.OFFICE.label}</td>,
                     <td key='kvUl2'><EInput value={F[M.OFFICE.name]} onChange={(v)=>this.onFieldChange([M.OFFICE.name],v)} /></td>
                 ]);
-    //
         const ADDRESS = this.state.isStr
                 ? ([<tr>
-                        <td className='ap-input-caption'>{M.ADDRESS.label}</td>
+                        <td colSpan='2'>
+                            <Button size="small" icon="plus" type="success" plain={true}
+                                    className="flex-parent mb18"
+                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>
+                        </td>
                         <td>{children}</td>
-                        <td><Button size="small" icon="plus" type="success" plain={true}
-                                className="flex-parent mb18"
-                                title='Раскрыть' onClick={this.changeMode}>Редактировать</Button></td>
+
                     </tr>
-                ])// 
+                ])
                 :   ([
                     <React.Fragment><tr>
                         <td className='ap-input-caption'>{M.REGION.label}</td>
@@ -185,25 +186,18 @@ class AddressData extends React.Component {
                                 className="flex-parent mb18"
                                 title='Применить' onClick={this.save}>Применить</Button></td>
                     </tr></React.Fragment>
-                ])
-        //
+                ]);
 
         return (
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                        <Card className="box-card" header={
-                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    {headerTitle}
-                                </h3>
-                            </div>
-                            }>
-                            <form>
-                                <table>
-                                    <tbody>
-                                        {ADDRESS}
-                                    </tbody>
-                                </table>
+                        <Card bodyStyle={{'padding-top': 0}} className="box-card">
+                            <hr class="txt-hr my6"/>
+                            <h4 className='ap-h4 flex-parent flex-parent--center-cross'>
+                                {headerTitle}
+                            </h4>
+                            <form className='ml0'>
+                                {ADDRESS}
                             </form>
                         </Card>
                     </Layout.Col>

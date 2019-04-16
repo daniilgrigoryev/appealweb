@@ -1,4 +1,4 @@
-import mapping from '../appealContent/mapping.js' 
+import mapping from './mapping.js' 
 
 const M = mapping.topicList; // связь с именованием полей в форме
 
@@ -15,7 +15,7 @@ const categories = [void 0 /*matrix index sync - void cell*/,
 	{ sys: "AM", text: "Жалоба на постановление по делу об АПН" },
 	{ sys: "AM", text: "Ходатайство о восстановлении срока обжалования постановления" },
 	{ sys: "AM", text: "Ходатайство о переносе срока рассмотрения дела об АПН" },
-	{ sys: " M", text: "Внесение информации об оплате административного шт…рждение отсутствия задолженности по оплате штрафа" },
+	{ sys: " M", text: "Внесение информации об оплате административного штрафа, подтверждение отсутствия задолженности по оплате штрафа" },
 	{ sys: "AM", text: "Возврат денежных средств" },
 	{ sys: " M", text: "Предоставление копии постановления# протокола# других материалов дела" },
 	{ sys: " M", text: "Внесение информации об отмене постановления" },
@@ -105,6 +105,8 @@ const fields = [
 */
 const matrix = [
 [categories[ 0],fields[ 0],fields[ 1],fields[ 2],fields[ 3],fields[ 4],fields[ 5],fields[ 6],fields[ 7],fields[ 8],fields[ 9],fields[10],fields[11],fields[12],fields[13],fields[14],fields[15]],
+
+[null               ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
 [categories[ 1].text,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
 [categories[ 2].text,1,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0],

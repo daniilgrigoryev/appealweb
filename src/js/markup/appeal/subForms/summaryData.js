@@ -1,4 +1,5 @@
 import React from 'react'
+import {Button, Card, Layout, Tag} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../components/finput.js'
 import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
@@ -6,13 +7,12 @@ import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
 import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import {EApnList} from '../subForms/apnList.js'
-import {EQuestionList} from '../subForms/questionList.js'
-import {Button, Card, Layout, Tag} from 'element-react'
-import {EOrganizationFrom} from "../subForms/organizationFrom";
-import {EOrganizationControl} from "../subForms/organizationControl";
+import {EApnList} from './apnList.js'
+import {EQuestionList} from './questionList.js'
+import {EOrganizationFrom} from "./organizationFrom";
+import {EOrganizationControl} from "./organizationControl";
 
-import mapping from './mapping.js'
+import mapping from '../mapping.js'
 
 const headerTitle = 'Краткое содержание';
 
@@ -26,7 +26,7 @@ const SummaryData = props => {
         <div scrollanchor='summary'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
-                    <Card className="box-card" header={
+                    <Card className="box-card border-b--0" header={
                         <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                             <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                 {headerTitle}
@@ -46,7 +46,7 @@ const SummaryData = props => {
                                 </div>)
                             }
                         </div>
-                    }>
+                    } bodyStyle={{'padding-bottom': 0}}>
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>Тематика обращения</h4>
                             <FieldArray component={EQuestionList} name='questions' disabled={disabled}/>

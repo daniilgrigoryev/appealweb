@@ -141,13 +141,19 @@ class DocLinker extends React.Component {
                 <div scrollanchor='links' key='ili'>
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
-                            <hr className='txt-hr my6'/>
-                            <h4 className='ap-h4'>Связанные обращения/письма</h4>
-
+                            <Card className="box-card" header={
+                                <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                                    <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
+                                        Связанные обращения/письма
+                                    </h3>
+                                </div>
+                            }>
                                 {CONTENT}
+                            </Card>
                         </Layout.Col>
                     </Layout.Row>
-                </div>,
+                </div>
+                ,
                 LINKER
                 ];
     };

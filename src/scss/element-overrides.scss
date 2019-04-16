@@ -67,10 +67,10 @@
 .el-checkbox__input {
   &.is-checked {
     .el-checkbox__inner {
-      background-color: white !important;
+      background-color: $color-blue-selected !important;
 
       &:after {
-        border-color: $color-blue-selected !important;
+        border-color: white !important;
       }
     }
   }
@@ -134,7 +134,7 @@
 
 .el-radio {
   .el-radio__input.is-checked .el-radio__inner {
-    background: transparent;
+    background: white;
   }
 
   .el-radio__inner::after {
@@ -212,10 +212,19 @@
   overflow: visible !important;
   border: none;
   border-bottom: 1px solid $color-border;
+
+  &.ap-sticky-card {
+    > .el-card__header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+    }
+  }
 }
 
 .el-card__header {
-  padding: 3px 20px;
+  padding: 4px 20px;
   border-color: $color-border;
   background-color: $color-bg-blue-faint;
   border-radius: 0;

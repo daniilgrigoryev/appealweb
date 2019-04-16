@@ -2,12 +2,12 @@ import * as _ from 'lodash'
 import React from 'react'
 import {Dialog,Select,Input,Collapse,Button, Tag} from 'element-react'
 import { connect } from 'react-redux'
-import {post} from '../../services/ajax.js'
-import {fetchSelect,fetchFabulasThemesMadi,baseUrl} from '../../services/api.js'
-import {getSessionId, getSystem} from '../../selectors/common.js'
-import DocPreview from './subForms/docPreview.js'
+import {post} from '../../../services/ajax.js'
+import {fetchSelect,fetchFabulasThemesMadi,baseUrl} from '../../../services/api.js'
+import {getSessionId, getSystem} from '../../../selectors/common.js'
+import DocPreview from './docPreview.js'
 
-import mapping from './appealContent/mapping.js'
+import mapping from '../mapping.js'
 
 const M = mapping.fabulaDialog;
 

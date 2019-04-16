@@ -116,7 +116,6 @@ export default {
 		CALL: 			 {name: 'call', 		  label: 'Вызов'},
 		INIT_LETTER: 	 {name: 'init_tetter', 	  label: 'Инициативное письмо'},
 		FORMED_DOCS: 	 {name: 'formed_docs', 	  label: 'Сформированные документы'}
-
 	},
 	organizationControl: {
 		ORG_NAME: 		 {name: 'name',			  label: 'Наименование',        key: 'ORG_LIST'},

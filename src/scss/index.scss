@@ -71,10 +71,10 @@ div.tooltipWrap {
 }
 
 .ap-h1 {
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 300;
-  letter-spacing: 0.36px;
-  line-height: 2;
+  letter-spacing: 0.5px;
+  line-height: 1.7;
   color: $color-text-headers;
 }
 
@@ -263,7 +263,7 @@ div.tooltipWrap {
   display: flex;
   justify-content: center;
   border-top: 1px solid $color-input-border;
-  box-shadow: 0 0 8px rgba(86, 83, 83, 0.25);
+  box-shadow: 0 0 7px rgba(86, 83, 83, 0.15);
   z-index: 1;
   transition: all 250ms ease-in;
 

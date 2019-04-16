@@ -1,15 +1,15 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form/immutable'
+import {Button, Card, Layout, Tag, Popover} from 'element-react'
 import {EInput, FInput} from '../../components/finput.js'
 import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
 import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
 import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import {Button, Card, Layout, Tag, Popover} from 'element-react'
-import {FIshDocList} from "../subForms/ishDocList";
+import {FIshDocList} from "./ishdoc/ishDocList";
 
-import mapping from './mapping.js'
+import mapping from '../mapping.js'
 
 const headerTitle = 'Архивная информация';
 const M = mapping.status;

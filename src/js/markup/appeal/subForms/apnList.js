@@ -1,13 +1,13 @@
 import React from 'react'
-import {FInput, EInput} from '../../components/finput.js'
+import * as _ from 'lodash'
+import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
+import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import * as _ from 'lodash'
 import * as V from '../../../validators'
-import {Button} from 'element-react'
 
-import mapping from '../appealContent/mapping.js'
+import mapping from '../mapping.js'
 
 const M = mapping.apnList;
 
@@ -30,9 +30,7 @@ export class EApnList extends React.Component {
 
         const ROWS = fields.map((x, i) => (<tr key={i}>
             <td>
-                <span className='ap-table-list-number mr12'>
-                {i + 1}
-                 </span>
+                <span className='ap-table-list-number mr12'>{i + 1}</span>
             </td>
             <td>
                 <span className='inline-block mr12'>

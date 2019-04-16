@@ -9,12 +9,12 @@ import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
 import {ESwitch, FSwitch} from '../../components/switch.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import {EOrganizationFrom, FOrganizationFrom} from '../subForms/organizationFrom.js'
-import {EOrganizationControl, FOrganizationControl} from '../subForms/organizationControl.js'
+import {EOrganizationFrom, FOrganizationFrom} from './organizationFrom.js'
+import {EOrganizationControl, FOrganizationControl} from './organizationControl.js'
 import {Button, Card, Layout, Tag} from 'element-react'
 import {scanPdf} from '../../../services/scanService.js'
 
-import mapping from './mapping.js'
+import mapping from '../mapping.js'
 
 const headerTitle = 'Дополнительные материалы';
 const M = mapping.organizationsData;

@@ -36,8 +36,19 @@ class EAutocomplete extends React.Component {
 		if (value){ 
 			const key = acKey || dataKey;
 			const hasWhere = !_.isEmpty(dataWhere);
-			if (!hasWhere){
-				getAcValue(key,value).then((value)=>{this.setState({value});});			
+			if (!hasWhere){ 
+				if (key){ // quick way
+					getAcValue(key,value).then((value)=>{this.setState({value});});		
+				} else { // long hard way
+					this.getDatas().then(x=>{
+						const queryLow = value.toLowerCase();
+						const ret = this.filter(queryLow, x.data, x.dataKeyed);
+						const first = _.first(ret);
+						if (first){
+							this.setState({value: first});
+						}
+					});
+				}
 			} else {
 				this.dataWhere = dataWhere;
 				getAcNoCache(key,JSON.stringify(dataWhere)).then((result)=>{
@@ -116,6 +127,7 @@ class EAutocomplete extends React.Component {
 			(dataKeyed && dataKeyed.length) && (dState.dataKeyed = dataKeyed); 
 		}
 		this.setState(dState);
+		return dataSuggestions;
 	}
 
 	getKey(value){

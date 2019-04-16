@@ -1,13 +1,13 @@
 import React from 'react'
-import {FInput, EInput} from '../../components/finput.js'
+import * as _ from 'lodash'
 import {Field, reduxForm} from 'redux-form/immutable'
+import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import * as _ from 'lodash'
 import * as V from '../../../validators'
 import {Button, Card, Layout, Tag} from 'element-react'
 
-import mapping from '../appealContent/mapping.js'
+import mapping from '../mapping.js'
 
 const M = mapping.questionList;
 

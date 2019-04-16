@@ -1,14 +1,13 @@
 import React from 'react'
-import {FInput, EInput} from '../../components/finput.js'
+import * as _ from 'lodash'
+import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
+import {FInput, EInput} from '../../components/finput.js'
 import {FSelect} from '../../components/select.js'
 import {FAutocomplete} from '../../components/fautocomplete.js'
 import {EPicker, FPicker} from '../../components/picker.js'
-import * as _ from 'lodash'
 import * as V from '../../../validators'
-import {Button} from 'element-react'
-
-import mapping from '../appealContent/mapping.js'
+import mapping from '../mapping.js'
 
 const M = mapping.organizationFrom;
 

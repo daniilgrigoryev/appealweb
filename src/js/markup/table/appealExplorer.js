@@ -13,7 +13,7 @@ import {EInput} from '../components/finput.js'
 import {ESelect} from '../components/select.js'
 import {EAutocomplete} from '../components/fautocomplete.js'
 import {EPicker} from '../components/picker.js'
-import mapping from '../../markup/appeal/appealContent/mapping.js'
+import mapping from '../../markup/appeal/mapping.js'
 import * as _ from 'lodash'
 
 const MS = mapping.status;

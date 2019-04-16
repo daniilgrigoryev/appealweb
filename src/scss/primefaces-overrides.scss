@@ -126,6 +126,10 @@ body .p-paginator {
     font-size: 10px !important;
     color: #ccc !important;
   }
+
+  .p-autocomplete-loader.pi-spinner {
+    right: 20px !important;
+  }
 }
 
 .p-autocomplete-panel {

@@ -7,7 +7,7 @@ import {relocate} from '../markup/app/app.js'
 
 const im = (obj)=> Immutable.fromJS(obj);
 
-const VERSION_FE = '7';
+const VERSION_FE = '8';
 let VERSION_BE = null;
 let VERSION_DB = null;
 AJAX.get('root/version').then(x=>VERSION_BE=(''+x.data));

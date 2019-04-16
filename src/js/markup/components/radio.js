@@ -8,7 +8,10 @@ class ERadio extends React.Component {
     super(props);
     const {options,value} = this.props; 
     this.state = {value};
-    //debugger;
+  }
+
+  componentDidMount(){
+    const {options,value} = this.props; 
     if (''==value){
       this.setState({value: options[0].property});
     }

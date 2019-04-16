@@ -1,20 +1,20 @@
 import React, {Component} from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import {Field, reduxForm} from 'redux-form/immutable'
-import {EInput, FInput} from '../../components/finput.js'
-import {EAutocomplete, FAutocomplete} from '../../components/fautocomplete.js'
-import {ECheckbox, FCheckbox} from '../../components/checkbox.js'
-import {ESwitch, FSwitch} from '../../components/switch.js'
-import {ESelect, FSelect} from '../../components/select.js'
-import {EPicker, FPicker} from '../../components/picker.js'
 import {Button, Card, Layout, Tag} from 'element-react'
-import {post} from '../../../services/ajax.js'
+import {Field, reduxForm} from 'redux-form/immutable'
+import {EInput, FInput} from '../components/finput.js'
+import {EAutocomplete, FAutocomplete} from '../components/fautocomplete.js'
+import {ECheckbox, FCheckbox} from '../components/checkbox.js'
+import {ESwitch, FSwitch} from '../components/switch.js'
+import {ESelect, FSelect} from '../components/select.js'
+import {EPicker, FPicker} from '../components/picker.js'
+import {post} from '../../services/ajax.js'
 import Immutable from 'immutable'
 import * as _ from 'lodash'
-import {messageSet} from '../../../actions/common.js'
+import {messageSet} from '../../actions/common.js'
 
-import mapping from './../appealContent/mapping.js'
+import mapping from './mapping.js'
 
 const alias = 'CLAIM_PUSH_COMBO';
 const headerTitle = 'Основные сведения';
@@ -176,8 +176,9 @@ class SidePanel extends Component {
                     {this.props.children}
                 </div>
 
-                <div className={`ap-footer ${noSave ? 'hidden' : ''}`}>
-                    <Button disabled={noSave} onClick={stateBtnClick}>{stateBtnText}</Button>
+                <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
+                    <Button disabled={noSave} type="success" size="small" plain={true} className='mr18'  onClick={stateBtnClick}>{stateBtnText}</Button>
+                    <Button size="small" type='text'>Отменить</Button>
                 </div>
             </div>
         )

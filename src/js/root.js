@@ -12,16 +12,6 @@ import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
 import {getSessionId,getMessages} from './selectors/common.js'
 import Login from './markup/login/login.js'
-import AppealWizard from './markup/appeal/appealWizard.js'
-import ListTest from './markup/editable/listTest.js'
-import FabulasList from './markup/editable/fabulasList.js'
-import TipDocList from './markup/editable/tipDocList.js'
-import Outgoing from './markup/outgoing/outgoing.js'
-import DocLinker from './markup/outgoing/subForms/docLinker.js'
-import IncomingLetter from './markup/letter/inc/incomingLetter.js'
-import OutcomingLetter from './markup/letter/out/outcomingLetter.js'
-import  DiapSPI  from './markup/settings/diapSPI.js'
-import  Postage  from './markup/settings/postage.js'
 import webGlId from './services/webGlId.js'
 import Fingerprint from './services/fingerprint.js'
 import {getUser} from './selectors/common.js'
@@ -78,18 +68,6 @@ class Root extends React.Component {
 
   render(){
     setTimeout(this.checkMessages.bind(this),0);
-
-    if (true){
-      //return <Postage />
-      //return <IncomingLetter/>;
-      //return <DocLinker />
-      //return <AppealWizard />
-
-      //return <Outgoing/>;
-      //return <ListTest />
-      //return <FabulasList/>;
-      //return <TipDocList />
-    }
 
     const {externalLogin,loggedIn} = this.props;
 

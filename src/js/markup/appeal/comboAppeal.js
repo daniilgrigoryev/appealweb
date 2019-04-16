@@ -3,26 +3,24 @@ import {compose} from 'redux'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {reset} from 'redux-form';
+import {Card,Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import Immutable from 'immutable'
-import BasicData from './appealContent/basicData.js'
-import ClaimantData from './appealContent/claimantData.js'
-import AddressData from './appealContent/addressData.js'
-import TestElement2RF from './appealContent/testElement2rf.js' 
-import OrganizationsData from './appealContent/organizationsData.js'
-import SummaryData from './appealContent/summaryData.js'
-import TopicsData from './appealContent/topicsData.js'
-import IshDocsData from './appealContent/ishDocsData.js'
-import PlusDocs from './appealContent/plusDocs.js'
-import ArchiveData from './appealContent/archiveData.js'
-import DocsLink from './appealContent/docsLink.js'
-import FullAppeal from './fullAppeal.js' 
-import StatusData from './appealContent/statusData.js'
+import BasicData from './subForms/basicData.js'
+import ClaimantData from './subForms/claimantData.js'
+import AddressData from '../common/addressData.js' 
+import OrganizationsData from './subForms/organizationsData.js'
+import SummaryData from './subForms/summaryData.js'
+import TopicsData from './subForms/theme/topicsData.js'
+import IshDocsData from './subForms/ishdoc/ishDocsData.js'
+import PlusDocs from './subForms/plusDocs.js'
+import ArchiveData from './subForms/archiveData.js'
+import DocsLink from './subForms/docsLink.js'
+import StatusData from './subForms/statusData.js'
 import {post} from '../../services/ajax.js'
 import {appealSetId} from '../../actions/common.js'
-import {Button} from 'element-react'
 import {messageSet} from '../../actions/common.js'
-import SidePanel from './subForms/sidePanel.js'
+import SidePanel from './sidePanel.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
@@ -79,18 +77,26 @@ class ComboAppeal extends Component {
 
     return (
       <SidePanel>
-  	    <BasicData    />
-  	    <ClaimantData />
-        <AddressData fl={fl} key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}>
-          {line_adr}
-        </AddressData>
-  	    <OrganizationsData />
-  	    <SummaryData  />
-  	    <TopicsData   />
-  	    <IshDocsData  />
-        <DocsLink reloadRow={this.reloadRow} />
-  	    <ArchiveData  />	    
-      </SidePanel>
+                <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
+                    <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                        <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
+                            Новое входящее обращение
+                        </h1>
+                    </div>
+                }>
+                    <BasicData/>
+                    <ClaimantData/>
+                    <AddressData fl={fl} key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}>
+                        {line_adr}
+                    </AddressData>
+                    <OrganizationsData/>
+                    <SummaryData/>
+                    <TopicsData/>
+                    <IshDocsData/>
+                    <DocsLink reloadRow={this.reloadRow}/>
+                    <ArchiveData/>
+                </Card>
+            </SidePanel>
     ); //
   }
 }
