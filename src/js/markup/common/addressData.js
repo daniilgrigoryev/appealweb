@@ -144,7 +144,7 @@ class AddressData extends React.Component {
                     <tr>
                         <td className='ap-input-caption'>{M.STR.label}</td>
                         <td><EInput value={F[M.STR.name]} onChange={(v)=>this.onFieldChange([M.STR.name],v)} /></td>
-                        <td className='ap-input-caption'>Квартира/офис</td>,
+                        <td className='ap-input-caption'>Квартира/офис</td>
                         <td><EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} /></td>             
                     </tr>
                     <tr>
