@@ -5,6 +5,7 @@ import React, { useState,useRef } from 'react'
 import {Button, Card, Layout, Tag, Switch} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import { change } from 'redux-form'
+import AddressData2, {getAdrKey} from '../../../common/addressData2.js' 
 import {EInput, FInput} from '../../../components/finput.js'
 import {EPicker, FPicker} from '../../../components/picker.js'
 import {ECheckbox, FCheckbox} from '../../../components/checkbox.js'
@@ -18,6 +19,7 @@ import mapping from '../../mapping.js'
 const hashCode = (s)=>(s||"").split("").reduce((a,b)=>(a=((a<<5)-a)+b.charCodeAt(0), a&a),0);            
 
 const M = mapping.topicList;
+const M_STATUS = mapping.status;
 
 const data2str = (data) =>{
     if (data){
@@ -104,9 +106,12 @@ class TopicRow extends React.Component {
 
         const CCC = CC.filter(x => x && x.sys.indexOf(SYS) > -1).map(x => x.text);
         const cIndex = CCC.indexOf(P[M.CAT.name]);
-        const cRow = MM[1];//MM[cIndex+1]; // lead row offset
+        const cRow = MM[cIndex+1]; // lead row offset
 
         const cif = (field, el) => {
+            if (true){
+                return el;
+            }
             if (!cRow) {
                 return null;
             }
@@ -147,22 +152,22 @@ class TopicRow extends React.Component {
             return [collapsed];
         } //
 
-        const PRIS_UCH = (!P[M.UCH_PRIS.name]) ? null : [
-            <tr key='pu1'>
+        const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
+            <tr>
                 <td className='ap-input-caption'>{M.RASSMOTR_DATE.label}</td>
                 <td>
                     <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
                 </td>
             </tr>
-            ,
-            <tr key='pu3'>
+            <tr>
                 <td></td>
                 <td>
                     <Button type="text" size="small">
                         <span className='color-blue'>Зарезервировать слот в СУО</span>
                     </Button>
                 </td>
-            </tr>];
+            </tr>
+        </React.Fragment>);
     //
         const postSelect = (args)=>{ // подсос даты
             const AL = apn_list;
@@ -176,6 +181,8 @@ class TopicRow extends React.Component {
             dispatch(change(`appeal`, fldD, null));
             dispatch(change('appeal', fldLinkedID, null));
         }
+
+        const dispatchForm = (fieldName,fieldVal)=>dispatch(change('appeal',fieldName,fieldVal));
 
         const editable =
             <React.Fragment key={id + 'e1'}>
@@ -246,6 +253,22 @@ class TopicRow extends React.Component {
                                         <table>
                                             <tbody>
                                             <tr>
+                                                <td className='ap-input-caption'>Исполнитель</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='ap-input-caption'>Отдел исполнителя</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='ap-input-caption'>Статус по теме</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'stage_id'} dataKey='THEME_STATUS' /></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='ap-input-caption'>Дата контроля</td>
+                                                <td><Field disabled={disabled} component={FPicker} name={field + 'control_date'} datepicker='+' /></td>
+                                            </tr>
+                                            <tr>
                                                 <td className='ap-input-caption'>{M.REL_DOCS.label}</td>
                                                 <td className='ap-input ap-input--disabled'>{P[M.REL_DOCS.name]}</td>
                                             </tr>
@@ -253,6 +276,7 @@ class TopicRow extends React.Component {
                                                 <td className='ap-input-caption'>{M.UCH_PRIS.label}</td>
                                                 <td><Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/></td>
                                             </tr>
+
                                             {PRIS_UCH}
 
                                             {cif(M.CODEX_ARTICLE.name,
@@ -270,13 +294,19 @@ class TopicRow extends React.Component {
                                             {cif(M.OWNER_TS_ADR.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.OWNER_TS_ADR.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.OWNER_TS_ADR.name]} name={field + M.OWNER_TS_ADR.name}/></td>
+                                                    <td><AddressData2 key={getAdrKey(value,['owner_ts_adr_id','owner_ts_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['owner_ts_adr_id','owner_ts_adr_kvart','owner_ts_adr_line']}>
+                                                            {value.get('owner_ts_adr_line') || ''}
+                                                        </AddressData2>
+                                                    </td>
                                                 </tr>)
                                             )}
                                             {cif(M.APN_ADR.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.APN_ADR.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.APN_ADR.name]} name={field + M.APN_ADR.name}/></td>
+                                                    <td><AddressData2 key={getAdrKey(value,['apn_adr_id','apn_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['apn_adr_id','apn_adr_kvart','apn_adr_line']} >
+                                                        {value.get('apn_adr_line') || ''}
+                                                        </AddressData2>
+                                                    </td>
                                                 </tr>)
                                             )}
                                             {cif(M.APN_DATA.name,
@@ -313,7 +343,7 @@ class TopicRow extends React.Component {
                                             {cif(M.DESISION_MAKER.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.DESISION_MAKER.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}/>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} stoppe='1'/>
                                                     </td>
                                                 </tr>)
                                             )}
@@ -331,10 +361,10 @@ class TopicRow extends React.Component {
                                                     </td>
                                                 </tr>)
                                             )}
-                                            {cif(M.APPEAL_APN.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.APPEAL_APN.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_APN.name]} name={field + M.APPEAL_APN.name} dataKey={M.APPEAL_APN.key}/>
+                                            {cif(M.POST_APPEAL_CAUSE.name,
+                                                (false && <tr>
+                                                    <td className='ap-input-caption'>{M.POST_APPEAL_CAUSE.label}</td>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.POST_APPEAL_CAUSE.name]} name={field + M.POST_APPEAL_CAUSE.name} dataKey={M.POST_APPEAL_CAUSE.key}/>
                                                     </td>
                                                 </tr>)
                                             )}

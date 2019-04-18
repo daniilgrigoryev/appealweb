@@ -20,7 +20,6 @@ class EAutocomplete extends React.Component {
 	    this.select=this.select.bind(this);
 	    this.getDatas=this.getDatas.bind(this);
 	    this.suggestData=this.suggestData.bind(this);
-
 	}
 
 	componentDidUpdate(prevData) { 
@@ -31,7 +30,7 @@ class EAutocomplete extends React.Component {
 	  }
 
 	componentDidMount(){
-		const {acKey,dataKey,value,dataWhere} = this.props;
+		const {acKey,dataKey,value,dataWhere,stoppe} = this.props;
 		//value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
 		if (value){ 
 			const key = acKey || dataKey;

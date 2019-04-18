@@ -5,7 +5,13 @@ import {Checkbox} from 'element-react'
 class ECheckbox extends React.Component {
 	render(){
 		const {value,checked} = this.props;
-		const nextChecked = typeof value == 'boolean' ? value : checked;
+		let nextChecked = false;
+		if (typeof value == 'string'){
+			const str = value=='true' || value=='false'; 
+			nextChecked =  str ? ('true'==value) : (!!value);
+		} else {
+			nextChecked = typeof value == 'boolean' ? value : checked;
+		}
 		return  <Checkbox {...this.props} checked={nextChecked} />
 	} //
 }

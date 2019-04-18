@@ -72,14 +72,14 @@ export default {
 		APN_ADR:         {name: 'apn_ade',        label: 'Адрес АПН'},
 		APN_DATA:        {name: 'apn_data',       label: 'Дата АПН'},
 		DESCRIPTION:     {name: 'description',    label: 'Описание'},
-		DECISION_DATE:   {name: 'decicion_date',  label: 'Дата принятия решения'},
+		DECISION_DATE:   {name: 'decision_date',  label: 'Дата принятия решения'},
 		VIOLATOR_REGNO:  {name: 'violator_regno', label: 'ГРЗ нарушителя'},
 		APPEAL_CAUSE:    {name: 'appeal_cause',   label: 'Причина обращения', key: 'APPEAL_CAUSE'},
 
 		DESISION_MAKER:  {name: 'decision_maker', label: 'Решение принял руководитель', key:'DECISION_MAKER'},
 		DECISION_THEME:  {name: 'decision_theme', label: 'Решение по теме',             key:'APPEAL_DECISION'},
 		DECISION_BASIS:  {name: 'decision_basis', label: 'Основания для решения',       key: 'APPEAL_DECISION_BASIS'},
-		APPEAL_APN:      {name: 'appeal_apn',     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)', key:'APPEAL_CAUSE'},
+		POST_APPEAL_CAUSE: {name: 'post_appeal_cause', label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)', key:'APPEAL_CAUSE'},
 		REL_DOCS: 		 {name: 'docs',		      label: 'Сформированные документы'},
 
 		CAT: 			{name: 'category', 		  label: 'Категория',                   key:'CLAIM_CATEGORIES'},
@@ -129,12 +129,12 @@ export default {
 		ISH_DATE: 		 {name: 'date',		      label: 'Исходящая дата'}
 	},
 	questionList: {
-		QUEST: 			 {name: 'question',		  label: 'Тематика обращения',		    key: 'QUESTIONS_LIST'},
-		DEPART: 		 {name: 'department', 	  label: 'Отдел', 						key: 'DEPARTMENTS_LIST'}
+		QUEST: 			 {name: 'subject_id',	  label: 'Тематика обращения',		    key: 'QUESTIONS_LIST'},
+		DEPART: 		 {name: 'org_id', 	      label: 'Отдел', 						key: 'DEPARTMENTS_LIST'}
 	},
 	ishLinksInner: {
-		ID: 			{name: 'dod_id',				label: 'ID'},
-		DESC: 			{name: 'desc',					label: 'Описание'}
+		ID: 			{name: 'dod_id',		  label: 'ID'},
+		DESC: 			{name: 'desc',			  label: 'Описание'}
 	}, 
 	fabulaDialog : {
 		DOCUMENT : 		 {name: 'document', 	  label: 'Документ'},

@@ -113,7 +113,7 @@ class ETopicList extends React.Component {
                    claim_id={claim_id}
                    dispatch={dispatch}
                    checkExpand={(x) => x == this.state.expandedId}
-                   collapse={()=>this.setState({expandedId:false})}
+                   collapse={()=>this.setState({expandedId:-1})}
                    field={x}
                    fields={fields}
                    value={arr.get(i)}

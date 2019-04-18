@@ -7,7 +7,6 @@ import {EInput} from '../components/finput.js'
 import {EAutocomplete} from '../components/fautocomplete.js'
 import {getAc,getAcValue,getAcNoCache} from '../../services/acCacher.js'
 import {post} from '../../services/ajax.js'
-
 import mapping from '../appeal/mapping.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
@@ -16,25 +15,88 @@ const M = mapping.claimantData;
 const alias_push = "ADDR_PUSH";
 const alias_get  = "ADDR_GET";
 
-class AddressData extends React.Component {
+class AddressData2 extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             isStr : true,
-            fullAddr: this.props.fullAddr
-        }
+            fullAddr: {}
+        }       
 
-        this.changeMode = this.changeMode.bind(this);
         this.save = this.save.bind(this);
+        this.changeMode = this.changeMode.bind(this);
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onListChange = this.onListChange.bind(this);
     }
+
+    componentDidMount(){
+        const {source,sid,fields} = this.props;
+        const [fId,fKvart,fLine] = fields;
+
+        const getField = (field)=>(source.get ? source.get(field) : source[field]);
+
+        const adr_id   = getField(fId);
+        const kvart    = getField(fKvart);
+        //const line_adr = getField(fLine);
+
+        const alias  = alias_get;
+        const denormalize = true;
+
+        debugger;
+
+        post('db/select',{alias,sid,kvart,adr_id,denormalize}).then(resp=>{
+            const {data,error} = resp;
+            if (error){
+                return;
+            }
+            const f = _.first(data);
+
+            /*
+
+            country_code_i: null,
+            street_id : FULL.street_id || null,
+            street_name_i : null,
+            city_id : FULL.city_id || null,
+            npunkt_tip_kod_i : null,
+            npunkt_name_i : null,
+            rayon_id : FULL.rayon_id || null,
+            rayon_name_i : null,
+            region : FULL.region || null,
+            region_kod_i : null,
+            dom : FULL.dom || null,
+            korpus : FULL.korpus || null,
+            str : FULL.str || null,
+            pindex : FULL.pindex || null,
+            okato_i: null,
+            kvart: FULL.kvart || null
+
+            */
+
+            const fullAddr = {
+                cdr_address_id: adr_id || null,
+                dom :      f['NDOM'] || null,
+                korpus:    f['NKORPUS'] || null,
+                kvart:     kvart,
+                line_adr:  f['LINE_ADR']  || null,
+                city_id:   f['CITY_ID']   || null,
+                pindex:    f['PINDEX']    || null,
+                rayon_id:  f['RAYON_ID']  || null ,
+                region:    f['REGION_ID'] || null, //  REGION_KOD
+                str:       f['NSTROENIE'] || null,
+                street_id: f['STREET_ID'] || null
+            }
+
+            this.setState({fullAddr});
+        });
+    }
   
     save() {
-        const {sid, cBack} = this.props;
+        const {sid, cBack,dispatchForm,rootField,fields} = this.props;
+        const [fId,fKvart,fLine] = fields;
         const FULL = this.state.fullAddr;
         const alias = alias_push;
+        const denormalize = true;
 
         let dat = {
             country_code_i: null,
@@ -55,17 +117,30 @@ class AddressData extends React.Component {
             kvart: FULL.kvart || null
         }
         
-        post('db/select',{alias,sid,...dat}).then(x=>{
-            const D = x.data;
-            if (D && !D.error && D.rows && D.rows[0]) {
-                const [CDR,lineAddr] = D.rows[0];
-                if (CDR && lineAddr) {
-                    let arrayAgg = _.reduce(_.toPairs(dat), (res, val) => (res.push({name:val[0],value:val[1]}),res),[]);
-                    arrayAgg.push({name : 'cdr_address_id', value : CDR.value}); 
-                    arrayAgg.push({name : 'line_adr', value : lineAddr.value});
-                    cBack(arrayAgg);
-                }
+        post('db/select',{alias,sid,denormalize,...dat}).then(resp=>{
+            const {data,error} = resp;
+            if (error){
+                console.error('Address data form error',error);
+                return;
             }
+debugger;
+            const row = _.first(data);
+            const arg = {
+                adr_id: row.ADR_ID     || '',
+                kvart: FULL.kvart      || '',
+                line_adr: row.LINE_ADR || '' 
+            };
+
+            if (cBack){
+                cBack(arg);
+            } else if (dispatchForm){
+                const rf = rootField || '';
+                dispatchForm(rf+fId    ,arg.adr_id );
+                dispatchForm(rf+fKvart ,arg.kvart);
+                dispatchForm(rf+fLine  ,arg.line_adr);
+            } else {
+                // ? source modify
+            }                
         });
 
         const isS = !this.state.isStr;
@@ -102,10 +177,10 @@ class AddressData extends React.Component {
     }
 
     render() {
-        const {children} = this.props;
+        const {children} = this.props; 
         const F = this.state.fullAddr;
-        const line_adr = F.fullAddr;
-        const placeholder = children || line_adr || '';     
+        const line_adr = this.fullAddr;
+        const placeholder = children || line_adr || '';    
         
         const ADDRESS = this.state.isStr
                 ? (<tr>
@@ -144,7 +219,7 @@ class AddressData extends React.Component {
                     <tr>
                         <td className='ap-input-caption'>{M.STR.label}</td>
                         <td><EInput value={F[M.STR.name]} onChange={(v)=>this.onFieldChange([M.STR.name],v)} /></td>
-                        <td className='ap-input-caption'>Квартира/офис</td>,
+                        <td className='ap-input-caption'>Квартира/офис</td>
                         <td><EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} /></td>             
                     </tr>
                     <tr>
@@ -184,7 +259,7 @@ class AddressData extends React.Component {
         return (
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                        <Card bodyStyle={{'padding-top': 0}} className="box-card">
+                        <Card bodyStyle={{'padding-top': 0, width: '600px'}} className="box-card">
                             <hr class="txt-hr my6"/>
                             <h4 className='ap-h4 flex-parent flex-parent--center-cross'>Адрес</h4>
                             <form className='ml0'>
@@ -197,6 +272,23 @@ class AddressData extends React.Component {
     }
 } //
 
-const mapStateToProps = (state) => ({sid : state.getIn(['general','user','sessionID'])});
+const mapStateToProps = (state) => ({sid:state.getIn(['general','user','sessionID'])})
 
-export default connect(mapStateToProps)(AddressData)
+const getAdrKey = (source={},fields=[])=>{
+    const [fId,fKvart] = fields;
+
+
+    const hasGetter = typeof source.get == 'function';
+
+    const getField = hasGetter 
+        ? (field)=>source.get(field) 
+        : (field)=>(source[field]);
+
+    const adr_id   = getField(fId);
+    const kvart    = getField(fKvart);
+    return adr_id+'=>'+kvart;
+}
+
+export default connect(mapStateToProps)(AddressData2)
+
+export {getAdrKey}

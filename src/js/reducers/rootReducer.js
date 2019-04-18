@@ -7,7 +7,7 @@ import {relocate} from '../markup/app/app.js'
 
 const im = (obj)=> Immutable.fromJS(obj);
 
-const VERSION_FE = '8';
+const VERSION_FE = '9';
 let VERSION_BE = null;
 let VERSION_DB = null;
 AJAX.get('root/version').then(x=>VERSION_BE=(''+x.data));
@@ -59,7 +59,7 @@ const ROOT_ACTIONS = {
   [A.APPEAL_LOAD]    : reduceAppealLoad
 }
 
-const rootReducer = function(state, action){
+const rootReducer = (state, action)=>{
   const change = ROOT_ACTIONS[action.type];
   return change ? change(state,action) : state;
 }

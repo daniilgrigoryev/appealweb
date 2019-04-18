@@ -40,55 +40,34 @@ class ComboAppeal extends Component {
     dispatch(initialize(im(x.data)));
   }
 
-
   render(){
     const {dispatch,change,initialize,formData} = this.props;    
-    const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
-
+    
     try{
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
         window.location.hash = h[0];
         setTimeout(()=>dispatch(initialize(im({}))),100);
       }
-    } catch (exc) { 
+    } catch (exc) {
       //debugger;
     }//
 
-    let fullAddr = {};
-    let fl = false;
-    let line_adr = '';
-    if (formData) {
-      fl       = formData.get('zajav_lic')|| false;
-      line_adr = formData.get('line_adr') || '';
-      fullAddr = _.pick(formData.toJS(), [
-        'cdr_address_id', 
-        'dom', 
-        'korpus', 
-        'kvart',
-        'line_adr', 
-        'city_id', 
-        'pindex', 
-        'rayon_id', 
-        'region', 
-        'str', 
-        'street_id']);
-    }
-
+    const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
+    const fullAddr = !formData ? {} : _.pick(formData.toJS(), ['zajav_lic','cdr_address_id','dom','korpus','kvart','line_adr','city_id','pindex','rayon_id','region','str','street_id']);
+    
     return (
       <SidePanel>
                 <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
                     <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                         <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
-                            Новое входящее обращение
+                            Входящее обращение
                         </h1>
                     </div>
                 }>
                     <BasicData/>
                     <ClaimantData/>
-                    <AddressData fl={fl} key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}>
-                        {line_adr}
-                    </AddressData>
+                    <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
                     <OrganizationsData/>
                     <SummaryData/>
                     <TopicsData/>

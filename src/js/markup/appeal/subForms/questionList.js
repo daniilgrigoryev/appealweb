@@ -11,11 +11,12 @@ import mapping from '../mapping.js'
 
 const M = mapping.questionList;
 
-const getRow = (id,question, department) => {
+const getRow = (id,question, department,control_date) => {
     return {
         id: id||null,
         question: question || null,
-        department: department || null
+        department: department || null,
+        control_date: control_date || null
     }
 }
 
@@ -32,14 +33,17 @@ export class EQuestionList extends React.Component {
             </td>
             <td>
                  <span className='inline-block mr12'>
-                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]}
-                            dataKey={M.QUEST.key}/>
-                      </span>
+                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key}/>
+                 </span>
             </td>
             <td>
                 <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]}
-                           dataKey={M.DEPART.key}/>
+                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key}/>
+                </span>
+            </td>
+            <td>
+                <span className='inline-block mr12'>
+                    <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' />
                 </span>
             </td>
             <td>{disabled ? null :
@@ -61,6 +65,7 @@ export class EQuestionList extends React.Component {
                             <th className='ap-table__header'>№</th>
                             <th className='ap-table__header'>{M.QUEST.label}</th>
                             <th className='ap-table__header'>{M.DEPART.label}</th>
+                            <th className='ap-table__header'>Дата контроля</th>
                         </tr>
                         </thead>
                         <tbody>

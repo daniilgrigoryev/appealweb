@@ -1,10 +1,12 @@
 import React from 'react'
+import moment from 'moment'
 import withValidators from './tooltipper.js'
 import {TimePicker, DatePicker} from 'element-react'
 import MaskedInput from 'react-text-mask'
 
 // Element component
-const ofs = new Date().getTimezoneOffset() * 60 * 1000;
+
+const DATE_FORMAT = 'YYYY-MM-DD"T"HH:mm:ss"Z"';
 
 class APicker extends React.Component {
     render() {
@@ -13,18 +15,17 @@ class APicker extends React.Component {
         value = value || null;
 
         if (typeof value == 'string') {
-            value = new Date(Date.parse(value) + ofs)
-            //value = new Date(Date.parse('2019-03-13T00:00:00.000Z') + ofs)
+            value = moment(value,DATE_FORMAT).toDate();
         }
 
-        const customChanger = (newVal) => {
+        const customChanger = (inpVal) => {
+            let newVal = !inpVal ?  null :moment(inpVal).format(DATE_FORMAT);
             let changer = null;
             if (reduxformfield) {
                 this.props.input.onChange(newVal);
             } else if (changer = this.props.onChange) {
                 changer(newVal);
             } else if (changer = this.props.onValidate) {
-                ;
                 changer(newVal);
             }
         }
@@ -60,8 +61,7 @@ class APicker extends React.Component {
             return <TimePicker {...p} value={value} onChange={customChanger}/>;
         } else { //
             const isShowTime = !!datetimepicker;
-            return <DatePicker {...p} isShowTime={isShowTime} value={value} onFocus={datePickerFormatToday}
-                               onChange={customChanger}/>
+            return <DatePicker {...p} isShowTime={isShowTime} value={value} onFocus={datePickerFormatToday} onChange={customChanger}/>
         } //
     } //
 }

@@ -91,7 +91,7 @@ const IshDocRow = (props) => {
                     </td>
                 </tr>
             </React.Fragment>
-);
+        );
         return [collapsed];
     } //
 

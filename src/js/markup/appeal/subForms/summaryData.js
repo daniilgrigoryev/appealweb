@@ -19,8 +19,7 @@ const headerTitle = 'Краткое содержание';
 const M = mapping.SummaryData;
 
 const SummaryData = props => {
-    const {nextPage, handleSubmit, prevPage, header, disabled} = props;
-    const navi = !disabled && (nextPage||prevPage);
+    const {handleSubmit,disabled} = props;
     
     return (
         <div scrollanchor='summary'>
@@ -28,27 +27,10 @@ const SummaryData = props => {
                 <Layout.Col span="24">
                     <Card className="box-card border-b--0" header={
                         <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                {headerTitle}
-                            </h3>
-
-                            {!navi
-                                ? null
-                                : (<div>
-                                    <Tag type="gray" className='mx12'>4/8</Tag>
-
-                                    <Button.Group>
-                                        <Button type="primary" size='small' onClick={prevPage} icon="arrow-left" />
-                                        <Button type="primary" size='small' onClick={nextPage}>
-                                            <i className="el-icon-arrow-right el-icon-right"/>
-                                        </Button>
-                                    </Button.Group>
-                                </div>)
-                            }
+                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>{headerTitle}</h3>
                         </div>
-                    } bodyStyle={{'padding-bottom': 0}}>
+                    } bodyStyle={{'paddingBottom': 0}}>
                         <form onSubmit={handleSubmit}>
-                            <h4 className='ap-h4'>Тематика обращения</h4>
                             <FieldArray component={EQuestionList} name='questions' disabled={disabled}/>
 
                             <hr className='txt-hr my18'/>

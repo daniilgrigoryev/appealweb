@@ -66,22 +66,22 @@ const categories = [void 0 /*matrix index sync - void cell*/,
 	-label: видимый в интерфейсе текст (слева от поля ввода)
 */
 const fields = [
-	{field: M.CODEX_ARTICLE.name , label: 'Статья кодекса'},
-	{field: M.OWNER_TS.name,       label: 'Владелец транспортного средства'},
-	{field: M.OWNER_TS_ADR.name,   label: 'Адрес владельца транспортного средства'},
-	{field: M.APPEAL_APN.name,     label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)'},
-	{field: M.UCH_PRIS.name,       label: 'Необходимо присутствие участника'},
-	{field: M.RASSMOTR_DATE.name,  label: 'Дата рассмотрения дела'},
-	{field: M.RASSMOTR_TIME.name,  label: 'Время рассмотрения дела'},
-	{field: M.DECISION_THEME.name, label: 'Решение по теме'},
-	{field: M.DECISION_BASIS.name, label: 'Основания для решения'},
-	{field: M.APN_ADR.name,        label: 'Адрес АПН'},
-	{field: M.APN_DATA.name,       label: 'Дата АПН'},
-	{field: M.DESCRIPTION.name,    label: 'Описание'},
-	{field: M.DESISION_MAKER.name, label: 'Решение принял руководитель'},
-	{field: M.DECISION_DATE.name,  label: 'Дата принятия решения'},
-	{field: M.VIOLATOR_REGNO.name, label: 'ГРЗ нарушителя'},
-	{field: M.APPEAL_CAUSE.name,   label: 'Причина обращения'}
+	{field: M.CODEX_ARTICLE.name , 		label: 'Статья кодекса'},
+	{field: M.OWNER_TS.name,       		label: 'Владелец транспортного средства'},
+	{field: M.OWNER_TS_ADR.name,   		label: 'Адрес владельца транспортного средства'},
+	{field: M.POST_APPEAL_CAUSE.name,   label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)'},
+	{field: M.UCH_PRIS.name,       		label: 'Необходимо присутствие участника'},
+	{field: M.RASSMOTR_DATE.name,  		label: 'Дата рассмотрения дела'},
+	{field: M.RASSMOTR_TIME.name,  		label: 'Время рассмотрения дела'},
+	{field: M.DECISION_THEME.name, 		label: 'Решение по теме'},
+	{field: M.DECISION_BASIS.name, 		label: 'Основания для решения'},
+	{field: M.APN_ADR.name,        		label: 'Адрес АПН'},
+	{field: M.APN_DATA.name,       		label: 'Дата АПН'},
+	{field: M.DESCRIPTION.name,    		label: 'Описание'},
+	{field: M.DESISION_MAKER.name, 		label: 'Решение принял руководитель'},
+	{field: M.DECISION_DATE.name,  		label: 'Дата принятия решения'},
+	{field: M.VIOLATOR_REGNO.name, 		label: 'ГРЗ нарушителя'},
+	{field: M.APPEAL_CAUSE.name,   		label: 'Причина обращения'}
 ];
 
 /*
