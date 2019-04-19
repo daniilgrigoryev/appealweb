@@ -35,8 +35,7 @@ class IshDocsData extends React.Component {
 
     render(){
         const props = this.props;
-        const {handleSubmit, pristine, nextPage, prevPage, submitting, disabled, categories,claim_id} = props;
-        const navi = !disabled && (nextPage||prevPage);
+        const {handleSubmit,disabled,categories,claim_id} = props;
         const fTypes = this.state.fabulaDocTypes;
         
         return (
@@ -48,20 +47,6 @@ class IshDocsData extends React.Component {
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                     {headerTitle}
                                 </h3>
-
-                                {!navi
-                                    ? null
-                                    : (<div>
-                                        <Tag type="gray" className='mx12'>6/8</Tag>
-
-                                        <Button.Group>
-                                            <Button type="primary" size='small' onClick={prevPage} icon="arrow-left" />
-                                            <Button type="primary" size='small' onClick={nextPage}>
-                                                <i className="el-icon-arrow-right el-icon-right"/>
-                                            </Button>
-                                        </Button.Group>
-                                    </div>)
-                                }
                             </div>
                         }>
                             <form onSubmit={handleSubmit}>

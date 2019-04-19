@@ -1,5 +1,6 @@
 import React from 'react'
 import * as _ from 'lodash'
+import moment from 'moment'
 import {Button, Dropdown} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../../components/finput.js'
@@ -16,6 +17,12 @@ import Immutable from 'immutable'
 const M = mapping.ishDocList;
 
 const data2str = (data) =>{
+    if (typeof data == 'string'){
+        try{        
+            return moment(Date.parse(data)).format('DD.MM.YYYY');
+        } catch(e){}
+    }
+
     if (data){
         return (data instanceof Date) ? data.toISOString() : data; 
     }
@@ -34,7 +41,7 @@ const IshDocRow = (props) => {
     const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes} = props;
 
     const id = value.get('id');
-    const related_topic = value.get('related_topic');
+    const related_topic = value.get('linked_theme_id');
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -49,12 +56,18 @@ const IshDocRow = (props) => {
     let DOC_MAKER = null;
     if (!disabled){
         if (hasTopic){
-            DOC_MAKER = (<Dropdown onCommand={commandFabula} menu={
-                            (<Dropdown.Menu>
-                                {fTypes.map(x => <Dropdown.Item command={x.property}>{x.value}</Dropdown.Item>)}
-                            </Dropdown.Menu>)}>
-                            <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
-                        </Dropdown>);
+            const menu = <Dropdown.Menu>
+                                {fTypes.map(x=><Dropdown.Item key={x.property} command={x.property}>{x.value}</Dropdown.Item>)}
+                        </Dropdown.Menu>;
+
+            DOC_MAKER = (
+                <React.Fragment>
+                    <Dropdown onCommand={commandFabula} menu={menu}>
+                        <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
+                    </Dropdown>
+                    <Button size="small" style={{marginLeft: '10px'}}>Загрузить документ</Button>
+                    <Button size="small">Сканировать документ</Button>
+                </React.Fragment>);
         } else { //
             DOC_MAKER = (<span>Конструктор шаблонов доступен после связывания документа с темой</span>);
         }
@@ -111,25 +124,25 @@ const IshDocRow = (props) => {
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.DOC_TARGET.label}</p>
-                                        <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} value={P[M.DOC_TARGET.name]}/>
+                                        <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} />
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.ISH_NUM.label}</p>
-                                        <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} value={P[M.ISH_NUM.name]}/>
+                                        <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} />
                                      </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.ISH_DATE.label}</p>
-                                        <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} value={P[M.ISH_DATE.name]} datepicker='+'/>
+                                        <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} datepicker='+'/>
                                     </span>
                                 </td>
                                 <td colSpan='3'>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.PODPISAL.label}</p>
-                                        <Field disabled={disabled} component={FInput} name={field + M.PODPISAL.name} value={P[M.PODPISAL.name]}/>
+                                        <Field disabled={disabled} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
                                     </span>
                                 </td>
                             </tr>
@@ -140,28 +153,32 @@ const IshDocRow = (props) => {
                                         <tbody>
                                         <tr>
                                             <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
-                                            <td>
-                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name}   value={P[M.REL_TOPIC.name]} datapromise={tGetter}/>
-                                            </td>
-                                            <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
-                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name}  value={P[M.CRYPTO_SIGN.name]}/></td>
+                                            <td colSpan='3'>
+                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name} datapromise={tGetter} stoppe='+'/>
+                                            </td>                                            
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  value={P[M.DOC_VID.name]} dataKey={M.DOC_VID.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  dataKey={M.DOC_VID.key}/></td>
                                             <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name}   value={P[M.DELIV_TYPE.name]} dataKey={M.DELIV_TYPE.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}    value={P[M.SHEETS_COUNT.name]}/></td>
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}   /></td>
                                             <td className='ap-input-caption'>{M.EDO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} value={P[M.EDO_NUM.name]}/></td>
+                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} /></td>
                                         </tr>
 
                                         <tr>
                                             <td className='ap-input-caption'>{M.COMMENT.label}</td>
-                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} value={P[M.COMMENT.name]} type="textarea"/></td>
+                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td className='ap-input-caption'>Статус проекта документов</td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' /></td>
+                                            <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
+                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} /></td>
                                         </tr>
                                         </tbody>
                                     </table>

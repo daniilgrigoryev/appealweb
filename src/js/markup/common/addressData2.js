@@ -43,36 +43,12 @@ class AddressData2 extends React.Component {
         const alias  = alias_get;
         const denormalize = true;
 
-        debugger;
-
         post('db/select',{alias,sid,kvart,adr_id,denormalize}).then(resp=>{
             const {data,error} = resp;
             if (error){
                 return;
             }
             const f = _.first(data);
-
-            /*
-
-            country_code_i: null,
-            street_id : FULL.street_id || null,
-            street_name_i : null,
-            city_id : FULL.city_id || null,
-            npunkt_tip_kod_i : null,
-            npunkt_name_i : null,
-            rayon_id : FULL.rayon_id || null,
-            rayon_name_i : null,
-            region : FULL.region || null,
-            region_kod_i : null,
-            dom : FULL.dom || null,
-            korpus : FULL.korpus || null,
-            str : FULL.str || null,
-            pindex : FULL.pindex || null,
-            okato_i: null,
-            kvart: FULL.kvart || null
-
-            */
-
             const fullAddr = {
                 cdr_address_id: adr_id || null,
                 dom :      f['NDOM'] || null,
@@ -123,7 +99,7 @@ class AddressData2 extends React.Component {
                 console.error('Address data form error',error);
                 return;
             }
-debugger;
+
             const row = _.first(data);
             const arg = {
                 adr_id: row.ADR_ID     || '',
@@ -259,12 +235,16 @@ debugger;
         return (
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                        <Card bodyStyle={{'padding-top': 0, width: '600px'}} className="box-card">
-                            <hr class="txt-hr my6"/>
+                        <Card bodyStyle={{'paddingTop': 0, width: '600px'}} className="box-card">
+                            <hr className="txt-hr my6"/>
                             <h4 className='ap-h4 flex-parent flex-parent--center-cross'>Адрес</h4>
-                            <form className='ml0'>
-                                {ADDRESS}
-                            </form>
+                            <div className='ml0'>
+                                <table>
+                                    <tbody>
+                                        {ADDRESS}
+                                    </tbody>
+                                </table>
+                            </div>
                         </Card>
                     </Layout.Col>
                 </Layout.Row>

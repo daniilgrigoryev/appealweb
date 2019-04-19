@@ -184,11 +184,15 @@ class AddressData extends React.Component {
         return (
                 <Layout.Row gutter="20">
                     <Layout.Col span="24">
-                        <Card bodyStyle={{'padding-top': 0}} className="box-card">
-                            <hr class="txt-hr my6"/>
+                        <Card bodyStyle={{'paddingTop': 0}} className="box-card">
+                            <hr className="txt-hr my6"/>
                             <h4 className='ap-h4 flex-parent flex-parent--center-cross'>Адрес</h4>
                             <form className='ml0'>
-                                {ADDRESS}
+                            <table>
+                                <tbody>
+                                    {ADDRESS}
+                                </tbody>
+                            </table>
                             </form>
                         </Card>
                     </Layout.Col>

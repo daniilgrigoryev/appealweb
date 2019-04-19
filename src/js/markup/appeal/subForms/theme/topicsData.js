@@ -28,7 +28,7 @@ const TopicsData = props => {
         <div scrollanchor='topics'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
-                    <Card className="box-card" bodyStyle={{'padding-top': 0}}>
+                    <Card className="box-card" bodyStyle={{'paddingTop': 0}}>
                         <form onSubmit={handleSubmit}>
                             <hr className='txt-hr my9'/>
                             <h4 className='ap-h4'>Список тем обращения</h4>

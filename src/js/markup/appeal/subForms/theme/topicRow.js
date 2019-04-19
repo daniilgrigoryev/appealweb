@@ -22,11 +22,17 @@ const M = mapping.topicList;
 const M_STATUS = mapping.status;
 
 const data2str = (data) =>{
+    if (typeof data == 'string'){
+        try{        
+            return moment(Date.parse(data)).format('DD.MM.YYYY');
+        } catch(e){}
+    }
+
     if (data){
         return (data instanceof Date) ? data.toISOString() : data; 
     }
     return '';
-}
+} 
 
 const stopPg = (cb, id) => (evt) => {
     evt.stopPropagation();
@@ -343,7 +349,7 @@ class TopicRow extends React.Component {
                                             {cif(M.DESISION_MAKER.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.DESISION_MAKER.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} stoppe='1'/>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} />
                                                     </td>
                                                 </tr>)
                                             )}

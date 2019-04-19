@@ -32,6 +32,11 @@ class EAutocomplete extends React.Component {
 	componentDidMount(){
 		const {acKey,dataKey,value,dataWhere,stoppe} = this.props;
 		//value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
+		
+		if (stoppe){
+			debugger;
+		}
+
 		if (value){ 
 			const key = acKey || dataKey;
 			const hasWhere = !_.isEmpty(dataWhere);
@@ -41,7 +46,7 @@ class EAutocomplete extends React.Component {
 				} else { // long hard way
 					this.getDatas().then(x=>{
 						const queryLow = value.toLowerCase();
-						const ret = this.filter(queryLow, x.data, x.dataKeyed);
+						const ret = this.filter(null, x.data, x.dataKeyed,queryLow);
 						const first = _.first(ret);
 						if (first){
 							this.setState({value: first});
@@ -114,11 +119,19 @@ class EAutocomplete extends React.Component {
 		return {data:dataLabels,dataKeyed};
 	}
 
-	filter(queryLow,data,dataKeyed){
+	filter(queryLow,data,dataKeyed,queryKey=null){
 		const d = this.state.data || data;
 		if (!d || d.error){
 			return [];
 		}
+		if (queryKey){
+			const first = _.first(dataKeyed);
+			const queryLow = queryKey.toLowerCase();
+			return (first.property == first.value) // noKey
+				? d.filter((row)=>row.toLowerCase().indexOf(queryLow)>-1)
+				: dataKeyed.filter((row)=>row.property==queryLow).map(x=>x.value);
+		}
+
 		const dataSuggestions = d.filter((row)=>row.toLowerCase().indexOf(queryLow)>-1);
 		const dState = {dataSuggestions};
 		if (data && data.length){

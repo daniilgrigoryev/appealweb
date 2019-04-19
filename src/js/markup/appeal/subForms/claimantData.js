@@ -193,7 +193,7 @@ class ClaimantData extends React.Component {
                         </h3>
                     </div>
                 }
-                bodyStyle={{'padding-bottom': 0}}
+                bodyStyle={{'paddingBottom': 0}}
                 >
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
