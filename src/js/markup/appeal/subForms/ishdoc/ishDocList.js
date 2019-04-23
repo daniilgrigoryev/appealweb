@@ -104,7 +104,7 @@ class EIshDocList extends React.Component {
         const xpd = this.onExpand.bind(this);
         const dialogOpenFabula = this.dialogOpenFabula.bind(this);
 
-        const {fields, disabled,claim_id,fTypes,categories} = this.props;
+        const {fields, disabled,claim_id,fTypes,categories,dispatch} = this.props;
         const fabData = {};
         const DIALOG = this.state.dialog;
 
@@ -112,7 +112,7 @@ class EIshDocList extends React.Component {
         const ROWS = fields.map((x, i, arr) => (
             <IshDocRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
                    onRemove={rmv} onExpand={xpd} onFabula={dialogOpenFabula} fabData={fabData} claim_id={claim_id} fTypes={fTypes}
-                   disabled={disabled} categories={categories} collapse={()=>this.setState({expandedId:false})}>{x.value}
+                   disabled={disabled} categories={categories} dispatch={dispatch} collapse={()=>this.setState({expandedId:false})}>{x.value}
             </IshDocRow>)); //
         
         return (

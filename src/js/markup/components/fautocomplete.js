@@ -32,11 +32,6 @@ class EAutocomplete extends React.Component {
 	componentDidMount(){
 		const {acKey,dataKey,value,dataWhere,stoppe} = this.props;
 		//value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
-		
-		if (stoppe){
-			debugger;
-		}
-
 		if (value){ 
 			const key = acKey || dataKey;
 			const hasWhere = !_.isEmpty(dataWhere);

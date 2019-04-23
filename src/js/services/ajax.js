@@ -38,11 +38,17 @@ const ajax = (method,url,payload,ajaxOpts) => {
 		opts.params = opts.data;
 	} else if (method=='POST_FILE'){
 		const data = new FormData();
-		data.append("file", payload);
-
+		if (!payload.file){
+			data.append("file", payload);
+		} else {
+			for (let key in payload){
+				data.append(key, payload[key]);
+			}
+		}
+		data.append('sessionId',sessionId);
+		opts.data = data;
 		opts.responseType= 'blob';
 		opts.method='POST';
-		opts.data = data;
 		opts.headers['Content-Type'] = 'multipart/form-data';
 		delete opts.headers['Accept'];
 	} else if(method=='MULTIPART'){

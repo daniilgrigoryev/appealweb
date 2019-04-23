@@ -80,7 +80,7 @@ export default {
 		DECISION_THEME:  {name: 'decision_theme', label: 'Решение по теме',             key:'APPEAL_DECISION'},
 		DECISION_BASIS:  {name: 'decision_basis', label: 'Основания для решения',       key: 'APPEAL_DECISION_BASIS'},
 		POST_APPEAL_CAUSE: {name: 'post_appeal_cause', label: 'Причина жалобы на постановление по делу об АПН  (В случае отмены указывается причина отмены)', key:'APPEAL_CAUSE'},
-		REL_DOCS: 		 {name: 'docs',		      label: 'Сформированные документы'},
+		REL_DOCS: 		 {name: 'docs',		      label: 'Файлы по теме'},
 
 		CAT: 			{name: 'category', 		  label: 'Категория',                   key:'CLAIM_CATEGORIES'},
 		POST_N: 		{name: 'post_n',		  label: '№ постановления' },
@@ -115,7 +115,7 @@ export default {
 		NOTIF: 			 {name: 'notif',		   label: 'Уведомление'},
 		CALL: 			 {name: 'call', 		   label: 'Вызов'},
 		INIT_LETTER: 	 {name: 'init_tetter', 	   label: 'Инициативное письмо'},
-		FORMED_DOCS: 	 {name: 'formed_docs', 	   label: 'Сформированные документы'}
+		FORMED_DOCS: 	 {name: 'formed_docs', 	   label: 'Файлы проекта документов'}
 	},
 	organizationControl: {
 		ORG_NAME: 		 {name: 'name',			  label: 'Наименование',        key: 'ORG_LIST'},

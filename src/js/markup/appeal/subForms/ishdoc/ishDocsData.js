@@ -35,9 +35,10 @@ class IshDocsData extends React.Component {
 
     render(){
         const props = this.props;
-        const {handleSubmit,disabled,categories,claim_id} = props;
+        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize} = props;
         const fTypes = this.state.fabulaDocTypes;
-        
+        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize};
+
         return (
             <div scrollanchor='ishDoc'>
                 <Layout.Row gutter="20">
@@ -51,7 +52,7 @@ class IshDocsData extends React.Component {
                         }>
                             <form onSubmit={handleSubmit}>
                                 <h4 className='ap-h4'>Проекты документов</h4>
-                                <FieldArray name='ish_docs_data' component={FIshDocList} disabled={disabled} categories={categories} claim_id={claim_id} fTypes={fTypes}/>
+                                <FieldArray name='ish_docs_data' component={FIshDocList} {...p}/>
                             </form>
                         </Card>
                     </Layout.Col>

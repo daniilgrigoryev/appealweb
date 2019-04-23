@@ -22,7 +22,6 @@ class Login extends React.Component {
 
     this.onInput = this.onInput.bind(this);
     this.onLogin = this.onLogin.bind(this);
-    this.onFileLoad = this.onFileLoad.bind(this);
   }
 
   onInput(evt){
@@ -48,11 +47,6 @@ class Login extends React.Component {
     this.props.dispatch(loginRequest(loginData));
   }
 
-  onFileLoad(e) {
-    const file = e.target.files[0];
-    const res = this.props.dispatch(loadRequest(file));
-  }
-
   render (){
     const {username,password} = this.state; 
     return (
@@ -63,7 +57,6 @@ class Login extends React.Component {
               <input type="text"     placeholder="Username" id="username" onChange={this.onInput} value={username}  />
               <input type="password" placeholder="Password" id="password" onChange={this.onInput} value={password}  />
               <button onClick={this.onLogin}>Submit</button>
-              <input type="file" name="file" onChange={this.onFileLoad} />
           </div>
         </div>
     ); //

@@ -47,7 +47,7 @@ export function push(sessionId,alias,data,jsonMode=false){
 }
 
 export function loadFile(file) { 
-	return AJ.postFile('doc/load_docx', file);
+	return AJ.postFile('storage/push', file);
 }
 
 export function fetchAutocomplete(key,dataWhere){
@@ -61,7 +61,6 @@ export function fetchSelect(key,dataWhere){
 		default: return AJ.post("db/select",{alias : key, listValueField : 'value', dataWhere});
 	}
 }
-
 
 export function fetchDecisionsRegionalCourt(){
 	return new Promise((resolve,reject)=>{

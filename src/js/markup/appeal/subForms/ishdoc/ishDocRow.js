@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import * as _ from 'lodash'
 import moment from 'moment'
+import { change } from 'redux-form'
 import {Button, Dropdown} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../../components/finput.js'
@@ -10,15 +11,16 @@ import {FAutocomplete} from '../../../components/fautocomplete.js'
 import {getAc} from '../../../../services/acCacher.js'
 import FabulaDialog from '../fabulaDialog.js'
 import mapping from '../../mapping.js'
-import {post} from '../../../../services/ajax.js'
+import {post,postFile,mpt} from '../../../../services/ajax.js'
 import {getSessionId, getSystem} from '../../../../selectors/common.js'
 import Immutable from 'immutable'
+import IshDocsData from './ishDocFile.js'
 
 const M = mapping.ishDocList;
 
 const data2str = (data) =>{
     if (typeof data == 'string'){
-        try{        
+        try{
             return moment(Date.parse(data)).format('DD.MM.YYYY');
         } catch(e){}
     }
@@ -38,10 +40,11 @@ const stopPg = (cb, id) => (evt) => {
 const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
 const IshDocRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes} = props;
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch} = props;
 
     const id = value.get('id');
     const related_topic = value.get('linked_theme_id');
+    const files = value.get('files');
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -65,8 +68,6 @@ const IshDocRow = (props) => {
                     <Dropdown onCommand={commandFabula} menu={menu}>
                         <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
                     </Dropdown>
-                    <Button size="small" style={{marginLeft: '10px'}}>Загрузить документ</Button>
-                    <Button size="small">Сканировать документ</Button>
                 </React.Fragment>);
         } else { //
             DOC_MAKER = (<span>Конструктор шаблонов доступен после связывания документа с темой</span>);
@@ -109,6 +110,11 @@ const IshDocRow = (props) => {
     } //
 
     const tGetter = ()=>themesLoad(claim_id);
+
+    const setFiles = (immutableFileList)=>{
+        let field = 'ish_docs_data['+ind+'].files';
+        dispatch(change('appeal',field,immutableFileList));
+    }
 
     const editable = (
         <React.Fragment key={id + 'e1'} >
@@ -193,21 +199,7 @@ const IshDocRow = (props) => {
                                     <hr className='txt-hr my18'/>
                                     <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
 
-                                    <table>
-                                        <tbody>
-                                        <tr className='flex-parent flex-parent--center-cross'>
-                                            <td>
-                                                <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                                            </td>
-                                            <td className='ap-table__header'>наименование документа</td>
-                                            <td>
-                                                <Button size="small" type="text">
-                                                    <i className="el-icon-close color-red-dark ml18"/>
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <IshDocsData ish_doc_id={id} {...{files,setFiles}} />
                                 </td>
                             </tr>
                             </tbody>

@@ -13,7 +13,6 @@ export function* watchFileLoad(action) {
         throw exc;
       }
       yield put(actions.filledUpload(loaded));
-
     } catch (message){
         err(message);
         yield put(actions.messageSet(message,'error'));
