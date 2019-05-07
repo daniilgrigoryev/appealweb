@@ -19,7 +19,7 @@ const headerTitle = 'Темы обращения';
 const M = mapping.TopicsData;
 
 const TopicsData = props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list} = props;
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId} = props;
     const navi = !disabled && (nextPage||prevPage);
     
     const isMadi = system == 'M';
@@ -32,7 +32,7 @@ const TopicsData = props => {
                         <form onSubmit={handleSubmit}>
                             <hr className='txt-hr my9'/>
                             <h4 className='ap-h4'>Список тем обращения</h4>
-                            <FieldArray name='topics_data' component={FTopicList} disabled={disabled} claim_id={claim_id} dispatch={dispatch} apn_list={apn_list}/>
+                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId}}/>
                         </form>
                     </Card>
                 </Layout.Col>
@@ -42,6 +42,7 @@ const TopicsData = props => {
 }; //
 
 const mapStateToProps = (state) => ({
+    sessionId:state.getIn(['general','user','sessionID']),
     system:   state.getIn(['general', 'system']),
     claim_id: state.getIn(['form', 'appeal','values','id']),
     apn_list: state.getIn(['form','appeal','values','apn_list'])

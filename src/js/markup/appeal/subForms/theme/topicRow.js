@@ -15,6 +15,7 @@ import {fields, categories, matrix} from '../../categories.js'
 import {post} from '../../../../services/ajax.js'
 import {messageSet} from '../../../../actions/common.js'
 import mapping from '../../mapping.js'
+import TopicDocs from  './topicDocs.js'
 
 const hashCode = (s)=>(s||"").split("").reduce((a,b)=>(a=((a<<5)-a)+b.charCodeAt(0), a&a),0);            
 
@@ -23,7 +24,7 @@ const M_STATUS = mapping.status;
 
 const data2str = (data) =>{
     if (typeof data == 'string'){
-        try{        
+        try{
             return moment(Date.parse(data)).format('DD.MM.YYYY');
         } catch(e){}
     }
@@ -55,7 +56,7 @@ class TopicRow extends React.Component {
 
     render(){
         const {manualPostLink} = this.state;
-        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse,claim_id,dispatch,apn_list} = this.props;
+        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse,claim_id,dispatch,apn_list,sessionId} = this.props;
         
         const fldN = field + M.POST_N.name;
         const fldD = field + M.POST_DATE.name;
@@ -70,6 +71,7 @@ class TopicRow extends React.Component {
         const decree_id     = value.get("post_decree_id");
         const post_decree_n = value.get('post_decree_n');
         const post_decree_date = value.get('post_decree_date');
+        const filesRows        = value.get('theme_files');
 
         const dateL = moment(post_decree_date).format("MMM Do YY");
         const dateP = moment(apn_post_date).format("MMM Do YY");
@@ -276,7 +278,9 @@ class TopicRow extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>{M.REL_DOCS.label}</td>
-                                                <td className='ap-input ap-input--disabled'>{P[M.REL_DOCS.name]}</td>
+                                                <td className='ap-input ap-input--disabled'>
+                                                    <TopicDocs rows={filesRows} sessionId={sessionId} />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>{M.UCH_PRIS.label}</td>

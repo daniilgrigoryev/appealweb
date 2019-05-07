@@ -100,20 +100,19 @@ class EIshDocList extends React.Component {
     }
 
     render() {
-        const rmv = this.onRemove.bind(this);
-        const xpd = this.onExpand.bind(this);
-        const dialogOpenFabula = this.dialogOpenFabula.bind(this);
+        const onRemove = this.onRemove.bind(this);
+        const onExpand = this.onExpand.bind(this);
+        const onFabula = this.dialogOpenFabula.bind(this);
 
-        const {fields, disabled,claim_id,fTypes,categories,dispatch} = this.props;
+        const {fields, disabled,claim_id,fTypes,categories,dispatch,sessionId,reloadRow} = this.props;
         const fabData = {};
         const DIALOG = this.state.dialog;
 
         const add = (rowGetter) => () => fields.push(rowGetter());
         const ROWS = fields.map((x, i, arr) => (
             <IshDocRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
-                   onRemove={rmv} onExpand={xpd} onFabula={dialogOpenFabula} fabData={fabData} claim_id={claim_id} fTypes={fTypes}
-                   disabled={disabled} categories={categories} dispatch={dispatch} collapse={()=>this.setState({expandedId:false})}>{x.value}
-            </IshDocRow>)); //
+                    {...{sessionId,fabData,claim_id,fTypes,disabled,categories,dispatch,onRemove,onExpand,onFabula,reloadRow}}
+                   collapse={()=>this.setState({expandedId:false})}>{x.value}</IshDocRow>)); //
         
         return (
             <React.Fragment>

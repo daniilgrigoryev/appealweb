@@ -37,10 +37,17 @@ class SidePanel extends Component {
         this.curHash = 0;
         this.save = this.save.bind(this);
         this.getHash = this.getHash.bind(this);
+        this.holdHash = this.holdHash.bind(this);
     }
 
     componentDidMount() {
         this.curHash = this.getHash();
+        this.props.hashHolder(this.holdHash);
+    }
+
+    holdHash(){
+        this.curHash = this.getHash();
+        this.forceUpdate();
     }
 
     getHash() {

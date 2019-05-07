@@ -1,13 +1,11 @@
 import './login.scss'
 
-import {loginRequest, loadRequest} from '../../actions/common.js'
 import * as _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
-import {post,get} from '../../services/ajax.js'
-import Fingerprint from '../../services/fingerprint.js'
 import webGlId from '../../services/webGlId.js'
-import {getUser, getFile} from '../../selectors/common.js'
+import Fingerprint from '../../services/fingerprint.js'
+import {loginRequest, loadRequest} from '../../actions/common.js'
 
 class Login extends React.Component {
 
@@ -63,6 +61,4 @@ class Login extends React.Component {
   }
 }; //
 
-export default connect((state) => {
-    return getUser(state).toJS();
-})(Login);
+export default connect()(Login);

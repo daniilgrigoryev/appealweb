@@ -9,6 +9,8 @@ import {getSessionId} from '../../../../selectors/common.js'
 import {post,postFile,mpt} from '../../../../services/ajax.js'
 import {baseUrl} from '../../../../services/api.js'
 import {scanPdf} from '../../../../services/scanService.js'
+import {EAutocomplete} from '../../../components/fautocomplete.js'
+import {ECheckbox} from '../../../components/checkbox.js'
 
 const im = (obj)=> Immutable.fromJS(obj);
 
@@ -16,16 +18,17 @@ const download = async (sessionId,row)=>{
     const params = new URLSearchParams();
     params.append('sessionId',sessionId);
     params.append('storage_id',row.get('storage_id'));
-
+    
+    const path = 'storage/pull?'; 
     const tempLink = document.createElement('a');
-    tempLink.href = baseUrl() + 'storage/pull?'+params.toString();
+    tempLink.href = baseUrl() + path + params.toString();
     tempLink.setAttribute('download', row.get('description'));
     tempLink.click();
     setTimeout(()=>(tempLink && (tempLink.remove())),5000);    
 }
 
 const IshDocsData = (props)=>{
-    const {files,setFiles,sessionId} = props;
+    const {files,setFiles,sessionId,fTypes,status_alias} = props;
     const finput = useRef(null);
     const clickFile = ()=>finput.current.click();
             
@@ -52,19 +55,35 @@ const IshDocsData = (props)=>{
         const resp = await mpt('storage/push',{file});
         onFileDone(resp,file.name,'S')
     }
+ 
+    const onChange = (index,field,val)=>{ 
+        const newFiles = (files|| im([]) ).setIn([index,field],val);
+        setFiles(newFiles);
+    }
 
-     const DOCUMENTS = !_.size(files)
+    const showCheckCB = (!status_alias) || status_alias=='AWAIT_CHECK';
+
+    const DOCUMENTS = !_.size(files)
         ? (<tr><td colSpan='2'>Нет загруженных файлов</td></tr>)
         :(files.map((x,i)=>(
-            <tr key={x.get('storage_id')} className='flex-parent flex-parent--center-cross'>
+            <tr key={x.get('storage_id')}>
                 <td>
                     <span className='ap-table-list-number mr12'>{i + 1}</span>
                 </td>
                 <td className='ap-table__header' onClick={()=>download(sessionId,x)} >{x.get('description')}</td>
                 <td>
+                    <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} />
+                </td>
+                <td>
                     <Button size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
                         <i className="el-icon-close color-red-dark ml18"/>
-                    </Button>
+                    </Button>                    
+                </td>
+                <td>
+                { (showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
+                    <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}} />
+                    : null
+                }
                 </td>
             </tr>))); //
 

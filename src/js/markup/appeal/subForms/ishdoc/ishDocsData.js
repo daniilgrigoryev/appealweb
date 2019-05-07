@@ -35,9 +35,9 @@ class IshDocsData extends React.Component {
 
     render(){
         const props = this.props;
-        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize} = props;
+        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow} = props;
         const fTypes = this.state.fabulaDocTypes;
-        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize};
+        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow};
 
         return (
             <div scrollanchor='ishDoc'>
@@ -66,7 +66,8 @@ const mapStateToProps = (state,props)=>{
     const claim_id = state.getIn(['form','appeal','values','id']);
     const form_values = state.getIn(['form','appeal','values']);
     const sys = getSystem(state);
-    return {claim_id,sys,form_values};
+    const sessionId = getSessionId(state);
+    return {claim_id,sys,form_values,sessionId};
 }
 
 export default compose(

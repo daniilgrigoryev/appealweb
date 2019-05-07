@@ -99,30 +99,20 @@ class ETopicList extends React.Component {
     }
 
     render() {
-        const rmv = this.onRemove.bind(this);
-        const inf = this.onInfo.bind(this);
-        const xpd = this.onExpand.bind(this);
-        const getV = this.getCategValue.bind(this);
+        const onRemove = this.onRemove.bind(this);
+        const onInfo = this.onInfo.bind(this);
+        const onExpand = this.onExpand.bind(this);
+        const getValue = this.getCategValue.bind(this);
 
-        const {fields, disabled,claim_id,dispatch,apn_list} = this.props;
+        const {fields, disabled,claim_id,dispatch,apn_list,sessionId} = this.props;
 
-        const ROWS = fields.map((x, i, arr) => (
-            <TopicRow key={i}
-                   ind={i}
-                   apn_list={apn_list}
-                   claim_id={claim_id}
-                   dispatch={dispatch}
+        const ROWS = fields.map((field, ind, arr) => (
+            <TopicRow key={ind}
                    checkExpand={(x) => x == this.state.expandedId}
                    collapse={()=>this.setState({expandedId:-1})}
-                   field={x}
-                   fields={fields}
-                   value={arr.get(i)}
-                   onRemove={rmv}
-                   onInfo={inf}
-                   onExpand={xpd}
-                   getValue={getV}
-                   disabled={disabled}>
-                {x.value}
+                   value={arr.get(ind)}                   
+                   {...{field,ind,apn_list,claim_id,dispatch,sessionId,fields,onRemove,onInfo,onExpand,getValue,disabled}}>
+                {field.value}
             </TopicRow>)); //
         const add = () => fields.push(im(getRow())); 
 

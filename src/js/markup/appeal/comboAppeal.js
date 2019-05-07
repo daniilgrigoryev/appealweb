@@ -29,6 +29,7 @@ class ComboAppeal extends Component {
   constructor(props){
     super(props);
     this.reloadRow = this.reloadRow.bind(this);      
+    this.hashHolder = null;
   }
 
   async reloadRow() {
@@ -38,6 +39,7 @@ class ComboAppeal extends Component {
     const claim_id = id;
     const x = await post('db/select', {alias, claim_id,orphan});
     dispatch(initialize(im(x.data)));
+    setTimeout(()=>(this.hashHold && this.hashHold()),500);
   }
 
   render(){
@@ -57,7 +59,7 @@ class ComboAppeal extends Component {
     const fullAddr = !formData ? {} : _.pick(formData.toJS(), ['zajav_lic','cdr_address_id','dom','korpus','kvart','line_adr','city_id','pindex','rayon_id','region','str','street_id']);
     
     return (
-      <SidePanel>
+      <SidePanel hashHolder={(cb)=>(this.hashHold=cb)}>
                 <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
                     <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                         <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
@@ -71,7 +73,7 @@ class ComboAppeal extends Component {
                     <OrganizationsData/>
                     <SummaryData/>
                     <TopicsData/>
-                    <IshDocsData/>
+                    <IshDocsData reloadRow={this.reloadRow} />
                     <DocsLink reloadRow={this.reloadRow}/>
                     <ArchiveData/>
                 </Card>

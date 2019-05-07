@@ -67,7 +67,7 @@ const rootReducer = (state, action)=>{
 const initialState = im({
     general : {
       system: 'M',
-      externalLogin: false && true,
+      externalLogin:false &&  true,
       messagesQueue: [],
       user : {
         username : '',

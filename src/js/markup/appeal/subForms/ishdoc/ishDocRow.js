@@ -11,12 +11,32 @@ import {FAutocomplete} from '../../../components/fautocomplete.js'
 import {getAc} from '../../../../services/acCacher.js'
 import FabulaDialog from '../fabulaDialog.js'
 import mapping from '../../mapping.js'
-import {post,postFile,mpt} from '../../../../services/ajax.js'
+import {post,postFile,mpt,get} from '../../../../services/ajax.js'
 import {getSessionId, getSystem} from '../../../../selectors/common.js'
 import Immutable from 'immutable'
 import IshDocsData from './ishDocFile.js'
+import {baseUrl} from '../../../../services/api.js'
+import {getCertificates,signXml} from '../../../../services/crypto.js'
+import CryptoSL from '../../../common/cryptoSigner.js'
 
 const M = mapping.ishDocList;
+
+const blob2user = (blob,filename)=>{
+    const a = document.createElement("a");
+    const url = window.URL.createObjectURL(blob);
+    try {
+        document.body.appendChild(a);
+        a.style = "display: none";
+        a.href = url;
+        a.download = fileName;
+        a.click();
+    } finally {
+        setTimeout(()=>{
+            window.URL.revokeObjectURL(url);
+            a && (a.remove());
+        },1000);
+    }
+}
 
 const data2str = (data) =>{
     if (typeof data == 'string'){
@@ -40,11 +60,12 @@ const stopPg = (cb, id) => (evt) => {
 const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
 const IshDocRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch} = props;
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow} = props;
 
     const id = value.get('id');
     const related_topic = value.get('linked_theme_id');
     const files = value.get('files');
+    const status_alias = value.get('status_alias');
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -54,6 +75,29 @@ const IshDocRow = (props) => {
     const linkingThemes = props.categories;
 
     const P = value;
+
+    const getSign = async (filename,cert)=>{
+        const params = new URLSearchParams();
+        params.append('sessionId',sessionId);
+        params.append('ishdoc_id',id);
+        const responseXml = await get('storage/pullXml',{ishdoc_id:id});
+        const xml = responseXml.data;
+        const signature = await signXml(xml,cert);
+
+        const info = cert.issuerInfo.split(',').map(x=>x.substring(x.indexOf('=')+1,x.length)).join(' ');
+        //const valid = ' действителен с ' + moment(Date.parse(cert.validPeriod.from)).format('DD.MM.YYYY') + ' до ' + moment(Date.parse(cert.validPeriod.to)).format('DD.MM.YYYY');
+
+        const pdfParams = {
+            'sessionId':sessionId,
+            'ishdoc_id':id,
+            'cert_n':cert.serialNumber,
+            'cert_vyd':info,
+            'signedXML': signature 
+        }
+        const responseSignedPdf = await post('storage/stampPdf',pdfParams);
+     
+        reloadRow();   
+    }
 
     const hasTopic = !_.isEmpty(related_topic);
     let DOC_MAKER = null;
@@ -116,6 +160,19 @@ const IshDocRow = (props) => {
         dispatch(change('appeal',field,immutableFileList));
     }
 
+    const setStatus = (newstatus)=>{
+        let field = 'ish_docs_data['+ind+'].status_alias';
+        dispatch(change('appeal',field,newstatus));
+    }
+
+    debugger;
+    const STATUS = ({
+        'AWAIT_CHECK' : (<Button onClick={()=>setStatus(null)}>Отмена ожидания проверки</Button>),
+        'AWAIT_SIGN'  : (<span>Ожидает подписи</span>),
+        'SIGNED'      : (<span>Подписано</span>),
+        'SENDED'      : (<span>Отправлено</span>)
+    })[status_alias] || (<Button onClick={()=>setStatus('AWAIT_CHECK')} >Передать на проверку</Button>);//
+
     const editable = (
         <React.Fragment key={id + 'e1'} >
             <tr>
@@ -145,11 +202,18 @@ const IshDocRow = (props) => {
                                         <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} datepicker='+'/>
                                     </span>
                                 </td>
-                                <td colSpan='3'>
+                                <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.PODPISAL.label}</p>
                                         <Field disabled={disabled} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
                                     </span>
+                                </td>
+                                <td>
+                                    {STATUS}
+                                </td>
+                                <td>
+
+                                <CryptoSL doSign={(cert)=>getSign(id,cert)} />
                                 </td>
                             </tr>
                             <tr key={id + 'e2'}>
@@ -180,12 +244,12 @@ const IshDocRow = (props) => {
                                             <td className='ap-input-caption'>{M.COMMENT.label}</td>
                                             <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/></td>
                                         </tr>
-                                        <tr>
+                                        {false && (<tr>
                                             <td className='ap-input-caption'>Статус проекта документов</td>
                                             <td><Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' /></td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
                                             <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} /></td>
-                                        </tr>
+                                        </tr>)}
                                         </tbody>
                                     </table>
 
@@ -199,7 +263,7 @@ const IshDocRow = (props) => {
                                     <hr className='txt-hr my18'/>
                                     <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
 
-                                    <IshDocsData ish_doc_id={id} {...{files,setFiles}} />
+                                    <IshDocsData ish_doc_id={id} {...{files,setFiles,fTypes,sessionId,status_alias}} />
                                 </td>
                             </tr>
                             </tbody>
