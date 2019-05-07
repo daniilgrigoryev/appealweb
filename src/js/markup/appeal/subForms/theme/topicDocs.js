@@ -3,7 +3,7 @@ import {baseUrl} from '../../../../services/api.js'
 
 export default (props)=>{
 	const {rows,sessionId} = props; 
-	if (_.size(ROWS)){//
+	if (_.size(ROWS)){
 		return (<span>Нет файлов по теме</span>);
 	} //
 
@@ -20,14 +20,10 @@ export default (props)=>{
 	    setTimeout(()=>(tempLink && (tempLink.remove())),5000);    
 	}
 
-	debugger;
-
 	const ROWS = rows.map(x=>(<tr onClick={()=>download(x.get('storage_id'),x.get('description'))}>
 		<td>{x.get('type_name')}</td>
 		<td>{x.get('description')}</td>
-	</tr>));
-
-	//
+	</tr>)); //
 
 	return (
 		<table>
