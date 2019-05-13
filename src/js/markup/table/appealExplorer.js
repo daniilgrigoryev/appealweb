@@ -25,6 +25,7 @@ const timeOfs = new Date().getTimezoneOffset() * 60 * 1000;
 const im = (obj) => Immutable.fromJS(obj)
 
 const desc = {
+    info_alias: 'i_obr',
     alias: 'APPEAL_LIST'
 }
 
