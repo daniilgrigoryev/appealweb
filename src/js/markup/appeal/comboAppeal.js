@@ -18,13 +18,31 @@ import ArchiveData from './appealContent/archiveData.js'
 import DocsLink from './appealContent/docsLink.js'
 import FullAppeal from './fullAppeal.js' 
 import StatusData from './appealContent/statusData.js'
-import {post} from '../../services/ajax.js'
+import {post, get, out} from '../../services/ajax.js'
 import {appealSetId} from '../../actions/common.js'
 import {Button} from 'element-react'
 import {messageSet} from '../../actions/common.js'
 import SidePanel from './subForms/sidePanel.js'
+import {baseUrl} from '../../services/api.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
+
+const testGetFile = (sessionId, claim_id)=>{
+    const params = new URLSearchParams()
+    params.append('session',sessionId)
+    params.append('claim_id',claim_id);
+    
+    const downloadDocLink = baseUrl() + 'report/fill?'+params.toString()
+
+    const tempLink = document.createElement('a');
+    tempLink.href = downloadDocLink;
+    tempLink.setAttribute('download', 'test.pdf');
+    tempLink.click();
+
+    setTimeout(()=>{
+      tempLink && (tempLink.remove());
+    },5000);
+} 
 
 class ComboAppeal extends Component {
 
@@ -41,7 +59,6 @@ class ComboAppeal extends Component {
     const x = await post('db/select', {alias, claim_id,orphan});
     dispatch(initialize(im(x.data)));
   }
-
 
   render(){
     const {dispatch,change,initialize,formData} = this.props;    
@@ -60,6 +77,8 @@ class ComboAppeal extends Component {
     let fullAddr = {};
     let fl = false;
     let line_adr = '';
+    let claim_id;
+
     if (formData) {
       fl       = formData.get('zajav_lic')|| false;
       line_adr = formData.get('line_adr') || '';
@@ -75,6 +94,8 @@ class ComboAppeal extends Component {
         'region', 
         'str', 
         'street_id']);
+      claim_id = formData.get('id') || '';
+      testGetFile(this.props.sid, claim_id);
     }
 
     return (
@@ -97,8 +118,10 @@ class ComboAppeal extends Component {
 
 const mapStateToProps = (state,props)=>{
     let id = state.getIn(['form','appeal','values','id']);
+    debugger;
     let formData = state.getIn(['form','appeal','values']);
-    return {id,formData};
+    let sid = state.getIn(['general','user','sessionID']);
+    return {id,formData,sid};
 }
 
 export default compose(
