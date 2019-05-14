@@ -26,7 +26,7 @@ const sign = (blob,cert)=>{
     reader.onloadend = async ()=>{
       const base64data = reader.result.replace("data:application/pdf;base64,","");          
       const ret = await performCades(base64data, cert);
-      debugger;
+
       resolve(ret);
     }
     reader.readAsDataURL(blob);
@@ -37,11 +37,11 @@ const signXmlBlob = (blobXML,cert)=>{
   return new Promise((resolve,reject)=>{
       const reader = new FileReader();
       reader.onloadend = async ()=>{
-        debugger;
+
         const xml = reader.result;  
         const api = await getCadespluginAPI();        
         const ret = await api.signXml(cert.thumbprint, xml, CADESCOM_XML_SIGNATURE_TYPE_ENVELOPED);
-        debugger;
+       
         resolve(ret);
       }
       reader.readAsText(blobXML);

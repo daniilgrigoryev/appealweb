@@ -7,7 +7,7 @@ import {relocate} from '../markup/app/app.js'
 
 const im = (obj)=> Immutable.fromJS(obj);
 
-const VERSION_FE = '11';
+const VERSION_FE = '12';
 let VERSION_BE = null;
 let VERSION_DB = null;
 AJAX.get('root/version').then(x=>VERSION_BE=(''+x.data));
@@ -67,7 +67,7 @@ const rootReducer = (state, action)=>{
 const initialState = im({
     general : {
       system: 'M',
-      externalLogin:false &&  true,
+      externalLogin: false && true,
       messagesQueue: [],
       user : {
         username : '',

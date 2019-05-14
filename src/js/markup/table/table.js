@@ -62,7 +62,8 @@ export default class AppealTable extends React.Component {
     async onPage(event) {
         const {desc, sid, where} = this.props;
         const JSON_W = JSON.stringify(where);
-        const par = Object.assign({}, desc, event, {sid, JSON_W})
+        const where_tail = true;
+        const par = Object.assign({}, desc, event, {sid,where_tail,JSON_W});
         const x = await post('db/select', par);
         const {data} = x;
         if (!data.rows){

@@ -1,6 +1,6 @@
 import * as AJ from './ajax.js'
 
-const MODE = 'DEV_47'
+const MODE = ''
 
 const URLS = {
 	'DESIGN' : 'DESIGN',

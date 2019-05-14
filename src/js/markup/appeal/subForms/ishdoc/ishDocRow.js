@@ -165,7 +165,6 @@ const IshDocRow = (props) => {
         dispatch(change('appeal',field,newstatus));
     }
 
-    debugger;
     const STATUS = ({
         'AWAIT_CHECK' : (<Button onClick={()=>setStatus(null)}>Отмена ожидания проверки</Button>),
         'AWAIT_SIGN'  : (<span>Ожидает подписи</span>),
