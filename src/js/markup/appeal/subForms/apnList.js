@@ -34,7 +34,7 @@ export class EApnList extends React.Component {
             </td>
             <td>
                 <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FInput} name={x + M.POST_NUM.name} value={x[M.POST_NUM.name]}/>
+                    <Field disabled={disabled} component={FInput} name={x + M.POST_NUM.name} value={x[M.POST_NUM.name]} className="w240"/>
                 </span>
             </td>
             <td>

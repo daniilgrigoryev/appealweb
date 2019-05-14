@@ -35,7 +35,7 @@ const mappingT = {
     REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
     //DATE_CONTROL:'Дата контроля',  
-    NAME: 'Обращенец',
+    NAME: 'Заявитель',
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     //PHONE: 'Телефон',
@@ -66,8 +66,8 @@ class AppealExplorer extends React.Component {
         return async () => {
             const claim_id = rowData.ID;
             const x = await post('db/select', {alias, claim_id,orphan});
+
             dispatch(initialize(im(x.data)));
-            relocate('appeal_incoming');
         }
     }
 
@@ -104,7 +104,8 @@ class AppealExplorer extends React.Component {
 
         templatingT['REG_NUM'] = (rowData, column) => {
             return <a onClick={a.openRow(rowData)}>{rowData.REG_NUM}</a>;
-        }//
+
+        }
 
         const ac =  null && {style, body};
 

@@ -197,7 +197,7 @@ class TopicRow extends React.Component {
                 <tr>
                     <td colSpan='6'>
                         <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
-                            <table className='wmax600'>
+                            <table>{/* className='wmax600' */}
                                 <tbody>
                                 <tr>
                                     <td>
@@ -213,14 +213,14 @@ class TopicRow extends React.Component {
 
                                     {manualPostLink
                                         ? (<td>
-                                             <span className='inline-block mr12'>
+                                             <span className='inline-block mr12 w240'>
                                                 <Field disabled={disabled} component={FInput} name={field + M.POST_N.name}
                                                        placeholder={M.POST_N.label}
                                                        value={P[M.POST_N.name]}/>
                                              </span>
                                             </td>)
                                         : (<td>
-                                            <span className='inline-block mr12'>
+                                            <span className='inline-block mr12 w240'>
                                                 <Field disabled={disabled} component={FAutocomplete} name={field + M.POST_N.name}
                                                        placeholder={M.POST_N.label} onSelect={postSelect}
                                                        datapromise={apnPromise} value={P[M.POST_N.name]}/>
@@ -228,7 +228,7 @@ class TopicRow extends React.Component {
                                             </td>)}                                
 
                                     <td>
-                                        <span className='inline-block mr12'>
+                                        <span className='inline-block mr12 w240'>
                                             <Field disabled={!manualPostLink} isDisabled={!manualPostLink} component={FPicker}
                                                 name={field + M.POST_DATE.name} placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
                                         </span>
