@@ -68,6 +68,7 @@ class AppealExplorer extends React.Component {
             const x = await post('db/select', {alias, claim_id,orphan});
 
             dispatch(initialize(im(x.data)));
+            relocate('appeal_incoming');
         }
     }
 
