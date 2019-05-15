@@ -114,7 +114,7 @@ class AppealExplorer extends React.Component {
             <React.Fragment>
                 <Layout.Row gutter="0">
                     <Layout.Col span="24">
-                        <Card className="box-card" header={
+                        <Card className="box-card scroll-styled scroll-auto" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
                                     Поиск обращений
