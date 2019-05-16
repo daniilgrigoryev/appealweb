@@ -122,7 +122,12 @@ class AppealExplorer extends React.Component {
                             </div>
                         }>
 
-                            <SearchRoot {...{fields,setGetter}} />
+                            <div className="view-data__container wmax1280">
+                                <SearchRoot {...{fields,setGetter}} />
+                            </div>
+
+
+                            
 
                             <div className='mt12'>
                                 <Button type="primary" onClick={this.search}>Искать</Button>
@@ -133,7 +138,7 @@ class AppealExplorer extends React.Component {
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where}} hdelta={'420'} />
+                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where}} hdelta={'560'} />
                             </Card>}
             </React.Fragment>
         )

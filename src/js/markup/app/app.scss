@@ -3,6 +3,37 @@ body {
   overflow: auto;
 }
 
+input, textarea{
+  margin-bottom: 0;
+}
+
+.wmax1920{
+  max-width: 1920px;
+}
+.wmax1280{
+  max-width: 1280px;
+}
+.view-data__container {
+  border-radius: 5px;
+  .items-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
+  }
+}
+
+
+.item {
+  display: grid;
+  grid-gap: 0px;
+  margin: 5px 0;
+  position: relative;
+  &.span-2{
+    grid-column: span 2;
+  }
+}
+
+
 .navLinks {
   background: #333;
   list-style: none;

@@ -23,32 +23,38 @@ const SearchRow = (props)=>{
     } //
     
     return (
-    	<tr>
-        <td>
-          <span>{label}</span>
-        </td>
-        <td>
-          <select style={{marginLeft: '4px', marginRight: '8px'}}
-              value={oper} 
-              onChange={(evt)=>change(i,'oper',evt.target.value)}>
-              <option value="=">=</option>
-              <option value=">=">&gt;=</option>
-              <option value=">">&gt;</option>
-              <option value="<=">&lt;=</option>
-              <option value="<">&lt;</option>
-              <option value="<>">&lt;&gt;</option>
-              <option value="NULL">NULL</option>
-              <option value="NOT_NULL">NOT NULL</option>
-              <option value="LIKE">Контекст</option>
-           </select>
-         </td>
-         <td>
-          {Row}
-         </td>
-         <td>
-            <button onClick={()=>remove(i)} style={{marginLeft: '8px'}}  >X</button>
-         </td>
-      </tr>);
+      <div className="item">
+        <div className="grid">
+          <div className="col col--4">
+            <span>{label}</span>
+          </div>
+          <div className="col col--2">
+            <select
+                value={oper} 
+                onChange={(evt)=>change(i,'oper',evt.target.value)}>
+                <option value="=">=</option>
+                <option value=">=">&gt;=</option>
+                <option value=">">&gt;</option>
+                <option value="<=">&lt;=</option>
+                <option value="<">&lt;</option>
+                <option value="<>">&lt;&gt;</option>
+                <option value="NULL">NULL</option>
+                <option value="NOT_NULL">NOT NULL</option>
+                <option value="LIKE">Контекст</option>
+            </select>
+          </div>
+          <div className="col">
+            {Row}
+          </div>
+          <div className="col col--1">
+            <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
+              <button onClick={()=>remove(i)}>
+                <i className="el-icon-delete color-red"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>);
 } //
 
 class SearchRoot extends React.Component {
@@ -99,19 +105,23 @@ class SearchRoot extends React.Component {
     ADD = [<option key='000' value='000'>Добавить поле</option>,...ADD]; //
     
     return (
-      <table>
-        <tbody>
-        {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
-        
-        <tr>
-          <td colSpan='4'>
-            <select value='000' onChange={(evt)=>add(evt.target.value)}>
-              {ADD}
-            </select>
-          </td>
-        </tr>
-        </tbody>       
-      </table>
+      <div>
+        <div className="items-wrap h240 scroll-styled scroll-auto border--1">
+          {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
+        </div>
+        <div className="wmax240 my12">
+          <select className="w-full" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
     ); //
   }
 }
