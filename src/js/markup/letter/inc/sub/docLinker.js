@@ -133,7 +133,7 @@ class DocLinker extends React.Component {
                 {TABLE}
 
             </div>
-        );
+        ); //
     }
 };
 

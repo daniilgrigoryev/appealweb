@@ -8,7 +8,7 @@ const SearchRow = (props)=>{
 		const {im,change,remove,label,typ,dict,root,link,oper,i}  = props;
     let {value} = props;
       
-    const nullable =(oper=='NULL' || oper=='NOT_NULL');  
+    const nullable =(oper=='NULL' || oper=='NOT NULL');  
     let Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} />;
     if (nullable){
     	Row = <span />;
@@ -38,7 +38,7 @@ const SearchRow = (props)=>{
               <option value="<">&lt;</option>
               <option value="<>">&lt;&gt;</option>
               <option value="NULL">NULL</option>
-              <option value="NOT_NULL">NOT NULL</option>
+              <option value="NOT NULL">NOT NULL</option>
               <option value="LIKE">Контекст</option>
            </select>
          </td>

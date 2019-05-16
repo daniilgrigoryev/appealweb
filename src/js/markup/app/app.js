@@ -9,6 +9,8 @@ import Immutable from 'immutable'
 
 import ComboAppeal from '../appeal/comboAppeal.js'
 import AppealExplorer from '../table/appealExplorer.js'
+import IDecisExplorer from '../table/iDecisExplorer.js'
+import ISignExplorer from '../table/iSignExplorer.js'
 import DecisionsList from '../editable/decisionsList.js'
 import CategoriesList from '../editable/categoriesList.js'
 import AppealCauseList from '../editable/appealCauseList.js'
@@ -40,6 +42,8 @@ export default function App() {
                         <Route path='/appeal_incoming' component={ComboAppeal}/>
                         <Route path='/appeal_outgoing' component={Outgoing}/>
                         <Route path='/explore' component={AppealExplorer}/>
+                        <Route path='/i_check' component={IDecisExplorer} />
+                        <Route path='/i_sign' component={ISignExplorer} />
                         <Route path='/letter_incoming' component={IncomingLetter}/>
                         <Route path='/letter_outgoing' component={OutcomingLetter}/>
                         <Route path='/sprav/fabulas' component={FabulaDocViewer}/>
@@ -121,9 +125,12 @@ class LayoutMain extends React.Component {
                         {false && <Menu.Item index="">Главная</Menu.Item>}
 
                         <Menu.SubMenu index="1" title="Обращения">
-                            <Menu.Item index="appeal_incoming?new">Новое входящее</Menu.Item>
-                            <Menu.Item index="appeal_outgoing">Новое исходящее</Menu.Item>
-                            <Menu.Item index="explore">Поиск</Menu.Item>
+                                <Menu.Item index="appeal_incoming?new">Входящие: Новое</Menu.Item>
+                                <Menu.Item index="explore">Входящие: Поиск</Menu.Item>
+                                <Menu.Item index="i_check">Входящие: К проверке</Menu.Item>
+                                <Menu.Item index="i_sign">Входящие: К подписи</Menu.Item>
+                                <Menu.Item index="appeal_outgoing">Исходящие: Новое</Menu.Item>
+                                                        
                         </Menu.SubMenu>
 
 

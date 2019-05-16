@@ -78,7 +78,6 @@ const performCades = async (base64data, cert) => {
 }
 
 
-
 const b64toBlob = async (b64Data, contentType='application/octet-stream') => {
   const url = `data:${contentType};base64,${b64Data}`;
   const response = await fetch(url);

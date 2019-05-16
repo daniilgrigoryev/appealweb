@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import * as _ from 'lodash'
 import moment from 'moment'
-import { change } from 'redux-form'
+import { change,formValues } from 'redux-form'
 import {Button, Dropdown} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../../components/finput.js'
@@ -18,6 +18,7 @@ import IshDocsData from './ishDocFile.js'
 import {baseUrl} from '../../../../services/api.js'
 import {getCertificates,signXml} from '../../../../services/crypto.js'
 import CryptoSL from '../../../common/cryptoSigner.js'
+
 
 const M = mapping.ishDocList;
 
@@ -59,6 +60,17 @@ const stopPg = (cb, id) => (evt) => {
 
 const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
+/*
+
+NONE
+AWAIT_CHECK
+ERROR_CHECK
+AWAIT_SIGN
+AWAIT_POST
+ERROR_SIGN
+
+*/
+
 const IshDocRow = (props) => {
     const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow} = props;
 
@@ -66,6 +78,7 @@ const IshDocRow = (props) => {
     const related_topic = value.get('linked_theme_id');
     const files = value.get('files');
     const status_alias = value.get('status_alias');
+    const status_eval = value.get('status_eval');
     const expanded = checkExpand(ind);
     const onRmv = stopPg(onRemove, ind);
     const onInf = stopPg(onInfo, id);
@@ -75,7 +88,6 @@ const IshDocRow = (props) => {
     const linkingThemes = props.categories;
 
     const P = value;
-
     const getSign = async (filename,cert)=>{
         const params = new URLSearchParams();
         params.append('sessionId',sessionId);
@@ -204,7 +216,13 @@ const IshDocRow = (props) => {
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.PODPISAL.label}</p>
-                                        <Field disabled={disabled} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
+                                        <Field disabled={true} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
+                                    </span>
+                                </td>
+                                <td>
+                                    <span className='inline-block mr12'>
+                                        <p className='ap-table__header'>Проверяющий</p>
+                                        <Field disabled={disabled} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
                                     </span>
                                 </td>
                                 <td>
