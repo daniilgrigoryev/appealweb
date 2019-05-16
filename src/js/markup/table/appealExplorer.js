@@ -121,14 +121,9 @@ class AppealExplorer extends React.Component {
                                 </h3>
                             </div>
                         }>
-
                             <div className="view-data__container wmax1280">
                                 <SearchRoot {...{fields,setGetter}} />
                             </div>
-
-
-                            
-
                             <div className='mt12'>
                                 <Button type="primary" onClick={this.search}>Искать</Button>
                             </div>

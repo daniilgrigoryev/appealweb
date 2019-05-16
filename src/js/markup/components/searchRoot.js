@@ -49,7 +49,7 @@ const SearchRow = (props)=>{
           <div className="col col--1">
             <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
               <button onClick={()=>remove(i)}>
-                <i className="el-icon-delete color-red"></i>
+                <i className="el-icon-close color-red"></i>
               </button>
             </div>
           </div>
@@ -113,15 +113,6 @@ class SearchRoot extends React.Component {
           <select className="w-full" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
     ); //
   }
 }
