@@ -13,25 +13,48 @@ input, textarea{
 .wmax1280{
   max-width: 1280px;
 }
+
+
 .view-data__container {
-  border-radius: 5px;
   .items-wrap {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    justify-content: start;
+    align-items: start;
+    grid-auto-rows: min-content;
+    grid-row-gap: 15px;
+    .item{}
+  }
+}
+.form-item{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  .form-item__label{
+    width: 140px;
+  }
+  .form-item__controls{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+  }
+
+
+
+  // это overrides, которые в будущем будут на всем 
+  // проекте когда прийдем к общему стилю для всех форм
+  input, textarea, .p-autocomplete{
+    margin-bottom: 0!important;
+  }
+  .el-input__icon{
+    top: 0px !important;
+    right: 5px;
   }
 }
 
 
-.item {
-  display: grid;
-  grid-gap: 0px;
-  margin: 5px 0;
-  position: relative;
-  &.span-2{
-    grid-column: span 2;
-  }
-}
+
+
 
 
 .navLinks {

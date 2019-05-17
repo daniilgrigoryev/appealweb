@@ -24,33 +24,36 @@ const SearchRow = (props)=>{
     
     return (
       <div className="item">
-        <div className="grid">
-          <div className="col col--4">
+        <div className="form-item">
+          <div className="form-item__label">
             <span>{label}</span>
           </div>
-          <div className="col col--2">
-            <select
-                value={oper} 
-                onChange={(evt)=>change(i,'oper',evt.target.value)}>
-                <option value="=">=</option>
-                <option value=">=">&gt;=</option>
-                <option value=">">&gt;</option>
-                <option value="<=">&lt;=</option>
-                <option value="<">&lt;</option>
-                <option value="<>">&lt;&gt;</option>
-                <option value="NULL">NULL</option>
-                <option value="NOT_NULL">NOT NULL</option>
-                <option value="LIKE">Контекст</option>
-            </select>
-          </div>
-          <div className="col">
-            {Row}
-          </div>
-          <div className="col col--1">
-            <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
-              <button onClick={()=>remove(i)}>
-                <i className="el-icon-close color-red"></i>
-              </button>
+
+          <div className="form-item__controls">
+            <div className="mx6">
+              <select
+                  value={oper} 
+                  onChange={(evt)=>change(i,'oper',evt.target.value)}>
+                  <option value="=">=</option>
+                  <option value=">=">&gt;=</option>
+                  <option value=">">&gt;</option>
+                  <option value="<=">&lt;=</option>
+                  <option value="<">&lt;</option>
+                  <option value="<>">&lt;&gt;</option>
+                  <option value="NULL">NULL</option>
+                  <option value="NOT_NULL">NOT NULL</option>
+                  <option value="LIKE">Контекст</option>
+              </select>
+            </div>
+            <div className="w180 flex-parent flex-parent--center-cross flex-parent--center-main">
+              {Row}
+            </div>
+            <div className="mx6">
+              <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
+                <button onClick={()=>remove(i)}>
+                  <i className="el-icon-close color-red"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -105,15 +108,15 @@ class SearchRoot extends React.Component {
     ADD = [<option key='000' value='000'>Добавить поле</option>,...ADD]; //
     
     return (
-      <div>
-        <div className="items-wrap h240 scroll-styled scroll-auto border--1">
+      <React.Fragment>
+        <div className="items-wrap h240 scroll-styled scroll-auto">
           {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
         </div>
-        <div className="wmax240 my12">
+        <div className="inline-block wmax240 my12 mr12">
           <select className="w-full" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
         </div>
-      </div>
-    ); //
+      </React.Fragment>
+    );
   }
 }
 
