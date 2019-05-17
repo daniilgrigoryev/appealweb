@@ -17,7 +17,7 @@ const SearchRow = (props)=>{
     } else if (typ=='N'){
     	Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} type="number" />;
     } else if (typ=='D'){
-    	Row = <EPicker {...{value}} onChange={(e)=>change(i,'value',e)} datepicker='+'/>;
+    	Row = <EPicker className="w60"  {...{value}} onChange={(e)=>change(i,'value',e)} datepicker='+'/>;
     } else if (typ=='B'){
       Row = <ECheckbox {...{value}} onChange={(e)=>change(i,'value',e)} />
     } //
@@ -25,13 +25,15 @@ const SearchRow = (props)=>{
     return (
       <div className="item">
         <div className="form-item">
-          <div className="form-item__label">
-            <span>{label}</span>
+          <div className="flex-parent flex-parent--center-cross flex-parent--center-main mr12">
+              <button onClick={()=>remove(i)}>
+                <i className="el-icon-close color-red"></i>
+              </button>
           </div>
-
+          <div className="form-item__label" title={label}>{label}</div>
           <div className="form-item__controls">
-            <div className="mx6">
-              <select
+            <div className="mx6 select-container">
+              <select className="select select--s bg-white"
                   value={oper} 
                   onChange={(evt)=>change(i,'oper',evt.target.value)}>
                   <option value="=">=</option>
@@ -44,16 +46,10 @@ const SearchRow = (props)=>{
                   <option value="NOT_NULL">NOT NULL</option>
                   <option value="LIKE">Контекст</option>
               </select>
+              <div class='select-arrow'></div>
             </div>
-            <div className="w180 flex-parent flex-parent--center-cross flex-parent--center-main">
+            <div>
               {Row}
-            </div>
-            <div className="mx6">
-              <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
-                <button onClick={()=>remove(i)}>
-                  <i className="el-icon-close color-red"></i>
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -112,9 +108,10 @@ class SearchRoot extends React.Component {
         <div className="items-wrap h240 scroll-styled scroll-auto">
           {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
         </div>
-        <div className="inline-block wmax240 my12 mr12">
-          <select className="w-full" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
-        </div>
+        <div className="select-container inline-block wmax240 my12 mr12">
+          <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
+          <div class='select-arrow'></div>
+        </div> 
       </React.Fragment>
     );
   }
