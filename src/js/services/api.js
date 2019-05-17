@@ -55,31 +55,6 @@ export function fetchAutocomplete(key,dataWhere){
 	return fetchSelect(key,dataWhere);
 }
 
-export function fetchSelect(key,dataWhere){
-	switch(key){
-		case 'decision_regional_court': return fetchDecisionsRegionalCourt(); 
-		case 'decision_moscow_court':   return fetchDecisionsMoscowCourt();
-		default: return AJ.post("db/select",{alias : key, listValueField : 'value', dataWhere});
-	}
-}
-
-export function fetchDecisionsRegionalCourt(){
-	return new Promise((resolve,reject)=>{
-		const resp =[
-			"постановление оставлено без изменения, жалоба не удовлетворена",
-			"постановление отменено, прекращено производство по делу",
-			"постановление отменено, дело возвращено на новое рассмотрение"
-		];
-		setTimeout(()=>resolve(resp),10);
-	});	
-}
-
-export function fetchDecisionsMoscowCourt(){
-	return new Promise((resolve,reject)=>{
-		const resp = [
-			"МАДИ",
-			"заявитель"
-		];
-		setTimeout(()=>resolve(resp),10);
-	});	
+export function fetchSelect(key,dataWhere){	
+	return AJ.post("db/select",{alias : key, listValueField : 'value', dataWhere});
 }

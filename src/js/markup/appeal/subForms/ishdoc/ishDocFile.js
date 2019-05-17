@@ -30,7 +30,10 @@ const download = async (sessionId,row)=>{
 const IshDocsData = (props)=>{
     const {files,setFiles,sessionId,fTypes,status_alias} = props;
     const finput = useRef(null);
-    const clickFile = ()=>finput.current.click();
+    const clickFile = ()=> {
+        finput.current.value = null;
+        finput.current.click();
+    }
             
     const remove = (storage_id)=>setFiles(files.filter(x=>x.get('storage_id')!=storage_id));
     

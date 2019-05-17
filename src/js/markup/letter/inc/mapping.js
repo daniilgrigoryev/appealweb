@@ -17,10 +17,10 @@ export default {
 		SHEETS_COUNT: 	 {name: 'sheets_count', 	  	label: 'Кол-во листов'}
 	},
 	incLetterHead: {
-		ZAJAV_SENDER: 	{name: 'zajav_sender',	  		label: 'От кого'},
-		ZAJAV_NDOC:     {name: 'zajav_ndoc',	 		label: '№ документа'},
-		ZAJAV_DATE:     {name: 'zajav_date',		  	label: 'Дата'},
-		ZAJAV_SIGNER: 	{name: 'zajav_signer',	 		label: 'Подписал'},
+		ZAJAV_SENDER: 	{name: 'source_sender',	  		label: 'От кого'},
+		ZAJAV_NDOC:     {name: 'source_ndoc',	 		label: '№ документа'},
+		ZAJAV_DATE:     {name: 'source_date',		  	label: 'Дата'},
+		ZAJAV_SIGNER: 	{name: 'source_signer',	 		label: 'Подписал'},
 		ORG_NAME: 		{name: 'org_name',		  		label: 'Список организаций/заявителей'},
 		INC_NUM: 		{name: 'inc_num',		  		label: 'Входящий №'},
 		SER_VH_DOC: 	{name: 'inc_ser',				label: 'Серия входящего документа'},
@@ -28,8 +28,8 @@ export default {
 		INC_DAT: 		{name: 'inc_dat',		  		label: 'Дата'},
 	},
 	incLetterIspoln: {
-		DESC: 			{name: 'desc',			  		label: '№'},
-		DATE: 			{name: 'date',			  		label: 'Дата'},
+		DESC: 			{name: 'isp_proizv_number',		label: '№'},
+		DATE: 			{name: 'isp_proizv_date',		label: 'Дата'},
 		ISP_PROIZV: 	{name: 'isp_poizv',	  			label: 'Исполнительное производство'},
 		ADD_N_PROIZ: 	{name: 'add_n_proizv',			label: 'Добавить № исполнительного производства'}
 	},
@@ -46,8 +46,8 @@ export default {
 		NOTE: 			{name: 'note',						label: 'Комментарий'}
 	},
 	incLetterPost: {
-		APN: 			{name: 'apn',					label: '№'},
-		DATE: 			{name: 'date',					label: 'Дата'},
+		APN: 			{name: 'decree_number',			label: '№'},
+		DATE: 			{name: 'decree_date',			label: 'Дата'},
 		ADD_POST_N: 	{name: 'add_post_n',			label: 'Добавить № постановления'},
 		POSTANS: 		{name: 'postans',				label: 'Постановления'}
 	},

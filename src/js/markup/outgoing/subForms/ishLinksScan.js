@@ -16,15 +16,6 @@ const M = mapping.ishLinksScan;
 
 const im = (obj)=> Immutable.fromJS(obj);
 
-// const getRow = (id, npost, desc, docId, content) => {
-//     return {
-//         id: id || null,
-//         desc: desc || '',
-//         docId: docId || null,
-//         content: content || null
-//     }
-// };
-
 const download = async (sessionId,row)=>{
     const params = new URLSearchParams();
     params.append('sessionId',sessionId);
@@ -41,8 +32,13 @@ const download = async (sessionId,row)=>{
 const scannedDocs = (props) => {
     const {disabled, files, setFiles, sid} = props
     const finput = useRef(null);
-    const clickFile = ()=>finput.current.click();
-    const remove = (storage_id)=>setFiles(files.filter(x=>x.get('storage_id')!=storage_id));
+    const clickFile = ()=> {
+        finput.current.value = null;
+        finput.current.click();
+    }
+    const remove = (storage_id)=> {
+        setFiles(files.filter(x=>x.get('storage_id')!=storage_id));
+    }
 
     const onFileLoad = async (e)=>{
         const file = e.target.files[0];
