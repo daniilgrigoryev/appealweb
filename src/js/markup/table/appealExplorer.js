@@ -123,7 +123,7 @@ class AppealExplorer extends React.Component {
                         }>
                             <div className="view-data__container pl18 py12">
                                 <SearchRoot {...{fields,setGetter}} />
-                                <div className='inline-block mt12'>
+                                <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
                                 </div>
                             </div>

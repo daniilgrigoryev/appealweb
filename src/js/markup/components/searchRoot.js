@@ -108,7 +108,7 @@ class SearchRoot extends React.Component {
         <div className="items-wrap h240 scroll-styled scroll-auto">
           {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
         </div>
-        <div className="select-container inline-block wmax240 my12 mr12">
+        <div className="select-container wmax240 mt12">
           <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
           <div class='select-arrow'></div>
         </div> 
