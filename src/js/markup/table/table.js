@@ -46,7 +46,7 @@ export default class AppealTable extends React.Component {
     }
 
     setTableHeight() {
-        this.setState({tableHeight : window.innerHeight - this.offsetTop - 88 - this.props.hdelta + "px"});
+        this.setState({tableHeight : window.innerHeight - this.offsetTop - 63 - this.props.hdelta + "px"});
     }
 
     toSuitableVal(table) { 
@@ -103,7 +103,7 @@ export default class AppealTable extends React.Component {
                                                                                                  style={{width: col.width}}/>); //
 
         if (selectable) {
-            dynamicColumns.unshift(<Column key="Sel" selectionMode="multiple" style={{width: '30px', textAlign: 'center', padding: '0px 3px 0px 3px'}}/>); //
+            dynamicColumns.unshift(<Column key="Sel" selectionMode="multiple" style={{width: '30px', textAlign: 'center', padding: '0px 3px 0px 3px'}}/>);
         }
         if (actionCol) {
             const {style, body} = actionCol;
@@ -126,7 +126,8 @@ export default class AppealTable extends React.Component {
                        header={head}
                        rowsPerPageOptions={[10, 25, 50, 100, 200, 300]}
                        selection={S.selected}
-                       onSelectionChange={e => this.setState({selected: e.value})}>
+                       onSelectionChange={e => this.setState({selected: e.value})}
+                       >
                 {dynamicColumns}
             </DataTable>
         ); //

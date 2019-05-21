@@ -34,7 +34,8 @@ const style = {textAlign: 'center', width: '8em'};
 const mapping = {
     REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
-    NAME: 'Обращенец',
+    //DATE_CONTROL:'Дата контроля',  
+    NAME: 'Заявитель',
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     STAGE: 'Статус',
@@ -76,6 +77,7 @@ class AppealExplorer extends React.Component {
         return async () => {
             const claim_id = rowData.ID;
             const x = await post('db/select', {alias, claim_id,orphan});
+
             dispatch(initialize(im(x.data)));
             const key = window.stateSave();
             const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
@@ -103,6 +105,7 @@ class AppealExplorer extends React.Component {
         const {sid} = this.props;
 
         templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
+
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
