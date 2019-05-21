@@ -72,7 +72,7 @@ class FabulaDocViewer extends React.Component {
     render() {
         const {rows} = this.state;
         const styleDoc = {
-            height: 'calc(100vh - 60px)',
+            height: 'calc(100vh - 115px)',
             overflow: 'auto'
         }
 
