@@ -46,7 +46,7 @@ export default class AppealTable extends React.Component {
     }
 
     setTableHeight() {
-        this.setState({tableHeight : window.innerHeight - this.offsetTop - 63 - this.props.hdelta + "px"});
+        this.setState({tableHeight : window.innerHeight - this.offsetTop - this.props.hdelta + "px"});
     }
 
     toSuitableVal(table) { 

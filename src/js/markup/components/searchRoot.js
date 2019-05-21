@@ -17,38 +17,43 @@ const SearchRow = (props)=>{
     } else if (typ=='N'){
     	Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} type="number" />;
     } else if (typ=='D'){
-    	Row = <EPicker {...{value}} onChange={(e)=>change(i,'value',e)} datepicker='+'/>;
+    	Row = <EPicker className="w60"  {...{value}} onChange={(e)=>change(i,'value',e)} datepicker='+'/>;
     } else if (typ=='B'){
       Row = <ECheckbox {...{value}} onChange={(e)=>change(i,'value',e)} />
     } //
     
     return (
-    	<tr>
-        <td>
-          <span>{label}</span>
-        </td>
-        <td>
-          <select style={{marginLeft: '4px', marginRight: '8px'}}
-              value={oper} 
-              onChange={(evt)=>change(i,'oper',evt.target.value)}>
-              <option value="=">=</option>
-              <option value=">=">&gt;=</option>
-              <option value=">">&gt;</option>
-              <option value="<=">&lt;=</option>
-              <option value="<">&lt;</option>
-              <option value="<>">&lt;&gt;</option>
-              <option value="NULL">NULL</option>
-              <option value="NOT NULL">NOT NULL</option>
-              <option value="LIKE">Контекст</option>
-           </select>
-         </td>
-         <td>
-          {Row}
-         </td>
-         <td>
-            <button onClick={()=>remove(i)} style={{marginLeft: '8px'}}  >X</button>
-         </td>
-      </tr>);
+      <div className="item">
+        <div className="form-item">
+          <div className="flex-parent flex-parent--center-cross flex-parent--center-main mr12">
+              <button onClick={()=>remove(i)}>
+                <i className="el-icon-close color-red"></i>
+              </button>
+          </div>
+          <div className="form-item__label" title={label}>{label}</div>
+          <div className="form-item__controls">
+            <div className="mx6 select-container">
+              <select className="select select--s bg-white"
+                  value={oper} 
+                  onChange={(evt)=>change(i,'oper',evt.target.value)}>
+                  <option value="=">=</option>
+                  <option value=">=">&gt;=</option>
+                  <option value=">">&gt;</option>
+                  <option value="<=">&lt;=</option>
+                  <option value="<">&lt;</option>
+                  <option value="<>">&lt;&gt;</option>
+                  <option value="NULL">NULL</option>
+                  <option value="NOT NULL">NOT NULL</option>
+                  <option value="LIKE">Контекст</option>
+              </select>
+              <div class='select-arrow'></div>
+            </div>
+            <div>
+              {Row}
+            </div>
+          </div>
+        </div>
+      </div>);
 } //
 
 class SearchRoot extends React.Component {
@@ -99,20 +104,16 @@ class SearchRoot extends React.Component {
     ADD = [<option key='000' value='000'>Добавить поле</option>,...ADD]; //
     
     return (
-      <table>
-        <tbody>
-        {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
-        
-        <tr>
-          <td colSpan='4'>
-            <select value='000' onChange={(evt)=>add(evt.target.value)}>
-              {ADD}
-            </select>
-          </td>
-        </tr>
-        </tbody>       
-      </table>
-    ); //
+      <React.Fragment>
+        <div className="items-wrap h240 scroll-styled scroll-auto">
+          {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
+        </div>
+        <div className="select-container wmax240 mt12">
+          <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
+          <div class='select-arrow'></div>
+        </div> 
+      </React.Fragment>
+    );
   }
 }
 
