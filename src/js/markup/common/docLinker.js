@@ -19,7 +19,7 @@ const linkedDocs = (props) => {
             response(await post('db/select',{alias,LINK_ID}));
             fields.remove(indx);
        } catch (exc){
-            dispatch(messageSet(ecx,'error'));
+            messageSet(ecx,'error');
        }
     } 
     const inf = (ind) => () => fields.remove(ind); // ! replace me

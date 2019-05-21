@@ -10,7 +10,7 @@ import { messagesErase } from './actions/common.js'
 import {loginRequest} from './actions/common.js'
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/ru-RU'
-import {getSessionId,getMessages} from './selectors/common.js'
+import {getSessionId} from './selectors/common.js'
 import Login from './markup/login/login.js'
 import webGlId from './services/webGlId.js'
 import Fingerprint from './services/fingerprint.js'
@@ -20,21 +20,23 @@ i18n.use(locale);
 
 class Root extends React.Component {
 
-  checkMessages(){
-    let messages = this.props.messagesQueue;
-    if (messages && (messages=messages.toJS()) && messages.length){
-      try{
-        messages.forEach(m=>{
-          const {type,message} = m; //types: info,success,warning,error
-          Notification[type]({message: message+''});
-        });
-      } finally {
-        this.props.dispatch(messagesErase());
-      }
-    }
-  }
+  constructor(props) {
+    super(props);
+    this.state = { 
+      fail: false 
+    };
 
-//http://172.20.255.47:8081/#sid=90c9d985-a5bf-43cb-af74-24382d9efdcd
+    window.claimMessageAdd = (typ,message)=>{
+      const type = ({
+        'E' : 'error',
+        'I' : 'info',
+        'W' : 'warning',
+        'S' : 'success'
+      })[typ] || typ;
+      Notification[type]({message: message+''});
+    };
+
+  }
 
   componentDidMount(){
     const MRK = 'sid=';
@@ -48,6 +50,11 @@ class Root extends React.Component {
         setTimeout(()=>this.doExternalLogin(sid),5);
       }
     }
+  }
+
+  componentDidCatch(error, info) {
+    const fail = {error, info};
+    this.setState({fail});
   }
 
   doExternalLogin(sid){
@@ -65,24 +72,43 @@ class Root extends React.Component {
     this.props.dispatch(loginRequest(loginData));
   }
 
-
   render(){
-    setTimeout(this.checkMessages.bind(this),0);
+    const {fail} = this.state; 
+    if (fail) {
+      console.error('Fail:',fail);
+
+      let stackTrace = [];
+      try{
+        stackTrace = fail.error.stack.replace(new RegExp('\r', 'g'),'\n',).split('\n');
+      } catch(x){
+      }
+
+      return (
+        <div>
+          <div style={{marginTop: '40px',textAlign: 'center'}}>
+            <h1 style={{ fontWeight: 'bold',fontSize: '20px', marginBottom: '20px', opacity: 0.75}}>Неудача.</h1>
+          </div>
+          <div style={{padding: '20px 20px 20px 60px', fontFamily: 'monospace'}}>
+            <ul>
+            {stackTrace.map((x,i)=><li key={i}>{x}</li>)}
+            </ul>
+          </div>
+        </div>);
+    }//
 
     const {externalLogin,loggedIn} = this.props;
 
     if (loggedIn){
-      return (<App />);
+      return <App />;
     } else if (!externalLogin){
-      return (<Login />);
+      return <Login />;
     }
-    return (<span>Авторизация...</span>);
+    return <span>Авторизация...</span>;
   } //
 };
 
-export default connect((state) => { //;
-   const messagesQueue = getMessages(state);
+export default connect((state) => {
    const loggedIn  = getSessionId(state);
    const externalLogin = state.getIn(['general','externalLogin']);
-   return {loggedIn, messagesQueue, externalLogin};
+   return {loggedIn,externalLogin};
 })(Root);

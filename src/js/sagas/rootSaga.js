@@ -19,7 +19,7 @@ export function* watchLogin(action) {
       yield put(actions.loginSuccess(loggedData.data));
     } catch (message){
         err(message);
-        yield put(actions.messageSet(message,'error'));
+        actions.messageSet(message,'error');
     }
 }
 
@@ -33,7 +33,7 @@ export function* watchLogout(action) {
       yield put(actions.logoutSuccess());
     } catch (message){
         err(message);
-        yield put(actions.messageSet(message,'error'));
+        actions.messageSet(message,'error');
     }
 }
 

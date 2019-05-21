@@ -104,7 +104,7 @@ class FabulasDocSections extends React.Component {
 
     expandRow(evt, expRow) {
         if (this.hasChanges()) {
-            this.props.dispatch(messageSet('Переключение строки невозможно: есть несохраненные изменения', 'warning'));
+            messageSet('Переключение строки невозможно: есть несохраненные изменения', 'warning');
             return;
         }
         const expandRow = Object.assign({}, expRow);
@@ -265,12 +265,12 @@ class FabulasDocSections extends React.Component {
         const {expandRow, rows} = this.state;
 
         if (this.hasChanges()) {
-            this.props.dispatch(messageSet('Добавление новой строки невозможно: есть несохраненные изменения', 'warning'));
+            messageSet('Добавление новой строки невозможно: есть несохраненные изменения', 'warning');
             return;
         }
 
         if (this.findNewRow()) {
-            this.props.dispatch(messageSet('Добавление новой строки невозможно: список уже содержит незафиксированную запись', 'warning'));
+            messageSet('Добавление новой строки невозможно: список уже содержит незафиксированную запись', 'warning');
             return;
         }
 

@@ -40,7 +40,8 @@ const mapping = {
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     ISP_NAME: 'Исполнитель',
-    ISP_OTD: 'Отдел'
+    ISP_OTD: 'Отдел',
+    DOC_TARGET: 'Проект документов'
 }
 
 const templating = {};
@@ -83,25 +84,39 @@ class ISignExplorer extends React.Component {
         const doc_ids = (selected||[]).map(x=>x.ID);
         const sessionId = this.props.sid;
 
+        let errors = 0;
+
         const getSign = async (ishdoc_id,cert,onDone)=>{
-            const responseXml = await get('storage/pullXml',{ishdoc_id});
-            const xml = responseXml.data;
-            const sign_xml = await signXml(xml,cert);
-            const sign_error = '';
+            let sign_error = '';
+            let sign_xml = '';
+            try {
+                const responseXml = await get('storage/pullXml',{ishdoc_id});
+                const xml = responseXml.data;
+                sign_xml = await signXml(xml,cert);
+                
+                const info = cert.issuerInfo.split(',').map(x=>x.substring(x.indexOf('=')+1,x.length)).join(' ');
+                //const valid = ' действителен с ' + moment(Date.parse(cert.validPeriod.from)).format('DD.MM.YYYY') + ' до ' + moment(Date.parse(cert.validPeriod.to)).format('DD.MM.YYYY');
 
-            const info = cert.issuerInfo.split(',').map(x=>x.substring(x.indexOf('=')+1,x.length)).join(' ');
-            //const valid = ' действителен с ' + moment(Date.parse(cert.validPeriod.from)).format('DD.MM.YYYY') + ' до ' + moment(Date.parse(cert.validPeriod.to)).format('DD.MM.YYYY');
-
-            const pdfParams = {
-                'sessionId':sessionId,
-                'ishdoc_id':ishdoc_id,
-                'cert_n':cert.serialNumber,
-                'cert_vyd':info,
-                'signedXML': sign_xml 
+                const pdfParams = {
+                    'sessionId':sessionId,
+                    'ishdoc_id':ishdoc_id,
+                    'cert_n':cert.serialNumber,
+                    'cert_vyd':info,
+                    'signedXML': sign_xml 
+                }
+                
+                const responseSignedPdf = await post('storage/stampPdf',pdfParams);
+            } catch (exc){
+                sign_xml   = 'error';
+                sign_error = exc + '';
+                errors++;
             }
-            const responseSignedPdf = await post('storage/stampPdf',pdfParams);
-            const x  = await post('db/select',{alias,ishdoc_id,sign_xml,sign_error,orphan});
-            const {data,error} = x;
+
+            try{
+                const x  = await post('db/select',{alias,ishdoc_id,sign_xml,sign_error,orphan});
+            } catch (err){
+                console.error('Sign fix failed',exc);
+            }
 
             onDone && (onDone());   
         }  
@@ -109,11 +124,16 @@ class ISignExplorer extends React.Component {
         const loop = ()=>{
             const ishdoc_id = doc_ids.pop();
             if (ishdoc_id){
+                const size = _.size(doc_ids);
+                const msg = size ? ('В очереди на подпись:' + size) : ('Завершение подписи...');
+                window.claimMessageAdd('I',msg);
                 getSign(ishdoc_id,cert,loop);
             } else { // exit
-                alert('Документы подписаны');
+                let msg = 'Проекты документов подписаны';
+                (errors) && (msg += `, ошибок: ${errors}`);
+                window.claimMessageAdd('S',msg);
             }
-        }       
+        }
 
         loop();      
     }
@@ -122,12 +142,27 @@ class ISignExplorer extends React.Component {
         const s = this.conditionGetter();
         let w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
         if (!_.size(w)){
-           w = [];
+            window.claimMessageAdd('E','Условие для поиска не задано');
+            return;
         }
 
         this.where = w;        
         this.key = 'k' + new Date().getTime();
         this.forceUpdate();
+    }
+
+    openRow(rowData, column) {
+        const {dispatch, change, initialize} = this.props;
+        const alias = 'CLAIM_GET';
+        const orphan = true;
+        return async () => {
+            const claim_id = rowData.ID;
+            const x = await post('db/select', {alias, claim_id,orphan});
+            dispatch(initialize(im(x.data)));
+            const key = window.stateSave();
+            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
+        }
     }
 
     render() {
@@ -138,6 +173,8 @@ class ISignExplorer extends React.Component {
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
+
+        templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
         return (
             <React.Fragment>

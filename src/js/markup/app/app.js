@@ -38,22 +38,22 @@ export default function App() {
             <LayoutConnected>
                
                     <Switch>
-                        <Route exact path='/' component={AppealExplorer || Home}/>
-                        <Route path='/appeal_incoming' component={ComboAppeal}/>
-                        <Route path='/appeal_outgoing' component={Outgoing}/>
-                        <Route path='/explore' component={AppealExplorer}/>
-                        <Route path='/i_check' component={IDecisExplorer} />
-                        <Route path='/i_sign' component={ISignExplorer} />
-                        <Route path='/letter_incoming' component={IncomingLetter}/>
-                        <Route path='/letter_outgoing' component={OutcomingLetter}/>
-                        <Route path='/sprav/fabulas' component={FabulaDocViewer}/>
-                        <Route path='/sprav/decisions' component={DecisionsList}/>
-                        <Route path='/sprav/categories' component={CategoriesList}/>
-                        <Route path='/sprav/appeal_causes' component={AppealCauseList}/>
-                        <Route path='/sprav/doc_types' component={TipDocList}/>
+                        <Route exact path='/' render={()=><AppealExplorer/>}/>
+                        <Route path='/appeal_incoming' render={()=><ComboAppeal/>}/>
+                        <Route path='/appeal_outgoing' render={()=><Outgoing/>}/>
+                        <Route path='/explore' render={()=><AppealExplorer/>}/>
+                        <Route path='/i_check' render={()=><IDecisExplorer/>} />
+                        <Route path='/i_sign' render={()=><ISignExplorer/>} />
+                        <Route path='/letter_incoming' render={()=><IncomingLetter/>}/>
+                        <Route path='/letter_outgoing' render={()=><OutcomingLetter/>}/>
+                        <Route path='/sprav/fabulas' render={()=><FabulaDocViewer/>}/>
+                        <Route path='/sprav/decisions' render={()=><DecisionsList/>}/>
+                        <Route path='/sprav/categories' render={()=><CategoriesList/>}/>
+                        <Route path='/sprav/appeal_causes' render={()=><AppealCauseList/>}/>
+                        <Route path='/sprav/doc_types' render={()=><TipDocList/>}/>
 
-                        <Route path='/settings/diapSPI' component={DialSPI}/>
-                        <Route path='/settings/postage' component={Postage}/>
+                        <Route path='/settings/diapSPI' render={()=><DialSPI/>}/>
+                        <Route path='/settings/postage' render={()=><Postage/>}/>
 
                         <Route path='*' component={NotFoundPage}/>
                     </Switch>

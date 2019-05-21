@@ -34,7 +34,7 @@ class IncomingLetter extends React.Component {
 
         post('db/select', {alias,data,jsonMode}).then(x => {
         }).catch(x=>{
-            dispatch(messageSet(x,'error'));
+            messageSet(x,'error');
             console.error(x);
             a.forceUpdate();
         });  

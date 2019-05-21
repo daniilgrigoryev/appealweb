@@ -61,7 +61,7 @@ class Outgoing extends React.Component {
                 console.error(exc);
             }
         }).catch(x => {
-            dispatch(messageSet(x, 'error'));
+            messageSet(x, 'error');
             console.error(x);
             a.forceUpdate();
         });

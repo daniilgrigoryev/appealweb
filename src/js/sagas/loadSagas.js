@@ -15,6 +15,6 @@ export function* watchFileLoad(action) {
       yield put(actions.filledUpload(loaded));
     } catch (message){
         err(message);
-        yield put(actions.messageSet(message,'error'));
+        actions.messageSet(message,'error');
     }
 }

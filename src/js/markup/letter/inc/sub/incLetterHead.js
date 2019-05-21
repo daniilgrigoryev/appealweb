@@ -49,7 +49,7 @@ const tdCollapsed = (fld, el, i, disabled, rmv, expd) => {
                 </td>
             </tr>
         </React.Fragment>
-    );
+    ); //
 };
 
 const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
@@ -118,7 +118,7 @@ const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
                 </td>
             </tr>
         </React.Fragment>);
-};
+}; //
 
 const ZajavRows = (props) => {
     const {fields, disabled, setExpanded, expandedId} = props;
@@ -188,7 +188,7 @@ const ZajavRows = (props) => {
                 </tbody>
             </table>
         </div>);
-};
+};//
 
 
 class IncLetterHead extends React.Component {

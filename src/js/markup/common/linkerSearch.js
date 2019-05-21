@@ -71,12 +71,12 @@ class LinkerSearch extends React.Component {
         const alias = 'CREATE_LINK_TABLE';
         try{
             response(await post('db/select',{alias, ...link}));
-            dispatch(messageSet('Документы связаны','success'));
+            messageSet('Документы связаны','success');
             if (reloadRow){
                 reloadRow();
             }
         } catch(exc){
-            dispatch(messageSet(exc,'error'));
+            messageSet(exc,'error');
         }
     }
 

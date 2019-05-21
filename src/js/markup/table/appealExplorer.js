@@ -77,7 +77,9 @@ class AppealExplorer extends React.Component {
             const claim_id = rowData.ID;
             const x = await post('db/select', {alias, claim_id,orphan});
             dispatch(initialize(im(x.data)));
-            relocate('appeal_incoming');
+            const key = window.stateSave();
+            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
         }
     }
 
@@ -85,7 +87,7 @@ class AppealExplorer extends React.Component {
         const s = this.conditionGetter();
         const w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
         if (!_.size(w)){
-            console.error('no condition found');
+            window.claimMessageAdd('E','Условие для поиска не задано');
             return;
         }
 
@@ -100,9 +102,7 @@ class AppealExplorer extends React.Component {
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
 
-        templating['REG_NUM'] = (rowData, column) => {
-            return <a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>;
-        }//
+        templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;

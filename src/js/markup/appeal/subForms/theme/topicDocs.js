@@ -3,7 +3,7 @@ import {baseUrl} from '../../../../services/api.js'
 
 export default (props)=>{
 	const {rows,sessionId} = props; 
-	if (_.size(ROWS)){
+	if (!_.size(rows)){
 		return (<span>Нет файлов по теме</span>);
 	} //
 

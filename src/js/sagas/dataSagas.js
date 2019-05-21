@@ -16,9 +16,9 @@ export function* watchAutocomplete(action) {
       if (!loggedData || !loggedData.data || (exc=loggedData.data.error)) {
         throw exc;
       }
-      yield put(actions.loginSuccess(loggedData.data));
+      actions.loginSuccess(loggedData.data);
     } catch (message){
         err(message);
-        yield put(actions.messageSet(message,'error'));
+        actions.messageSet(message,'error');
     }
 }

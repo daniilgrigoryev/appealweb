@@ -38,7 +38,8 @@ const mapping = {
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     ISP_NAME: 'Исполнитель',
-    ISP_OTD: 'Отдел'
+    ISP_OTD: 'Отдел',
+    DOC_TARGET: 'Проект документов'
 }
 
 const templating = {};
@@ -74,28 +75,45 @@ class IDecisExplorer extends React.Component {
         this.getSelected = outerGetSelected;
     }
 
-    verify(){
+    async verify(){
         const orphan = true;
-        const selected = this.getSelected ();
-        const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';
-        
+        const selected = this.getSelected();
+        const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';        
         const alias = 'APPEAL_VERIFY';
-        post('db/select',{alias,doc_ids,orphan}).then(x=>{
-            const {data,error} = x;
-            this.search();
-        });
+        try{
+            const x = await post('db/select',{alias,doc_ids,orphan});
+            window.claimMessageAdd('S','Проекты документов проверены');
+        } catch (exc){
+            window.claimMessageAdd('E',exc);
+        }
+        this.search();
     }
 
     search() {
         const s = this.conditionGetter();
         let w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
         if (!_.size(w)){
-           w = [];
+            window.claimMessageAdd('E','Условие для поиска не задано');
+            return;
         }
 
         this.where = w;        
         this.key = 'k' + new Date().getTime();
         this.forceUpdate();
+    }
+
+    openRow(rowData, column) {
+        const {dispatch, change, initialize} = this.props;
+        const alias = 'CLAIM_GET';
+        const orphan = true;
+        return async () => {
+            const claim_id = rowData.ID;
+            const x = await post('db/select', {alias, claim_id,orphan});
+            dispatch(initialize(im(x.data)));
+            const key = window.stateSave();
+            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
+        }
     }
 
     render() {
@@ -106,6 +124,8 @@ class IDecisExplorer extends React.Component {
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
+
+        templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
         return (
             <React.Fragment>

@@ -84,13 +84,13 @@ class TopicRow extends React.Component {
             if (error || data==''){
                 console.error('linkDecree error:', error || 'No suitable record found');
                 dispatch(change('appeal', fldLinkedID, null));            
-                dispatch(messageSet('Не удалось найти постановление в АДМ','error'));
+                messageSet('Не удалось найти постановление в АДМ','error');
                 return;
             }
             dispatch(change('appeal', fldLinkedID,(''+data)));            
             dispatch(change('appeal', fldLinkedNN,apn_post_n));
             dispatch(change('appeal', fldLinkedDD,apn_post_date));            
-            dispatch(messageSet('Связано с постановлением в АДМ','success'));    
+            messageSet('Связано с постановлением в АДМ','success');    
         }
 
         let LinkerBTN = (<span>Невозможно связать с АДМ</span>); //
