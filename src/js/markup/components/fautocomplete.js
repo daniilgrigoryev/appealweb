@@ -182,9 +182,9 @@ class EAutocomplete extends React.Component {
 //const EAutocomplete = withValidators(AAutocomplete);
 
 // redux Form component
-const FAutocomplete = React.memo(function FAutocomplete(props){
+const FAutocomplete = function FAutocomplete(props){
 	const {input,meta} = props;
 	return <EAutocomplete {...props} {...input} {...meta} reduxformfield="true" />
-})  //
+}  //
 
 export {EAutocomplete,FAutocomplete};
