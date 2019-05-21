@@ -129,7 +129,7 @@ class LayoutMain extends React.Component {
                                 <Menu.Item index="explore">Входящие: Поиск</Menu.Item>
                                 <Menu.Item index="i_check">Входящие: К проверке</Menu.Item>
                                 <Menu.Item index="i_sign">Входящие: К подписи</Menu.Item>
-                                <Menu.Item index="appeal_outgoing">Исходящие: Новое</Menu.Item>
+                                <Menu.Item index="appeal_outgoing?new">Исходящие: Новое</Menu.Item>
                         </Menu.SubMenu>
 
 

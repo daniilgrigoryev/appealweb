@@ -39,7 +39,6 @@ class IncomingLetter extends React.Component {
     }
 
     getHash() {
-        debugger;
         const {formData} = this.props;
         return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.toJS(),['linked_docs'])));
     }
