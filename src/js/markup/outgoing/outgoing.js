@@ -7,7 +7,7 @@ import {Button, Input, Card, Layout} from 'element-react'
 import {post} from '../../services/ajax.js'
 import Immutable from 'immutable'
 import {messageSet} from '../../actions/common.js'
-
+import {getSessionId, getSystem} from '../../selectors/common.js'
 import IshHead from './subForms/ishHead.js'
 import IshBasic from './subForms/ishBasic.js'
 import IshLinksPost from './subForms/ishLinksPost.js'
@@ -15,6 +15,8 @@ import IshLinkInner from './subForms/ishLinksInner.js'
 import IshLinkScan from './subForms/ishLinksScan.js'
 
 const im = (obj) => Immutable.fromJS(obj)
+
+const hashCode = (s) => (s || '').split('').reduce((hash, val) => (((hash << 5) - hash) + val.charCodeAt(0)) | 0, 0);
 
 const alias = 'CLAIM_OUT_PUSH'
 
@@ -24,15 +26,39 @@ class Outgoing extends React.Component {
         super(props);
         this.checkIn = this.checkIn.bind(this);
         this.reloadRow = this.reloadRow.bind(this);
+        this.setFiles = this.setFiles.bind(this);
+        this.curHash = 0;
+        this.getHash = this.getHash.bind(this);
+        this.state = {
+            fabulaDocTypes: []
+        }
+    }
+
+    getHash() {
+        const {formData} = this.props;
+        return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.toJS(),['linked_docs'])));
+    }
+
+    componentDidMount(){
+        const {sys} = this.props;
+        this.curHash = this.getHash();
+        const alias = 'AVAILABLE_FAB_DOC_TYPES_'+sys;
+        const listValueField = 'value';
+        post('db/select',{alias,listValueField}).then(x=>this.setState({fabulaDocTypes:x.data}));
     }
 
     async reloadRow() {
+        const a = this;
         const {dispatch, change, initialize, formData} = this.props;
         const alias = 'CLAIM_OUT_GET';
         const orphan = true;
         const claim_id = formData.get('id');
         const x = await post('db/select', {alias, claim_id, orphan});
         dispatch(initialize(im(x.data)));
+        setTimeout(() => {
+                    a.curHash = a.getHash();
+                    a.forceUpdate();
+                }, 1000);
     }
 
     checkIn() {
@@ -67,10 +93,27 @@ class Outgoing extends React.Component {
         });
     }
 
+    setFiles(immutableFileList) {
+        const {dispatch, change} = this.props;
+        dispatch(change('files', immutableFileList));
+    }
+
+
     render() {
-        const {formData} = this.props;
-        const id = !formData ? null : formData.get('id');
-        const saveText = id ? 'Сохранить' : 'Зарегистрировать';
+        const {formData, files, sid, dispatch, initialize} = this.props;
+        try {
+            const h = window.location.hash.split('?');
+            if (h[1]=='new'){
+                window.location.hash = h[0];
+                setTimeout(()=>dispatch(initialize(im({}))),100);
+            }
+        } catch (exc) {
+        //debugger;
+        }//
+
+        const noSave = !!(this.curHash && this.curHash == this.getHash())
+        const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
+        const stateBtnClick = noSave ? () => {} : this.checkIn;
 
         return (
             <div className='ap-side-panel-wrap'>
@@ -86,11 +129,10 @@ class Outgoing extends React.Component {
                                 <IshBasic/>
                                 <IshLinksPost/>
                                 <IshLinkInner reloadRow={this.reloadRow}/>
-                                <IshLinkScan/>
+                                <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} />
                             </Card>
-
-                            <div className="ap-footer">
-                                <Button type="success" size="small" plain={true} className='mr18' onClick={this.checkIn}>{saveText}</Button>
+                            <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
+                                <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
                                 <Button size="small" type='text'>Отменить</Button>
                             </div>
                         </Layout.Col>
@@ -102,8 +144,12 @@ class Outgoing extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const sid = getSessionId(state);
+    const sys = getSystem(state);
     let formData = state.getIn(['form', 'outgoing', 'values']);
-    return {formData};
+    let files;
+    formData && (files = state.getIn(['form', 'outgoing', 'values' ,'files']));
+    return {formData, files, sid, sys};
 }
 
 export default compose(

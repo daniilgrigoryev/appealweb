@@ -130,13 +130,12 @@ class LayoutMain extends React.Component {
                                 <Menu.Item index="i_check">Входящие: К проверке</Menu.Item>
                                 <Menu.Item index="i_sign">Входящие: К подписи</Menu.Item>
                                 <Menu.Item index="appeal_outgoing">Исходящие: Новое</Menu.Item>
-                                                        
                         </Menu.SubMenu>
 
 
                         <Menu.SubMenu index="2" title="Служебные письма">
-                            <Menu.Item index="letter_incoming">Новое входящее</Menu.Item>
-                            <Menu.Item index="letter_outgoing">Новое исходящее</Menu.Item>
+                            <Menu.Item index="letter_incoming?new">Новое входящее</Menu.Item>
+                            <Menu.Item index="letter_outgoing?new">Новое исходящее</Menu.Item>
                             <Menu.Item index="explore">Поиск</Menu.Item>
                         </Menu.SubMenu>
 

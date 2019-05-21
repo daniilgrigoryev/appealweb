@@ -15,10 +15,10 @@ const serData = ['78-10', '78-11', '78-21', '78-20'];
 const getRow = (id,zajavSender, zajavNDoc, zajavDate, zajavSigner) => {
     return {
         id: id || null,
-        zajavSender: zajavSender || '',
-        zajavNDoc: zajavNDoc || '',
-        zajavDate: zajavDate || null,
-        zajavSigner: zajavSigner | ''
+        source_sender: zajavSender || '',
+        source_ndoc: zajavNDoc || '',
+        source_date: zajavDate || null,
+        source_signer: zajavSigner || ''
     }
 }
 
@@ -120,7 +120,7 @@ const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
         </React.Fragment>);
 }; //
 
-const ZajavRows = (props) => {
+const ZajavRows = React.memo(function ZajavRows(props) {
     const {fields, disabled, setExpanded, expandedId} = props;
     const add = () => fields.push(getRow());
     const rmv = (ind) => () => fields.remove(ind);
@@ -188,7 +188,7 @@ const ZajavRows = (props) => {
                 </tbody>
             </table>
         </div>);
-};//
+});
 
 
 class IncLetterHead extends React.Component {

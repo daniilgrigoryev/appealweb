@@ -13,12 +13,12 @@ const M = mapping.incLetterPost;
 const getRow = (id,apn, date) => {
     return {
         id: id || null,
-        apn: apn || null,
-        date: date || null
+        decree_number: apn || null,
+        decree_date: date || null
     }
 }
 
-const postRows = (props) => {
+const postRows = React.memo(function postRows(props) {
     const {fields, disabled} = props;
     const add = () => fields.push(getRow());
     const rmv = (ind) => () => fields.remove(ind);
@@ -107,9 +107,9 @@ const postRows = (props) => {
             </table>
         </React.Fragment>
     );
-};
+});
 
-const IncLetterPost = props => {
+const IncLetterPost = React.memo(function IncLetterPost(props) {
     const {disabled} = props;
     return (
         <div>
@@ -118,7 +118,7 @@ const IncLetterPost = props => {
 
             <FieldArray component={postRows} name='posts' disabled={disabled}/>
         </div>);
-};
+});
 
 export default reduxForm({
     form: 'letter_incoming', // <------ same form name

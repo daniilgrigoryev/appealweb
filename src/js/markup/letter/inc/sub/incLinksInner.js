@@ -19,7 +19,7 @@ const getRow = (id,npost, desc, docId) => {
     }
 }
 
-const linkedDocs = (props) => {
+const linkedDocs = React.memo(function linkedDocs(props) {
     const {fields, disabled, hideLinker, showLinker} = props
     //const add = ()=>fields.push(getRow());
     const add = showLinker;
@@ -87,7 +87,7 @@ const linkedDocs = (props) => {
                 </tbody>
             </table>
         </React.Fragment>);
-};
+});
 
 class IncLinkInner extends React.Component {
 

@@ -23,11 +23,16 @@ class EAutocomplete extends React.Component {
 	}
 
 	componentDidUpdate(prevData) { 
-	    const {value} = this.props;
-	    if (value != prevData.value && (value=='' || value ==null)){ 
+	    const {value,dataWhere} = this.props;
+	    	 	
+	 	const prevDW = prevData.dataWhere;
+		const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere,prevDW);
+		if (dataWhereChanged){
+			this.setState({data: null, dataKeyed:null, dataSuggestions: null, value: ""});
+		} else if (value != prevData.value && (value=='' || value ==null)){ 
 	      this.setState({data: null, dataKeyed:null, value: ""});
-	    }
-	  }
+	    }		
+	}
 
 	componentDidMount(){
 		const {acKey,dataKey,value,dataWhere,stoppe} = this.props;
@@ -61,15 +66,6 @@ class EAutocomplete extends React.Component {
 				});
 			}
 		}
-	}
-
-	componentDidUpdate(prevData) { 
-		const {dataWhere} = this.props;
-		const prevDW = prevData.dataWhere;
-		const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere,prevDW);
-		if (dataWhereChanged){
-			this.setState({data: null, dataKeyed:null, dataSuggestions: null, value: ""});
-		}		
 	}
 
 	async suggestData(event) {
@@ -115,6 +111,7 @@ class EAutocomplete extends React.Component {
 	}
 
 	filter(queryLow,data,dataKeyed,queryKey=null){
+		debugger;
 		const d = this.state.data || data;
 		if (!d || d.error){
 			return [];
