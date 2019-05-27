@@ -75,7 +75,7 @@ const IshDocsData = (props)=>{
                 </td>
                 <td className='ap-table__header' onClick={()=>download(sessionId,x)} >{x.get('description')}</td>
                 <td>
-                    <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} />
+                    <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} readonly/>
                 </td>
                 <td>
                     <Button size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>

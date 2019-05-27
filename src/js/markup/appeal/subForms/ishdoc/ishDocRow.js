@@ -216,13 +216,13 @@ const IshDocRow = (props) => {
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>{M.PODPISAL.label}</p>
-                                        <Field disabled={true} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
+                                        <Field disabled={true} component={FAutocomplete}  props={{readonly: true}} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
                                     </span>
                                 </td>
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>Проверяющий</p>
-                                        <Field disabled={disabled} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
+                                        <Field disabled={disabled} component={FAutocomplete}  props={{readonly: true}} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
                                     </span>
                                 </td>
                                 <td>
@@ -241,14 +241,14 @@ const IshDocRow = (props) => {
                                         <tr>
                                             <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
                                             <td colSpan='3'>
-                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name} datapromise={tGetter} stoppe='+'/>
+                                                <Field disabled={disabled} component={FAutocomplete} props={{readonly: true}} name={field + M.REL_TOPIC.name} datapromise={tGetter} stoppe='+'/>
                                             </td>                                            
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  dataKey={M.DOC_VID.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} props={{readonly: true}} name={field + M.DOC_VID.name}  dataKey={M.DOC_VID.key}/></td>
                                             <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/></td>
+                                            <td><Field disabled={disabled} component={FAutocomplete} props={{readonly: true}} name={field + M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
@@ -280,7 +280,7 @@ const IshDocRow = (props) => {
                                     <hr className='txt-hr my18'/>
                                     <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
 
-                                    <IshDocsData ish_doc_id={id} {...{files,setFiles,fTypes,sessionId,status_alias}} />
+                                    <IshDocsData ish_doc_id={id} {...{files,setFiles,fTypes,sessionId,status_alias}}/>
                                 </td>
                             </tr>
                             </tbody>

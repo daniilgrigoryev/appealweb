@@ -19,7 +19,7 @@ class EAutocomplete extends React.Component {
 	    this.change=this.change.bind(this);
 	    this.select=this.select.bind(this);
 	    this.getDatas=this.getDatas.bind(this);
-	    this.suggestData=this.suggestData.bind(this);
+			this.suggestData=this.suggestData.bind(this);
 	}
 
 	componentDidUpdate(prevData) { 
@@ -111,7 +111,7 @@ class EAutocomplete extends React.Component {
 	}
 
 	filter(queryLow,data,dataKeyed,queryKey=null){
-		debugger;
+		// debugger;
 		const d = this.state.data || data;
 		if (!d || d.error){
 			return [];
@@ -175,7 +175,7 @@ class EAutocomplete extends React.Component {
 
 	render() {
 		const {value,dataSuggestions} = this.state;
-	    return <AutoComplete value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} />
+	    return <AutoComplete value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} readonly={this.props.readonly}/>
 	} //
 }
 

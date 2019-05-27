@@ -54,12 +54,12 @@ const BasicData = props => {
                                         <tbody>
                                         <tr>
                                             <td className='ap-input-caption'>{M.REQUEST_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name}
+                                            <td><Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} props={{readonly: true}}
                                                        dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/></td>
                                         </tr>
                                         <tr>
                                             <td className='ap-input-caption'>{M.RESPONSE_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={M.RESPONSE_TYPE.name}
+                                            <td><Field disabled={disabled} component={FSelect} name={M.RESPONSE_TYPE.name} props={{readonly: true}}
                                                        dataKey={M.RESPONSE_TYPE.key} placeholder='Выбор'/></td>
                                         </tr>
                                         </tbody>

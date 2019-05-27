@@ -134,6 +134,7 @@ class SidePanel extends Component {
                                 <td className='ap-input-caption w120'>{M.STATUS.label}</td>
                                 <td>
                                     <Field disabled={disabled}
+                                           props={{readonly: true}}
                                            className='w-full'
                                            component={FSelect}
                                            name={M.STATUS.name}
@@ -145,6 +146,7 @@ class SidePanel extends Component {
                                 <td>
                                     <Field disabled={disabled}
                                            className='w-full'
+                                           props={{readonly: true}}
                                            component={FAutocomplete}
                                            name={M.DEPART.name}
                                            dataKey={M.DEPART.key}/>
@@ -155,6 +157,7 @@ class SidePanel extends Component {
                                 <td>
                                     <Field disabled={disabled}
                                            className='w-full'
+                                           props={{readonly: true}}
                                            component={FAutocomplete}
                                            name={M.EXECUTOR.name}
                                            dataKey={M.EXECUTOR.key}/>
