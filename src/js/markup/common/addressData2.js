@@ -153,7 +153,7 @@ class AddressData2 extends React.Component {
     }
 
     render() {
-        const {children} = this.props; 
+        const {children,disabled} = this.props; 
         const F = this.state.fullAddr;
         const line_adr = this.fullAddr;
         const placeholder = children || line_adr || '';    
@@ -161,9 +161,10 @@ class AddressData2 extends React.Component {
         const ADDRESS = this.state.isStr
                 ? (<tr>
                         <td colSpan='2'>
-                            <Button size="small" icon="plus" type="success" plain={true}
+                            {disabled ? null : 
+                                <Button size="small" icon="plus" type="success" plain={true}
                                     className="flex-parent mb18"
-                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>
+                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
                         </td>
                         <td>{placeholder}</td>
 

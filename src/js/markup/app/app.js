@@ -9,6 +9,7 @@ import Immutable from 'immutable'
 
 import ComboAppeal from '../appeal/comboAppeal.js'
 import AppealExplorer from '../table/appealExplorer.js'
+import AppealOutExplorer from '../table/appealOutExplorer.js'
 import IDecisExplorer from '../table/iDecisExplorer.js'
 import ISignExplorer from '../table/iSignExplorer.js'
 import DecisionsList from '../editable/decisionsList.js'
@@ -39,6 +40,7 @@ export default function App() {
                
                     <Switch>
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
+                        <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
                         <Route path='/appeal_incoming' render={()=><ComboAppeal/>}/>
                         <Route path='/appeal_outgoing' render={()=><Outgoing/>}/>
                         <Route path='/explore' render={()=><AppealExplorer/>}/>
@@ -62,11 +64,7 @@ export default function App() {
     ); //
 };
 
-
-const Home = () => {
-    return <h1>Главная страница. Тут может быть что-то. А может не быть.</h1>;
-}; //
-
+const Home = () => (<h1>Главная страница. Тут может быть что-то. А может не быть.</h1>); //
 
 const NotFoundPage = ({match}) => {
     const {url} = match;
@@ -130,8 +128,8 @@ class LayoutMain extends React.Component {
                                 <Menu.Item index="i_check">Входящие: К проверке</Menu.Item>
                                 <Menu.Item index="i_sign">Входящие: К подписи</Menu.Item>
                                 <Menu.Item index="appeal_outgoing?new">Исходящие: Новое</Menu.Item>
+                                <Menu.Item index="explore_out">Исходящие: Поиск</Menu.Item>
                         </Menu.SubMenu>
-
 
                         <Menu.SubMenu index="2" title="Служебные письма">
                             <Menu.Item index="letter_incoming?new">Новое входящее</Menu.Item>

@@ -19,7 +19,7 @@ const headerTitle = 'Темы обращения';
 const M = mapping.TopicsData;
 
 const TopicsData = props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId} = props;
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode} = props;
     const navi = !disabled && (nextPage||prevPage);
     
     const isMadi = system == 'M';
@@ -32,7 +32,7 @@ const TopicsData = props => {
                         <form onSubmit={handleSubmit}>
                             <hr className='txt-hr my9'/>
                             <h4 className='ap-h4'>Список тем обращения</h4>
-                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId}}/>
+                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode}}/>
                         </form>
                     </Card>
                 </Layout.Col>

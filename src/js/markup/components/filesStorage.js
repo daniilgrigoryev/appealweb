@@ -5,12 +5,12 @@ import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {Button, Dropdown} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
-import {getSessionId} from '../../../../selectors/common.js'
-import {post,postFile,mpt} from '../../../../services/ajax.js'
-import {baseUrl} from '../../../../services/api.js'
-import {scanPdf} from '../../../../services/scanService.js'
-import {EAutocomplete} from '../../../components/fautocomplete.js'
-import {ECheckbox} from '../../../components/checkbox.js'
+import {getSessionId} from '../../selectors/common.js'
+import {post,postFile,mpt} from '../../services/ajax.js'
+import {baseUrl} from '../../services/api.js'
+import {scanPdf} from '../../services/scanService.js'
+import {EAutocomplete} from './fautocomplete.js'
+import {ECheckbox} from './checkbox.js'
 
 const im = (obj)=> Immutable.fromJS(obj);
 
@@ -27,8 +27,8 @@ const download = async (sessionId,row)=>{
     setTimeout(()=>(tempLink && (tempLink.remove())),5000);    
 }
 
-const IshDocsData = (props)=>{
-    const {files,setFiles,sessionId,fTypes,status_alias} = props;
+const FilesStorage = React.memo(function FilesStorage(props){
+    const {files,setFiles,sessionId,fTypes,status_alias,disabled} = props;
     const finput = useRef(null);
     const clickFile = ()=> {
         finput.current.value = null;
@@ -59,7 +59,7 @@ const IshDocsData = (props)=>{
         onFileDone(resp,file.name,'S')
     }
  
-    const onChange = (index,field,val)=>{ 
+    const onChange = (index,field,val)=>{
         const newFiles = (files|| im([]) ).setIn([index,field],val);
         setFiles(newFiles);
     }
@@ -67,7 +67,7 @@ const IshDocsData = (props)=>{
     const showCheckCB = (!status_alias) || status_alias=='AWAIT_CHECK';
 
     const DOCUMENTS = !_.size(files)
-        ? (<tr><td colSpan='2'>Нет загруженных файлов</td></tr>)
+        ?(<tr><td colSpan='2'>Нет загруженных файлов</td></tr>)
         :(files.map((x,i)=>(
             <tr key={x.get('storage_id')}>
                 <td>
@@ -75,15 +75,18 @@ const IshDocsData = (props)=>{
                 </td>
                 <td className='ap-table__header' onClick={()=>download(sessionId,x)} >{x.get('description')}</td>
                 <td>
-                    <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} />
+                    {(!fTypes) ? null 
+                        : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
                 </td>
                 <td>
-                    <Button size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                        <i className="el-icon-close color-red-dark ml18"/>
-                    </Button>                    
+                    { disabled ? null : 
+                        <Button size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                            <i className="el-icon-close color-red-dark ml18"/>
+                        </Button>   
+                    }                 
                 </td>
                 <td>
-                { (showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
+                { (fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
                     <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}} />
                     : null
                 }
@@ -91,17 +94,19 @@ const IshDocsData = (props)=>{
             </tr>))); //
 
     return (<React.Fragment>
-                <div>
+                
+                {disabled ? null : <div>
                     <Button size="small" style={{marginLeft: '10px'}} onClick={clickFile} >Загрузить документ</Button>
                     <Button size="small" onClick={onFileScan} >Сканировать документ</Button>
                     <input type="file" name="file" style={{'display':'none'}} ref={finput} onChange={onFileLoad} />
-                </div>
+                </div>}
+
                 <table>
                     <tbody>
                         {DOCUMENTS}
                     </tbody>
                 </table>
             </React.Fragment>)
-} //
+}) //
 
-export default connect((state,props)=>({sessionId : getSessionId(state)}))(IshDocsData)
+export default connect((state,props)=>({sessionId : getSessionId(state)}))(FilesStorage)

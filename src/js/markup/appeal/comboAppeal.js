@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent,Component } from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -18,13 +18,15 @@ import ArchiveData from './subForms/archiveData.js'
 import DocsLink from './subForms/docsLink.js'
 import StatusData from './subForms/statusData.js'
 import {post} from '../../services/ajax.js'
+import {baseUrl} from '../../services/api.js'
 import {appealSetId} from '../../actions/common.js'
 import {messageSet} from '../../actions/common.js'
 import SidePanel from './sidePanel.js'
+import {getRights} from  '../../services/rights.js'
 
 const im = (obj)=> Immutable.fromJS(obj)
 
-class ComboAppeal extends Component {
+class ComboAppeal extends PureComponent {
 
   constructor(props){
     super(props);
@@ -56,10 +58,154 @@ class ComboAppeal extends Component {
     }//
 
     const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
-    const fullAddr = !formData ? {} : _.pick(formData.toJS(), ['zajav_lic','cdr_address_id','dom','korpus','kvart','line_adr','city_id','pindex','rayon_id','region','str','street_id']);
     
+    let fullAddr = {};
+    let fl = false;
+    let line_adr = '';
+    let claim_id;
+    let files = [];
+
+    if (formData) {
+      fl       = formData.get('zajav_lic')|| false;
+      line_adr = formData.get('line_adr') || '';
+      files = formData.get('files') || [];
+      fullAddr = _.pick(formData.toJS(), [
+        'cdr_address_id', 
+        'dom', 
+        'korpus', 
+        'kvart',
+        'line_adr', 
+        'city_id', 
+        'pindex', 
+        'rayon_id', 
+        'region', 
+        'str', 
+        'street_id']);
+      claim_id = formData.get('id') || ''; 
+      //debugger;
+      //testGetFile(this.props.sid, claim_id);
+    }
+
+    const right = 'general_super';
+
+    let CONTENT = (<div style={{fontFamily:'monospace',width: '800px'}}>
+───────────────────────────────────────────────────────────────
+───────────────████████────────────────────────────────────────
+──────────────███▄███████──────────────────────────────────────
+──────────────███████████──────────────────────────────────────
+──────────────███████████──────────────────────────────────────
+──────────────██████───────────────────────────────────────────
+──────────────█████████────────────────────────────────────────
+────█───────███████────────────────────────────────────────────
+────██────████████████───────────── Недостаточно прав ─────────
+────███──██████████──█────────── для просмотра обращения───────
+────███████████████────────────────────────────────────────────
+────███████████████────────────────────────────────────────────
+─────█████████████─────────────────────────────────────────────
+──────███████████──────────────────────────────────────────────
+────────████████───────────────────────────────────────────────
+─────────███──██───────────────────────────────────────────────
+─────────██────█───────────────────────────────────────────────
+─────────█─────█───────────────────────────────────────────────
+─────────██────██──────────────────────────────────────────────
+───────────────────────────────────────────────────────────────
+      </div>); //
+
+    const [head,tail] = right.split('_');
+    if (head=='office'){
+      if (tail=='clerk'){
+         CONTENT = (<React.Fragment>
+            <BasicData disabled={true}/>
+            <ClaimantData disabled={true}/>
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+            <OrganizationsData disabled={true}/>
+            <SummaryData disabled={true}/>
+          </React.Fragment>); //
+      } else if (tail=='response') {
+        CONTENT = ( <TopicsData responseMode={true} />); //
+      } else if (tail=='chief') {
+        CONTENT = (<React.Fragment>
+            <BasicData />
+            <ClaimantData />
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}  />
+            <OrganizationsData />
+            <SummaryData />
+          </React.Fragment>); //
+      }
+    } else if (head=='department'){
+      if (tail=='admin'){
+         CONTENT = (<React.Fragment>
+              <BasicData disabled={true}/>
+              <ClaimantData disabled={true}/>
+              <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+              <OrganizationsData disabled={true}/>
+              <SummaryData disabled={true}/>
+              <TopicsData adminMode={true} />
+            </React.Fragment>); //
+      } else if (tail=='clerk'){
+         CONTENT = (<React.Fragment>
+              <TopicsData />
+              <IshDocsData reloadRow={this.reloadRow} />
+              <DocsLink reloadRow={this.reloadRow} />
+             </React.Fragment>); //
+      } else if (tail=='verifier'){
+         CONTENT = (<React.Fragment>
+              <TopicsData disabled={true} />
+              <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+              <DocsLink reloadRow={this.reloadRow} disabled={true} />
+             </React.Fragment>); //
+      } else if (tail=='chief'){
+         CONTENT = (<React.Fragment>
+              <TopicsData />
+              <IshDocsData reloadRow={this.reloadRow} />
+              <DocsLink reloadRow={this.reloadRow} />
+             </React.Fragment>); //
+      }
+    } else if (head=='archive'){
+      if (tail=='clerk'){
+        CONTENT = <ArchiveData/>
+      } else if (tail=='chief'){
+        CONTENT = (<React.Fragment>
+                      <BasicData disabled={true}/>
+                      <ClaimantData disabled={true}/>
+                      <TopicsData disabled={true} />
+                      <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+                      <DocsLink reloadRow={this.reloadRow} disabled={true} />
+                      <ArchiveData/>
+                   </React.Fragment>); //
+      }
+    } else if (head=='general'){
+      if (tail=='observer'){
+          CONTENT = (<React.Fragment>
+            <BasicData disabled={true}/>
+            <ClaimantData disabled={true}/>
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+            <OrganizationsData disabled={true}/>
+            <SummaryData disabled={true}/>
+            <TopicsData disabled={true}/>
+            <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+            <DocsLink reloadRow={this.reloadRow} disabled={true}/>
+            <PlusDocs disabled={true} />
+            <ArchiveData disabled={true}/>
+          </React.Fragment>); //
+      } else if (tail=='super') {
+        CONTENT = (<React.Fragment>
+            <BasicData/>
+            <ClaimantData/>
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
+            <OrganizationsData/>
+            <SummaryData/>
+            <TopicsData/>
+            <IshDocsData reloadRow={this.reloadRow} />
+            <DocsLink reloadRow={this.reloadRow}/>
+            <PlusDocs  />
+            <ArchiveData/>
+          </React.Fragment>); //
+      }
+    }
+
     return (
-      <SidePanel hashHolder={(cb)=>(this.hashHold=cb)}>
+      <SidePanel hashHolder={(cb)=>(this.hashHold=cb)} disabled={true}>
                 <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
                     <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                         <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
@@ -67,15 +213,7 @@ class ComboAppeal extends Component {
                         </h1>
                     </div>
                 }>
-                    <BasicData/>
-                    <ClaimantData/>
-                    <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
-                    <OrganizationsData/>
-                    <SummaryData/>
-                    <TopicsData/>
-                    <IshDocsData reloadRow={this.reloadRow} />
-                    <DocsLink reloadRow={this.reloadRow}/>
-                    <ArchiveData/>
+                {CONTENT}
                 </Card>
             </SidePanel>
     ); //
@@ -85,7 +223,8 @@ class ComboAppeal extends Component {
 const mapStateToProps = (state,props)=>{
     let id = state.getIn(['form','appeal','values','id']);
     let formData = state.getIn(['form','appeal','values']);
-    return {id,formData};
+    let sid = state.getIn(['general','user','sessionID']);
+    return {id,formData,sid};
 }
 
 export default compose(

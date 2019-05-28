@@ -10,6 +10,7 @@ import {ESwitch, FSwitch} from '../components/switch.js'
 import {ESelect, FSelect} from '../components/select.js'
 import {EPicker, FPicker} from '../components/picker.js'
 import {post} from '../../services/ajax.js'
+import {baseUrl} from '../../services/api.js'
 import Immutable from 'immutable'
 import * as _ from 'lodash'
 import {messageSet} from '../../actions/common.js'
@@ -29,6 +30,25 @@ const scrollNavi = (attr) => {
         el && el.scrollIntoView();
     }
 }
+
+const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
+    const params = new URLSearchParams()
+    params.append('session',sessionId)
+    params.append('claim_id',claim_id)
+    params.append('report_alias',report_alias)
+    params.append('report_fname',report_fname)
+    
+    const downloadDocLink = baseUrl() + 'report/fill?'+params.toString()
+
+    const tempLink = document.createElement('a');
+    tempLink.href = downloadDocLink;
+    tempLink.setAttribute('download', 'test.pdf');
+    tempLink.click();
+
+    setTimeout(()=>{
+      tempLink && (tempLink.remove());
+    },5000);
+} 
 
 class SidePanel extends Component {
 
@@ -91,14 +111,14 @@ class SidePanel extends Component {
 
     render() {
         const noop = () => {};
-        const {disabled, formData} = this.props;
+        const {disabled, formData, sessionId} = this.props;
         
         const noSave = !!(this.curHash && this.curHash == this.getHash())
         const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? noop : this.save;
 
-        const {checking_date, registration_number} = _.get(formData ? formData.toJS():{}, 'values', {});
-
+        const {checking_date, registration_number,id} = _.get(formData ? formData.toJS():{}, 'values', {});
+        
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-left'>
@@ -164,6 +184,13 @@ class SidePanel extends Component {
                         </table>
                     </div>
 
+                     <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>
+                        <h3 className="ap-h3">Печать малый</h3>
+                    </div>
+                    <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>
+                        <h3 className="ap-h3">Печать большой</h3>
+                    </div>
+
                     <div className="el-card__header el-card__header--top-border">
                         <h3 className="ap-h3">Список подразделов</h3>
                     </div>
@@ -194,7 +221,8 @@ class SidePanel extends Component {
 
 const mapStateToProps = (state, props) => {
     const formData = state.getIn(['form', 'appeal']);
-    return {formData};
+    const sessionId = state.getIn(['general','user','sessionID']);
+    return {formData,sessionId};
 }
 
 export default compose(

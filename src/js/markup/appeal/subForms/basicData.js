@@ -39,11 +39,7 @@ const BasicData = props => {
                                         <tr>
                                             <td className='ap-input-caption'>{M.ECOO_NUM.label}</td>
                                             <td><Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/></td>
-                                        </tr>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/></td>
-                                        </tr>
+                                        </tr>                                       
                                         </tbody>
                                     </table>
                                 </form>
@@ -57,10 +53,9 @@ const BasicData = props => {
                                             <td><Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name}
                                                        dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/></td>
                                         </tr>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.RESPONSE_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={M.RESPONSE_TYPE.name}
-                                                       dataKey={M.RESPONSE_TYPE.key} placeholder='Выбор'/></td>
+                                         <tr>
+                                            <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
+                                            <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/></td>
                                         </tr>
                                         </tbody>
                                     </table>

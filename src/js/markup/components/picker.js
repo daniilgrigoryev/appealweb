@@ -56,6 +56,8 @@ class APicker extends React.Component {
 
         const p = Object.assign({}, this.props);
         delete p.onChange;
+        p.isDisabled = p.disabled;
+        p.isReadonly = p.disabled;
 
         if (timepicker) {
             return <TimePicker {...p} value={value} onChange={customChanger}/>;

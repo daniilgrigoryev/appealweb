@@ -14,11 +14,10 @@ import mapping from '../../mapping.js'
 import {post,postFile,mpt,get} from '../../../../services/ajax.js'
 import {getSessionId, getSystem} from '../../../../selectors/common.js'
 import Immutable from 'immutable'
-import IshDocsData from './ishDocFile.js'
+import FilesStorage from '../../../components/filesStorage.js'
 import {baseUrl} from '../../../../services/api.js'
 import {getCertificates,signXml} from '../../../../services/crypto.js'
 import CryptoSL from '../../../common/cryptoSigner.js'
-
 
 const M = mapping.ishDocList;
 
@@ -143,10 +142,9 @@ const IshDocRow = (props) => {
                     <td>{P.get(M.PODPISAL.name)}</td>
                     <td>{P.get(M.STATUS.name)}</td>
                     <td className='pr12 align-r'>
-                        {disabled ? null :
-                            <Button type="text" onClick={onXpd}>
-                                <i className="el-icon-edit color-green"/>
-                            </Button>}
+                        <Button type="text" onClick={onXpd}>
+                            <i className="el-icon-edit color-green"/>
+                        </Button>
 
                         {disabled ? null :
                             <Button size="small" type="text" onClick={onRmv}>
@@ -226,11 +224,10 @@ const IshDocRow = (props) => {
                                     </span>
                                 </td>
                                 <td>
-                                    {STATUS}
+                                    {disabled? null : STATUS}
                                 </td>
                                 <td>
-
-                                <CryptoSL doSign={(cert)=>getSign(id,cert)} />
+                                    {disabled? null : <CryptoSL doSign={(cert)=>getSign(id,cert)} />}
                                 </td>
                             </tr>
                             <tr key={id + 'e2'}>
@@ -261,12 +258,18 @@ const IshDocRow = (props) => {
                                             <td className='ap-input-caption'>{M.COMMENT.label}</td>
                                             <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/></td>
                                         </tr>
-                                        {false && (<tr>
-                                            <td className='ap-input-caption'>Статус проекта документов</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' /></td>
+                                        <tr>
+                                            {false && 
+                                                (<React.Fragment>
+                                                        <td className='ap-input-caption'>Статус проекта документов</td>
+                                                        <td><Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' /></td>
+                                                    </React.Fragment>)}
+                                            
+                                            <td></td>
+                                            <td></td>
                                             <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
                                             <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} /></td>
-                                        </tr>)}
+                                        </tr>
                                         </tbody>
                                     </table>
 
@@ -280,7 +283,7 @@ const IshDocRow = (props) => {
                                     <hr className='txt-hr my18'/>
                                     <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
 
-                                    <IshDocsData ish_doc_id={id} {...{files,setFiles,fTypes,sessionId,status_alias}} />
+                                    <FilesStorage {...{files,setFiles,fTypes,sessionId,status_alias,disabled}} />
                                 </td>
                             </tr>
                             </tbody>

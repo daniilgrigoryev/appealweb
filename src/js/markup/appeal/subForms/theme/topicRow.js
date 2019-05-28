@@ -56,8 +56,10 @@ class TopicRow extends React.Component {
 
     render(){
         const {manualPostLink} = this.state;
-        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, disabled,collapse,claim_id,dispatch,apn_list,sessionId} = this.props;
-        
+        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode} = this.props;
+        let {disabled} = this.props;
+        disabled = disabled || responseMode || adminMode;
+
         const fldN = field + M.POST_N.name;
         const fldD = field + M.POST_DATE.name;
         const fldLinkedID = field + "post_decree_id";
@@ -145,9 +147,9 @@ class TopicRow extends React.Component {
                         </td>
                         <td colSpan='2' className='pr12 align-r'>
                            <span className="ml12">
-                               {disabled ? null : <Button type="text" onClick={onXpd}><i className="el-icon-edit color-green"/></Button>}
-                               {disabled ? null : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
-                               {disabled ? null : <Button size="small" type="text" onClick={onRmv}><i className="el-icon-close color-red-dark"/></Button>}
+                               <Button type="text" onClick={onXpd}><i className="el-icon-edit color-green"/></Button>
+                               {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
+                               {(disabled || responseMode) ? null : <Button size="small" type="text" onClick={onRmv}><i className="el-icon-close color-red-dark"/></Button>}
                            </span>
                         </td>
                     </tr>
@@ -170,9 +172,9 @@ class TopicRow extends React.Component {
             <tr>
                 <td></td>
                 <td>
-                    <Button type="text" size="small">
+                    {null && <Button type="text" size="small">
                         <span className='color-blue'>Зарезервировать слот в СУО</span>
-                    </Button>
+                    </Button>}
                 </td>
             </tr>
         </React.Fragment>);
@@ -229,11 +231,12 @@ class TopicRow extends React.Component {
 
                                     <td>
                                         <span className='inline-block mr12 w240'>
-                                            <Field disabled={!manualPostLink} isDisabled={!manualPostLink} component={FPicker}
+                                            <Field disabled={!manualPostLink} disabled={!manualPostLink || disabled} component={FPicker} disabled={disabled}
                                                 name={field + M.POST_DATE.name} placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
                                         </span>
                                     </td>
                                     <td>
+                                        {disabled ? null : (
                                          <Switch
                                             value={manualPostLink}
                                             onValue={true}
@@ -244,7 +247,8 @@ class TopicRow extends React.Component {
                                                 this.setManualPostLink(value);
                                                 postClear(); 
                                             }}>
-                                          </Switch>
+                                          </Switch>)}
+                                    
                                     </td>
                                     <td className='ap-input-caption w120'>Ручной ввод</td>
                                     <td>{LinkerBTN}</td>
@@ -262,11 +266,11 @@ class TopicRow extends React.Component {
                                             <tbody>
                                             <tr>
                                                 <td className='ap-input-caption'>Исполнитель</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Отдел исполнителя</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Статус по теме</td>
@@ -304,7 +308,7 @@ class TopicRow extends React.Component {
                                             {cif(M.OWNER_TS_ADR.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.OWNER_TS_ADR.label}</td>
-                                                    <td><AddressData2 key={getAdrKey(value,['owner_ts_adr_id','owner_ts_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['owner_ts_adr_id','owner_ts_adr_kvart','owner_ts_adr_line']}>
+                                                    <td><AddressData2 key={getAdrKey(value,['owner_ts_adr_id','owner_ts_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['owner_ts_adr_id','owner_ts_adr_kvart','owner_ts_adr_line']}  disabled={disabled}>
                                                             {value.get('owner_ts_adr_line') || ''}
                                                         </AddressData2>
                                                     </td>
@@ -313,7 +317,7 @@ class TopicRow extends React.Component {
                                             {cif(M.APN_ADR.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.APN_ADR.label}</td>
-                                                    <td><AddressData2 key={getAdrKey(value,['apn_adr_id','apn_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['apn_adr_id','apn_adr_kvart','apn_adr_line']} >
+                                                    <td><AddressData2 key={getAdrKey(value,['apn_adr_id','apn_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['apn_adr_id','apn_adr_kvart','apn_adr_line']} disabled={disabled}>
                                                         {value.get('apn_adr_line') || ''}
                                                         </AddressData2>
                                                     </td>

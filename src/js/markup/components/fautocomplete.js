@@ -30,7 +30,7 @@ class EAutocomplete extends React.Component {
 		if (dataWhereChanged){
 			this.setState({data: null, dataKeyed:null, dataSuggestions: null, value: ""});
 		} else if (value != prevData.value && (value=='' || value ==null)){ 
-	      this.setState({data: null, dataKeyed:null, value: ""});
+	     	this.setState({data: null, dataKeyed:null, value: ""});
 	    }		
 	}
 
@@ -175,7 +175,8 @@ class EAutocomplete extends React.Component {
 
 	render() {
 		const {value,dataSuggestions} = this.state;
-	    return <AutoComplete value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} />
+		const {disabled} = this.props;
+	    return <AutoComplete disabled={disabled} value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} />
 	} //
 }
 

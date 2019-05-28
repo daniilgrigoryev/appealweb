@@ -160,7 +160,7 @@ class ISignExplorer extends React.Component {
             const x = await post('db/select', {alias, claim_id,orphan});
             dispatch(initialize(im(x.data)));
             const key = window.stateSave();
-            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
+            const href = window.location.href.replace('/i_sign',`/appeal_incoming&storageKey=${key}`);
             window.open(href,'_blank');
         }
     }
