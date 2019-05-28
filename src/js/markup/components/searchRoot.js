@@ -61,6 +61,7 @@ class SearchRoot extends React.Component {
   constructor(props){
   	super(props);
   
+    this.scrollElement = null;
   	this.state = {root :[]}
     
     this.change = this.change.bind(this);
@@ -92,7 +93,9 @@ class SearchRoot extends React.Component {
         const field = fields.filter(x=>x.label==fieldLabel)[0];
         const row = Object.assign({oper:'=',value:''},field);
         root = [...root,row];
-        this.setState({root});			
+        this.setState({root},()=>{
+          setTimeout(()=>(this.scrollElement.scrollTop=this.scrollElement.scrollHeight),50);
+        });
    }
   
   render() {
@@ -105,7 +108,7 @@ class SearchRoot extends React.Component {
     
     return (
       <React.Fragment>
-        <div className="items-wrap h240 scroll-styled scroll-auto">
+        <div className="items-wrap h240 scroll-styled scroll-auto" ref={el => (this.scrollElement = el) }>
           {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
         </div>
         <div className="select-container wmax240 mt12">
