@@ -15,6 +15,7 @@ import {EAutocomplete} from '../components/fautocomplete.js'
 import {EPicker} from '../components/picker.js'
 import {SearchRoot} from '../components/searchRoot.js'
 import map from '../../markup/appeal/mapping.js'
+import {baseUrl} from '../../services/api.js'
 import * as _ from 'lodash'
 
 const MS = map.status;
@@ -54,8 +55,10 @@ class AppealExplorer extends React.Component {
         this.where    = {};
         this.key      = 0;
 
+        this.registerGetSelected = this.registerGetSelected.bind(this);
         this.conditionGetter = null;
         this.search   = this.search.bind(this);
+        this.getXFile = this.getXFile.bind(this);
     }
 
     componentDidMount(){
@@ -71,7 +74,7 @@ class AppealExplorer extends React.Component {
     }
 
     openRow(rowData, column) {
-        const {dispatch, change, initialize} = this.props;
+        const {dispatch, change, initialize, sid} = this.props;
         const alias = 'CLAIM_GET';
         const orphan = true;
         return async () => {
@@ -98,8 +101,32 @@ class AppealExplorer extends React.Component {
         this.forceUpdate();
     }
 
+    getXFile() {
+        const alias = 'EXCEL_LIST';
+        const {sid} = this.props;
+        const selected = this.getSelected();
+        const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';     
+
+        const params = new URLSearchParams();
+        params.append('sessionId',sid);
+        params.append('doc_ids', doc_ids);
+        params.append('alias', alias);
+
+        const path = 'xls/fill?'; 
+        const tempLink = document.createElement('a');
+        tempLink.href = baseUrl() + path + params.toString();
+        tempLink.setAttribute('download', 'test.xls');
+        tempLink.click();
+        setTimeout(()=>(tempLink && (tempLink.remove())),5000);
+
+    }
+
+    registerGetSelected(outerGetSelected) {
+        this.getSelected = outerGetSelected;
+    }
+
     render() {
-        const {key,where,state} = this;
+        const {key,where,state,registerGetSelected} = this;
         const {fields} = state;
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
@@ -125,6 +152,7 @@ class AppealExplorer extends React.Component {
                                 <SearchRoot {...{fields,setGetter}} />
                                 <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
+                                    <Button type="primary" onClick={this.getXFile}>xls</Button>
                                 </div>
                             </div>
                         </Card>
@@ -133,7 +161,7 @@ class AppealExplorer extends React.Component {
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where}} hdelta={'515'} />
+                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where, registerGetSelected}} hdelta={'515'}  selectable={true} />
                             </Card>}
             </React.Fragment>
         )
