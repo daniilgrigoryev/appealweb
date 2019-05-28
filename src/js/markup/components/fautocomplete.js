@@ -20,6 +20,9 @@ class EAutocomplete extends React.Component {
 	    this.select=this.select.bind(this);
 	    this.getDatas=this.getDatas.bind(this);
 			this.suggestData=this.suggestData.bind(this);
+
+
+			console.log(this.props);
 	}
 
 	componentDidUpdate(prevData) { 
@@ -175,7 +178,7 @@ class EAutocomplete extends React.Component {
 
 	render() {
 		const {value,dataSuggestions} = this.state;
-	    return <AutoComplete value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} readonly={this.props.readonly}/>
+	    return <AutoComplete value={value} suggestions={dataSuggestions} onChange={this.change} onSelect={this.select} onClick={this.click} completeMethod={this.suggestData} dropdown={true} readonly={this.props.readOnly}/>
 	} //
 }
 
