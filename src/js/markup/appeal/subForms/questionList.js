@@ -33,12 +33,12 @@ export class EQuestionList extends React.Component {
             </td>
             <td>
                  <span className='inline-block mr12'>
-                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key} readOnly />
+                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key} />
                  </span>
             </td>
             <td>
                 <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key} readOnly/>
+                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key}/>
                 </span>
             </td>
             <td>

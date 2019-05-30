@@ -205,7 +205,7 @@ class TopicRow extends React.Component {
                                     </td>
                                     <td>
                                         <span className='inline-block mr12'>
-                                            <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name} readOnly
+                                            <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
                                                    placeholder={M.CAT.label}
                                                    dataKey={M.CAT.key} value={P[M.CAT.name]}/>
                                         </span>
@@ -262,11 +262,11 @@ class TopicRow extends React.Component {
                                             <tbody>
                                             <tr>
                                                 <td className='ap-input-caption'>Исполнитель</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} readOnly name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Отдел исполнителя</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} readOnly name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Статус по теме</td>
@@ -346,28 +346,28 @@ class TopicRow extends React.Component {
                                             {cif(M.APPEAL_CAUSE.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.APPEAL_CAUSE.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]}  readOnly  name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]}  name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
                                                     </td>
                                                 </tr>)
                                             )}
                                             {cif(M.DESISION_MAKER.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.DESISION_MAKER.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} readOnly name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} />
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} />
                                                     </td>
                                                 </tr>)
                                             )}
                                             {cif(M.DECISION_THEME.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.DECISION_THEME.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_THEME.name]}  readOnly  name={field + M.DECISION_THEME.name} dataKey={M.DECISION_THEME.key}/>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_THEME.name]}  name={field + M.DECISION_THEME.name} dataKey={M.DECISION_THEME.key}/>
                                                     </td>
                                                 </tr>)
                                             )}
                                             {cif(M.DECISION_BASIS.name,
                                                 (<tr>
                                                     <td className='ap-input-caption'>{M.DECISION_BASIS.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_BASIS.name]}  readOnly  name={field + M.DECISION_BASIS.name} dataKey={M.DECISION_BASIS.key}/>
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_BASIS.name]}  name={field + M.DECISION_BASIS.name} dataKey={M.DECISION_BASIS.key}/>
                                                     </td>
                                                 </tr>)
                                             )}

@@ -46,7 +46,7 @@ const SearchRow = (props)=>{
                   <option value="NOT NULL">NOT NULL</option>
                   <option value="LIKE">Контекст</option>
               </select>
-              <div class='select-arrow'></div>
+              <div className='select-arrow'></div>
             </div>
             <div>
               {Row}
@@ -110,7 +110,7 @@ class SearchRoot extends React.Component {
         </div>
         <div className="select-container wmax240 mt12">
           <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
-          <div class='select-arrow'></div>
+          <div className='select-arrow'></div>
         </div> 
       </React.Fragment>
     );
