@@ -3,7 +3,7 @@ import {compose} from 'redux'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {reset} from 'redux-form';
-import {Card,Button} from 'element-react'
+import {Card,Button, Layout} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import Immutable from 'immutable'
 import BasicData from './subForms/basicData.js'
@@ -46,7 +46,6 @@ class ComboAppeal extends PureComponent {
 
   render(){
     const {dispatch,change,initialize,formData} = this.props;    
-    
     try{
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
@@ -57,6 +56,12 @@ class ComboAppeal extends PureComponent {
       //debugger;
     }//
 
+    let addrH = <form>
+                  <hr className="txt-hr my6"/>
+                  <h4 className='ap-h4'>Адрес</h4>
+                 </form>
+
+    //
     const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
     
     let fullAddr = {};
@@ -117,6 +122,7 @@ class ComboAppeal extends PureComponent {
          CONTENT = (<React.Fragment>
             <BasicData disabled={true}/>
             <ClaimantData disabled={true}/>
+             {addrH}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
@@ -127,6 +133,7 @@ class ComboAppeal extends PureComponent {
         CONTENT = (<React.Fragment>
             <BasicData />
             <ClaimantData />
+            {addrH}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}  />
             <OrganizationsData />
             <SummaryData />
@@ -137,6 +144,7 @@ class ComboAppeal extends PureComponent {
          CONTENT = (<React.Fragment>
               <BasicData disabled={true}/>
               <ClaimantData disabled={true}/>
+              {addrH}
               <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
               <OrganizationsData disabled={true}/>
               <SummaryData disabled={true}/>
@@ -179,6 +187,7 @@ class ComboAppeal extends PureComponent {
           CONTENT = (<React.Fragment>
             <BasicData disabled={true}/>
             <ClaimantData disabled={true}/>
+            {addrH}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
@@ -192,6 +201,7 @@ class ComboAppeal extends PureComponent {
         CONTENT = (<React.Fragment>
             <BasicData/>
             <ClaimantData/>
+            {addrH}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
             <OrganizationsData/>
             <SummaryData/>

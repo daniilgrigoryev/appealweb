@@ -37,7 +37,7 @@ class AddressData2 extends React.Component {
         const getField = (field)=>(source.get ? source.get(field) : source[field]);
 
         const adr_id   = getField(fId);
-        const kvart    = getField(fKvart);
+        const kvart    = getField(fKvart) || '';
         //const line_adr = getField(fLine);
 
         const alias  = alias_get;
@@ -155,7 +155,7 @@ class AddressData2 extends React.Component {
     render() {
         const {children,disabled} = this.props; 
         const F = this.state.fullAddr;
-        const line_adr = this.fullAddr;
+        const line_adr = F.line_adr;
         const placeholder = children || line_adr || '';    
         
         const ADDRESS = this.state.isStr
@@ -233,22 +233,10 @@ class AddressData2 extends React.Component {
                     </tr></React.Fragment>
                 );
 
-        return (
-                <Layout.Row gutter="20">
-                    <Layout.Col span="24">
-                        <Card bodyStyle={{'paddingTop': 0, width: '600px'}} className="box-card">
-                            <hr className="txt-hr my6"/>
-                            <h4 className='ap-h4 flex-parent flex-parent--center-cross'>Адрес</h4>
-                            <div className='ml0'>
-                                <table>
-                                    <tbody>
-                                        {ADDRESS}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </Card>
-                    </Layout.Col>
-                </Layout.Row>
+        return (       
+                <div className='ml0'>
+                    {ADDRESS}
+                </div>
         )
     }
 } //
@@ -257,7 +245,6 @@ const mapStateToProps = (state) => ({sid:state.getIn(['general','user','sessionI
 
 const getAdrKey = (source={},fields=[])=>{
     const [fId,fKvart] = fields;
-
 
     const hasGetter = typeof source.get == 'function';
 
