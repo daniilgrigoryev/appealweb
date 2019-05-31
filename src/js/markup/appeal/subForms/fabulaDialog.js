@@ -57,13 +57,20 @@ class FabulaDialog extends React.Component {
 
 	download(href,filename){
 		var tempLink = document.createElement('a');
-        tempLink.href = href;
-        tempLink.setAttribute('download', 'filename.docx');
-        tempLink.click();
+		var event = document.createEvent('MouseEvents');
+				event.initMouseEvent(
+					'click', true, false, window, 0, 0, 0, 0, 0
+					, false, false, false, false, 0, null
+				);
 
-        setTimeout(()=>{
-          tempLink && (tempLink.remove());
-        },5000);
+		tempLink.href = href;
+		tempLink.setAttribute('download', 'filename.docx');
+		
+		tempLink.dispatchEvent(event);
+		
+		setTimeout(()=>{
+			tempLink && (tempLink.remove());
+		},5000);
 	}
 
 	downloadDocument(ext,doc={},section={}){
