@@ -104,7 +104,7 @@ class AddressData extends React.Component {
     render() {
         const {children,disabled} = this.props;
         const F = this.state.fullAddr;
-        const line_adr = F.fullAddr;
+        const line_adr = F.line_adr;
         const placeholder = children || line_adr || '';     
         
         const ADDRESS = this.state.isStr
@@ -183,21 +183,9 @@ class AddressData extends React.Component {
                 );
 
         return (
-                <Layout.Row gutter="20">
-                    <Layout.Col span="24">
-                        <Card bodyStyle={{'paddingTop': 0}} className="box-card">
-                            <hr className="txt-hr my6"/>
-                            <h4 className='ap-h4 flex-parent flex-parent--center-cross'>Адрес</h4>
-                            <form className='ml0'>
-                            <table>
-                                <tbody>
-                                    {ADDRESS}
-                                </tbody>
-                            </table>
-                            </form>
-                        </Card>
-                    </Layout.Col>
-                </Layout.Row>
+                <form>
+                    {ADDRESS}
+                </form>
         )
     }
 } //
