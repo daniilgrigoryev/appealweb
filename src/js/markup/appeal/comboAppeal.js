@@ -215,7 +215,7 @@ class ComboAppeal extends PureComponent {
     }
 
     return (
-      <SidePanel hashHolder={(cb)=>(this.hashHold=cb)} disabled={true}>
+      <SidePanel hashHolder={(cb)=>(this.hashHold=cb)}>
                 <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
                     <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                         <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
