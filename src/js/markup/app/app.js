@@ -41,13 +41,13 @@ export default function App() {
                     <Switch>
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
                         <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
-                        <Route path='/appeal_incoming' render={()=><ComboAppeal/>}/>
-                        <Route path='/appeal_outgoing' render={()=><Outgoing/>}/>
+                        <Route path='/appeal_incoming' render={(props)=><ComboAppeal hashChange = {props.location.search}/>}/>
+                        <Route path='/appeal_outgoing' render={(props)=><Outgoing hashChange = {props.location.search}/>}/>
                         <Route path='/explore' render={()=><AppealExplorer/>}/>
                         <Route path='/i_check' render={()=><IDecisExplorer/>} />
                         <Route path='/i_sign' render={()=><ISignExplorer/>} />
-                        <Route path='/letter_incoming' render={()=><IncomingLetter/>}/>
-                        <Route path='/letter_outgoing' render={()=><OutcomingLetter/>}/>
+                        <Route path='/letter_incoming' render={(props)=><IncomingLetter hashChange = {props.location.search}/>}/>
+                        <Route path='/letter_outgoing' render={(props)=><OutcomingLetter hashChange = {props.location.search}/>}/>
                         <Route path='/sprav/fabulas' render={()=><FabulaDocViewer/>}/>
                         <Route path='/sprav/decisions' render={()=><DecisionsList/>}/>
                         <Route path='/sprav/categories' render={()=><CategoriesList/>}/>
