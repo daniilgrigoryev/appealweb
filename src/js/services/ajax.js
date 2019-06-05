@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let MODE = '';
-let BASE_URL = '';
+let BASE_URL = 'DEV_47';
 let sessionId = null;
 
 const ajax = (method,url,payload,ajaxOpts) => {
