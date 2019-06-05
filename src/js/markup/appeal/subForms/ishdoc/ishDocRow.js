@@ -139,8 +139,8 @@ const IshDocRow = (props) => {
                     <td>{P.get(M.DOC_TARGET.name)}</td>
                     <td>{P.get(M.ISH_NUM.name)}</td>
                     <td>{data2str(P.get(M.ISH_DATE.name))}</td>
-                    <td>{P.get(M.PODPISAL.name)}</td>
-                    <td>{P.get(M.STATUS.name)}</td>
+                    <td>{P.get('podpisal_name')}</td>
+                    <td>{P.get('status_name')}</td>
                     <td className='pr12 align-r'>
                         <Button type="text" onClick={onXpd}>
                             <i className="el-icon-edit color-green"/>
@@ -181,6 +181,7 @@ const IshDocRow = (props) => {
         'SIGNED'      : (<span>Подписано</span>),
         'SENDED'      : (<span>Отправлено</span>)
     })[status_alias] || (<Button onClick={()=>setStatus('AWAIT_CHECK')} >Передать на проверку</Button>);//
+
 
     const editable = (
         <React.Fragment key={id + 'e1'} >
