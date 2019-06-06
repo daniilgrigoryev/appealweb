@@ -64,9 +64,9 @@ class FabulaSecEditor extends React.Component {
                     <tr>
                         <td className='ap-input-caption align-t'>Содержимое</td>
                         <td colSpan='3'>
-                            <Input
+                            <EInput
                                 type="textarea"
-                                value={s.CONTENT} onChange={(v) => this.setVal('CONTENT', v.target.value)}
+                                value={s.CONTENT} onChange={(v) => this.setVal('CONTENT', v)}
                                 autosize={{ minRows: 6, maxRows: 20}}
                             />
 
