@@ -59,8 +59,6 @@ export default class CrudTable extends React.Component {
         const newRow = row || this.state.row;
         let rows = [...this.state.rows];
 
-        debugger;
-
         if (this.newrow) {
             rows.push(newRow);
         } else {

@@ -1,0 +1,56 @@
+
+
+.dialIsh {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;	
+
+	.el-dialog__header {
+		width: 100%;
+	}
+}
+
+
+.dialFoot {
+	padding: 0px 20px 15px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;	
+
+	.spBtn {
+		margin-left: auto;
+	}
+}
+
+.dialBod {
+	padding: 10px 20px 0px 20px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;	
+
+	.spDiv {
+		width: 140px;
+	}
+
+	.selEl {
+		width: calc(100% - 140px);
+
+		.el-input__icon {
+		    width: 35px !important;
+		}
+	}
+}
+
+.formFr {
+	position: absolute;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 100500;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+

@@ -60,6 +60,7 @@ const initialState = im({
     general : {
       system: 'A',
       externalLogin: false && true,
+
       user : {
         username : '',
         sessionId: ''

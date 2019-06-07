@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import {Dialog,Select,Input,Collapse,Button, Tag} from 'element-react'
 import { connect } from 'react-redux'
 import {post} from '../../../services/ajax.js'
@@ -7,9 +8,13 @@ import {fetchSelect,fetchFabulasThemesMadi,baseUrl} from '../../../services/api.
 import {getSessionId, getSystem} from '../../../selectors/common.js'
 import DocPreview from './docPreview.js'
 import mapping from '../mapping.js'
+import '../../../../scss/ishdocExtraStyle.scss'
 
 const M = mapping.fabulaDialog;
-const st = {width: '200px',display: 'inline-block'}
+// const st = {width: '200px',display: 'inline-block'}
+
+
+const WAITING = "Ожидайте..";
 
 class FabulaDialog extends React.Component {
 
@@ -19,11 +24,12 @@ class FabulaDialog extends React.Component {
 			docList: null, // null==not initialized, []==empty
 			doc: null, // {fabulaDoc, fileName, fileId}
 			secList: null,
-			
+			strVal: 'Необходимо выбрать документ',
 			showDialog: false,
 			downloadDocLink: null
 		}
 
+		this.setString = this.setString.bind(this);
 		this.downloadDocument = this.downloadDocument.bind(this);
 	}
 
@@ -43,6 +49,8 @@ class FabulaDialog extends React.Component {
 		this.setState({doc,secList});			
 		if (_.isEmpty(secList)){
 			this.downloadDocument('docx',doc);
+		} else {
+			this.setString("Необходимо указать секцию")
 		}
 	}
 
@@ -55,25 +63,39 @@ class FabulaDialog extends React.Component {
 		this.setState({showDialog : false});
 	}
 
-	download(href,filename){
-		var tempLink = document.createElement('a');
-		var event = document.createEvent('MouseEvents');
-				event.initMouseEvent(
-					'click', true, false, window, 0, 0, 0, 0, 0
-					, false, false, false, false, 0, null
-				);
+	setString(strVal) {
+		this.setState({strVal});
+	}
 
-		tempLink.href = href;
-		tempLink.setAttribute('download', 'filename.docx');
-		
-		tempLink.dispatchEvent(event);
-		
-		setTimeout(()=>{
-			tempLink && (tempLink.remove());
-		},5000);
+	download(href,filename){
+		fetch(href).then(res => {
+        	filename = (res.headers.get("Content-Disposition") || "").replace("attachment; filename=","").replace("; charset=utf-8", "");
+        	filename = filename.replace(new RegExp("\"", 'g'), "");
+         	filename = decodeURI(filename);
+        	return res.blob();
+    	}).then(res => { 
+        	const data = new Blob([res], {type: 'application/octet-stream'});
+        	const answ = window.URL.createObjectURL(data);
+        	let tempLink = document.createElement('a');
+        	tempLink.href = answ;
+        	let event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0
+								, false, false, false, false, 0, null);
+			tempLink.setAttribute('download', filename);
+			tempLink.dispatchEvent(event);
+			this.setString("");
+          	setTimeout(()=>{
+            	tempLink && (tempLink.remove());
+          	},5000);
+        }).catch(x=>{
+            messageSet(x,'error');
+            console.error(x);
+           	this.setString("");
+        }); 
 	}
 
 	downloadDocument(ext,doc={},section={}){
+		this.setString(WAITING);
 		const document_id = doc.property;
 		const fabula_section_id = section.property;
 		const {i_claim_id,i_claim_theme_id,sessionId,i_claim_ishdoc} = this.props;
@@ -91,9 +113,19 @@ class FabulaDialog extends React.Component {
 		this.download(downloadDocLink,'docx.docx');
 	}
 
+	freezeForm() {
+		return ReactDOM.createPortal(
+			<div className='formFr'></div>,
+			document.body);
+	} //
+
 	render() {
-		let {doc,docList,secList,showDialog,downloadDocLink} = this.state;
+		let {doc,docList,secList,showDialog,downloadDocLink,strVal} = this.state;
 		const {cancel,done,title,zajav} = this.props;
+
+		const blocker = strVal===WAITING 
+			? this.freezeForm() 
+			: null;
 
 		const SHDIAL = !showDialog 
       		? null 
@@ -107,13 +139,14 @@ class FabulaDialog extends React.Component {
                 	downloadDoc ={()=>this.downloadDocument(this)}
 					downloadPdf ={()=>this.downloadDocument(this)}
                 	closePreview={this.closePreview.bind(this)} document={downloadDocLink}/>
-              </Dialog.Body>
+              	</Dialog.Body>
           	</Dialog>); //
 
 		docList = docList || [];
 
 		return ( 
-	      [<Dialog
+	      [<Dialog 
+	      	className="dialIsh"
 	        title={title}
 	        size="tiny"
 	        visible={true}
@@ -123,37 +156,29 @@ class FabulaDialog extends React.Component {
 	        closeOnPressEscape={false}
 	        lockScroll={true} >
 
-	        <Dialog.Body>
-	        	<table className='w-full'>
-	        		<tbody>
-		        		<tr>
-		        			<td className='ap-input-caption'>Выбор документа</td>
-		        			<td>
-		        				<Select value={this.state.doc} onChange={this.setDoc.bind(this)} >
-									{ docList.map(el =>(<Select.Option key={el.property} label={el.value} value={el}  />)) }
-								</Select>
-							</td>
-		        		</tr>
+	        <Dialog.Body className='dialBod'>
+			        			<div className = 'spDiv'>Выбор документа</div>
+			        				<Select className='selEl' value={this.state.doc} onChange={this.setDoc.bind(this)} >
+										{ docList.map(el =>(<Select.Option key={el.property} label={el.value} value={el} />)) }
+									</Select>
 		        		{_.isEmpty(secList) ? null
-		        			: (<tr>
-				        			<td className='ap-input-caption'>Выбор секции</td>
-				        			<td>
-				        				<Select value={this.state.sec} onChange={this.setSection.bind(this)} >
+		        			: (<React.Fragment>
+		        				<div className = 'spDiv'>Выбор секции</div>
+				        				<Select className='selEl' value={this.state.sec} onChange={this.setSection.bind(this)} >
 											{ secList.map(el =>(<Select.Option key={el.property} label={el.value} value={el}  />)) }
 										</Select>
-									</td>
-								</tr>)}
-	        		</tbody>
-	        	</table>
+								</React.Fragment>)}
 	        </Dialog.Body>
 
-	        <Dialog.Footer className="dialog-footer">
-	          <Button onClick={cancel}>Отмена</Button>
+	        <Dialog.Footer className="dialog-footer, dialFoot">
+	        			<div className = 'ftMes'>{strVal}</div>
+	        			<Button className='spBtn' onClick={cancel}>Отмена</Button>
 	        </Dialog.Footer>
-	      </Dialog>, SHDIAL]
-		);
+
+	      </Dialog>, SHDIAL, blocker]);
 	}//
 };
+
 
 const mapStateToProps = (state,props)=>{
 	const sessionId = getSessionId(state);

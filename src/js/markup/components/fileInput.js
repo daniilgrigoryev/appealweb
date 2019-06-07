@@ -10,7 +10,6 @@ class EFileInput extends Component {
     }
 
     handleFile(evt) {
-      debugger;
         const {onChange} = this.props;
         const files = evt.target.files;
         const f = files[0];
@@ -23,7 +22,6 @@ class EFileInput extends Component {
         reader.onload = (e)=>{
           const blobBuf = e.target.result; // new Blob([new Uint8Array(data)]);
           const blob = new Blob([new Uint8Array(blobBuf)]);
-          debugger;
           onChange(blob);
         };
         reader.readAsArrayBuffer(f); // старт чтения, в коллбеке base64 строка
