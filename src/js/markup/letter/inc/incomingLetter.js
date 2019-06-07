@@ -72,8 +72,7 @@ class IncomingLetter extends React.Component {
     }
 
     render() {
-        const {files, sid, dispatch, initialize} = this.props;
-
+        const {formData, files, sid, dispatch, initialize} = this.props;
         try {
             const h = window.location.hash.split('?');
             if (h[1]=='new'){
