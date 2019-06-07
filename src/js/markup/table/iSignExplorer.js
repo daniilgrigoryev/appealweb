@@ -156,7 +156,7 @@ class ISignExplorer extends React.Component {
         const alias = 'CLAIM_GET';
         const orphan = true;
         return async () => {
-            const claim_id = rowData.ID;
+            const claim_id = rowData.CLAIM_ID;
             const x = await post('db/select', {alias, claim_id,orphan});
             dispatch(initialize(im(x.data)));
             const key = window.stateSave();
