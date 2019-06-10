@@ -2,10 +2,11 @@ import React from 'react'
 import {Field, FieldArray, reduxForm, arrayPush} from 'redux-form/immutable'
 import {Dialog, Button, Card, Layout, Alert} from 'element-react'
 import * as _ from 'lodash'
-import {post,response} from '../../services/ajax.js'
+import {post} from '../../services/ajax.js'
 import LinkerSearch from './linkerSearch.js'
 import {FInput, EInput} from '../components/finput.js'
 import {EPicker, FPicker} from '../components/picker.js'
+import {messageSet} from '../../actions/common.js'
 
 
 const linkedDocs = (props) => {
@@ -16,10 +17,10 @@ const linkedDocs = (props) => {
        const alias = 'REMOVE_LINK_TABLE';
        try {
             const LINK_ID = fields.get(indx).get('link_id');
-            response(await post('db/select',{alias,LINK_ID}));
+            await post('db/select',{alias,LINK_ID});
             fields.remove(indx);
        } catch (exc){
-            messageSet(ecx,'error');
+            messageSet(exc,'error');
        }
     } 
     const inf = (ind) => () => fields.remove(ind); // ! replace me
