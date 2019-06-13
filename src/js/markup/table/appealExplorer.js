@@ -17,6 +17,7 @@ import {SearchRoot} from '../components/searchRoot.js'
 import map from '../../markup/appeal/mapping.js'
 import {baseUrl} from '../../services/api.js'
 import * as _ from 'lodash'
+import {messageSet} from '../../actions/common.js'
 
 const MS = map.status;
 const MB = map.basicData;
@@ -102,9 +103,15 @@ class AppealExplorer extends React.Component {
     }
 
     getXFile() {
-        const alias = 'EXCEL_LIST';
+        const alias = 'I_CLAIM_EXCEL_LIST';
         const {sid} = this.props;
         const selected = this.getSelected();
+        if (_.isEmpty(selected)) {
+            const msg = 'Ни одна запись не выбрана';
+            messageSet(msg, 'error');             
+            console.error(msg);
+            return;
+        }
         const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';     
 
         const params = new URLSearchParams();
@@ -122,7 +129,8 @@ class AppealExplorer extends React.Component {
     }
 
     registerGetSelected(outerGetSelected) {
-        this.getSelected = outerGetSelected;
+       this.getSelected = outerGetSelected;
+       this.forceUpdate();
     }
 
     render() {
@@ -152,7 +160,7 @@ class AppealExplorer extends React.Component {
                                 <SearchRoot {...{fields,setGetter}} />
                                 <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
-                                    <Button type="primary" onClick={this.getXFile}>xls</Button>
+                                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
                             </div>
                         </Card>

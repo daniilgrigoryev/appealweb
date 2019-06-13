@@ -17,6 +17,7 @@ import {SearchRoot} from '../components/searchRoot.js'
 import map from '../../markup/appeal/mapping.js'
 import {baseUrl} from '../../services/api.js'
 import * as _ from 'lodash'
+import {messageSet} from '../../actions/common.js'
 
 const timeOfs = new Date().getTimezoneOffset() * 60 * 1000;
 
@@ -65,10 +66,15 @@ class LetterExplorer extends React.Component {
     }
 
     getXFile() {
-        debugger;
         const alias = 'I_LET_EXCEL_LIST';
         const {sid} = this.props;
         const selected = this.getSelected();
+        if (_.isEmpty(selected)) {
+            const msg = 'Ни одна запись не выбрана';
+            messageSet(msg, 'error');             
+            console.error(msg);
+            return;
+        }
         const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';     
 
         const params = new URLSearchParams();
@@ -144,7 +150,7 @@ class LetterExplorer extends React.Component {
                                 <SearchRoot {...{fields,setGetter}} />
                                 <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
-                                    <Button type="primary" onClick={this.getXFile}>xls</Button>
+                                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
                             </div>
                         </Card>
