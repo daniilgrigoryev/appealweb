@@ -10,7 +10,10 @@ import mapping from '../mapping.js'
 
 const M = mapping.incLetterHead;
 
-const serData = ['78-10', '78-11', '78-21', '78-20'];
+const serData = [{property: '78-10', value: '78-10'}, 
+                {property: '78-11', value: '78-11'},
+                {property: '78-21', value: '78-21'},
+                {property: '78-20', value: '78-20'}];
 
 const getRow = (id,zajavSender, zajavNDoc, zajavDate, zajavSigner) => {
     return {

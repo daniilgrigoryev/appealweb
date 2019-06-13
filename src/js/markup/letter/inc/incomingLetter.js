@@ -9,8 +9,8 @@ import IncLetterBasic from './sub/incLetterBasic.js'
 import IncLetterPlus from './sub/incLetterPlus.js'
 import IncLetterPost from './sub/incLetterPost.js'
 import IncLetterIspoln from './sub/incLetterIspoln.js'
-import IncLinkInner from './sub/incLinksInner.js'
 import IncLinkScan from './sub/incLinksScan.js'
+import DocsLink from './sub/docsLink.js'
 import Immutable from 'immutable'
 import {messageSet} from '../../../actions/common.js'
 
@@ -32,6 +32,7 @@ class IncomingLetter extends React.Component {
         this.register = this.register.bind(this);
         this.curHash = 0;
         this.getHash = this.getHash.bind(this);
+        this.reloadRow = this.reloadRow.bind(this);
     }
 
     componentDidMount() {
@@ -55,7 +56,7 @@ class IncomingLetter extends React.Component {
                 dispatch(initialize(im(x.data)));
                 setTimeout(() => {
                      a.curHash = a.getHash();
-                    a.forceUpdate();
+                     a.forceUpdate();
                 }, 1000);
             }
         }).catch(x=>{
@@ -66,14 +67,27 @@ class IncomingLetter extends React.Component {
 
     }
 
+    async reloadRow() {
+        const a = this;
+        const {dispatch, change, initialize, id} = a.props;
+        const alias = 'LETTER_GET';
+        const orphan = true;
+        const let_id = id;
+        const x = await post('db/select', {alias, let_id,orphan});
+        dispatch(initialize(im(x.data)));
+        setTimeout(() => {
+                     a.curHash = a.getHash();
+                     a.forceUpdate();
+                }, 500);
+    }
+
     setFiles(immutableFileList) {
         const {dispatch, change} = this.props;
         dispatch(change('files', immutableFileList));
     }
 
     render() {
-        const {files, sid, dispatch, initialize} = this.props;
-
+        const {formData, files, sid, dispatch, initialize} = this.props;
         try {
             const h = window.location.hash.split('?');
             if (h[1]=='new'){
@@ -103,7 +117,7 @@ class IncomingLetter extends React.Component {
                                 <IncLetterPlus/>
                                 <IncLetterPost/>
                                 <IncLetterIspoln/>
-                                <IncLinkInner/>
+                                <DocsLink reloadRow = {this.reloadRow}/>
                                 <IncLinkScan files={files} setFiles={this.setFiles} sid={sid}/>
                             </Card>
                             <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
@@ -121,9 +135,10 @@ class IncomingLetter extends React.Component {
 const mapStateToProps = (state) => {
     const sid = getSessionId(state);
     const formData = state.getIn(['form','letter_incoming','values']);
+    const id = state.getIn(['form','letter_incoming','values','id']);
     let files;
     formData && (files = state.getIn(['form', 'letter_incoming', 'values' ,'files']));
-    return {formData, files, sid};
+    return {formData, files, sid, id};
 }
 
 export default compose(

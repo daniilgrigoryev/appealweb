@@ -19,35 +19,27 @@ import {baseUrl} from '../../services/api.js'
 import * as _ from 'lodash'
 import {messageSet} from '../../actions/common.js'
 
-const MS = map.status;
-const MB = map.basicData;
-const MC = map.claimantData;
-
 const timeOfs = new Date().getTimezoneOffset() * 60 * 1000;
 
 const im = (obj) => Immutable.fromJS(obj)
 
 const desc = {
-    info_alias: 'i_obr',
-    alias: 'APPEAL_LIST'
+    info_alias: 'i_let',
+    alias: 'LETTER_LIST'
 }
 
 const style = {textAlign: 'center', width: '8em'};
 const mapping = {
     REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
-    //DATE_CONTROL:'Дата контроля',  
-    NAME: 'Заявитель',
-    FP_NAME: 'Физ. лицо',
-    JP_NAME: 'ЮЛ наименование',
-    STAGE: 'Статус',
-    ISP_NAME: 'Исполнитель',
-    ISP_OTD: 'Отдел'
+    COURT: 'Наименование суда',
+    VIOLATOR: 'ФИО/Наименование нарушителя',
+    DELIV_NAME: 'Тип доставки'
 }
 
 const templating = {};
 
-class AppealExplorer extends React.Component {
+class LetterExplorer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,7 +47,6 @@ class AppealExplorer extends React.Component {
         this.state    = {fields};
         this.where    = {};
         this.key      = 0;
-
         this.registerGetSelected = this.registerGetSelected.bind(this);
         this.conditionGetter = null;
         this.search   = this.search.bind(this);
@@ -64,7 +55,7 @@ class AppealExplorer extends React.Component {
 
     componentDidMount(){
         const alias='TABLE_INFO';
-        const table_alias= 'i_obr';
+        const table_alias= 'i_let';
         const orphan = true;
         post('db/select',{alias,table_alias,orphan}).then(x=>{
             const {data,error} = x;
@@ -74,36 +65,8 @@ class AppealExplorer extends React.Component {
         })
     }
 
-    openRow(rowData, column) {
-        const {dispatch, change, initialize, sid} = this.props;
-        const alias = 'CLAIM_GET';
-        const orphan = true;
-        return async () => {
-            const claim_id = rowData.ID;
-            const x = await post('db/select', {alias, claim_id,orphan});
-
-            dispatch(initialize(im(x.data)));
-            const key = window.stateSave();
-            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
-            window.open(href,'_blank');
-        }
-    }
-
-    search() {
-        const s = this.conditionGetter();
-        const w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
-        if (!_.size(w)){
-            window.claimMessageAdd('E','Условие для поиска не задано');
-            return;
-        }
-
-        this.where = w;        
-        this.key = 'k' + new Date().getTime();
-        this.forceUpdate();
-    }
-
     getXFile() {
-        const alias = 'I_CLAIM_EXCEL_LIST';
+        const alias = 'I_LET_EXCEL_LIST';
         const {sid} = this.props;
         const selected = this.getSelected();
         if (_.isEmpty(selected)) {
@@ -129,8 +92,35 @@ class AppealExplorer extends React.Component {
     }
 
     registerGetSelected(outerGetSelected) {
-       this.getSelected = outerGetSelected;
-       this.forceUpdate();
+        this.getSelected = outerGetSelected;
+    }
+
+    openRow(rowData, column) {
+        const {dispatch, change, initialize} = this.props;
+        const alias = 'LETTER_GET';
+        const orphan = true;
+        return async () => {
+            const let_id = rowData.ID;
+            const x = await post('db/select', {alias,let_id,orphan});
+     
+            dispatch(initialize(im(x.data)));
+            const key = window.stateSave();
+            const href = window.location.href.replace('/explore_letter',`/letter_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
+        }
+    }
+
+    search() {
+        const s = this.conditionGetter();
+        const w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
+        if (!_.size(w)){
+            window.claimMessageAdd('E','Условие для поиска не задано');
+            return;
+        }
+
+        this.where = w;        
+        this.key = 'k' + new Date().getTime();
+        this.forceUpdate();
     }
 
     render() {
@@ -152,7 +142,7 @@ class AppealExplorer extends React.Component {
                         <Card bodyStyle={{ padding: '0' }} className="box-card scroll-styled scroll-auto" header={
                             <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
                                 <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    Поиск обращений
+                                    Поиск служебных писем
                                 </h3>
                             </div>
                         }>
@@ -169,7 +159,7 @@ class AppealExplorer extends React.Component {
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where, registerGetSelected}} hdelta={'515'}  selectable={true} />
+                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where,registerGetSelected}} hdelta={'515'} selectable={true} />
                             </Card>}
             </React.Fragment>
         )
@@ -181,10 +171,10 @@ const state2props = (state) =>({sid: getSessionId(state)})
 export default compose(
     connect(state2props),
     reduxForm({
-        form: 'appeal', // <------ same form name
+        form: 'letter_incoming', // <------ same form name
         destroyOnUnmount: false, // <------ preserve form data
         forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
         enableReinitialize: true
         //validate
     })
-)(AppealExplorer)
+)(LetterExplorer)

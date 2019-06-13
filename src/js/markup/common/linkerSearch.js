@@ -5,7 +5,7 @@ import {Button, Input, Radio} from 'element-react'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import AppealTable from '../table/table.js'
-import {post,response} from '../../services/ajax.js'
+import {post} from '../../services/ajax.js'
 import {getSessionId} from '../../selectors/common.js'
 import {messageSet} from '../../actions/common.js'
 
@@ -70,7 +70,7 @@ class LinkerSearch extends React.Component {
         link = _.mapKeys(link,(value,key)=>key.toUpperCase());
         const alias = 'CREATE_LINK_TABLE';
         try{
-            response(await post('db/select',{alias, ...link}));
+            await post('db/select',{alias, ...link});
             messageSet('Документы связаны','success');
             if (reloadRow){
                 reloadRow();

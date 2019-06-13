@@ -10,6 +10,7 @@ import Immutable from 'immutable'
 import ComboAppeal from '../appeal/comboAppeal.js'
 import AppealExplorer from '../table/appealExplorer.js'
 import AppealOutExplorer from '../table/appealOutExplorer.js'
+import LetterExplorer from '../table/letterExplorer.js'
 import IDecisExplorer from '../table/iDecisExplorer.js'
 import ISignExplorer from '../table/iSignExplorer.js'
 import DecisionsList from '../editable/decisionsList.js'
@@ -41,6 +42,7 @@ export default function App() {
                     <Switch>
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
                         <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
+                        <Route exact path='/explore_letter' render={()=><LetterExplorer/>}/>
                         <Route path='/appeal_incoming' render={(props)=><ComboAppeal hashChange = {props.location.search}/>}/>
                         <Route path='/appeal_outgoing' render={(props)=><Outgoing hashChange = {props.location.search}/>}/>
                         <Route path='/explore' render={()=><AppealExplorer/>}/>
@@ -134,7 +136,7 @@ class LayoutMain extends React.Component {
                         <Menu.SubMenu index="2" title="Служебные письма">
                             <Menu.Item index="letter_incoming?new">Новое входящее</Menu.Item>
                             <Menu.Item index="letter_outgoing?new">Новое исходящее</Menu.Item>
-                            <Menu.Item index="explore">Поиск</Menu.Item>
+                            <Menu.Item index="explore_letter">Поиск</Menu.Item>
                         </Menu.SubMenu>
 
                         <Menu.SubMenu index="3" title="Справочники">

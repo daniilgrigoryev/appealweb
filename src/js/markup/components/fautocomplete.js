@@ -38,6 +38,7 @@ class EAutocomplete extends React.Component {
     componentDidMount() {
         const {acKey, dataKey, value, dataWhere, stoppe} = this.props;
         //value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
+        
         if (value) {
             const key = acKey || dataKey;
             const hasWhere = !_.isEmpty(dataWhere);
@@ -48,6 +49,7 @@ class EAutocomplete extends React.Component {
                     });
                 } else { // long hard way
                     this.getDatas().then(x => {
+                        
                         const queryLow = value.toLowerCase();
                         const ret = this.filter(null, x.data, x.dataKeyed, queryLow);
                         const first = _.first(ret);
@@ -85,7 +87,7 @@ class EAutocomplete extends React.Component {
 
         { // search list source
             const {data, acKey, dataKey, datagetter, dataWhere, datapromise, readOnly} = this.props;
-
+            
             if (datagetter) {
                 d = datagetter();
             } else if (datapromise) {
