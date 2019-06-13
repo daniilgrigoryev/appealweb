@@ -33,14 +33,14 @@ const reduceLogout = (state,action)=>{
 }
 
 const reduceLogin = (state,action)=>{
-  const {sessionID,externalSid,db_version} = action.loggedData;
+  const {sessionID,externalSid,db_version,sys} = action.loggedData;
   VERSION_DB = db_version;
   AJAX.setSid(sessionID);
   PULSE.notifyAlive(sessionID,externalSid);
   PULSE.start();
   setTimeout(()=>relocate('explore'),100);
   window.claimMessageAdd('info','Вход...');
-  return state.set('user', im(action.loggedData));
+  return state.set('system',sys).set('user', im(action.loggedData));
 }
 
 const reduceAppealLoad = (state,action)=>state.setIn(['form','appeal'],action.data);
@@ -58,7 +58,7 @@ const rootReducer = (state, action)=>{
 
 const initialState = im({
     general : {
-      system: 'A',
+      system: '',
       externalLogin: false && true,
 
       user : {

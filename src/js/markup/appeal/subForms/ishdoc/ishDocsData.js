@@ -27,8 +27,7 @@ class IshDocsData extends React.Component {
     }
 
     componentDidMount(){
-        const {sys} = this.props;
-        const alias = 'AVAILABLE_FAB_DOC_TYPES_'+sys;
+        const alias = 'AVAILABLE_FAB_DOC_TYPES';
         const listValueField = 'value';
         post('db/select',{alias,listValueField}).then(x=>this.setState({fabulaDocTypes:x.data}));
     }

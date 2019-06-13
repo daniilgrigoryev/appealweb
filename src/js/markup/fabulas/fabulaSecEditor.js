@@ -38,7 +38,7 @@ class FabulaSecEditor extends React.Component {
     render() {
         const {sys, cancelEdit} = this.props;
         const s = this.state;
-        const dataKeyDecisions = 'DECISIONS_' + sys;
+        const dataKeyDecisions = 'DECISIONS';
 
         // const textareaSt = {width: '100%'};
 

@@ -28,7 +28,7 @@ class FabulaDocViewer extends React.Component {
 
     reload() {
         const {sys} = this.props;
-        const alias = 'FAB_DOC_' + sys;
+        const alias = 'FAB_DOC';
         const denormalize = true;
         post('db/select', {alias, denormalize}).then(x => this.setState({rows: x.data}));
     }

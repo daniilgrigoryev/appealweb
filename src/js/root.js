@@ -96,9 +96,12 @@ class Root extends React.Component {
         </div>);
     }//
 
-    const {externalLogin,loggedIn} = this.props;
+    const {externalLogin,loggedIn,sys} = this.props;
 
     if (loggedIn){
+      if (!sys){
+        // ?
+      }
       return <App />;
     } else if (!externalLogin){
       return <Login />;
@@ -110,5 +113,6 @@ class Root extends React.Component {
 export default connect((state) => {
    const loggedIn  = getSessionId(state);
    const externalLogin = state.getIn(['general','externalLogin']);
-   return {loggedIn,externalLogin};
+   const sys =state.getIn(['general','system']);
+   return {loggedIn,externalLogin,sys};
 })(Root);

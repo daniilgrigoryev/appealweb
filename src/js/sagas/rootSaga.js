@@ -25,7 +25,7 @@ export function* watchLogin(action) {
 
 export function* watchLogout(action) {   
     try{
-      const loggedData = yield call(api.logout,action.sessionId);      
+      const loggedData = yield call(api.logout,action.sessionId);   
       let exc = 'Unknown logout error';
       if (!loggedData || !loggedData.data || (exc=loggedData.data.error)) {
         throw exc;

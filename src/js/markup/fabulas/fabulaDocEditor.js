@@ -59,7 +59,7 @@ class FabulaDocEditor extends React.Component {
         const {sys, cancelEdit} = this.props;
         const s = this.state;
 
-        const dataKeyTipDoc = 'FAB_DOC_TYPES_' + sys;
+        const dataKeyTipDoc = 'FAB_DOC_TYPES';
 
         return (
             <React.Fragment>
