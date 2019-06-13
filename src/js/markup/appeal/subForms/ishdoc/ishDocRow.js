@@ -72,8 +72,9 @@ ERROR_SIGN
 
 const IshDocRow = (props) => {
     const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow} = props;
-
     const id = value.get('id');
+    const ver_id = value.get('verifier_id');
+    const showBtn = id && ver_id;
     const related_topic = value.get('linked_theme_id');
     const files = value.get('files');
     const status_alias = value.get('status_alias');
@@ -140,7 +141,7 @@ const IshDocRow = (props) => {
                     <td>{P.get(M.ISH_NUM.name)}</td>
                     <td>{data2str(P.get(M.ISH_DATE.name))}</td>
                     <td>{P.get('podpisal_name')}</td>
-                    <td>{P.get('status_name')}</td>
+                    <td>{P.get('status_name') || 'Черновик'}</td>
                     <td className='pr12 align-r'>
                         <Button type="text" onClick={onXpd}>
                             <i className="el-icon-edit color-green"/>
@@ -170,17 +171,29 @@ const IshDocRow = (props) => {
         dispatch(change('appeal',field,immutableFileList));
     }
 
-    const setStatus = (newstatus)=>{
+    const setCheckSt = (newstatus) => {
+        post("db/select",{alias: 'SET_CHECK_STATUS', id: id, status_alias: newstatus, orphan: true})
+            .then(x => (x.data && +x.data > 0 && reloadRow()))
+            .catch(x => {
+                messageSet(x, 'error');
+                console.error(x);
+            });
         let field = 'ish_docs_data['+ind+'].status_alias';
         dispatch(change('appeal',field,newstatus));
     }
 
+    const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt(null)}>Отмена ожидания проверки</Button>);
+    const await_s = <span>Ожидает подписи</span>;
+    const signd = <span>Подписано</span>;
+    const sendd = <span>Отправлено</span>;
+    const nostat = !showBtn ? null : (<Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку</Button>);
+
     const STATUS = ({
-        'AWAIT_CHECK' : (<Button onClick={()=>setStatus(null)}>Отмена ожидания проверки</Button>),
-        'AWAIT_SIGN'  : (<span>Ожидает подписи</span>),
-        'SIGNED'      : (<span>Подписано</span>),
-        'SENDED'      : (<span>Отправлено</span>)
-    })[status_alias] || (<Button onClick={()=>setStatus('AWAIT_CHECK')} >Передать на проверку</Button>);//
+        'AWAIT_CHECK' : await_c,
+        'AWAIT_SIGN'  : await_s,
+        'SIGNED'      : signd,
+        'SENDED'      : sendd
+    })[status_alias] || nostat; //
 
 
     const editable = (
@@ -221,14 +234,14 @@ const IshDocRow = (props) => {
                                 <td>
                                     <span className='inline-block mr12'>
                                         <p className='ap-table__header'>Проверяющий</p>
-                                        <Field disabled={disabled} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
+                                        <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
                                     </span>
                                 </td>
                                 <td>
                                     {disabled? null : STATUS}
                                 </td>
                                 <td>
-                                    {disabled? null : <CryptoSL doSign={(cert)=>getSign(id,cert)} />}
+                                    {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
                                 </td>
                             </tr>
                             <tr key={id + 'e2'}>
