@@ -12,7 +12,8 @@ import mapping from '../mapping.js'
 const M = mapping.ishHead;
 
 
-const nDoc = ['78-08', '78-00']
+const nDoc = [{property: '78-08', value: '78-08'}, 
+             {property: '78-00', value: '78-00'}];
 
 const getRow = (id, addr) => {
     return {
@@ -79,7 +80,7 @@ const addressee = (props) => {
     );
 };
 
-class IshHead extends React.Component {
+class IshHead extends React.Component {//
 
     render() {
         const {disabled} = this.props

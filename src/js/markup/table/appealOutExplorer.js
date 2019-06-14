@@ -15,6 +15,8 @@ import {EAutocomplete} from '../components/fautocomplete.js'
 import {EPicker} from '../components/picker.js'
 import {SearchRoot} from '../components/searchRoot.js'
 import map from '../../markup/appeal/mapping.js'
+import {baseUrl} from '../../services/api.js'
+import {messageSet} from '../../actions/common.js'
 import * as _ from 'lodash'
 
 const MS = map.status;
@@ -50,7 +52,8 @@ class AppealOutExplorer extends React.Component {
         this.state    = {fields};
         this.where    = {};
         this.key      = 0;
-
+        this.registerGetSelected = this.registerGetSelected.bind(this);
+        this.getXFile = this.getXFile.bind(this);
         this.conditionGetter = null;
         this.search   = this.search.bind(this);
     }
@@ -65,6 +68,36 @@ class AppealOutExplorer extends React.Component {
                 this.setState({fields:data});   
             }
         })
+    }
+
+    getXFile() {
+        const alias = 'O_CLAIM_EXCEL_LIST';
+        const {sid} = this.props;
+        const selected = this.getSelected();
+        if (_.isEmpty(selected)) {
+            const msg = 'Ни одна запись не выбрана';
+            messageSet(msg, 'error');             
+            console.error(msg);
+            return;
+        }
+        const doc_ids = '{'+(selected||[]).map(x=>x.ID).join(',')+'}';     
+
+        const params = new URLSearchParams();
+        params.append('sessionId',sid);
+        params.append('doc_ids', doc_ids);
+        params.append('alias', alias);
+
+        const path = 'xls/fill?'; 
+        const tempLink = document.createElement('a');
+        tempLink.href = baseUrl() + path + params.toString();
+        tempLink.setAttribute('download', 'test.xls');
+        tempLink.click();
+        setTimeout(()=>(tempLink && (tempLink.remove())),5000);
+
+    }
+
+    registerGetSelected(outerGetSelected) {
+        this.getSelected = outerGetSelected;
     }
 
     openRow(rowData, column) {
@@ -96,7 +129,7 @@ class AppealOutExplorer extends React.Component {
     }
 
     render() {
-        const {key,where,state} = this;
+        const {key,where,state,registerGetSelected} = this;
         const {fields} = state;
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
@@ -122,6 +155,7 @@ class AppealOutExplorer extends React.Component {
                                 <SearchRoot {...{fields,setGetter}} />
                                 <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
+                                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
                             </div>
                         </Card>
@@ -130,7 +164,7 @@ class AppealOutExplorer extends React.Component {
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where}} hdelta={'515'} />
+                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where,registerGetSelected}} hdelta={'515'} selectable={true}/>
                             </Card>}
             </React.Fragment>
         )
