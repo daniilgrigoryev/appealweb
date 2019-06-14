@@ -25,7 +25,16 @@ class EAutocomplete extends React.Component {
 
     componentDidUpdate(prevData) {
         const {value, dataWhere} = this.props;
-
+        const {dataKeyed} = this.state;
+ 
+        if(_.size(dataKeyed)){ // фикс для кривых апдейтов
+            const valueOuter =  _.chain(dataKeyed).filter(x=>x.property===value).first().get('value').value();
+            if (valueOuter!=this.state.value){
+                this.setState({value: valueOuter});
+                return;
+            }
+        }
+        
         const prevDW = prevData.dataWhere;
         const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere, prevDW);
         if (dataWhereChanged) {

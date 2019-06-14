@@ -14,7 +14,7 @@ import {baseUrl} from '../../services/api.js'
 import Immutable from 'immutable'
 import * as _ from 'lodash'
 import {messageSet} from '../../actions/common.js'
-
+import moment from 'moment'
 import mapping from './mapping.js'
 
 const alias = 'CLAIM_PUSH_COMBO';
@@ -50,12 +50,26 @@ const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
     },5000);
 } 
 
+const data2str = (data) =>{
+    if (typeof data == 'string'){
+        try{
+            return moment(Date.parse(data)).format('DD.MM.YYYY');
+        } catch(e){}
+    }
+
+    if (data){
+        return (data instanceof Date) ? data.toISOString() : data; 
+    }
+    return '';
+} 
+
 class SidePanel extends Component {
 
     constructor(props) {
         super(props);
         this.curHash = 0;
         this.save = this.save.bind(this);
+        this.cancel = this.cancel.bind(this);
         this.getHash = this.getHash.bind(this);
         this.holdHash = this.holdHash.bind(this);
     }
@@ -109,15 +123,20 @@ class SidePanel extends Component {
         });
     }
 
+    cancel() {
+        const {formData, dispatch, initialize} = this.props;
+        const inState = formData.get('initial');
+        dispatch(initialize(inState));
+    }
+
     render() {
         const noop = () => {};
         const {disabled, formData, sessionId} = this.props;
-        
         const noSave = !!(this.curHash && this.curHash == this.getHash())
         const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? noop : this.save;
 
-        const {checking_date, registration_number,id} = _.get(formData ? formData.toJS():{}, 'values', {});
+        const {checking_date, registration_number,id} = _.get(formData ? formData.toJS():{}, 'values', {});  
         
         return (
             <div className='ap-side-panel-wrap'>
@@ -141,7 +160,7 @@ class SidePanel extends Component {
                                 <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
                                 <td>
                                     <span className={`px6 py1 mb6 round bg-blue-faint inline-block ${registration_number ? '' : 'opacity50'}`}>
-                                        {checking_date ? checking_date : '<Отсутствует>'}
+                                        {!checking_date ? ('<Отсутствует>') : data2str(checking_date)}
                                     </span>
                                 </td>
                             </tr>
@@ -212,7 +231,7 @@ class SidePanel extends Component {
 
                 <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
                     <Button disabled={noSave} type="success" size="small" plain={true} className='mr18'  onClick={stateBtnClick}>{stateBtnText}</Button>
-                    <Button size="small" type='text'>Отменить</Button>
+                    <Button size="small" type='text' onClick={this.cancel} >Отменить</Button>
                 </div>
             </div>
         )

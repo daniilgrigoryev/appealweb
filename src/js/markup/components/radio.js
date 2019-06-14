@@ -10,6 +10,15 @@ class ERadio extends React.Component {
     this.state = {value};
   }
 
+  componentDidUpdate(prevProps) {
+    const valueOuter = this.props.value;
+    const {options} = this.props;
+      if (prevProps.value != valueOuter && valueOuter != this.state.value ) {
+          this.setState({value: valueOuter || options[0].property});
+          return;
+      }
+    }
+
   componentDidMount(){
     const {options,value} = this.props; 
     if (''==value){
