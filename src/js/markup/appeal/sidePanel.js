@@ -58,6 +58,7 @@ class SidePanel extends Component {
         this.save = this.save.bind(this);
         this.getHash = this.getHash.bind(this);
         this.holdHash = this.holdHash.bind(this);
+        this.duplicate = this.duplicate.bind(this);
     }
 
     componentDidMount() {
@@ -82,15 +83,6 @@ class SidePanel extends Component {
         const jsonMode = true;
 
         post('db/select', {alias, data, jsonMode}).then(x => {
-            const F = formData.toJS();
-            const V = F ? F.values : {};
-
-            const {error} = x.data;
-            if (error) {
-                let exc = error.split('Detail')[0];
-                throw exc;
-            }
-
             const json = x.data.rows[0][0].value; // the first column value of single row expected
             try {
                 const R = JSON.parse(json); // ret holder
@@ -109,16 +101,61 @@ class SidePanel extends Component {
         });
     }
 
+    duplicate() {
+        const {dispatch, change, initialize, sessionId, formData} = this.props;
+        const a = this;
+        const jsonMode = true;
+        const vals = formData.toJS().values;
+        const preData = _.omit(vals, [
+            'apn_list','files', 'id', 'ish_docs_data', 'organizations_control','organizations_from', 
+            'questions', 'sheets', 'tom','topics_data', 'registration_number',  
+            'ecoo_num','edo_num', 'checking_date', 'assiged_checking_date',
+             'deadline_send_date', 'registration_date', 'linked_docs'
+        ]);
+        const data = JSON.stringify(Object.assign({}, preData, {processing_stage_id: '1',  exec_org_key: '-1', exec_emp_key: '-1'}));
+        post('db/select', {alias, data, jsonMode}).then(x => {
+            const json = x.data.rows[0][0].value; // the first column value of single row expected
+            try {
+                const R = JSON.parse(json); // ret holder
+                dispatch(initialize(im(R)));
+                setTimeout(()=>{
+                    const key = window.stateSave();
+                    const href = window.location.href.replace('/appeal_incoming',`/appeal_incoming&storageKey=${key}`);
+                    window.open(href,'_blank');
+                    dispatch(initialize(formData.get('values')));       
+                },200);
+            } catch (exc) {
+                console.error(exc);
+            }
+        }).catch(x => {
+            messageSet(x, 'error');
+            console.error(x);
+            a.forceUpdate();
+        });
+    }
+
     render() {
         const noop = () => {};
-        const {disabled, formData, sessionId} = this.props;
-        
+        const {disabled,formData,sessionId} = this.props;
         const noSave = !!(this.curHash && this.curHash == this.getHash())
-        const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
+        
+        const stateBtnText  = noSave ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? noop : this.save;
 
-        const {checking_date, registration_number,id} = _.get(formData ? formData.toJS():{}, 'values', {});
-        
+        let checking_date = null;
+        let registration_number = null; 
+        let id = null;
+        let processing_stage_id = null;
+        const values = !formData ? null : formData.get('values');
+        if (values){
+            checking_date = values.get('checking_date');
+            registration_number = values.get('registration_number');
+            id = values.get('id');
+            processing_stage_id = values.get('processing_stage_id');
+        }
+
+        const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
+
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-left'>
@@ -190,6 +227,9 @@ class SidePanel extends Component {
                     <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>
                         <h3 className="ap-h3">Печать большой</h3>
                     </div>
+                    {showDupe && <div className="el-card__header el-card__header--top-border" onClick={()=>this.duplicate()}>
+                        <h3 className="ap-h3">Дублировать</h3>
+                    </div>}
 
                     <div className="el-card__header el-card__header--top-border">
                         <h3 className="ap-h3">Список подразделов</h3>
