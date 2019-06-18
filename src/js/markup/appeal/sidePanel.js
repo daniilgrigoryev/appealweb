@@ -106,32 +106,25 @@ class SidePanel extends Component {
         const a = this;
         const jsonMode = true;
         const vals = formData.toJS().values;
-        const preData = _.omit(vals, [
-            'apn_list','files', 'id', 'ish_docs_data', 'organizations_control','organizations_from', 
-            'questions', 'sheets', 'tom','topics_data', 'registration_number',  
-            'ecoo_num','edo_num', 'checking_date', 'assiged_checking_date',
-             'deadline_send_date', 'registration_date', 'linked_docs'
+        const preData = _.pick(vals, [
+            "cdr_address_id", "cdr_strict_address", "city_id", "dom", "email", "fam", "inn", 
+            "ish_number", "issue_date", "issued_to_emp_id", "issued_to_exec_org_id", "korpus", "kvart", "line_adr", "lpp", 
+            "name", "npunkt", "office", "org_name", "phone", "pindex", "podpis", "pred_fam", 
+            "pred_name", "pred_sex", "pred_surname", "rayon", "rayon_id", 
+            "region", "request_type", "sex", "sheets_count", "street", "street_id", "surname", "zajav_lic"
         ]);
-        const data = JSON.stringify(Object.assign({}, preData, {processing_stage_id: '1',  exec_org_key: '-1', exec_emp_key: '-1'}));
-        post('db/select', {alias, data, jsonMode}).then(x => {
-            const json = x.data.rows[0][0].value; // the first column value of single row expected
-            try {
-                const R = JSON.parse(json); // ret holder
-                dispatch(initialize(im(R)));
-                setTimeout(()=>{
-                    const key = window.stateSave();
-                    const href = window.location.href.replace('/appeal_incoming',`/appeal_incoming&storageKey=${key}`);
-                    window.open(href,'_blank');
-                    dispatch(initialize(formData.get('values')));       
-                },200);
-            } catch (exc) {
-                console.error(exc);
-            }
-        }).catch(x => {
-            messageSet(x, 'error');
-            console.error(x);
-            a.forceUpdate();
-        });
+        
+        const data = Object.assign({}, preData);
+        dispatch(initialize(im(data)));
+        setTimeout(()=>{
+            const key = window.stateSave();
+            const href = window.location.href.replace('/appeal_incoming',`/appeal_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
+            setTimeout(()=>{
+                    dispatch(initialize(im({})))
+                    dispatch(initialize(im(vals)));       
+                },500);
+            },200);
     }
 
     render() {

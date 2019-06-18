@@ -31,14 +31,19 @@ class EAutocomplete extends React.Component {
         if (dataWhereChanged) {
             this.setState({data: null, dataKeyed: null, dataSuggestions: null, value: ""});
         } else if (value != prevData.value && (value == '' || value == null)) {
-            this.setState({data: null, dataKeyed: null, value: ""});
-        }
+            if (window.lolkek) {
+                    setTimeout(()=>{
+                        window.lolkek && (window.lolkek = null);
+                    },1000)
+                    this.setState({data: null, dataKeyed: null, value: ""});
+                }
+            }
+
     }
 
     componentDidMount() {
         const {acKey, dataKey, value, dataWhere, stoppe} = this.props;
         //value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
-        
         if (value) {
             const key = acKey || dataKey;
             const hasWhere = !_.isEmpty(dataWhere);

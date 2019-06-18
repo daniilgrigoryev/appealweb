@@ -50,6 +50,7 @@ class ComboAppeal extends PureComponent {
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
         window.location.hash = h[0];
+        window.lolkek= 'newPg';
         setTimeout(()=>dispatch(initialize(im({}))),100);
       }
     } catch (exc) {
