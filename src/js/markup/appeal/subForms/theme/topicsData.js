@@ -28,9 +28,12 @@ const TopicsData = props => {
         <div scrollanchor='topics'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
-                    <Card className="box-card" bodyStyle={{'paddingTop': 0}}>
+                    <Card className="box-card" header={
+                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>{headerTitle}</h3>
+                        </div>
+                    }>
                         <form onSubmit={handleSubmit}>
-                            <hr className='txt-hr my9'/>
                             <h4 className='ap-h4'>Список тем обращения</h4>
                             <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode}}/>
                         </form>
