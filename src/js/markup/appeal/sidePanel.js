@@ -72,6 +72,7 @@ class SidePanel extends Component {
         this.cancel = this.cancel.bind(this);
         this.getHash = this.getHash.bind(this);
         this.holdHash = this.holdHash.bind(this);
+        this.duplicate = this.duplicate.bind(this);
     }
 
     componentDidMount() {
@@ -96,15 +97,6 @@ class SidePanel extends Component {
         const jsonMode = true;
 
         post('db/select', {alias, data, jsonMode}).then(x => {
-            const F = formData.toJS();
-            const V = F ? F.values : {};
-
-            const {error} = x.data;
-            if (error) {
-                let exc = error.split('Detail')[0];
-                throw exc;
-            }
-
             const json = x.data.rows[0][0].value; // the first column value of single row expected
             try {
                 const R = JSON.parse(json); // ret holder
@@ -129,15 +121,55 @@ class SidePanel extends Component {
         dispatch(initialize(inState));
     }
 
+    duplicate() {
+        const {dispatch, change, initialize, sessionId, formData} = this.props;
+        const a = this;
+        const jsonMode = true;
+        const vals = formData.toJS().values;
+        const preData = _.pick(vals, [
+            "cdr_address_id", "cdr_strict_address", "city_id", "dom", "email", "fam", "inn", 
+            "ish_number", "issue_date", "issued_to_emp_id", "issued_to_exec_org_id", "korpus", "kvart", "line_adr", "lpp", 
+            "name", "npunkt", "office", "org_name", "phone", "pindex", "podpis", "pred_fam", 
+            "pred_name", "pred_sex", "pred_surname", "rayon", "rayon_id", 
+            "region", "request_type", "sex", "sheets_count", "street", "street_id", "surname", "zajav_lic"
+        ]);
+        
+        const data = Object.assign({}, preData);
+        dispatch(initialize(im(data)));
+        setTimeout(()=>{
+            const key = window.stateSave();
+            const href = window.location.href.replace('/appeal_incoming',`/appeal_incoming&storageKey=${key}`);
+            window.open(href,'_blank');
+            setTimeout(()=>{
+                    dispatch(initialize(im({})))
+                    dispatch(initialize(im(vals)));       
+                },500);
+            },200);
+    }
+
     render() {
         const noop = () => {};
-        const {disabled, formData, sessionId} = this.props;
+        const {disabled,formData,sessionId} = this.props;
+
         const noSave = !!(this.curHash && this.curHash == this.getHash())
-        const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
+        
+        const stateBtnText  = noSave ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? noop : this.save;
 
-        const {checking_date, registration_number,id} = _.get(formData ? formData.toJS():{}, 'values', {});  
-        
+        let checking_date = null;
+        let registration_number = null; 
+        let id = null;
+        let processing_stage_id = null;
+        const values = !formData ? null : formData.get('values');
+        if (values){
+            checking_date = values.get('checking_date');
+            registration_number = values.get('registration_number');
+            id = values.get('id');
+            processing_stage_id = values.get('processing_stage_id');
+        }
+
+        const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
+
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-left'>
@@ -209,6 +241,9 @@ class SidePanel extends Component {
                     <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>
                         <h3 className="ap-h3">Печать большой</h3>
                     </div>
+                    {showDupe && <div className="el-card__header el-card__header--top-border" onClick={()=>this.duplicate()}>
+                        <h3 className="ap-h3">Дублировать</h3>
+                    </div>}
 
                     <div className="el-card__header el-card__header--top-border">
                         <h3 className="ap-h3">Список подразделов</h3>
