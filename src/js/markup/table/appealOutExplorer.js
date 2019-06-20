@@ -39,7 +39,7 @@ const mapping = {
     //DATE_CONTROL:'Дата контроля',  
     NAME: 'Заявитель',
     ISP_NAME: 'Исполнитель',
-    ISP_OTD: 'Отдел'
+    //ISP_OTD: 'Отдел'
 }
 
 const templating = {};
