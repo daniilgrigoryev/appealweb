@@ -189,16 +189,17 @@ class SidePanel extends Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
+                                <td className='ap-input-caption w120'>{M.REG_DATE.label}</td>
                                 <td>
-                                    <span className={`px6 py1 mb6 round bg-blue-faint inline-block ${registration_number ? '' : 'opacity50'}`}>
-                                        {!checking_date ? ('<Отсутствует>') : data2str(checking_date)}
-                                    </span>
+                                    <Field disabled={disabled}
+                                           className='w-full'
+                                           component={FPicker}
+                                           name={M.REG_DATE.name}
+                                           date='+'/>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
                         <table className='w-full'>
                             <tbody>
                             <tr>
@@ -229,6 +230,28 @@ class SidePanel extends Component {
                                            component={FAutocomplete}
                                            name={M.EXECUTOR.name}
                                            dataKey={M.EXECUTOR.key}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
+                                <td>
+                                    <td>
+                                    <Field disabled={disabled}
+                                           className='w-full'
+                                           component={FPicker}
+                                           name={M.CHK_DATE.name}
+                                           date='+'/>
+                                </td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className='ap-input-caption w120'>{M.CLS_DATE.label}</td>
+                                <td>
+                                    <Field disabled={disabled}
+                                           className='w-full'
+                                           component={FPicker}
+                                           name={M.CLS_DATE.name}
+                                           date='+'/>
                                 </td>
                             </tr>
                             </tbody>

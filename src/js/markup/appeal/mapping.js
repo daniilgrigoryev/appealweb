@@ -148,6 +148,8 @@ export default {
 		STATUS: 		 {name: 'processing_stage_id', label: 'Статус',      key: 'PROCESSING_STAGES'},
 		EXECUTOR: 		 {name: 'exec_emp_key', 	   label: 'Исполнитель', key: 'EMPLOYESS_LIST'},
 		REG_NUM: 		 {name: 'registration_number', label: 'Рег. номер'},
-		CHK_DATE: 		 {name: 'checking_date', 	   label: 'Дата контроля'}
+		CHK_DATE: 		 {name: 'checking_date', 	   label: 'Дата контр.'},
+		REG_DATE: 		 {name: 'registration_date',   label: 'Рег. дата'},
+		CLS_DATE: 		 {name: 'closing_date',        label: 'Дата закр.'}
 	}
 }
