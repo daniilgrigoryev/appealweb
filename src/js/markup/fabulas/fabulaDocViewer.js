@@ -66,7 +66,7 @@ class FabulaDocViewer extends React.Component {
             <td className='ap-table__td'><a onClick={() => this.selectRow(id)} title='Редактировать'>{x.NAME}</a></td>
             <td className='ap-table__td'>{x.DTYPE}</td>
             <td className='ap-table__td'>{x.ZAJAV}</td>
-        </tr>);
+        </tr>); //
     }
 
     render() {

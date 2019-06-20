@@ -104,14 +104,14 @@ class ETopicList extends React.Component {
         const onExpand = this.onExpand.bind(this);
         const getValue = this.getCategValue.bind(this);
 
-        const {fields, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode} = this.props;
+        const {fields, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow} = this.props;
 
         const ROWS = fields.map((field, ind, arr) => (
             <TopicRow key={ind}
                    checkExpand={(x) => x == this.state.expandedId}
                    collapse={()=>this.setState({expandedId:-1})}
                    value={arr.get(ind)}                   
-                   {...{field,ind,apn_list,claim_id,dispatch,sessionId,fields,onRemove,onInfo,onExpand,getValue,disabled,responseMode,adminMode}}>
+                   {...{field,ind,apn_list,claim_id,dispatch,sessionId,fields,onRemove,onInfo,onExpand,getValue,disabled,responseMode,adminMode,reloadRow}}>
                 {field.value}
             </TopicRow>)); //
         const add = () => fields.push(im(getRow())); 

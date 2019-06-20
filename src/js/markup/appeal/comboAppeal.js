@@ -128,7 +128,7 @@ class ComboAppeal extends PureComponent {
             <SummaryData disabled={true}/>
           </React.Fragment>); //
       } else if (tail=='response') {
-        CONTENT = ( <TopicsData responseMode={true} />); //
+        CONTENT = ( <TopicsData reloadRow={this.reloadRow}   responseMode={true} />); //
       } else if (tail=='chief') {
         CONTENT = (<React.Fragment>
             <BasicData />
@@ -148,23 +148,23 @@ class ComboAppeal extends PureComponent {
               <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
               <OrganizationsData disabled={true}/>
               <SummaryData disabled={true}/>
-              <TopicsData adminMode={true} />
+              <TopicsData reloadRow={this.reloadRow}   adminMode={true} />
             </React.Fragment>); //
       } else if (tail=='clerk'){
          CONTENT = (<React.Fragment>
-              <TopicsData />
+              <TopicsData reloadRow={this.reloadRow}   />
               <IshDocsData reloadRow={this.reloadRow} />
               <DocsLink reloadRow={this.reloadRow} />
              </React.Fragment>); //
       } else if (tail=='verifier'){
          CONTENT = (<React.Fragment>
-              <TopicsData disabled={true} />
+              <TopicsData reloadRow={this.reloadRow}   disabled={true} />
               <IshDocsData reloadRow={this.reloadRow} disabled={true} />
               <DocsLink reloadRow={this.reloadRow} disabled={true} />
              </React.Fragment>); //
       } else if (tail=='chief'){
          CONTENT = (<React.Fragment>
-              <TopicsData />
+              <TopicsData reloadRow={this.reloadRow}   />
               <IshDocsData reloadRow={this.reloadRow} />
               <DocsLink reloadRow={this.reloadRow} />
              </React.Fragment>); //
@@ -176,7 +176,7 @@ class ComboAppeal extends PureComponent {
         CONTENT = (<React.Fragment>
                       <BasicData disabled={true}/>
                       <ClaimantData disabled={true}/>
-                      <TopicsData disabled={true} />
+                      <TopicsData reloadRow={this.reloadRow}   disabled={true} />
                       <IshDocsData reloadRow={this.reloadRow} disabled={true} />
                       <DocsLink reloadRow={this.reloadRow} disabled={true} />
                       <ArchiveData/>
@@ -191,7 +191,7 @@ class ComboAppeal extends PureComponent {
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
-            <TopicsData disabled={true}/>
+            <TopicsData reloadRow={this.reloadRow}   disabled={true}/>
             <IshDocsData reloadRow={this.reloadRow} disabled={true} />
             <DocsLink reloadRow={this.reloadRow} disabled={true}/>
             <PlusDocs disabled={true} />
@@ -205,7 +205,7 @@ class ComboAppeal extends PureComponent {
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
             <OrganizationsData/>
             <SummaryData/>
-            <TopicsData/>
+            <TopicsData reloadRow={this.reloadRow}  />
             <IshDocsData reloadRow={this.reloadRow} />
             <DocsLink reloadRow={this.reloadRow}/>
             <PlusDocs  />

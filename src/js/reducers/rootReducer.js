@@ -46,9 +46,9 @@ const reduceLogin = (state,action)=>{
 const reduceAppealLoad = (state,action)=>state.setIn(['form','appeal'],action.data);
 
 const ROOT_ACTIONS = {
-  [A.LOGOUT_DONE]    : reduceLogout,
-  [A.LOGIN_DONE]     : reduceLogin,
-  [A.APPEAL_LOAD]    : reduceAppealLoad
+  [A.LOGOUT_DONE] : reduceLogout,
+  [A.LOGIN_DONE]  : reduceLogin,
+  [A.APPEAL_LOAD] : reduceAppealLoad
 }
 
 const rootReducer = (state, action)=>{

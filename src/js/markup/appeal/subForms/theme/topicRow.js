@@ -56,50 +56,60 @@ class TopicRow extends React.Component {
 
     render(){
         const {manualPostLink} = this.state;
-        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode} = this.props;
+        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow} = this.props;
         let {disabled} = this.props;
         disabled = disabled || responseMode || adminMode;
 
-        const fldN = field + M.POST_N.name;
-        const fldD = field + M.POST_DATE.name;
-        const fldLinkedID = field + "post_decree_id";
-        const fldLinkedNN = field + "post_decree_n";
-        const fldLinkedDD = field + "post_decree_date";
+        const fldN = field + "post_n";
+        const fldD = field + "post_date";
+        const fldID_AP = field + "post_decree_id";
+        const fldN_AP  = field + "post_decree_n";
+        const fldD_AP  = field + "post_decree_date";
+        const flds_post = [fldN,fldD,fldID_AP,fldN_AP,fldD_AP];
+       
+        const id           = value.get('id');
+        const filesRows    = value.get('theme_files');
+        const stat_in_work = 'true'===value.get('stat_in_work'); 
+        const stat_done    = 'true'===value.get('stat_done');
+        
+        const post_n    = value.get('post_n');       // номер постановления введенный
+        const post_date = value.get('post_date');    // дата постановления введенная
+        const apn_post_decree_id     = value.get("post_decree_id");  // ИД постановления, связаный по АПР
+        const apn_post_decree_n      = value.get('post_decree_n');   // номер постановления связанный по АПР
+        const apn_post_decree_date   = value.get('post_decree_date');// дата постановления связанная по АПР
+        
+        const dateI = moment(post_date).format("MMM Do YY"); // date input parsed
+        const dateD = moment(apn_post_decree_date).format("MMM Do YY");    // date input db
+        
+        const postClear = ()=>flds_post.forEach(x=>dispatch(change(`appeal`, x, null)));
 
-        const id            = value.get('id');
-        const apn_post_n    = value.get('post_n');
-        const apn_post_date = value.get('post_date');
-        const post_id       = value.get('post_id');
-        const decree_id     = value.get("post_decree_id");
-        const post_decree_n = value.get('post_decree_n');
-        const post_decree_date = value.get('post_decree_date');
-        const filesRows        = value.get('theme_files');
-
-        const dateL = moment(post_decree_date).format("MMM Do YY");
-        const dateP = moment(apn_post_date).format("MMM Do YY");
-
-        const linkedPost = !decree_id ? false : (post_decree_n==apn_post_n && dateL == dateP);      
+        const linkedPost = !!apn_post_decree_id;      
         const linkDecree = async ()=>{
             const orphan = true;
-            const resp = await post("db/select",{alias : 'LINK_DECREE', apn_post_n,apn_post_date,orphan});
+            const theme_id = id;
+            const apn_post_n = post_n;
+            const apn_post_date = dateI;
+            const resp = await post("db/select",{alias : 'LINK_DECREE', theme_id,apn_post_n,apn_post_date,orphan});
             const {data,error} = resp;
             if (error || data==''){
                 console.error('linkDecree error:', error || 'No suitable record found');
-                dispatch(change('appeal', fldLinkedID, null));            
                 messageSet('Не удалось найти постановление в АДМ','error');
-                return;
+            } else {
+                messageSet('Связано с постановлением в АДМ','success');              
             }
-            dispatch(change('appeal', fldLinkedID,(''+data)));            
-            dispatch(change('appeal', fldLinkedNN,apn_post_n));
-            dispatch(change('appeal', fldLinkedDD,apn_post_date));            
-            messageSet('Связано с постановлением в АДМ','success');    
+            reloadRow(); 
         }
 
         let LinkerBTN = (<span>Невозможно связать с АДМ</span>); //
-        if (apn_post_date && (apn_post_n || post_id)){
-            LinkerBTN = !linkedPost 
-                 ? (<Button onClick={linkDecree}>Связать с АДМ</Button>)
-                 : (<span>Связано с АДМ</span>); //
+        const apn_readonly = stat_in_work || apn_post_decree_id;    
+        if (stat_in_work){
+            LinkerBTN = apn_post_decree_id ? (<span>Связано с АПР</span>) : (<span>Не связано с АПР</span>); //
+        } else {
+            if (apn_post_decree_id){
+                LinkerBTN = (<Button onClick={linkDecree}>Отвязать от АПР</Button>); //
+            } else if (post_n && post_date) {
+                LinkerBTN = (<Button onClick={linkDecree}>Связать с АПР</Button>); //
+            }
         }
 
         const apnPromise = ()=>post("db/select",{alias : 'APN', listValueField : 'value', id: claim_id});
@@ -183,13 +193,8 @@ class TopicRow extends React.Component {
             const AL = apn_list;
             const newDateStr = _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value();
             const newVal = !newDateStr ? null : new Date(Date.parse(newDateStr));
+            debugger;
             dispatch(change(`appeal`, fldD, newVal));
-        }
-
-        const postClear = ()=>{
-            dispatch(change(`appeal`, fldN, null));
-            dispatch(change(`appeal`, fldD, null));
-            dispatch(change('appeal', fldLinkedID, null));
         }
 
         const dispatchForm = (fieldName,fieldVal)=>dispatch(change('appeal',fieldName,fieldVal));
@@ -216,14 +221,14 @@ class TopicRow extends React.Component {
                                     {manualPostLink
                                         ? (<td>
                                              <span className='inline-block mr12 w240'>
-                                                <Field disabled={disabled} component={FInput} name={field + M.POST_N.name}
+                                                <Field disabled={disabled || apn_readonly} component={FInput} name={field + M.POST_N.name}
                                                        placeholder={M.POST_N.label}
                                                        value={P[M.POST_N.name]}/>
                                              </span>
                                             </td>)
                                         : (<td>
                                             <span className='inline-block mr12 w240'>
-                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.POST_N.name}
+                                                <Field disabled={disabled || apn_readonly} component={FAutocomplete} name={field + M.POST_N.name}
                                                        placeholder={M.POST_N.label} onSelect={postSelect}
                                                        datapromise={apnPromise} value={P[M.POST_N.name]}/>
                                              </span>
@@ -231,12 +236,12 @@ class TopicRow extends React.Component {
 
                                     <td>
                                         <span className='inline-block mr12 w240'>
-                                            <Field disabled={!manualPostLink} disabled={!manualPostLink || disabled} component={FPicker} disabled={disabled}
-                                                name={field + M.POST_DATE.name} placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
+                                            <Field disabled={!manualPostLink || disabled || apn_readonly} component={FPicker} name={field + M.POST_DATE.name} 
+                                            placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
                                         </span>
                                     </td>
                                     <td>
-                                        {disabled ? null : (
+                                        {(disabled || apn_readonly) ? null : (
                                          <Switch
                                             value={manualPostLink}
                                             onValue={true}
@@ -382,6 +387,16 @@ class TopicRow extends React.Component {
                                                     </td>
                                                 </tr>)
                                             )}
+
+                                            <tr>
+                                                <td className='ap-input-caption'>Решение по АП</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_decis_id'} dataKey='APR_DECIS'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='ap-input-caption'>Причина прекращения по АП</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/></td>
+                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </td>
