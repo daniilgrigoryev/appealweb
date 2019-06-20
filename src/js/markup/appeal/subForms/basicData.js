@@ -39,7 +39,7 @@ const BasicData = props => {
                                         <tr>
                                             <td className='ap-input-caption'>{M.ECOO_NUM.label}</td>
                                             <td><Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/></td>
-                                        </tr>                                       
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </form>

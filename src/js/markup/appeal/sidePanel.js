@@ -41,9 +41,15 @@ const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
     const downloadDocLink = baseUrl() + 'report/fill?'+params.toString()
 
     const tempLink = document.createElement('a');
+    const event = document.createEvent('MouseEvents');
+        event.initMouseEvent(
+          'click', true, false, window, 0, 0, 0, 0, 0
+          , false, false, false, false, 0, null
+        );
+
     tempLink.href = downloadDocLink;
     tempLink.setAttribute('download', 'test.pdf');
-    tempLink.click();
+    tempLink.dispatchEvent(event);
 
     setTimeout(()=>{
       tempLink && (tempLink.remove());
