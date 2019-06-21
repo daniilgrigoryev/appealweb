@@ -139,6 +139,8 @@ class TopicRow extends React.Component {
             return !!cRow[fIndex] ? el : null;
         };
 
+        const numberRuling = P.get(M.POST_N.name);
+
         if (!expanded) {
             const collapsed = (
                 <React.Fragment key={id} >
@@ -150,7 +152,7 @@ class TopicRow extends React.Component {
                             <span className='inline-block mr12'>{this.props.getValue(P.get(M.CAT.name))}</span>
                         </td>
                         <td>
-                            <span className='inline-block mr12'>{P.get(M.POST_N.name)}</span>
+                            <span className='inline-block mr12 cutted-text wmax180' title={numberRuling}>{numberRuling}</span>
                         </td>
                         <td>
                             <span className='inline-block mr12'>{data2str(P.get(M.POST_DATE.name))}</span>
@@ -211,7 +213,7 @@ class TopicRow extends React.Component {
                                         <span className='ap-table-list-number mr12'>{ind + 1}</span>
                                     </td>
                                     <td>
-                                        <span className='inline-block mr12'>
+                                        <span className='inline-block mr12 wmin60'>
                                             <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
                                                    placeholder={M.CAT.label}
                                                    dataKey={M.CAT.key} value={P[M.CAT.name]}/>
