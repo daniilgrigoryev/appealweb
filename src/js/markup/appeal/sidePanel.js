@@ -48,6 +48,7 @@ const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
         );
 
     tempLink.href = downloadDocLink;
+
     tempLink.setAttribute('download', 'test.pdf');
     tempLink.dispatchEvent(event);
 
