@@ -67,11 +67,14 @@ class TopicRow extends React.Component {
         const fldD_AP  = field + "post_decree_date";
         const flds_post = [fldN,fldD,fldID_AP,fldN_AP,fldD_AP];
        
-        const id           = value.get('id');
-        const filesRows    = value.get('theme_files');
-        const stat_in_work = 'true'===value.get('stat_in_work'); 
-        const stat_done    = 'true'===value.get('stat_done');
+        const id             = value.get('id');
+        const filesRows      = value.get('theme_files');
+        const stat_in_work   = 'true'===value.get('stat_in_work'); 
+        const stat_wait_post = 'true'===value.get('stat_wait_post');
+        const stat_done      = 'true'===value.get('stat_done');
         
+        const executor_id = value.get('executor_id');
+
         const post_n    = value.get('post_n');       // номер постановления введенный
         const post_date = value.get('post_date');    // дата постановления введенная
         const apn_post_decree_id     = value.get("post_decree_id");  // ИД постановления, связаный по АПР
@@ -84,31 +87,48 @@ class TopicRow extends React.Component {
         const postClear = ()=>flds_post.forEach(x=>dispatch(change(`appeal`, x, null)));
 
         const linkedPost = !!apn_post_decree_id;      
-        const linkDecree = async ()=>{
+        const linkDecree = async (passPost)=>{
             const orphan = true;
             const theme_id = id;
-            const apn_post_n = post_n;
-            const apn_post_date = dateI;
-            const resp = await post("db/select",{alias : 'LINK_DECREE', theme_id,apn_post_n,apn_post_date,orphan});
+            const apn_post_n = passPost ? post_n: null;
+            const apn_post_date = passPost ? post_date: null;
+//debugger;
+            const resp = await post("db/select",{alias : 'LINK_DECREE', theme_id,apn_post_n,apn_post_date,orphan}) // информация о постановлении передается - связывание
+           
             const {data,error} = resp;
             if (error || data==''){
                 console.error('linkDecree error:', error || 'No suitable record found');
                 messageSet('Не удалось найти постановление в АДМ','error');
             } else {
-                messageSet('Связано с постановлением в АДМ','success');              
+
+                if (passPost){
+                    messageSet('Связано с постановлением в АДМ','success');              
+                } else {
+                    messageSet('Связь с постановлением в АДМ удалена','success');              
+                }
             }
             reloadRow(); 
         }
 
+        const doLink = ()=>{
+            //debugger;
+            linkDecree(true);
+        }
+
+          const doUnlink = ()=>{
+            //debugger;
+            linkDecree(false);
+        }
+
         let LinkerBTN = (<span>Невозможно связать с АДМ</span>); //
         const apn_readonly = stat_in_work || apn_post_decree_id;    
-        if (stat_in_work){
+        if (stat_in_work || stat_wait_post|| stat_done){
             LinkerBTN = apn_post_decree_id ? (<span>Связано с АПР</span>) : (<span>Не связано с АПР</span>); //
         } else {
             if (apn_post_decree_id){
-                LinkerBTN = (<Button onClick={linkDecree}>Отвязать от АПР</Button>); //
+                LinkerBTN = (<Button onClick={doUnlink}>Отвязать от АПР</Button>); //
             } else if (post_n && post_date) {
-                LinkerBTN = (<Button onClick={linkDecree}>Связать с АПР</Button>); //
+                LinkerBTN = (<Button onClick={doLink}>Связать с АПР</Button>); //
             }
         }
 
@@ -193,11 +213,51 @@ class TopicRow extends React.Component {
             const AL = apn_list;
             const newDateStr = _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value();
             const newVal = !newDateStr ? null : new Date(Date.parse(newDateStr));
-            debugger;
             dispatch(change(`appeal`, fldD, newVal));
         }
 
         const dispatchForm = (fieldName,fieldVal)=>dispatch(change('appeal',fieldName,fieldVal));
+
+        const statusChanger = async (next_status)=>{
+            const orphan = true;
+            const theme_id = id;
+
+            
+            const resp = await post("db/select",{alias : 'THEME_NEXT_STATUS', theme_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
+
+            const {data,error} = resp;
+            if (error || data==''){
+                console.error('linkDecree error:', error || 'No suitable record found');
+                messageSet('Не удалось изменить статус темы','error');
+            } else {
+                messageSet('Статус темы изменен','success');              
+            }
+            reloadRow(); 
+
+        }
+
+
+        let STATUS_BTN = (<button>Нет исполнителя</button>);//
+        if (_.size(executor_id)){
+            STATUS_BTN = (<button onClick={()=>statusChanger('START')} >Назначен исполнитель. Запустить в работу</button>);//
+
+            if (stat_in_work){/*
+                STATUS_BTN = (
+                    <React.Fragment>
+                        <button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>
+                        <button onClick={()=>statusChanger('PAUSE')} >Остановить производство</button>
+                    </React.Fragment>);*/
+
+                STATUS_BTN = (<button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
+            } else if (stat_wait_post){
+               // STATUS_BTN = (<button onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
+               STATUS_BTN = (<button>Ожидает отправки</button>);/// 
+            } else if (stat_done){
+                STATUS_BTN = (<button>Исполнено</button>);//
+            }
+        }
+
+       // debugger;
 
         const editable =
             <React.Fragment key={id + 'e1'}>
@@ -279,7 +339,7 @@ class TopicRow extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Статус по теме</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'stage_id'} dataKey='THEME_STATUS' /></td>
+                                                <td>{STATUS_BTN}</td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Дата контроля</td>

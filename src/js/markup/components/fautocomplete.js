@@ -9,7 +9,7 @@ class EAutocomplete extends React.Component {
         super(props);
         this.state = {
             dataSuggestions: null,
-            value: null,
+            visibleval: null,
             data: null,
             dataKeyed: null
         };
@@ -21,70 +21,66 @@ class EAutocomplete extends React.Component {
         this.getDatas = this.getDatas.bind(this);
         this.suggestData = this.suggestData.bind(this);
         this.blur = this.blur.bind(this);
+        this.setVisibleVal = this.setVisibleVal.bind(this);
     }
 
-    componentDidUpdate(prevData) {
+    componentDidUpdate(prevData) { 
         const {value, dataWhere} = this.props;
-        const {dataKeyed} = this.state;
- 
-        if(_.size(dataKeyed)){ // фикс для кривых апдейтов
-            const valueOuter =  _.chain(dataKeyed).filter(x=>x.property===value).first().get('value').value();
-            if (valueOuter!=this.state.value){
-                this.setState({value: valueOuter});
-                return;
-            }
-        }
+        const {dataKeyed,visibleval} = this.state;
         
         const prevDW = prevData.dataWhere;
         const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere, prevDW);
+        
         if (dataWhereChanged) {
-            this.setState({data: null, dataKeyed: null, dataSuggestions: null, value: ""});
-        } else if (value != prevData.value && (value == '' || value == null)) {
-            if (window.lolkek) {
-                    setTimeout(()=>{
-                        window.lolkek && (window.lolkek = null);
-                    },1000)
-                    this.setState({data: null, dataKeyed: null, value: ""});
-                }
+            this.setState({data: null, dataKeyed: null, dataSuggestions: null, visibleval: ""});
+        } else if (value != prevData.value) {
+            if (value == '' || value == null){
+                this.setState({visibleval: ""});
+            } else if (prevData.value=='' || prevData.value==null) {
+                this.setVisibleVal(value);
             }
-
+        }
     }
 
     componentDidMount() {
-        const {acKey, dataKey, value, dataWhere, stoppe} = this.props;
-        //value && getAcValue(acKey||dataKey,value).then((value)=>this.setState({value})); // prop value was passed
+        const {value} = this.props;
         if (value) {
-            const key = acKey || dataKey;
-            const hasWhere = !_.isEmpty(dataWhere);
-            if (!hasWhere) {
-                if (key) { // quick way
-                    getAcValue(key, value).then((value) => {
-                        this.setState({value});
-                    });
-                } else { // long hard way
-                    this.getDatas().then(x => {
-                        
-                        const queryLow = value.toLowerCase();
-                        const ret = this.filter(null, x.data, x.dataKeyed, queryLow);
-                        const first = _.first(ret);
-                        if (first) {
-                            this.setState({value: first});
-                        }
-                    });
-                }
-            } else {
-                this.dataWhere = dataWhere;
-                getAcNoCache(key, JSON.stringify(dataWhere)).then((result) => {
-                    const rows = result.data;
-                    let findVal;
-                    if (rows && !rows.error) {
-                        findVal = _.find(rows, x => x.property && x.property == value);
+            this.setVisibleVal(value)
+        }
+    }
+
+    setVisibleVal(value){
+        const {acKey, dataKey,dataWhere} = this.props;
+        const key = acKey || dataKey;
+        const hasWhere = !_.isEmpty(dataWhere);
+        if (!hasWhere) {
+            if (key) { // quick way
+                getAcValue(key, value).then((visibleval) => {
+                    this.setState({visibleval});
+                });
+            } else { // long hard way
+                this.getDatas().then(x => {                        
+                    const queryLow = value.toLowerCase();
+                    const ret = this.filter(null, x.data, x.dataKeyed, queryLow);
+                    const first = _.first(ret);
+                    if (first) {
+                        this.setState({visibleval: first});
                     }
-                    const val = findVal ? findVal.value : 0;
-                    this.setState({value: val});
                 });
             }
-        }
+        } else {
+            this.dataWhere = dataWhere;
+            getAcNoCache(key, JSON.stringify(dataWhere)).then((result) => {
+                const rows = result.data;
+                let findVal;
+                if (rows && !rows.error) {
+                    findVal = _.find(rows, x => x.property && x.property == value);
+                }
+                const val = findVal ? findVal.value : 0;
+                this.setState({visibleval: val});
+            });
+        }    
+
     }
 
     async suggestData(event) {
@@ -188,7 +184,7 @@ class EAutocomplete extends React.Component {
                 return row.toLowerCase().indexOf(value) > -1;
             }).length;
             if (!match) {
-                this.setState({value: ''});
+                this.setState({visibleval: ''});
             }
         } else {
             setTimeout(() => {
@@ -196,16 +192,16 @@ class EAutocomplete extends React.Component {
             }, 200);
         }
     }
+
     change(event, cb = null) {
         const {value} = event;
-
         if (value == '' || value == '[отсутствует]') {
             const {onChange} = this.props;
-            this.setState({value: ''}, cb);
+            this.setState({visibleval: ''}, cb);
             onChange && (onChange(null));
         } else {
-            this.setState({value}, cb);
-    }
+            this.setState({visibleval:value}, cb);
+        }
     }
 
     select(event) {
@@ -214,13 +210,13 @@ class EAutocomplete extends React.Component {
             const {value} = event;
             const key = this.getKey(value);
             onChange(key);
-            onSelect && (onSelect({value, key, name}));
+            onSelect && (onSelect({visibleval:value, key, name}));
         };
         this.change(event, cb);
     }
 
     render() {
-        const {value, dataSuggestions} = this.state;
+        const {visibleval, dataSuggestions} = this.state;
         const {readOnly, disabled} = this.props;
         const readonly = readOnly;
         const onChange = this.change;
@@ -230,7 +226,7 @@ class EAutocomplete extends React.Component {
         const suggestions = dataSuggestions;
         const completeMethod = this.suggestData;
         const dropdown = true;
-
+        const value = visibleval;
         return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect, onClick, onBlur}} />
         } //
     }
