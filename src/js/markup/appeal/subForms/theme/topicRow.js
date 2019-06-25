@@ -92,7 +92,7 @@ class TopicRow extends React.Component {
             const theme_id = id;
             const apn_post_n = passPost ? post_n: null;
             const apn_post_date = passPost ? post_date: null;
-//debugger;
+
             const resp = await post("db/select",{alias : 'LINK_DECREE', theme_id,apn_post_n,apn_post_date,orphan}) // информация о постановлении передается - связывание
            
             const {data,error} = resp;
@@ -100,25 +100,16 @@ class TopicRow extends React.Component {
                 console.error('linkDecree error:', error || 'No suitable record found');
                 messageSet('Не удалось найти постановление в АДМ','error');
             } else {
-
-                if (passPost){
-                    messageSet('Связано с постановлением в АДМ','success');              
-                } else {
-                    messageSet('Связь с постановлением в АДМ удалена','success');              
-                }
+                const text = passPost
+                    ? 'Связано с постановлением в АДМ'
+                    : 'Связь с постановлением в АДМ удалена';
+                messageSet(text,'success');              
             }
-            reloadRow(); 
+            reloadRow();
         }
 
-        const doLink = ()=>{
-            //debugger;
-            linkDecree(true);
-        }
-
-          const doUnlink = ()=>{
-            //debugger;
-            linkDecree(false);
-        }
+        const doLink = ()=>linkDecree(true);
+        const doUnlink = ()=>linkDecree(false);
 
         let LinkerBTN = (<span>Невозможно связать с АДМ</span>); //
         const apn_readonly = stat_in_work || apn_post_decree_id;    
@@ -451,6 +442,10 @@ class TopicRow extends React.Component {
                                             <tr>
                                                 <td className='ap-input-caption'>Решение по АП</td>
                                                 <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_decis_id'} dataKey='APR_DECIS'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='ap-input-caption'>Статья-основание решения по АП</td>
+                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_cause_id'} dataKey='APR_DECIS_CAUSE'/></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Причина прекращения по АП</td>

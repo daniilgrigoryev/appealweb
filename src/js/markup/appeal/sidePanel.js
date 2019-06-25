@@ -169,6 +169,7 @@ class SidePanel extends Component {
         }
 
         const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
+        const {Provider} = React.createContext({ color: 'white' });
 
         return (
             <div className='ap-side-panel-wrap'>
