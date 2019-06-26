@@ -35,7 +35,6 @@ class Root extends React.Component {
       })[typ] || typ;
       Notification[type]({message: message+''});
     };
-
   }
 
   componentDidMount(){

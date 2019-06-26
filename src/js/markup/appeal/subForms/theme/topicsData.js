@@ -18,8 +18,8 @@ import mapping from '../../mapping.js'
 const headerTitle = 'Темы обращения';
 const M = mapping.TopicsData;
 
-const TopicsData = props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow} = props;
+const TopicsData = React.memo(props => {
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges} = props;
     const navi = !disabled && (nextPage||prevPage);
     
     const isMadi = system == 'M';
@@ -32,14 +32,14 @@ const TopicsData = props => {
                         <form onSubmit={handleSubmit}>
                             <hr className='txt-hr my9'/>
                             <h4 className='ap-h4'>Список тем обращения</h4>
-                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow}}/>
+                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges}}/>
                         </form>
                     </Card>
                 </Layout.Col>
             </Layout.Row>
         </div>
     )
-}; //
+}); //
 
 const mapStateToProps = (state) => ({
     sessionId:state.getIn(['general','user','sessionID']),

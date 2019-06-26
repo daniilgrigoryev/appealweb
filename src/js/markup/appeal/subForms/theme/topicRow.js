@@ -41,7 +41,7 @@ const stopPg = (cb, id) => (evt) => {
     return false;
 }
 
-class TopicRow extends React.Component {
+class TopicRow extends React.PureComponent {
 
     constructor(props){
         super(props);
@@ -56,7 +56,7 @@ class TopicRow extends React.Component {
 
     render(){
         const {manualPostLink} = this.state;
-        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow} = this.props;
+        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges} = this.props;
         let {disabled} = this.props;
         disabled = disabled || responseMode || adminMode;
 
@@ -111,15 +111,19 @@ class TopicRow extends React.Component {
         const doLink = ()=>linkDecree(true);
         const doUnlink = ()=>linkDecree(false);
 
-        let LinkerBTN = (<span>Невозможно связать с АДМ</span>); //
+        let LinkerBTN = (<span>Невозможно связать с АПР</span>); //
         const apn_readonly = stat_in_work || apn_post_decree_id;    
-        if (stat_in_work || stat_wait_post|| stat_done){
-            LinkerBTN = apn_post_decree_id ? (<span>Связано с АПР</span>) : (<span>Не связано с АПР</span>); //
+        if (!noChanges){
+            LinkerBTN = (<span>Для связи с АПР все изменения должны быть зафиксированы в БД</span>);
         } else {
-            if (apn_post_decree_id){
-                LinkerBTN = (<Button onClick={doUnlink}>Отвязать от АПР</Button>); //
-            } else if (post_n && post_date) {
-                LinkerBTN = (<Button onClick={doLink}>Связать с АПР</Button>); //
+            if (stat_in_work || stat_wait_post|| stat_done){
+                LinkerBTN = apn_post_decree_id ? (<span>Связано с АПР</span>) : (<span>Не связано с АПР</span>); //
+            } else {
+                if (apn_post_decree_id){
+                    LinkerBTN = (<Button onClick={doUnlink}>Отвязать от АПР</Button>); //
+                } else if (post_n && post_date) {
+                    LinkerBTN = (<Button onClick={doLink}>Связать с АПР</Button>); //
+                }
             }
         }
 
@@ -150,9 +154,8 @@ class TopicRow extends React.Component {
             return !!cRow[fIndex] ? el : null;
         };
 
-        if (!expanded) {
-            const collapsed = (
-                <React.Fragment key={id} >
+        if (!expanded) {// collapsed 
+            return <React.Fragment key={id} >
                     <tr>
                         <td>
                             <span className='ap-table-list-number mr12'>{ind + 1}</span>
@@ -179,8 +182,7 @@ class TopicRow extends React.Component {
                             <hr className='txt-hr my18'/>
                         </td>
                     </tr>
-                </React.Fragment>);
-            return [collapsed];
+                </React.Fragment>;
         } //
 
         const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
@@ -213,7 +215,11 @@ class TopicRow extends React.Component {
             const orphan = true;
             const theme_id = id;
 
-            
+            if (!noChanges){
+                messageSet('Для изменения статуса все изменения должны быть зафиксированы в БД','error');
+                return;
+            } 
+
             const resp = await post("db/select",{alias : 'THEME_NEXT_STATUS', theme_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
 
             const {data,error} = resp;
@@ -224,9 +230,7 @@ class TopicRow extends React.Component {
                 messageSet('Статус темы изменен','success');              
             }
             reloadRow(); 
-
         }
-
 
         let STATUS_BTN = (<button>Нет исполнителя</button>);//
         if (_.size(executor_id)){
@@ -247,8 +251,6 @@ class TopicRow extends React.Component {
                 STATUS_BTN = (<button>Исполнено</button>);//
             }
         }
-
-       // debugger;
 
         const editable =
             <React.Fragment key={id + 'e1'}>
@@ -451,7 +453,6 @@ class TopicRow extends React.Component {
                                                 <td className='ap-input-caption'>Причина прекращения по АП</td>
                                                 <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/></td>
                                             </tr>
-
                                             </tbody>
                                         </table>
                                     </td>

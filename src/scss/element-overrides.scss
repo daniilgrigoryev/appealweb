@@ -215,6 +215,8 @@
   overflow: visible !important;
   border: none;
   border-bottom: 1px solid $color-border;
+  transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 
   &.ap-sticky-card {
     > .el-card__header {

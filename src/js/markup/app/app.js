@@ -8,6 +8,7 @@ import {getSessionId} from '../../selectors/common.js'
 import Immutable from 'immutable'
 
 import ComboAppeal from '../appeal/comboAppeal.js'
+import SidePanel from '../appeal/sidePanel.js'
 import AppealExplorer from '../table/appealExplorer.js'
 import AppealOutExplorer from '../table/appealOutExplorer.js'
 import LetterExplorer from '../table/letterExplorer.js'
@@ -43,7 +44,7 @@ export default function App() {
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
                         <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
                         <Route exact path='/explore_letter' render={()=><LetterExplorer/>}/>
-                        <Route path='/appeal_incoming' render={(props)=><ComboAppeal hashChange = {props.location.search}/>}/>
+                        <Route path='/appeal_incoming' render={(props)=><SidePanel hashChange = {props.location.search}/>}/>
                         <Route path='/appeal_outgoing' render={(props)=><Outgoing hashChange = {props.location.search}/>}/>
                         <Route path='/explore' render={()=><AppealExplorer/>}/>
                         <Route path='/i_check' render={()=><IDecisExplorer/>} />

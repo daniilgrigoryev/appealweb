@@ -42,7 +42,7 @@ const getRowZajav = (args) => im(getRow('Заявитель ФЛ', args));
 const getRowOrg   = (args) => im(getRow('Организация', args));
 
 // Element component
-class EIshDocList extends React.Component {
+class EIshDocList extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -104,14 +104,14 @@ class EIshDocList extends React.Component {
         const onExpand = this.onExpand.bind(this);
         const onFabula = this.dialogOpenFabula.bind(this);
 
-        const {fields, disabled,claim_id,fTypes,categories,dispatch,sessionId,reloadRow} = this.props;
+        const {fields, disabled,claim_id,fTypes,categories,dispatch,sessionId,reloadRow,noChanges} = this.props;
         const fabData = {};
         const DIALOG = this.state.dialog;
 
         const add = (rowGetter) => () => fields.push(rowGetter());
         const ROWS = fields.map((x, i, arr) => (
             <IshDocRow key={i} ind={i} field={x} value={arr.get(i)} checkExpand={(x) => x === this.state.expandedId}
-                    {...{sessionId,fabData,claim_id,fTypes,disabled,categories,dispatch,onRemove,onExpand,onFabula,reloadRow}}
+                    {...{sessionId,fabData,claim_id,fTypes,disabled,categories,dispatch,onRemove,onExpand,onFabula,reloadRow,noChanges}}
                    collapse={()=>this.setState({expandedId:false})}>{x.value}</IshDocRow>)); //
         
         return (
@@ -154,10 +154,10 @@ class EIshDocList extends React.Component {
     }
 }
 
-const FIshDocList = (props) => {
+const FIshDocList = React.memo(props => {
     const {input, meta} = props;
     return <EIshDocList {...props} {...input} {...meta} reduxformfield="true"/>
-}  //
+})  //
 //
 
 export {EIshDocList, FIshDocList};

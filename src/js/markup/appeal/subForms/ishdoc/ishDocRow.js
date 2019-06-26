@@ -59,19 +59,9 @@ const stopPg = (cb, id) => (evt) => {
 
 const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
-/*
-
-NONE
-AWAIT_CHECK
-ERROR_CHECK
-AWAIT_SIGN
-AWAIT_POST
-ERROR_SIGN
-
-*/
-
-const IshDocRow = (props) => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, disabled, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow} = props;
+const IshDocRow = React.memo(props => {
+    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow,noChanges} = props;
+    let {disabled} = props;
     const id = value.get('id');
     const ver_id = value.get('verifier_id');
     const showBtn = id && ver_id;
@@ -86,12 +76,37 @@ const IshDocRow = (props) => {
     const commandFabula = (type, el) => onFabula(type, fabData,related_topic,id);
 
     const linkingThemes = props.categories;
-
     const P = value;
+
+    disabled = disabled || !!status_alias; // при любом из установленных статусов (ожидает проверки, ожидает подписи, подписано (ожидает отправки), отправлено) редактирование запрещено
+
+    if (!expanded) { // collapsed
+        return (<React.Fragment key={id} >
+                <tr>
+                    <td><span className='ap-table-list-number mr12'>{ind + 1}</span></td>
+                    <td>{P.get(M.DOC_TARGET.name)}</td>
+                    <td>{P.get(M.ISH_NUM.name)}</td>
+                    <td>{data2str(P.get(M.ISH_DATE.name))}</td>
+                    <td>{P.get('podpisal_name')}</td>
+                    <td>{P.get('status_name') || 'Черновик'}</td>
+                    <td className='pr12 align-r'>
+                        <Button type="text" onClick={onXpd}>
+                            <i className="el-icon-edit color-green"/>
+                        </Button>
+
+                        {disabled ? null :
+                            <Button size="small" type="text" onClick={onRmv}>
+                                <i className="el-icon-close color-red-dark"/>
+                            </Button>}
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan='7'><hr className='txt-hr my6'/></td>
+                </tr>
+            </React.Fragment>);
+    } //
+
     const getSign = async (filename,cert)=>{
-        const params = new URLSearchParams();
-        params.append('sessionId',sessionId);
-        params.append('ishdoc_id',id);
         const responseXml = await get('storage/pullXml',{ishdoc_id:id});
         const xml = responseXml.data;
         const signature = await signXml(xml,cert);
@@ -110,58 +125,21 @@ const IshDocRow = (props) => {
      
         reloadRow();   
     }
-
+    
     const hasTopic = !_.isEmpty(related_topic);
     let DOC_MAKER = null;
     if (!disabled){
-        if (hasTopic){
+        if (hasTopic && noChanges){
             const menu = <Dropdown.Menu>
                                 {fTypes.map(x=><Dropdown.Item key={x.property} command={x.property}>{x.value}</Dropdown.Item>)}
                         </Dropdown.Menu>;
 
-            DOC_MAKER = (
-                <React.Fragment>
-                    <Dropdown onCommand={commandFabula} menu={menu}>
+            DOC_MAKER = <Dropdown onCommand={commandFabula} menu={menu}>
                         <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
-                    </Dropdown>
-                </React.Fragment>);
+                    </Dropdown>;
         } else { //
-            DOC_MAKER = (<span>Конструктор шаблонов доступен после связывания документа с темой</span>);
+            DOC_MAKER = <span>Конструктор шаблонов доступен после связывания документа с темой и отсутствии несохраненных изменений</span>;
         }
-    } //
-
-    if (!expanded) {
-        const collapsed = (
-            <React.Fragment key={id} >
-                <tr>
-                    <td>
-                        <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                    </td>
-                    <td>{P.get(M.DOC_TARGET.name)}</td>
-                    <td>{P.get(M.ISH_NUM.name)}</td>
-                    <td>{data2str(P.get(M.ISH_DATE.name))}</td>
-                    <td>{P.get('podpisal_name')}</td>
-                    <td>{P.get('status_name') || 'Черновик'}</td>
-                    <td className='pr12 align-r'>
-                        <Button type="text" onClick={onXpd}>
-                            <i className="el-icon-edit color-green"/>
-                        </Button>
-
-                        {disabled ? null :
-                            <Button size="small" type="text" onClick={onRmv}>
-                                <i className="el-icon-close color-red-dark"/>
-                            </Button>}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colSpan='7'>
-                        <hr className='txt-hr my6'/>
-                    </td>
-                </tr>
-            </React.Fragment>
-        );
-        return [collapsed];
     } //
 
     const tGetter = ()=>themesLoad(claim_id);
@@ -180,13 +158,17 @@ const IshDocRow = (props) => {
             });
         let field = 'ish_docs_data['+ind+'].status_alias';
         dispatch(change('appeal',field,newstatus));
-    }
+    } //
 
     const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt(null)}>Отмена ожидания проверки</Button>);
     const await_s = <span>Ожидает подписи</span>;
     const signd = <span>Подписано</span>;
     const sendd = <span>Отправлено</span>;
-    const nostat = !showBtn ? null : (<Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку</Button>);
+    const nostat = !showBtn ? null : (
+        <React.Fragment>
+            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку</Button>
+            <Button onClick={()=>setCheckSt('SIGNED')} >Подписать вручную</Button>
+        </React.Fragment>);
 
     const STATUS = ({
         'AWAIT_CHECK' : await_c,
@@ -194,7 +176,6 @@ const IshDocRow = (props) => {
         'SIGNED'      : signd,
         'SENDED'      : sendd
     })[status_alias] || nostat; //
-
 
     const editable = (
         <React.Fragment key={id + 'e1'} >
@@ -242,7 +223,7 @@ const IshDocRow = (props) => {
                                 </td>
                                 <td>
                                     {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
-                                </td>
+                                </td> 
                             </tr>
                             <tr key={id + 'e2'}>
                                 <td colSpan='6'>
@@ -324,6 +305,6 @@ const IshDocRow = (props) => {
             </tr>
         </React.Fragment>);
     return editable;
-} //
+}) //
 
 export default IshDocRow

@@ -16,6 +16,21 @@ import * as _ from 'lodash'
 import {messageSet} from '../../actions/common.js'
 import moment from 'moment'
 import mapping from './mapping.js'
+import PropTypes from 'prop-types'
+import {reset} from 'redux-form';
+import BasicData from './subForms/basicData.js'
+import ClaimantData from './subForms/claimantData.js'
+import AddressData from '../common/addressData.js' 
+import OrganizationsData from './subForms/organizationsData.js'
+import SummaryData from './subForms/summaryData.js'
+import TopicsData from './subForms/theme/topicsData.js'
+import IshDocsData from './subForms/ishdoc/ishDocsData.js'
+import PlusDocs from './subForms/plusDocs.js'
+import ArchiveData from './subForms/archiveData.js'
+import DocsLink from './subForms/docsLink.js'
+import StatusData from './subForms/statusData.js'
+import {appealSetId} from '../../actions/common.js'
+import {getRights} from  '../../services/rights.js'
 
 const alias = 'CLAIM_PUSH_COMBO';
 const headerTitle = 'Основные сведения';
@@ -73,11 +88,21 @@ class SidePanel extends Component {
         this.getHash = this.getHash.bind(this);
         this.holdHash = this.holdHash.bind(this);
         this.duplicate = this.duplicate.bind(this);
+        this.reloadRow = this.reloadRow.bind(this);  
+    }
+
+    async reloadRow() {
+        const {dispatch, change, initialize,id} = this.props;
+        const alias = 'CLAIM_GET';
+        const orphan = true;
+        const claim_id = id;
+        const x = await post('db/select', {alias, claim_id,orphan});
+        dispatch(initialize(im(x.data)));
+        setTimeout(()=>(this.hashHold && this.hashHold()),500);
     }
 
     componentDidMount() {
         this.curHash = this.getHash();
-        this.props.hashHolder(this.holdHash);
     }
 
     holdHash(){
@@ -149,12 +174,22 @@ class SidePanel extends Component {
 
     render() {
         const noop = () => {};
-        const {disabled,formData,sessionId} = this.props;
+        const {dispatch,change,initialize,disabled,formData,sessionId} = this.props;
+        try{
+          const h = window.location.hash.split('?');
+          if (h[1]=='new'){
+            window.location.hash = h[0];
+            setTimeout(()=>dispatch(initialize(im({}))),100);
+            return (<span>Новое обращение</span>); //
+          }
+        } catch (exc) {
+          //debugger;
+        }//
 
-        const noSave = !!(this.curHash && this.curHash == this.getHash())
+        const noChanges = !!(this.curHash && this.curHash == this.getHash()); 
         
-        const stateBtnText  = noSave ? 'Нет изменений' : 'Сохранить';
-        const stateBtnClick = noSave ? noop : this.save;
+        const stateBtnText  = noChanges ? 'Нет изменений' : 'Сохранить';
+        const stateBtnClick = noChanges ? noop : this.save;
 
         let checking_date = null;
         let registration_number = null; 
@@ -171,7 +206,167 @@ class SidePanel extends Component {
         const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
         const {Provider} = React.createContext({ color: 'white' });
 
-        return (
+        let addrH = (<form>
+            <hr className="txt-hr my6"/>
+            <h4 className='ap-h4'>Адрес</h4>
+            </form>);
+
+        const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
+    
+        let fullAddr = {};
+        let fl = false;
+        let line_adr = '';
+        let claim_id;
+        let files = [];
+
+        if (formData) {
+          fl       = formData.get('zajav_lic')|| false;
+          line_adr = formData.get('line_adr') || '';
+          files = formData.get('files') || [];
+          fullAddr = _.pick(formData.toJS(), [
+            'cdr_address_id', 
+            'dom', 
+            'korpus', 
+            'kvart',
+            'line_adr', 
+            'city_id', 
+            'pindex', 
+            'rayon_id', 
+            'region', 
+            'str', 
+            'street_id']);
+          claim_id = formData.get('id') || ''; 
+          //debugger;
+          //testGetFile(this.props.sid, claim_id);
+        }
+
+        const right = 'general_super';
+
+        let CONTENT = (<div style={{fontFamily:'monospace',width: '800px'}}>
+───────────────────────────────────────────────────────────────
+───────────────████████────────────────────────────────────────
+──────────────███▄███████──────────────────────────────────────
+──────────────███████████──────────────────────────────────────
+──────────────███████████──────────────────────────────────────
+──────────────██████───────────────────────────────────────────
+──────────────█████████────────────────────────────────────────
+────█───────███████────────────────────────────────────────────
+────██────████████████───────────── Недостаточно прав ─────────
+────███──██████████──█────────── для просмотра обращения───────
+────███████████████────────────────────────────────────────────
+────███████████████────────────────────────────────────────────
+─────█████████████─────────────────────────────────────────────
+──────███████████──────────────────────────────────────────────
+────────████████───────────────────────────────────────────────
+─────────███──██───────────────────────────────────────────────
+─────────██────█───────────────────────────────────────────────
+─────────█─────█───────────────────────────────────────────────
+─────────██────██──────────────────────────────────────────────
+───────────────────────────────────────────────────────────────
+        </div>); //
+
+        const reloadRow = this.reloadRow;
+        const P = {noChanges,reloadRow};
+
+         const [head,tail] = right.split('_');
+    if (head=='office'){
+      if (tail=='clerk'){
+         CONTENT = (<React.Fragment>
+            <BasicData {...P} disabled={true}/>
+            <ClaimantData {...P} disabled={true}/>
+             {addrH}
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+            <OrganizationsData {...P} disabled={true}/>
+            <SummaryData {...P} disabled={true}/>
+          </React.Fragment>); //
+      } else if (tail=='response') {
+        CONTENT = ( <TopicsData reloadRow={this.reloadRow}   responseMode={true} />); //
+      } else if (tail=='chief') {
+        CONTENT = (<React.Fragment>
+            <BasicData />
+            <ClaimantData />
+            {addrH}
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}  />
+            <OrganizationsData />
+            <SummaryData />
+          </React.Fragment>); //
+      }
+    } else if (head=='department'){
+      if (tail=='admin'){
+         CONTENT = (<React.Fragment>
+              <BasicData disabled={true}/>
+              <ClaimantData disabled={true}/>
+              {addrH}
+              <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+              <OrganizationsData disabled={true}/>
+              <SummaryData disabled={true}/>
+              <TopicsData reloadRow={this.reloadRow}   adminMode={true} />
+            </React.Fragment>); //
+      } else if (tail=='clerk'){
+         CONTENT = (<React.Fragment>
+              <TopicsData reloadRow={this.reloadRow}   />
+              <IshDocsData reloadRow={this.reloadRow} />
+              <DocsLink reloadRow={this.reloadRow} />
+             </React.Fragment>); //
+      } else if (tail=='verifier'){
+         CONTENT = (<React.Fragment>
+              <TopicsData reloadRow={this.reloadRow}   disabled={true} />
+              <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+              <DocsLink reloadRow={this.reloadRow} disabled={true} />
+             </React.Fragment>); //
+      } else if (tail=='chief'){
+         CONTENT = (<React.Fragment>
+              <TopicsData reloadRow={this.reloadRow}   />
+              <IshDocsData reloadRow={this.reloadRow} />
+              <DocsLink reloadRow={this.reloadRow} />
+             </React.Fragment>); //
+      }
+    } else if (head=='archive'){
+      if (tail=='clerk'){
+        CONTENT = <ArchiveData/>
+      } else if (tail=='chief'){
+        CONTENT = (<React.Fragment>
+                      <BasicData disabled={true}/>
+                      <ClaimantData disabled={true}/>
+                      <TopicsData reloadRow={this.reloadRow}   disabled={true} />
+                      <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+                      <DocsLink reloadRow={this.reloadRow} disabled={true} />
+                      <ArchiveData/>
+                   </React.Fragment>); //
+      }
+    } else if (head=='general'){
+      if (tail=='observer'){
+          CONTENT = (<React.Fragment>
+            <BasicData disabled={true}/>
+            <ClaimantData disabled={true}/>
+            {addrH}
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
+            <OrganizationsData disabled={true}/>
+            <SummaryData disabled={true}/>
+            <TopicsData reloadRow={this.reloadRow}   disabled={true}/>
+            <IshDocsData reloadRow={this.reloadRow} disabled={true} />
+            <DocsLink reloadRow={this.reloadRow} disabled={true}/>
+            <PlusDocs disabled={true} />
+            <ArchiveData disabled={true}/>
+          </React.Fragment>); //
+      } else if (tail=='super') {
+        CONTENT = (<React.Fragment>
+            <BasicData {...P} />
+            <ClaimantData {...P} />
+            {addrH}
+            <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
+            <OrganizationsData {...P} />
+            <SummaryData {...P} />
+            <TopicsData {...P}  />
+            <IshDocsData {...P} />
+            <DocsLink {...P}/>
+            <PlusDocs {...P} />
+            <ArchiveData {...P} />
+          </React.Fragment>); //
+      }
+    }
+
+    return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-left'>
                     <div className="el-card__header">
@@ -192,11 +387,7 @@ class SidePanel extends Component {
                             <tr>
                                 <td className='ap-input-caption w120'>{M.REG_DATE.label}</td>
                                 <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FPicker}
-                                           name={M.REG_DATE.name}
-                                           date='+'/>
+                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.REG_DATE.name} date='+'/>
                                 </td>
                             </tr>
                             </tbody>
@@ -206,53 +397,31 @@ class SidePanel extends Component {
                             <tr>
                                 <td className='ap-input-caption w120'>{M.STATUS.label}</td>
                                 <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FSelect}
-                                           name={M.STATUS.name}
-                                           dataKey={M.STATUS.key}/>
+                                    <Field disabled={disabled} className='w-full' component={FSelect} name={M.STATUS.name} dataKey={M.STATUS.key}/>
                                 </td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.DEPART.label}</td>
                                 <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FAutocomplete}
-                                           name={M.DEPART.name}
-                                           dataKey={M.DEPART.key}/>
+                                    <Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.DEPART.name} dataKey={M.DEPART.key}/>
                                 </td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.EXECUTOR.label}</td>
                                 <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FAutocomplete}
-                                           name={M.EXECUTOR.name}
-                                           dataKey={M.EXECUTOR.key}/>
+                                    <Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/>
                                 </td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
                                 <td>
-                                    <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FPicker}
-                                           name={M.CHK_DATE.name}
-                                           date='+'/>
-                                </td>
+                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.CHK_DATE.name} date='+'/>
                                 </td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.CLS_DATE.label}</td>
                                 <td>
-                                    <Field disabled={disabled}
-                                           className='w-full'
-                                           component={FPicker}
-                                           name={M.CLS_DATE.name}
-                                           date='+'/>
+                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.CLS_DATE.name} date='+'/>
                                 </td>
                             </tr>
                             </tbody>
@@ -285,11 +454,19 @@ class SidePanel extends Component {
                     </ul>
                 </div>
                 <div className='ap-side-panel-content'>
-                    {this.props.children}
+                    <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
+                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                            <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
+                                Входящее обращение
+                            </h1>
+                        </div>
+                    }>
+                    {CONTENT}
+                    </Card>
                 </div>
 
-                <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
-                    <Button disabled={noSave} type="success" size="small" plain={true} className='mr18'  onClick={stateBtnClick}>{stateBtnText}</Button>
+                <div className="ap-footer" className={`ap-footer ${noChanges ? 'hidden' : ''}`}>
+                    <Button disabled={noChanges} type="success" size="small" plain={true} className='mr18'  onClick={stateBtnClick}>{stateBtnText}</Button>
                     <Button size="small" type='text' onClick={this.cancel} >Отменить</Button>
                 </div>
             </div>
@@ -300,7 +477,9 @@ class SidePanel extends Component {
 const mapStateToProps = (state, props) => {
     const formData = state.getIn(['form', 'appeal']);
     const sessionId = state.getIn(['general','user','sessionID']);
-    return {formData,sessionId};
+    const id = state.getIn(['form','appeal','values','id']);
+    const sid = state.getIn(['general','user','sessionID']);
+    return {formData,sessionId,id,sid};
 }
 
 export default compose(

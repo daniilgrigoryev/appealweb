@@ -16,7 +16,7 @@ import mapping from '../../mapping.js'
 
 const headerTitle = 'Исходящие документы';
 
-class IshDocsData extends React.Component {
+class IshDocsData extends React.PureComponent {
 
     constructor(props){
         super(props);
@@ -34,9 +34,9 @@ class IshDocsData extends React.Component {
 
     render(){
         const props = this.props;
-        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow} = props;
+        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow,noChanges} = props;
         const fTypes = this.state.fabulaDocTypes;
-        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow};
+        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow,noChanges};
 
         return (
             <div scrollanchor='ishDoc'>

@@ -29,6 +29,7 @@ const im = (obj)=> Immutable.fromJS(obj)
 class ComboAppeal extends PureComponent {
 
   constructor(props){
+    throw 'pep'
     super(props);
     this.reloadRow = this.reloadRow.bind(this);      
     this.hashHolder = null;
@@ -50,7 +51,6 @@ class ComboAppeal extends PureComponent {
       const h = window.location.hash.split('?');
       if (h[1]=='new'){
         window.location.hash = h[0];
-        window.lolkek= 'newPg';
         setTimeout(()=>dispatch(initialize(im({}))),100);
       }
     } catch (exc) {
