@@ -78,6 +78,7 @@ const IshDocRow = React.memo(props => {
     const linkingThemes = props.categories;
     const P = value;
 
+    const prop_disabled = disabled;
     disabled = disabled || !!status_alias; // при любом из установленных статусов (ожидает проверки, ожидает подписи, подписано (ожидает отправки), отправлено) редактирование запрещено
 
     if (!expanded) { // collapsed
@@ -160,14 +161,18 @@ const IshDocRow = React.memo(props => {
         dispatch(change('appeal',field,newstatus));
     } //
 
-    const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt(null)}>Отмена ожидания проверки</Button>);
+    const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
     const await_s = <span>Ожидает подписи</span>;
-    const signd = <span>Подписано</span>;
+    const signd = (<React.Fragment> 
+        <span>Подписано</span>
+        <Button onClick={()=>setCheckSt('SENDED')} >Отправлено вручную</Button>
+    </React.Fragment>);
     const sendd = <span>Отправлено</span>;
     const nostat = !showBtn ? null : (
         <React.Fragment>
-            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку</Button>
-            <Button onClick={()=>setCheckSt('SIGNED')} >Подписать вручную</Button>
+            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку (ЭЦП)</Button>
+            <Button onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
+            <Button onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Подпись не требуется</Button>
         </React.Fragment>);
 
     const STATUS = ({
@@ -219,7 +224,7 @@ const IshDocRow = React.memo(props => {
                                     </span>
                                 </td>
                                 <td>
-                                    {disabled? null : STATUS}
+                                    {prop_disabled ? null : STATUS}
                                 </td>
                                 <td>
                                     {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }

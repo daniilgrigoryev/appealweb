@@ -98,7 +98,8 @@ class SidePanel extends Component {
         const claim_id = id;
         const x = await post('db/select', {alias, claim_id,orphan});
         dispatch(initialize(im(x.data)));
-        setTimeout(()=>(this.hashHold && this.hashHold()),500);
+        //setTimeout(()=>(this.hashHold && this.hashHold()),500);
+        setTimeout(()=>(this.curHash = this.getHash()),500);
     }
 
     componentDidMount() {
@@ -195,17 +196,18 @@ class SidePanel extends Component {
         let registration_number = null; 
         let id = null;
         let processing_stage_id = null;
+        let processing_stage_name = null;
         const values = !formData ? null : formData.get('values');
         if (values){
             checking_date = values.get('checking_date');
             registration_number = values.get('registration_number');
             id = values.get('id');
             processing_stage_id = values.get('processing_stage_id');
+            processing_stage_name = values.get('processing_stage_name');
         }
 
         const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
-        const {Provider} = React.createContext({ color: 'white' });
-
+        
         let addrH = (<form>
             <hr className="txt-hr my6"/>
             <h4 className='ap-h4'>Адрес</h4>
@@ -366,6 +368,71 @@ class SidePanel extends Component {
       }
     }
 
+    const nextStatus = async (next_status)=>{
+        if (!noChanges){
+            messageSet('Невозможно изменить статус обращения при наличии несохраненных изменений','error');
+            return;
+        }
+
+        const claim_id = id;
+        const orphan = true;
+       
+        try{
+            const resp = await post("db/select",{alias : 'CLAIM_NEXT_STATUS', claim_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
+            const {data,error} = resp;
+            if (error || data==''){
+              throw (error || 'Не удалось получить данные');
+            } else {
+              messageSet('Статус обращения изменен','success');              
+            }
+        } catch (exc) {
+            console.error('claim status change error:', exc);
+            messageSet('Не удалось изменить статус обращения','error');
+        }
+
+        reloadRow();
+    }
+
+    const STAGE = processing_stage_name;
+    let STATUS = <button onClick={()=>nextStatus('STAT_PREPARED')}>Черновик. Сохранить</button>; //
+
+    if (STAGE=='STAT_PREPARED'){
+      STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Ожидает регистрации. Зарегистрировать</button>
+          <button onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_REGISTERED'){
+      // ! переключение в "У исполнителя" происходит автоматически при начале работы над любой темой в Обращении
+      STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_REJECTED')}>Зарегистрировано. Отклонить.</button>
+        </React.Fragment>);//
+    } else if (STAGE=='STAT_RETURNED_TO_REGISTRATOR'){
+      STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Возвращено регистратору. Подтвердить исправления</button>
+          <button onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_MOVED_TO_EXECUTOR'){
+       STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_RESPONSE_PREPARED'){
+      STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_SENT')}>Подготовлен ответ. Подтвердить исполнение обращения</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_SENT'){
+       STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_ARCHIVED')}>Исполнено. Подтвердить передачу в архив</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_REJECTED'){
+      STATUS = (<React.Fragment>
+          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Отклонено. Вернуть в регистрацию</button>
+      </React.Fragment>);//
+    } else if (STAGE=='STAT_ARCHIVED'){
+       STATUS = (<React.Fragment>
+          <button>Архив</button>
+      </React.Fragment>);//
+    }
+
     return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-left'>
@@ -396,33 +463,23 @@ class SidePanel extends Component {
                             <tbody>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.STATUS.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FSelect} name={M.STATUS.name} dataKey={M.STATUS.key}/>
-                                </td>
+                                <td>{STATUS}</td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.DEPART.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.DEPART.name} dataKey={M.DEPART.key}/>
-                                </td>
+                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.DEPART.name} dataKey={M.DEPART.key}/></td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.EXECUTOR.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/>
-                                </td>
+                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/></td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.CHK_DATE.name} date='+'/>
-                                </td>
+                                <td><Field disabled={disabled} className='w-full' component={FPicker} name={M.CHK_DATE.name} date='+'/></td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.CLS_DATE.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.CLS_DATE.name} date='+'/>
-                                </td>
+                                <td><Field disabled={disabled} className='w-full' component={FPicker} name={M.CLS_DATE.name} date='+'/></td>
                             </tr>
                             </tbody>
                         </table>

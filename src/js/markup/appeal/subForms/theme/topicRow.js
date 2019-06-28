@@ -218,17 +218,21 @@ class TopicRow extends React.PureComponent {
             if (!noChanges){
                 messageSet('Для изменения статуса все изменения должны быть зафиксированы в БД','error');
                 return;
-            } 
-
-            const resp = await post("db/select",{alias : 'THEME_NEXT_STATUS', theme_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
-
-            const {data,error} = resp;
-            if (error || data==''){
-                console.error('linkDecree error:', error || 'No suitable record found');
-                messageSet('Не удалось изменить статус темы','error');
-            } else {
-                messageSet('Статус темы изменен','success');              
             }
+
+            try{
+                const resp = await post("db/select",{alias : 'THEME_NEXT_STATUS', theme_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
+                const {data,error} = resp;
+                if (error || data==''){
+                    throw (error || 'Не удалось получить данные');
+                } else {
+                    messageSet('Статус темы изменен','success');              
+                }
+            } catch (exc){
+                console.error('topic status change error:', exc);
+                messageSet('Не удалось изменить статус темы','error');
+            }
+
             reloadRow(); 
         }
 
@@ -246,7 +250,7 @@ class TopicRow extends React.PureComponent {
                 STATUS_BTN = (<button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
             } else if (stat_wait_post){
                // STATUS_BTN = (<button onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
-               STATUS_BTN = (<button>Ожидает отправки</button>);/// 
+               STATUS_BTN = (<button onClick={()=>statusChanger('COMMIT')} >Ожидает отправки</button>);/// 
             } else if (stat_done){
                 STATUS_BTN = (<button>Исполнено</button>);//
             }

@@ -79,8 +79,7 @@ const   setMode  = (newMode)=>{ MODE = newMode;}
 const	setSid   = (newSid) =>{ sessionId = newSid;}
 const	eraseSid = ()=>{ sessionId = null; }
 
-const	out = (res) => {
-	
+const	out = (res) => {	
     let filename = (res.headers['content-type'] || "").replace("attachment; filename=", "");
     filename = decodeURI(filename);
   	const hasWarns = res.headers['content-language'];
