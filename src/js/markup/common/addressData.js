@@ -111,9 +111,7 @@ class AddressData extends React.Component {
                 ? (<tr>
                         <td colSpan='2'>
                             {disabled ? null : 
-                                <Button size="small" icon="plus" type="success" plain={true}
-                                    className="flex-parent mb18"
-                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
+                                <Button size="small" icon="plus" plain={true} className="flex-parent" title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
                         </td>
                         <td>{placeholder}</td>
 
@@ -181,14 +179,6 @@ class AddressData extends React.Component {
                             <EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} />
                         </div>
                     </div>
-
-                    
-
-
-
-
-  
-
 
                     {false && 
                     <React.Fragment>

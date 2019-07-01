@@ -179,12 +179,13 @@
 }
 
 .el-button {
-  text-transform: uppercase;
   transition: background-color 200ms linear;
+  font-size: 14px;
+  border-radius: 6px;
 
   &.el-button--default {
-    border-color: $color-blue !important;
-    color: $color-blue !important;
+    border: 1px solid #CCCCCC !important;
+    color: #797979 !important;
   }
 
   &.el-button--default:hover {
@@ -201,6 +202,9 @@
 
   span:empty {
     display: none;
+  }
+  [class^=el-icon-]{
+    margin-right: 6px;
   }
 }
 

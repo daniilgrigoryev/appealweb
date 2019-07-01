@@ -325,7 +325,8 @@ form > .ap-h4{
     li {
       padding-left: 20px;
       border-left: 4px solid transparent;
-
+      color: #505A6E;
+      font-size: 14px;
       &:hover, &.active {
         color: $color-blue;
         border-left-color: $color-blue;
