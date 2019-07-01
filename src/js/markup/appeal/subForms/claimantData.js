@@ -36,109 +36,82 @@ class ClaimantData extends React.Component {
          const ZAJAV_SOURCE = isFL
             ? (
                 <React.Fragment>
-                    <Layout.Row gutter="0">
-                        <Layout.Col xs="24" md="24" lg="12">
-                            <table className='w-full'>
-                                <tbody>
-                                <tr key='flSex' className='txt-nowrap'>
-                                    <td className='ap-input-caption'>{M.SEX.label}</td>
-                                    <td colSpan='3' className='pb12'>
-                                   <span>
-                                        <Field disabled={disabled} name={M.SEX.name} component={FRadio}
-                                               options={sexOptions}/>
-                                   </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </Layout.Col>
-                    </Layout.Row>
-
-                    <Layout.Row gutter="0">
-                        <Layout.Col xs="24" md="24" lg="12">
-                            <table className='w-full'>
-                                <tbody>
-                                <tr key='flFam'>
-                                    <td className='ap-input-caption'>{M.FAM.label}</td>
-                                    <td colSpan='3'><Field disabled={disabled} name={M.FAM.name} component={FInput}/>
-                                    </td>
-                                </tr>
-                                <tr key='flName'>
-                                    <td className='ap-input-caption'>{M.NAME.label}</td>
-                                    <td colSpan='3'><Field disabled={disabled} name={M.NAME.name} component={FInput}/>
-                                    </td>
-                                </tr>
-                                <tr key='flSurname'>
-                                    <td className='ap-input-caption'>{M.SURNAME.label}</td>
-                                    <td colSpan='3'><Field disabled={disabled} name={M.SURNAME.name}
-                                                           component={FInput}/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </Layout.Col>
-                        <Layout.Col xs="24" md="24" lg="12">
-                            <table className='w-full'>
-                                <tbody>
-                                <tr>
-                                    <td className='ap-input-caption'>{M.PHONE.label}</td>
-                                    <td colSpan='3'><Field disabled={disabled} name={M.PHONE.name}
-                                                           component={FInput} mask={phoneMask}/></td>
-                                </tr>
-                                <tr>
-                                    <td className='ap-input-caption'>{M.EMAIL.label}</td>
-                                    <td colSpan='3'><Field disabled={disabled} name={M.EMAIL.name}
-                                                           component={FInput}/></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </Layout.Col>
-                    </Layout.Row>
+                    <div className="item item--left" key='flSex'>
+                        <small className="label">{M.SEX.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.SEX.name} component={FRadio} options={sexOptions}/>
+                        </div>
+                    </div>
+                    <div className="item item--right" key='flFam'>
+                        <small className="label">{M.FAM.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.FAM.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--right" key='flName'>
+                        <small className="label">{M.NAME.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.NAME.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--right" key='flSurname'>
+                        <small className="label">{M.SURNAME.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.SURNAME.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--left">
+                        <small className="label">{M.PHONE.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.PHONE.name} component={FInput} mask={phoneMask}/>
+                        </div>
+                    </div>
+                    <div className="item item--left">
+                        <small className="label">{M.EMAIL.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.EMAIL.name} component={FInput}/>
+                        </div>
+                    </div>
                 </React.Fragment>
             )
-            : (<Layout.Row gutter="0">
-                    <Layout.Col xs="24" md="24" lg="10">
-                        <table className='w-full'>
-                            <tbody>
-                            <tr key='ulOrgName'>
-                                <td className='ap-input-caption'>{M.ORG_NAME.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.ORG_NAME.name} component={FInput}/>
-                                </td>
-                            </tr>
-                            <tr key='ulIshNum'>
-                                <td className='ap-input-caption'>{M.ISH_NUMBER.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.ISH_NUMBER.name} component={FInput}/>
-                                </td>
-                            </tr>
-                            <tr key='ulIshDt'>
-                                <td className='ap-input-caption'>{M.ISH_DATE.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.ISH_DATE.name} component={FPicker}
-                                                       datepicker='+'/></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </Layout.Col>
-                    <Layout.Col xs="24" md="12" lg="10">
-                        <table className='w-full'>
-                            <tbody>
-                            <tr key='ulINN'>
-                                <td className='ap-input-caption'>{M.INN.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.INN.name} component={FInput}/></td>
-                            </tr>
-                            <tr key='ulKPP'>
-                                <td className='ap-input-caption'>{M.KPP.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.KPP.name} component={FInput}/></td>
-                            </tr>
-
-                            <tr key='ulPodpis'>
-                                <td className='ap-input-caption'>{M.PODPIS.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} name={M.PODPIS.name} component={FInput}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </Layout.Col>
-                </Layout.Row>
+            : (<React.Fragment>
+                    <div className="item item--left" key='ulOrgName'>
+                        <small className="label">{M.ORG_NAME.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.ORG_NAME.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--left" key='ulIshNum'>
+                        <small className="label">{M.ISH_NUMBER.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.ISH_NUMBER.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--left" key='ulIshDt'>
+                        <small className="label">{M.ISH_DATE.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.ISH_DATE.name} component={FPicker} datepicker='+'/>
+                        </div>
+                    </div>
+                    <div className="item item--right" key='ulINN'>
+                        <small className="label">{M.INN.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.INN.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--righ" key='ulKPP'>
+                        <small className="label">{M.KPP.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.KPP.name} component={FInput}/>
+                        </div>
+                    </div>
+                    <div className="item item--righ" key='ulPodpis'>
+                        <small className="label">{M.PODPIS.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} name={M.PODPIS.name} component={FInput}/>
+                        </div>
+                    </div>
+                </React.Fragment>
             );
 //
 
@@ -155,87 +128,63 @@ class ClaimantData extends React.Component {
 //
 
         const PREDST = isPred ?
-            <Layout.Row gutter="0">
-                <Layout.Col xs="24" md="12" lg="12">
-                    <table className='w-full'>
-                        <tbody>
-                        <tr>
-                            <td className='ap-input-caption'>{M.PRED_SEX.label}</td>
-                            <td colSpan='3' className='pb12'><Field disabled={disabled} name={M.PRED_SEX.name}
-                                                                    component={FRadio}
-                                                                    options={sexOptions}/></td>
-                        </tr>
-                        <tr key='flPredFam'>
-                            <td className='ap-input-caption'>{M.PRED_FAM.label}</td>
-                            <td colSpan='3'><Field disabled={disabled} name={M.PRED_FAM.name} component={FInput}/></td>
-                        </tr>
-                        <tr key='flPredName'>
-                            <td className='ap-input-caption'>{M.PRED_NAME.label}</td>
-                            <td colSpan='3'><Field disabled={disabled} name={M.PRED_NAME.name} component={FInput}/></td>
-                        </tr>
-                        <tr key='flPredSurname'>
-                            <td className='ap-input-caption'>{M.PRED_SURNAME.label}</td>
-                            <td colSpan='3'><Field disabled={disabled} name={M.PRED_SURNAME.name} component={FInput}/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </Layout.Col>
-            </Layout.Row>
+            <React.Fragment>
+                <div className="item item--left">
+                    <small className="label">{M.PRED_SEX.label}</small>
+                    <div className="value">
+                        <Field disabled={disabled} name={M.PRED_SEX.name} component={FRadio} options={sexOptions}/>
+                    </div>
+                </div>
+                <div className="item item--left" key='flPredFam'>
+                    <small className="label">{M.PRED_FAM.label}</small>
+                    <div className="value">
+                        <Field disabled={disabled} name={M.PRED_FAM.name} component={FInput}/>
+                    </div>
+                </div>
+                <div className="item item--left" key='flPredName'>
+                    <small className="label">{M.PRED_NAME.label}</small>
+                    <div className="value">
+                        <Field disabled={disabled} name={M.PRED_NAME.name} component={FInput}/>
+                    </div>
+                </div>
+                <div className="item item--left" key='flPredSurname'>
+                    <small className="label">{M.PRED_NAME.label}</small>
+                    <div className="value">
+                        <Field disabled={disabled} name={M.PRED_SURNAME.name} component={FInput}/>
+                    </div>
+                </div>
+            </React.Fragment>
             : null;
 
         return (
             <div scrollanchor='claimant'>
-                <Card className="box-card border-b--0" header={
-                    <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                        <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                            Заявитель
-                        </h3>
+                <Card className="box-card sectionCard" header={
+                    <div className='headline'>
+                        <h3>Заявитель</h3>
                     </div>
                 }
-                bodyStyle={{'paddingBottom': 0}}
+                // bodyStyle={{'paddingBottom': 0}}
                 >
-                    <Layout.Row gutter="20">
-                        <Layout.Col span="24">
-                            <form className='ml0' onSubmit={handleSubmit}>
-                                <table className='mb12'>
-                                    <tbody>
-                                    <tr key='flSurname'>
-                                        <td className='ap-input-caption'>Тип лица</td>
-                                        <td>
-                                            <Field disabled={disabled}
-                                                   name={M.ZAJAV_LIC.name}
-                                                   component={FRadio}
-                                                   options={zajavOptions}/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                    <form className="form" onSubmit={handleSubmit}>
+                        <div className="form-container">
+                            <div className="wrap">
+                                <div className="item" key='flSurname'>
+                                    <small className="label">Тип лица</small>
+                                    <div className="value">
+                                        <Field disabled={disabled} name={M.ZAJAV_LIC.name} component={FRadio} options={zajavOptions}/>
+                                    </div>
+                                </div>
                                 {ZAJAV_SOURCE}
-
-                                <table>
-                                    <tbody>
-                                    <tr key='flPred'>
-                                        <td colSpan='3'>
-                                            <h4 className='ap-h4'>
-                                                {M.PRED.label}
-
-                                                <Field disabled={disabled}
-                                                       name={M.PRED.name}
-                                                       component={FCheckbox}
-                                                       className='ml6'
-                                                />
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                                <div className="item item--left" key='flPred'>
+                                    <small className="label">{M.PRED.label}</small>
+                                    <div className="value">
+                                        <Field disabled={disabled} name={M.PRED.name} component={FCheckbox}/>
+                                    </div>
+                                </div>
                                 {PREDST}
-                            </form>
-                        </Layout.Col>
-                    </Layout.Row>
+                            </div>
+                        </div>
+                    </form>
                 </Card>
             </div>);
     } //

@@ -171,8 +171,13 @@ class LayoutMain extends React.Component {
                                 <Button className='block w-full align-l ml0' type="text">Третье</Button>
                             </div>
                         )}>
-                            <Button type="text" className="ap-user-menu-toggle">
-                            </Button>
+                            <div className="flex-parent flex-parent--center-cross">
+                                <Button type="text" className="ap-user-menu-toggle">
+                                </Button>
+                                <div className="user-avatar-burger"></div>
+                            </div>
+
+
                         </Popover>
                     </div>
                 </header>

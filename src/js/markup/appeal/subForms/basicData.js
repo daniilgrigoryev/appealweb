@@ -20,48 +20,41 @@ const BasicData = props => {
         <div scrollanchor='basic'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
-                    <Card className="box-card" header={
-                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                {headerTitle}
-                            </h3>
+                    <Card className="box-card sectionCard" header={
+                        <div className='headline'>
+                            <h3>{headerTitle}</h3>
                         </div>
                     }>
-                        <Layout.Row gutter="0">
-                            <Layout.Col xs="24" md="12" lg="12">
-                                <form onSubmit={handleSubmit}>
-                                    <table className='w-full'>
-                                        <tbody>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.EDO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/></td>
-                                        </tr>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.ECOO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/></td>
-                                        </tr>                                       
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </Layout.Col>
-                            <Layout.Col xs="24" md="12" lg="12">
-                                <form className='ml0' onSubmit={handleSubmit}>
-                                    <table className='w-full'>
-                                        <tbody>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.REQUEST_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name}
-                                                       dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/></td>
-                                        </tr>
-                                         <tr>
-                                            <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </Layout.Col>
-                        </Layout.Row>
+                    <form class="form"  onSubmit={handleSubmit}>
+                        <div class="form-container">
+                            <div class="wrap">
+                                <div class="item">
+                                    <small class="label">{M.EDO_NUM.label}</small>
+                                    <div class="value">
+                                        <Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <small class="label">{M.ECOO_NUM.label}</small>
+                                    <div class="value">
+                                        <Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/>  
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <small class="label">{M.REQUEST_TYPE.label}</small>
+                                    <div class="value">
+                                        <Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <small class="label">{M.SHEETS_COUNT.label}</small>
+                                    <div class="value">
+                                        <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     </Card>
                 </Layout.Col>
             </Layout.Row>

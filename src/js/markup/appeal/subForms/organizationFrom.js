@@ -47,7 +47,7 @@ export class EOrganizationFrom extends React.Component {
             <td>
                 {disabled ? null :
                     <Button size="small" type="text" onClick={rmv(i)}>
-                        <i className="el-icon-close color-red-dark"/>
+                        <i className="ico round minus"/>
                     </Button>
                 }
             </td>

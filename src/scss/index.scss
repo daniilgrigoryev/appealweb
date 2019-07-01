@@ -93,15 +93,15 @@ div.tooltipWrap {
   line-height: 1.5;
   color: $color-text-headers;
 }
-
+form > .ap-h4{
+  margin: 10px 0 20px 0;
+}
 .ap-h4 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 2;
-  margin-bottom: 10px;
-  color: $color-text-headers;
+  line-height: 100%;
+  color: #6B94C2;
   letter-spacing: 0.25px;
-  text-shadow: 1px 1px 0 white;
 }
 
 .txt-h3 {
@@ -271,16 +271,24 @@ div.tooltipWrap {
     bottom: -72px;
   }
 }
-
+.user-avatar-burger{
+  background: url("/src/images/user-avatar-burger.svg") no-repeat center;
+  height: 14px;
+  width: 13px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 .ap-user-menu-toggle {
   $size: 42px;
   width: $size;
   height: $size;
   background: url("/src/images/user.svg") no-repeat center;
   background-size: contain;
-  opacity: 0.65;
+  // opacity: 0.65;
+  filter: grayscale(80%);
+  background-color: gray;
+  border-radius: 100%;
   transition: all 100ms linear;
-
   &:hover {
     opacity: 0.85;
   }
@@ -339,3 +347,103 @@ div.tooltipWrap {
   border-top: 1px solid $color-input-border;
   border-bottom: 1px solid $color-input-border;
 }
+
+
+/* Daniil Grigoryev */
+.sectionCard{
+  .headline{
+    h3{
+      font-size: 17px;
+      color: #6B94C2;
+    }
+  }
+}
+
+
+
+.form-container{
+  max-width: 900px;
+
+  .wrap{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 17px;
+    grid-auto-flow: dense;
+
+    .item{
+      display: grid;
+      grid-template-columns: 50% 1fr;
+      align-items: center;
+      max-width: 450px;
+
+      .label{
+        font-family: 'Open Sans';
+        margin-right: 15px;
+        text-align: right;
+        font-size: 14px;
+        color: #797979;
+      }
+      .value{
+        max-width: 300px;
+      }
+    }
+    .item--full{
+      grid-column: span 2;
+      grid-template-columns: 25% 1fr;
+      max-width: inherit;
+    }
+    .item--right{
+      grid-column: 2 / 3;
+    }
+    .item--left{
+      grid-column: 1 / 2;
+    }
+  }
+}
+
+.select-container{
+  .select{
+    font-size: 16px;
+    color: #373737;
+    padding: 4px 30px 4px 7px;
+    option{
+      
+    }
+  }
+}
+
+i.ico{
+  position: relative;
+  display: block;
+  width: 25px;
+  height: 25px;
+  &.round{
+    &.minus{
+      background-image: url('/src/images/ico-round-minus.svg');
+      background-repeat: no-repeat;
+    }
+    &.plus{
+      background-image: url('/src/images/ico-round-plus.svg');
+      background-repeat: no-repeat;
+    }
+  }
+  &.minus{
+    background-image: url('/src/images/ico-minus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  
+}
+
+
+
+/*
+
+                    <div className="item">
+                        <small className="label"></small>
+                        <div className="value">
+
+                        </div>
+                    </div>
+*/

@@ -207,7 +207,6 @@ class SidePanel extends Component {
         const {Provider} = React.createContext({ color: 'white' });
 
         let addrH = (<form>
-            <hr className="txt-hr my6"/>
             <h4 className='ap-h4'>Адрес</h4>
             </form>);
 
@@ -242,7 +241,7 @@ class SidePanel extends Component {
 
         const right = 'general_super';
 
-        let CONTENT = (<div style={{fontFamily:'monospace',width: '800px'}}>
+        let CONTENT = (<div style={{fontFamily:'monospace', width: '800px', outline: '1px solid #000'}}>
 ───────────────────────────────────────────────────────────────
 ───────────────████████────────────────────────────────────────
 ──────────────███▄███████──────────────────────────────────────
@@ -274,7 +273,7 @@ class SidePanel extends Component {
          CONTENT = (<React.Fragment>
             <BasicData {...P} disabled={true}/>
             <ClaimantData {...P} disabled={true}/>
-             {addrH}
+             {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData {...P} disabled={true}/>
             <SummaryData {...P} disabled={true}/>
@@ -285,7 +284,7 @@ class SidePanel extends Component {
         CONTENT = (<React.Fragment>
             <BasicData />
             <ClaimantData />
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}  />
             <OrganizationsData />
             <SummaryData />
@@ -296,7 +295,7 @@ class SidePanel extends Component {
          CONTENT = (<React.Fragment>
               <BasicData disabled={true}/>
               <ClaimantData disabled={true}/>
-              {addrH}
+              {/* {addrH} */}
               <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
               <OrganizationsData disabled={true}/>
               <SummaryData disabled={true}/>
@@ -339,7 +338,7 @@ class SidePanel extends Component {
           CONTENT = (<React.Fragment>
             <BasicData disabled={true}/>
             <ClaimantData disabled={true}/>
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
@@ -353,7 +352,7 @@ class SidePanel extends Component {
         CONTENT = (<React.Fragment>
             <BasicData {...P} />
             <ClaimantData {...P} />
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
             <OrganizationsData {...P} />
             <SummaryData {...P} />
