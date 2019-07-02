@@ -121,61 +121,61 @@ class AddressData extends React.Component {
                     <React.Fragment>
                     <div className="item item--full">
                         <small className="label">{M.REGION.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EAutocomplete value={F[M.REGION.name]} key={F[M.REGION.name]} onChange={(val)=>this.onListChange(val,M.REGION.name)} dataKey={M.REGION.key} />
                         </div>
                     </div>
                     <div className="item item--full">
                         <small className="label">{M.RAYON.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EAutocomplete value={F['rayon_id']} key={F['rayon_id']} onChange={(val)=>this.onListChange(val,'rayon_id')} dataWhere={_.pick(F, [M.REGION.name])} dataKey={M.RAYON.key} />
                         </div>
                     </div>
                     <div className="item item--full">
                         <small className="label">{M.NPUNKT.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EAutocomplete value={F['city_id']} key={F['city_id']} onChange={(val)=>this.onListChange(val,'city_id')} dataWhere={_.pick(F, [M.REGION.name, 'rayon_id'])} dataKey={M.NPUNKT.key}  />
                         </div>
                     </div>
                     
                 
-                    <div className="item item--left">
+                    <div className="item" style={{gridColumn: '1 / span 3'}}>
                         <small className="label">{M.STREET.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EAutocomplete value={F['street_id']} key={F['street_id']} onChange={(val)=>this.onListChange(val,'street_id')} dataWhere={_.pick(F, [M.REGION.name,'rayon_id','city_id'])} dataKey={M.STREET.key}  />
                         </div>
                     </div>
                     
-                    <div className="item item--right">
+                    <div className="item item--flow" style={{gridColumn: 'auto / 5'}}>
                         <small className="label">{M.PINDEX.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EInput value={F[M.PINDEX.name]} onChange={(v)=>this.onFieldChange([M.PINDEX.name],v)} />
                         </div>
                     </div>
 
 
 
-                    <div className="item">
+                    <div className="item" style={{gridColumn: 'auto / span 1'}}>
                         <small className="label">{M.DOM.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EInput value={F[M.DOM.name]} onChange={(v)=>this.onFieldChange([M.DOM.name],v)}/>
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
                         <small className="label">{M.KORPUS.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EInput value={F[M.KORPUS.name]} onChange={(v)=>this.onFieldChange([M.KORPUS.name],v)} />
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
                         <small className="label">{M.STR.label}</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EInput value={F[M.STR.name]} onChange={(v)=>this.onFieldChange([M.STR.name],v)} />
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
                         <small className="label">Квартира/офис</small>
-                        <div className="value wmax-full">
+                        <div className="value">
                             <EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} />
                         </div>
                     </div>

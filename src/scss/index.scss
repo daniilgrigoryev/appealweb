@@ -93,9 +93,6 @@ div.tooltipWrap {
   line-height: 1.5;
   color: $color-text-headers;
 }
-form > .ap-h4{
-  margin: 10px 0 20px 0;
-}
 .ap-h4 {
   font-size: 14px;
   font-weight: 400;
@@ -361,21 +358,67 @@ form > .ap-h4{
 }
 
 
+// .ap-h4{
+//   margin: 10px 0 20px 0;
+// }
 
+.txt-middle{
+  font-size: 16px;
+}
+.color-gray-light{
+  color: #ccc;
+}
+.w130{
+  width: 130px!important;
+}
 .form-container{
-  max-width: 900px;
+  // max-width: 900px;
+  max-width: 1100px;
+  .flex-table{
+    padding-left: 190px;
+    .row{
+      display: flex;
+      align-items: center;
+      
+      .column{
+        margin: 0 15px 0 0;
+        .label{
+          color: #797979;
+          font-size: 14px;
+          line-height: 100%;
+          padding: 9px 0;
+          height: 32px;
+        }
+        .value{
+        }
+        &.column--end{
+          align-self: end;
+          margin-left: auto;
+          .value{
+            margin-top: 33px;
+          }
+        }
+      }
+    }
+  }
+
 
   .wrap{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    // grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-row-gap: 17px;
+    grid-column-gap: 17px;
     grid-auto-flow: dense;
+
 
     .item{
       display: grid;
-      grid-template-columns: 50% 1fr;
+      // grid-template-columns: minmax(210px, min-content) minmax(215px, 1fr);
+      grid-template-columns: minmax(190px, min-content) auto;
+      
       align-items: center;
-      max-width: 450px;
+      grid-column: auto / span 2;
 
       .label{
         font-family: 'Open Sans';
@@ -383,23 +426,33 @@ form > .ap-h4{
         text-align: right;
         font-size: 14px;
         color: #797979;
+        max-width: 220px;
+        min-width: 108px;
       }
       .value{
-        max-width: 300px;
-      }
+        // min-width: 320px;
+      } 
+    }
+    .item--flow{
+      grid-template-columns: min-content 1fr;
     }
     .item--full{
-      grid-column: span 2;
-      grid-template-columns: 25% 1fr;
+      grid-column: span 4;
       max-width: inherit;
+      .value{
+        min-width: 100%;
+      } 
     }
     .item--right{
-      grid-column: 2 / 3;
+      // grid-column: 2 / 3;
+      grid-column: 3 / span 2;
     }
     .item--left{
-      grid-column: 1 / 2;
+      grid-column: 1 / span 2;
     }
   }
+
+
 }
 
 .select-container{

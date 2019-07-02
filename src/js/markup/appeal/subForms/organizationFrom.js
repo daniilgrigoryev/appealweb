@@ -28,48 +28,48 @@ export class EOrganizationFrom extends React.Component {
         const {fields, disabled} = this.props;
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
-        const ROWS = fields.map((x, i) => (<tr key={i}>
-            <td>
-                <span className='inline-block mr12'>
+        const ROWS = fields.map((x, i) => (
+        <div className="row" key={i}>
+            <div className="column w300">
+                <div className="label">{M.ORG_NAME.label}</div>
+                <div className="value">
                     <Field disabled={disabled} component={FAutocomplete} name={x + M.ORG_NAME.name} value={x[M.ORG_NAME.name]}  dataKey={M.ORG_NAME.key} />
-                </span>
-            </td>
-            <td>
-                <span className='inline-block mr12'>
+                </div>
+            </div>
+            <div className="column w180">
+                <div className="label">{M.ISH_NUM.label}</div>
+                <div className="value">
                     <Field disabled={disabled} component={FInput} name={x + M.ISH_NUM.name} value={x[M.ISH_NUM.name]}/>
-                </span>
-            </td>
-            <td>
-                 <span className='inline-block mr12'>
-                 <Field disabled={disabled} component={FPicker} name={x + M.ISH_DATE.name} value={x[M.ISH_DATE.name]} datepicker='+'/>
-                </span>
-            </td>
-            <td>
-                {disabled ? null :
-                    <Button size="small" type="text" onClick={rmv(i)}>
-                        <i className="ico round minus"/>
-                    </Button>
-                }
-            </td>
-        </tr>));
+                </div>
+            </div>
+            <div className="column w130">
+                <div className="label">{M.ISH_DATE.label}</div>
+                <div className="value">
+                    <Field disabled={disabled} component={FPicker} name={x + M.ISH_DATE.name} value={x[M.ISH_DATE.name]} datepicker='+'/>
+                </div>
+            </div>
+            <div className="column column--end">
+                <div className="value">
+                    {disabled ? null :
+                        <div>
+                            <Button className="py0" size="small" type="text" onClick={rmv(i)}>
+                                <i className="ico round minus"/>
+                            </Button>
+                            <Button className="py0" size="small" type="text" onClick={add}>
+                                <i className="ico round plus"/>
+                            </Button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>));
         //
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных организаций</p>
-                    :
-                    <table>
-                        <thead>
-                        <tr>
-                            <th className='ap-table__header'>{M.ORG_NAME.label}</th>
-                            <th className='ap-table__header'>{M.ISH_NUM.label}</th>
-                            <th className='ap-table__header'>{M.ISH_DATE.label}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {ROWS}
-                        </tbody>
-                    </table>
+                    <p className='mb18 txt-em color-gray'>Нет добавленных организаций</p>
+                    :                    
+                    <div className="flex-table">{ROWS}</div>
                 }
 
                 {disabled ? null :

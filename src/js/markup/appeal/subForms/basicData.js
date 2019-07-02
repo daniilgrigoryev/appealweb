@@ -29,6 +29,12 @@ const BasicData = props => {
                         <div class="form-container">
                             <div class="wrap">
                                 <div class="item">
+                                    <small class="label">Регистрационный номер</small>
+                                    <div class="value">
+                                        <span className="txt-middle color-gray-light">[отсутствует]</span>
+                                    </div>
+                                </div>
+                                <div class="item">
                                     <small class="label">{M.EDO_NUM.label}</small>
                                     <div class="value">
                                         <Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/>
@@ -48,7 +54,7 @@ const BasicData = props => {
                                 </div>
                                 <div class="item">
                                     <small class="label">{M.SHEETS_COUNT.label}</small>
-                                    <div class="value">
+                                    <div class="value w36">
                                         <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
                                     </div>
                                 </div>
