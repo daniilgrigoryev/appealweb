@@ -126,7 +126,8 @@ class EAutocomplete extends React.Component {
             if (typeof d[0].property === 'string' && d[0].value) {
                 dataLabels = d.map(x => x.value);
             } else {
-                dataKeyed = null; // d.map(x=>({property: x, value: x}));
+                // dataKeyed = null;
+               dataKeyed = d.map(x=>({property: x, value: x}));
             }
         }
         return {data: dataLabels, dataKeyed};
@@ -184,7 +185,10 @@ class EAutocomplete extends React.Component {
                 return row.toLowerCase().indexOf(value) > -1;
             }).length;
             if (!match) {
-                this.setState({visibleval: ''});
+                const {onChange} = this.props; 
+                this.setState({visibleval: ''},()=>{
+                    onChange && (onChange(null));
+                });
             }
         } else {
             setTimeout(() => {
