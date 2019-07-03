@@ -414,6 +414,7 @@ class SidePanel extends Component {
     } else if (STAGE=='STAT_MOVED_TO_EXECUTOR'){
        STATUS = (<React.Fragment>
           <button onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</button>
+          <button onClick={()=>nextStatus('STAT_RETURNED_TO_REGISTRATOR')}>Вернуть регистратору</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_RESPONSE_PREPARED'){
       STATUS = (<React.Fragment>

@@ -162,7 +162,7 @@ const IshDocRow = React.memo(props => {
     } //
 
     const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
-    const await_s = <span>Ожидает подписи</span>;
+    const await_s = (<Button onClick={()=>setCheckSt('REVOKE_SIGN')}>Ожидает подписи. Отказ от подписи</Button>);
     const signd = (<React.Fragment> 
         <span>Подписано</span>
         <Button onClick={()=>setCheckSt('SENDED')} >Отправлено вручную</Button>
