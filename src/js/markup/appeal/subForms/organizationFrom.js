@@ -51,14 +51,14 @@ export class EOrganizationFrom extends React.Component {
             <div className="column column--end">
                 <div className="value">
                     {disabled ? null :
-                        <div>
-                            <Button className="py0" size="small" type="text" onClick={rmv(i)}>
-                                <i className="ico round minus"/>
-                            </Button>
-                            <Button className="py0" size="small" type="text" onClick={add}>
-                                <i className="ico round plus"/>
-                            </Button>
-                        </div>
+                        <Button className="py0" size="small" type="text" onClick={rmv(i)}>
+                            <i className="ico round minus"/>
+                        </Button>
+                    }
+                    {disabled ? null : 
+                        <Button className="py0" size="small" type="text" onClick={add}>
+                            <i className="ico round plus"/>
+                        </Button>
                     }
                 </div>
             </div>
@@ -66,17 +66,17 @@ export class EOrganizationFrom extends React.Component {
         //
         return (
             <React.Fragment>
-                {!fields.length ?
-                    <p className='mb18 txt-em color-gray'>Нет добавленных организаций</p>
-                    :                    
-                    <div className="flex-table">{ROWS}</div>
+                {!fields.length 
+                    ? <p className='my6 txt-em color-gray align-center'>Нет добавленных организаций</p>
+                    : <div className="flex-table">{ROWS}</div>
                 }
 
-                {disabled ? null :
-                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
-                            className="flex-parent mb18"
+                {disabled || fields.length ? null :
+                    <Button size="small" icon="plus" plain={true} onClick={add}
+                            className="mx-auto my6 block"
                             title='Добавить тему'>Добавить</Button>
                 }
+
             </React.Fragment>
         )
     }

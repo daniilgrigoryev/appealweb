@@ -23,24 +23,20 @@ const SummaryData = props => {
     
     return (
         <div scrollanchor='summary'>
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card border-b--0" header={
-                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>{headerTitle}</h3>
-                        </div>
-                    } bodyStyle={{'paddingBottom': 0}}>
+                <Card className="box-card sectionCard" header={
+                    <div className='headline'>
+                        <h3>{headerTitle}</h3>
+                    </div>
+                }>
+                      <div className="form-container">
                         <form onSubmit={handleSubmit}>
                             <FieldArray component={EQuestionList} name='questions' disabled={disabled}/>
-
-                            <hr className='txt-hr my18'/>
 
                             <h4 className='ap-h4'>Постановления</h4>
                             <FieldArray component={EApnList} name='apn_list' disabled={disabled}/>
                         </form>
-                    </Card>
-                </Layout.Col>
-            </Layout.Row>
+                      </div>
+                </Card>
         </div>
     )
 } //

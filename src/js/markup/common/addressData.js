@@ -108,14 +108,13 @@ class AddressData extends React.Component {
         const placeholder = children || line_adr || '';     
         
         const ADDRESS = this.state.isStr
-                ? (<tr>
-                        <td colSpan='2'>
-                            {disabled ? null : 
-                                <Button size="small" icon="plus" plain={true} className="flex-parent" title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
-                        </td>
-                        <td>{placeholder}</td>
-
-                    </tr>
+                ? (<div className="item item--full flex-parent--center-main">
+                        {disabled ? null : 
+                            <Button size="small" icon="plus" 
+                                    plain={true} className="mx-auto my6 block" 
+                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>
+                        }
+                    </div>
                 )
                 : (
                     <React.Fragment>
@@ -152,9 +151,6 @@ class AddressData extends React.Component {
                             <EInput value={F[M.PINDEX.name]} onChange={(v)=>this.onFieldChange([M.PINDEX.name],v)} />
                         </div>
                     </div>
-
-
-
                     <div className="item" style={{gridColumn: 'auto / span 1'}}>
                         <small className="label">{M.DOM.label}</small>
                         <div className="value">

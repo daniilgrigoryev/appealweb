@@ -381,7 +381,7 @@ div.tooltipWrap {
       align-items: center;
       
       .column{
-        margin: 0 15px 0 0;
+        margin: 5px 15px 5px 0;
         .label{
           color: #797979;
           font-size: 14px;
@@ -428,6 +428,15 @@ div.tooltipWrap {
         color: #797979;
         max-width: 220px;
         min-width: 108px;
+
+        // span{
+        //   position: absolute;
+        //   right: 0px;
+        //   width: 190px;
+        //   transform: scale;
+        //   top: 50%;
+        //   transform: translateY(-50%);            
+        // }
       }
       .value{
         // min-width: 320px;
@@ -479,6 +488,11 @@ i.ico{
     &.plus{
       background-image: url('/src/images/ico-round-plus.svg');
       background-repeat: no-repeat;
+    }
+    &.info{
+      background-image: url('/src/images/ico-round-info.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
     }
   }
   &.minus{

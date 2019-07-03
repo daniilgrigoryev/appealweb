@@ -151,6 +151,9 @@ input, textarea, .p-autocomplete{
 }
 
 .p-autocomplete-panel {
+  min-width: auto;
+  width: max-content;
+  max-width: 500px;
   .p-autocomplete-list-item {
     color: $color-input-text !important;
     padding: 3px 7px!important;
