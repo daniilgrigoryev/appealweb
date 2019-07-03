@@ -1,6 +1,10 @@
 import * as AJ from './ajax.js'
 
+<<<<<<< HEAD
 const MODE = 'DEV_47'
+=======
+const MODE = 'DEV_97'
+>>>>>>> origin/R23509
 
 const URLS = {
 	'DESIGN' : 'DESIGN',

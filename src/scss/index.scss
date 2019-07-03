@@ -252,6 +252,12 @@ div.tooltipWrap {
   border: 1px solid rgba($color-text-headers, 0.2);
 }
 
+.cutted-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
 // Page Footer
 .ap-footer {
   background: white;
