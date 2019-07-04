@@ -31,10 +31,9 @@ const SummaryData = props => {
                         </div>
                     } bodyStyle={{'paddingBottom': 0}}>
                         <form onSubmit={handleSubmit}>
+                            <h4 className='ap-h4'>Тематики</h4>
                             <FieldArray component={EQuestionList} name='questions' disabled={disabled}/>
-
                             <hr className='txt-hr my18'/>
-
                             <h4 className='ap-h4'>Постановления</h4>
                             <FieldArray component={EApnList} name='apn_list' disabled={disabled}/>
                         </form>
