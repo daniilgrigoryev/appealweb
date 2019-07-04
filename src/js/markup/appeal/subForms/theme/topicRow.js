@@ -264,7 +264,7 @@ class TopicRow extends React.PureComponent {
                 <tr>
                     <td colSpan='6'>
                         <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
-                            <table>{/* className='wmax600' */}
+                            <table>
                                 <tbody>
                                 <tr>
                                     <td>
@@ -421,8 +421,12 @@ class TopicRow extends React.PureComponent {
                                             )}
                                             {cif(M.DESISION_MAKER.name,
                                                 (<tr>
-                                                    <td className='ap-input-caption'>{M.DESISION_MAKER.label}</td>
+                                                    <td className='ap-input-caption dog'>{M.DESISION_MAKER.label}</td>
                                                     <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} />
+                                                    </td>
+                                                    <td className="w120">
+                                                        <h5 className='ap-h5 inline-block mx12'>И. О</h5>
+                                                        <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
                                                     </td>
                                                 </tr>)
                                             )}
