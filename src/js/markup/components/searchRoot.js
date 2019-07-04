@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom'
-import { Portal } from 'react-portal';
 import {EInput} from './finput.js'
 import {ESelect} from './select.js'
 import {EPicker} from './picker.js'
@@ -8,6 +6,7 @@ import {ECheckbox} from './checkbox.js'
 import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {messageSet} from '../../actions/common.js'
+import positions from 'positions'
 
 import  '../../../scss/searchRoot.scss'
 
@@ -67,7 +66,7 @@ class SearchRoot extends React.Component {
   
   constructor(props){
   	super(props);
-  
+
     this.scrollElement = null;
   	this.state = {
       root :[], 
@@ -90,12 +89,17 @@ class SearchRoot extends React.Component {
     this.changeLoadPort      = this.changeLoadPort.bind(this);
     this.setDefaultCondition = this.setDefaultCondition.bind(this);
     this.deleteCondition     = this.deleteCondition.bind(this);
+    this.removeAll           = this.removeAll.bind(this);
    }
 
    componentDidMount(){
-      const {setGetter} = this.props;
+      const {setGetter, setRemover} = this.props;
       if (typeof setGetter == 'function'){
         setGetter(()=>(this.state.root));
+      }
+
+      if (typeof setRemover == 'function') {
+        setRemover(this.removeAll);
       }
       const conditions = this.getConditions();
       const defaultConditionKey = this.getDefaultConditionKey();
@@ -123,6 +127,15 @@ class SearchRoot extends React.Component {
           conditionName = '';
       }
       this.setState({showSavePort, showLoadPort, conditionName, root});
+   }
+
+   removeAll() {
+    this.setState({
+      showSavePort : false,
+      showLoadPort : false,
+      conditionName : '',
+      root : []
+    });
    }
 
    add(fieldLabel){
@@ -267,7 +280,6 @@ class SearchRoot extends React.Component {
     retPort() {
       const {loadCondition, changeLoadPort, saveCondition, changeSavePort, setDefaultCondition, deleteCondition, setName} = this;
       const {conditionName, conditionsLables, showLoadPort, showSavePort, defCondName} = this.state;
-
       const notDefaultCondition = !defCondName || conditionName != defCondName
   
       if (showLoadPort || showSavePort) {
@@ -284,8 +296,9 @@ class SearchRoot extends React.Component {
               <td><Button type="primary" onClick={saveCondition}>Сохранить</Button></td>
           </React.Fragment>); //
 
-        return ReactDOM.createPortal(
-          <table className={showLoadPort ? 'loadTable' : 'saveTable'}>
+        return(
+          <div className = 'searchTable'>
+          <table>
             <tbody>
               <tr>
                 {INNER}
@@ -294,35 +307,38 @@ class SearchRoot extends React.Component {
                 </Button></td>
               </tr>
             </tbody>
-          </table>,
-        document.body); //
+          </table>
+        </div>);
       }
-      return null;
+     return null;//
     }
   
     render() {
     	const {change, remove, add, changeSavePort, changeLoadPort} = this;
     	const {root} = this.state;
       const {fields} = this.props;
+      
       const showSaveBtn = root && !_.isEmpty(root);
 
       let ADD = fields.map(x=><option key={x.label} value={x.label}>{x.label}</option>);
       ADD = [<option key='000' value='000'>Добавить поле</option>,...ADD]; //
 
       const showPort = this.retPort();
-      
+
       return (
         <React.Fragment>
           <div className="items-wrap h240 scroll-styled scroll-auto" ref={el => (this.scrollElement = el) }>
             {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
           </div>
-          <div className="select-container wmax240 mt12">
+          <div className="searchCont">
+          <div className="select-container wmax240">
             <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
             <div className='select-arrow'></div>
           </div> 
           <Button type="primary" onClick={changeLoadPort}>Загрузить условие</Button>
           {showSaveBtn && <Button type="primary" onClick={changeSavePort}>Сохранить условие</Button>}
           {showPort}
+          </div>
         </React.Fragment>
       );//
     }
