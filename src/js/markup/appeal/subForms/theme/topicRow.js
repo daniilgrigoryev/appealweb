@@ -157,8 +157,7 @@ class TopicRow extends React.PureComponent {
         const numberRuling = P.get(M.POST_N.name);
 
         if (!expanded) {
-            const collapsed = (
-                <React.Fragment key={id} >
+            return (<React.Fragment key={id} >
                     <tr>
                         <td>
                             <span className='ap-table-list-number mr12'>{ind + 1}</span>
@@ -185,7 +184,7 @@ class TopicRow extends React.PureComponent {
                             <hr className='txt-hr my18'/>
                         </td>
                     </tr>
-                </React.Fragment>;
+                </React.Fragment>);
         } //
 
         const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
