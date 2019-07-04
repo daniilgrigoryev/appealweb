@@ -84,11 +84,17 @@ class LetterExplorer extends React.Component {
 
         const path = 'xls/fill?'; 
         const tempLink = document.createElement('a');
+
+        var event = document.createEvent('MouseEvents');
+        event.initMouseEvent(
+          'click', true, false, window, 0, 0, 0, 0, 0
+          , false, false, false, false, 0, null
+        );
+
         tempLink.href = baseUrl() + path + params.toString();
         tempLink.setAttribute('download', 'test.xls');
-        tempLink.click();
+        tempLink.dispatchEvent(event);
         setTimeout(()=>(tempLink && (tempLink.remove())),5000);
-
     }
 
     registerGetSelected(outerGetSelected) {
