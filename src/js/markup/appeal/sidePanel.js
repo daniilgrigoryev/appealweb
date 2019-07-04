@@ -228,11 +228,11 @@ class SidePanel extends Component {
         let claim_id;
         let files = [];
 
-        if (formData) {
-          fl       = formData.get('zajav_lic')|| false;
-          line_adr = formData.get('line_adr') || '';
-          files = formData.get('files') || [];
-          fullAddr = _.pick(formData.toJS(), [
+        if (values) {
+          fl       = values.get('zajav_lic')|| false;
+          line_adr = values.get('line_adr') || '';
+          files = values.get('files') || [];
+          fullAddr = _.pick(values.toJS(), [
             'cdr_address_id', 
             'dom', 
             'korpus', 
@@ -244,7 +244,7 @@ class SidePanel extends Component {
             'region', 
             'str', 
             'street_id']);
-          claim_id = formData.get('id') || ''; 
+          claim_id = values.get('id') || ''; 
           //debugger;
           //testGetFile(this.props.sid, claim_id);
         }
