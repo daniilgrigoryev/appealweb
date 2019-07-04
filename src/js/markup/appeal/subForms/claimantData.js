@@ -162,9 +162,7 @@ class ClaimantData extends React.Component {
                     <div className='headline'>
                         <h3>Заявитель</h3>
                     </div>
-                }
-                // bodyStyle={{'paddingBottom': 0}}
-                >
+                }>
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="form-container">
                             <div className="wrap">

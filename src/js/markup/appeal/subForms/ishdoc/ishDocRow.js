@@ -2,7 +2,7 @@ import React, {useRef} from 'react'
 import * as _ from 'lodash'
 import moment from 'moment'
 import { change,formValues } from 'redux-form'
-import {Button, Dropdown} from 'element-react'
+import {Button, Dropdown, Card} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../../components/finput.js'
 import {EPicker, FPicker} from '../../../components/picker.js'
@@ -100,9 +100,6 @@ const IshDocRow = React.memo(props => {
                             </Button>}
                     </td>
                 </tr>
-                <tr>
-                    <td colSpan='7'><hr className='txt-hr my6'/></td>
-                </tr>
             </React.Fragment>);
     } //
 
@@ -178,132 +175,151 @@ const IshDocRow = React.memo(props => {
     })[status_alias] || nostat; //
 
     const editable = (
-        <React.Fragment key={id + 'e1'} >
-            <tr>
-                <td colSpan='7'>
-                    <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                                </td>
-                                <td>
-                                    <span className='inline-block mr12'>
-                                        <p className='ap-table__header'>{M.DOC_TARGET.label}</p>
-                                        <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} />
-                                     </span>
-                                </td>
-                                <td>
-                                    <span className='inline-block mr12'>
-                                        <p className='ap-table__header'>{M.ISH_NUM.label}</p>
-                                        <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} />
-                                     </span>
-                                </td>
-                                <td>
-                                    <span className='inline-block mr12'>
-                                        <p className='ap-table__header'>{M.ISH_DATE.label}</p>
-                                        <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} datepicker='+'/>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span className='inline-block mr12'>
-                                        <p className='ap-table__header'>{M.PODPISAL.label}</p>
-                                        <Field disabled={true} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span className='inline-block mr12'>
-                                        <p className='ap-table__header'>Проверяющий</p>
-                                        <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
-                                    </span>
-                                </td>
-                                <td>
-                                    {disabled? null : STATUS}
-                                </td>
-                                <td>
-                                    {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
-                                </td> 
-                            </tr>
-                            <tr key={id + 'e2'}>
-                                <td colSpan='6'>
-                                    <h4 className='ap-h4'>{M.DETAIL_INF.label}</h4>
-                                    <table className='wmax600'>
-                                        <tbody>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.REL_TOPIC.label}</td>
-                                            <td colSpan='3'>
-                                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name} datapromise={tGetter} stoppe='+'/>
-                                            </td>                                            
-                                        </tr>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.DOC_VID.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  dataKey={M.DOC_VID.key}/></td>
-                                            <td className='ap-input-caption'>{M.DELIV_TYPE.label}</td>
-                                            <td><Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/></td>
-                                        </tr>
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.SHEETS_COUNT.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}   /></td>
-                                            <td className='ap-input-caption'>{M.EDO_NUM.label}</td>
-                                            <td><Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} /></td>
-                                        </tr>
+        <div className="shadow-darken10" style={{'border':'1px solid #CCC'}} key={id + 'e1'} >
+            <Card className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>Основные сведения</h3>
+                </div>
+            }>
+                <div className="form-container">
+                    <div className="wrap">
+                        <div className="item">
+                            <small className="label">{M.DOC_TARGET.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FInput} name={field + M.DOC_TARGET.name} />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.ISH_NUM.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FInput} name={field + M.ISH_NUM.name} />
+                            </div>
+                        </div>
+                        <div className="item item--right">
+                            <small className="label">{M.ISH_DATE.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FPicker} name={field + M.ISH_DATE.name} datepicker='+'/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.PODPISAL.label}</small>
+                            <div className="value">
+                                <Field disabled={true} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Проверяющий</small>
+                            <div className="value">
+                                <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
+                            </div>
+                        </div>
+                        <div className="item">
+                            {/* <small className="label"></small>
+                            <div className="value">
+                            </div> */}
+                            {disabled? null : STATUS}
+                        </div>
+                        <div className="item">
+                            {/* <small className="label"></small>
+                            <div className="value">
+                            </div> */}
+                            {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
+                        </div>
+                    </div>
+                </div>
+            </Card>
 
-                                        <tr>
-                                            <td className='ap-input-caption'>{M.COMMENT.label}</td>
-                                            <td colSpan='3'><Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/></td>
-                                        </tr>
-                                        <tr>
-                                            {false && 
-                                                (<React.Fragment>
-                                                        <td className='ap-input-caption'>Статус проекта документов</td>
-                                                        <td><Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' /></td>
-                                                    </React.Fragment>)}
-                                            
-                                            <td></td>
-                                            <td></td>
-                                            <td className='ap-input-caption'>{M.CRYPTO_SIGN.label}</td>
-                                            <td><Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} /></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
 
-                                    <hr className='txt-hr my18'/>
+            <Card className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>{M.DETAIL_INF.label}</h3>
+                </div>
+            }>
+                <div className="form-container">
+                    <div className="wrap" key={id + 'e2'}>
+                        <div className="item">
+                            <small className="label">{M.DOC_VID.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + M.DOC_VID.name}  dataKey={M.DOC_VID.key}/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.SHEETS_COUNT.label}</small>
+                            <div className="value w60">
+                                <Field disabled={disabled} component={FInput} name={field + M.SHEETS_COUNT.name}/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.REL_TOPIC.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + M.REL_TOPIC.name} datapromise={tGetter} stoppe='+'/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.DELIV_TYPE.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/>
+                            </div>
+                        </div>
 
-                                    <div className='flex-parent flex-parent--center-cross'>
-                                        <h4 className="ap-h4 mr18 mb0">{'' && M.FAB_DOC.label}</h4>
-                                        {DOC_MAKER}
-                                    </div>
-
-                                    <hr className='txt-hr my18'/>
-                                    <h4 className="ap-h4">{M.FORMED_DOCS.label}</h4>
-
-                                    <FilesStorage {...{files,setFiles,fTypes,sessionId,status_alias,disabled}} />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <hr className='txt-hr my18'/>
-                        <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross'>
-                            <Button type="text" size="small" onClick={collapse}>
-                                <span className='color-blue'>Свернуть</span>
-                            </Button>
-                            <div>
-                                {disabled ? null :
-                                    <Button type="text" onClick={onRmv}>
-                                        <i className="el-icon-delete color-red-dark"/>
-                                    </Button>}
+                        <div className="item">
+                            <small className="label">{M.EDO_NUM.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} />
+                            </div>
+                        </div>
+                        <div className="item item--left">
+                            <small className="label">{M.COMMENT.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/>
+                            </div>
+                        </div>
+                        {false && 
+                            (<div className="item">
+                                <small className="label">Статус проекта документов</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' />
+                                </div>
+                            </div>
+                        )}
+                        <div className="item item--right">
+                            <small className="label">{M.CRYPTO_SIGN.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} />
                             </div>
                         </div>
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td colSpan='7'>
-                    <hr className='txt-hr my18'/>
-                </td>
-            </tr>
-        </React.Fragment>);
+                </div>
+            </Card>
+
+
+{/* 
+            <div className='flex-parent flex-parent--center-cross'>
+                <h4 className="ap-h4 mr18 mb0">{'' && M.FAB_DOC.label}</h4>
+                {DOC_MAKER}
+            </div> */}
+
+            <Card className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>{M.FORMED_DOCS.label}</h3>
+                </div>
+            } bodyStyle={{'padding': 0}}>
+                <div className="form-container">
+                    <FilesStorage {...{files,setFiles,fTypes,sessionId,status_alias,disabled}} />
+                </div>
+            </Card>
+
+            <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross bg-white px18 py12'>
+                {disabled ? null :
+                <Button type="text" onClick={onRmv}>
+                    <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
+                </Button>}
+                <Button type="text" size="small" onClick={collapse}>
+                    <span className='color-blue'>Свернуть</span>
+                </Button>
+            </div>
+
+        </div>);
     return editable;
 }) //
 

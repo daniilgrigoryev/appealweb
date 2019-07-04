@@ -365,11 +365,53 @@ div.tooltipWrap {
 .txt-middle{
   font-size: 16px;
 }
+.border-gray{
+  border-color: #ccc;
+}
 .color-gray-light{
   color: #ccc;
 }
 .w130{
   width: 130px!important;
+}
+.fileCard{
+  width: 267px;
+  box-sizing: border-box;
+  border: 1px solid #CCCCCC;
+  border-radius: 0;
+  margin: 10px;
+  .fileCard__header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #B9B9B9;
+    height: 140px;
+    overflow: hidden;
+  }
+  .fileCard__footer{
+    padding: 10px;
+    max-height: 77px;
+    background-color: #fff;
+    position: relative;
+    .el-popover{
+      min-width: auto;
+    }
+    .action{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 20px;
+    }
+    .content{
+      width: 215px;
+    }
+    p{
+      color: #797979;
+      &.date{
+        font-size: 13px;
+      }
+    }
+  }
 }
 .form-container{
   // max-width: 900px;
@@ -464,6 +506,7 @@ div.tooltipWrap {
 
 }
 
+
 .select-container{
   .select{
     font-size: 16px;
@@ -477,7 +520,8 @@ div.tooltipWrap {
 
 i.ico{
   position: relative;
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   width: 25px;
   height: 25px;
   &.round{
@@ -500,8 +544,35 @@ i.ico{
     background-repeat: no-repeat;
     background-position: center;
   }
-
-  
+  &.upload{
+    width: 16px;
+    height: 16px;
+    background-image: url('/src/images/ico-upload.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &.download{
+    background-image: url('/src/images/ico-download.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  &.scan{
+    width: 21px;
+    height: 21px;
+    background-image: url('/src/images/ico-scan.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &.dot{
+    background-image: url('/src/images/ico-dotted.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 4px;
+    height: 20px;
+  }
 }
 
 

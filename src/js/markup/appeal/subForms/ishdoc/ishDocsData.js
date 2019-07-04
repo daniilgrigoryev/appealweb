@@ -40,22 +40,18 @@ class IshDocsData extends React.PureComponent {
 
         return (
             <div scrollanchor='ishDoc'>
-                <Layout.Row gutter="20">
-                    <Layout.Col span="24">
-                        <Card className="box-card" header={
-                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    {headerTitle}
-                                </h3>
-                            </div>
-                        }>
-                            <form onSubmit={handleSubmit}>
-                                <h4 className='ap-h4'>Проекты документов</h4>
-                                <FieldArray name='ish_docs_data' component={FIshDocList} {...p}/>
-                            </form>
-                        </Card>
-                    </Layout.Col>
-                </Layout.Row>
+                <Card className="box-card sectionCard" header={
+                    <div className="headline">
+                        <h3>{headerTitle}</h3>
+                    </div>
+                }>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-container">
+                            <h4 className='ap-h4'>Проекты документов</h4>
+                            <FieldArray name='ish_docs_data' component={FIshDocList} {...p}/>
+                        </div>
+                    </form>
+                </Card>
             </div>
         )
     }

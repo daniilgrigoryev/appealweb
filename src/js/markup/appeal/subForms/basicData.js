@@ -25,36 +25,36 @@ const BasicData = props => {
                             <h3>{headerTitle}</h3>
                         </div>
                     }>
-                    <form class="form"  onSubmit={handleSubmit}>
-                        <div class="form-container">
-                            <div class="wrap">
-                                <div class="item">
-                                    <small class="label">Регистрационный номер</small>
-                                    <div class="value">
+                    <form className="form"  onSubmit={handleSubmit}>
+                        <div className="form-container">
+                            <div className="wrap">
+                                <div className="item">
+                                    <small className="label">Регистрационный номер</small>
+                                    <div className="value">
                                         <span className="txt-middle color-gray-light">[отсутствует]</span>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <small class="label">{M.EDO_NUM.label}</small>
-                                    <div class="value">
+                                <div className="item">
+                                    <small className="label">{M.EDO_NUM.label}</small>
+                                    <div className="value">
                                         <Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <small class="label">{M.ECOO_NUM.label}</small>
-                                    <div class="value">
+                                <div className="item">
+                                    <small className="label">{M.ECOO_NUM.label}</small>
+                                    <div className="value">
                                         <Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/>  
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <small class="label">{M.REQUEST_TYPE.label}</small>
-                                    <div class="value">
+                                <div className="item">
+                                    <small className="label">{M.REQUEST_TYPE.label}</small>
+                                    <div className="value">
                                         <Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <small class="label">{M.SHEETS_COUNT.label}</small>
-                                    <div class="value w36">
+                                <div className="item">
+                                    <small className="label">{M.SHEETS_COUNT.label}</small>
+                                    <div className="value w36">
                                         <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
                                     </div>
                                 </div>

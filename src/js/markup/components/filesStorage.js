@@ -3,7 +3,7 @@ import moment from 'moment'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
-import {Button, Dropdown} from 'element-react'
+import {Button, Dropdown, Card, Popover} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {getSessionId} from '../../selectors/common.js'
 import {post,postFile,mpt} from '../../services/ajax.js'
@@ -22,9 +22,19 @@ const download = async (sessionId,row)=>{
     const path = 'storage/pull?'; 
     const tempLink = document.createElement('a');
     tempLink.href = baseUrl() + path + params.toString();
+
     tempLink.setAttribute('download', row.get('description'));
     tempLink.click();
     setTimeout(()=>(tempLink && (tempLink.remove())),5000);    
+}
+const getPath = (sessionId,row) => {
+    const params = new URLSearchParams();
+    params.append('sessionId',sessionId);
+    params.append('storage_id',row.get('storage_id'));
+    const path = 'storage/pull?'; 
+    const tempLink = document.createElement('a');
+    tempLink.href = baseUrl() + path + params.toString();
+    return tempLink.href; 
 }
 
 const FilesStorage = React.memo(function FilesStorage(props){
@@ -64,48 +74,76 @@ const FilesStorage = React.memo(function FilesStorage(props){
         setFiles(newFiles);
     }
 
+    const txtSourceAlias = (source_alias) => {
+        switch (source_alias) {
+            case 'F':   return 'Загруженный документ';
+            case 'S':   return 'Сканированный документ';
+            default:    return null;}
+    }
+
     const showCheckCB = (!status_alias) || status_alias=='AWAIT_CHECK';
 
     const DOCUMENTS = !_.size(files)
-        ?(<tr><td colSpan='2'>Нет загруженных файлов</td></tr>)
+        ?(<p className="my6 txt-em color-gray align-center">Нет загруженных файлов</p>)
         :(files.map((x,i)=>(
-            <tr key={x.get('storage_id')}>
-                <td>
-                    <span className='ap-table-list-number mr12'>{i + 1}</span>
-                </td>
-                <td className='ap-table__header' onClick={()=>download(sessionId,x)} >{x.get('description')}</td>
-                <td>
-                    {(!fTypes) ? null 
-                        : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
-                </td>
-                <td>
-                    { disabled ? null : 
-                        <Button size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                            <i className="el-icon-close color-red-dark ml18"/>
-                        </Button>   
-                    }                 
-                </td>
-                <td>
-                { (fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
-                    <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}} />
-                    : null
-                }
-                </td>
-            </tr>))); //
+            <Card className="fileCard" key={x.get('storage_id')} bodyStyle={{'padding': 0}}>
+                <div className="fileCard__header">
+                    <img src={getPath(sessionId, x)}/>
+                </div>
+                <div className="fileCard__footer">
+
+                <Popover placement="right" width="200px" trigger="hover" content={(
+                    <div className="flex-parent flex-parent--column">
+                        {disabled ? null :
+                            <Button className="py0 mb6" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                                <i className="ico round minus mr6"/>
+                                удалить
+                            </Button>
+                        }
+                        {disabled ? null : 
+                            <Button className="py0 ml0 mt6" size="small" type="text" onClick={()=>download(sessionId,x)}>
+                                <i className="ico download mr6"/>
+                                скачать
+                            </Button>
+                        }
+                    </div>
+                   
+
+                )}>
+                    <Button className="action py0" size="small" type="text">
+                        <i className="ico dot"/>
+                    </Button>
+                </Popover>
+                    <div className="content">
+                        {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
+                        {/* <p onClick={()=>download(sessionId,x)}>{x.get('description')}</p> */}
+
+                        {x.get('source_alias') ? <p className="txt-em">{txtSourceAlias(x.get('source_alias'))}</p> : null}
+
+                        {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
+                            <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
+                            : null
+                        }
+                    </div>
+
+                </div>
+            </Card>))); //
 
     return (<React.Fragment>
-                
-                {disabled ? null : <div>
-                    <Button size="small" style={{marginLeft: '10px'}} onClick={clickFile} >Загрузить документ</Button>
-                    <Button size="small" onClick={onFileScan} >Сканировать документ</Button>
+                <div className="flex-parent flex-parent--center-main flex-parent--center-cross flex-parent--wrap">{DOCUMENTS}</div>
+                {disabled ? null :
+                <div className="flex-parent flex-parent--center-main py18 border-t border-gray">
+                    <Button size="small" className="my6 block h30 py0" onClick={clickFile}>
+                        <i className="ico upload mr6"></i>
+                        <span className="align-middle">Загрузить документ</span>
+                    </Button>
+                    <Button size="small" className="my6 block h30 py0" onClick={onFileScan}>
+                        <i className="ico scan mr6"></i>
+                        <span className="align-middle">Сканировать документ</span>
+                    </Button>
                     <input type="file" name="file" style={{'display':'none'}} ref={finput} onChange={onFileLoad} />
                 </div>}
 
-                <table>
-                    <tbody>
-                        {DOCUMENTS}
-                    </tbody>
-                </table>
             </React.Fragment>)
 }) //
 

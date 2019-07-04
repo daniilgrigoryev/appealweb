@@ -117,35 +117,19 @@ class EIshDocList extends React.PureComponent {
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет исходящих документов</p>
-                    :
-                    <table key='idl1' className='w-full mb18'>
-                        <thead>
-                        <tr>
-                            <th className='ap-table__header'>№</th>
-                            <th className='ap-table__header'>{M.DOC_TARGET.label}</th>
-                            <th className='ap-table__header'>{M.ISH_NUM.label}</th>
-                            <th className='ap-table__header'>{M.ISH_DATE.label}</th>
-                            <th className='ap-table__header'>{M.PODPISAL.label}</th>
-                            <th className='ap-table__header'>{M.STATUS.label}</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {ROWS}
-                        </tbody>
-                    </table>
+                    <p className='my6 txt-em color-gray align-center'>Нет исходящих документов</p>
+                    : <div>{ROWS}</div>
                 }
 
-                <div className='flex-parent'>
+                <div className='flex-parent flex-parent--center-main'>
                     {disabled ? null :
-                        <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowZajav)}
-                                className="flex-parent mb18"
+                        <Button size="small" icon="plus" plain={true} onClick={add(getRowZajav)}
+                                className="my6 block"
                                 title='Добавить тему'>Проект документов для заявителя</Button>}
 
                     {disabled ? null :
-                        <Button size="small" icon="plus" type="success" plain={true} onClick={add(getRowOrg)}
-                                className="flex-parent mb18"
+                        <Button size="small" icon="plus" plain={true} onClick={add(getRowOrg)}
+                                className="my6 block"
                                 title='Добавить тему'>Проект документов для организации</Button>}
                 </div>
                 {DIALOG}
