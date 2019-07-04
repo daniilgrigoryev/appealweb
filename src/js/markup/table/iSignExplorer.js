@@ -36,7 +36,7 @@ const style = {textAlign: 'center', width: '8em'};
 const mapping = {
     REG_NUM: 'Регистрационный номер',
     DATE_REG: 'Дата регистрации',
-    NAME: 'Обращенец',
+    NAME: 'Заявитель',
     FP_NAME: 'Физ. лицо',
     JP_NAME: 'ЮЛ наименование',
     ISP_NAME: 'Исполнитель',
