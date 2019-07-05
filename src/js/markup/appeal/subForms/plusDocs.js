@@ -37,14 +37,12 @@ class PlusDocs extends Component {
                     <div className='headline'>
                         <h3>
                             {headerTitle}
-                        </h3>                              
+                        </h3> 
                     </div>
                 }>
                 <div className="form-container">
                     <FilesStorage {...{files,setFiles,}} disabled={disabled} />
                 </div>
-
-                
                 </Card>
             </div>);
     }

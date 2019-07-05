@@ -88,38 +88,30 @@ const FilesStorage = React.memo(function FilesStorage(props){
         :(files.map((x,i)=>(
             <Card className="fileCard" key={x.get('storage_id')} bodyStyle={{'padding': 0}}>
                 <div className="fileCard__header">
-                    <img src={getPath(sessionId, x)}/>
+                    <i className="ico defaultFile"></i>
                 </div>
                 <div className="fileCard__footer">
+                    <Popover placement="left" width="200px" trigger="click" content={(
+                            <div className="flex-parent flex-parent--column popoverContent">
+                                {disabled ? null :
+                                    <Button className="actionButton py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                                        <i className="ico round minus mr6"/> удалить
+                                    </Button>
+                                }
+                                <Button className="actionButton py0 ml0" size="small" type="text" onClick={()=>download(sessionId,x)}>
+                                    <i className="ico download mr6"/> скачать
+                                </Button>
+                            </div>
+                        )}>
+                        <Button className="action py0" size="small" type="text">
+                            <i className="ico dot"/>
+                        </Button>
+                    </Popover>
 
-                <Popover placement="right" width="200px" trigger="hover" content={(
-                    <div className="flex-parent flex-parent--column">
-                        {disabled ? null :
-                            <Button className="py0 mb6" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                                <i className="ico round minus mr6"/>
-                                удалить
-                            </Button>
-                        }
-                        {disabled ? null : 
-                            <Button className="py0 ml0 mt6" size="small" type="text" onClick={()=>download(sessionId,x)}>
-                                <i className="ico download mr6"/>
-                                скачать
-                            </Button>
-                        }
-                    </div>
-                   
-
-                )}>
-                    <Button className="action py0" size="small" type="text">
-                        <i className="ico dot"/>
-                    </Button>
-                </Popover>
                     <div className="content">
+                        <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
                         {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
-                        {/* <p onClick={()=>download(sessionId,x)}>{x.get('description')}</p> */}
-
                         {x.get('source_alias') ? <p className="txt-em">{txtSourceAlias(x.get('source_alias'))}</p> : null}
-
                         {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
                             <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
                             : null
@@ -130,7 +122,7 @@ const FilesStorage = React.memo(function FilesStorage(props){
             </Card>))); //
 
     return (<React.Fragment>
-                <div className="flex-parent flex-parent--center-main flex-parent--center-cross flex-parent--wrap">{DOCUMENTS}</div>
+                <div className="flex-parent flex-parent--center-main flex-parent--wrap">{DOCUMENTS}</div>
                 {disabled ? null :
                 <div className="flex-parent flex-parent--center-main py18 border-t border-gray">
                     <Button size="small" className="my6 block h30 py0" onClick={clickFile}>
