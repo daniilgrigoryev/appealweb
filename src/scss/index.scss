@@ -390,11 +390,15 @@ div.tooltipWrap {
   }
   .fileCard__footer{
     padding: 10px;
-    max-height: 77px;
     background-color: #fff;
     position: relative;
     .el-popover{
       min-width: auto;
+    }
+    .popoverContent{
+      .actionButton:nth-child(2){
+        margin-top: 6px;
+      }
     }
     .action{
       position: absolute;
@@ -404,6 +408,17 @@ div.tooltipWrap {
     }
     .content{
       width: 215px;
+      .fileName{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        display: inline;
+        &:hover{
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
     }
     p{
       color: #797979;
@@ -418,6 +433,10 @@ div.tooltipWrap {
   max-width: 1100px;
   .flex-table{
     padding-left: 190px;
+    @media screen and (max-width: 1450px){
+      padding-left: 0;
+    }
+
     .row{
       display: flex;
       align-items: center;
@@ -458,7 +477,9 @@ div.tooltipWrap {
       display: grid;
       // grid-template-columns: minmax(210px, min-content) minmax(215px, 1fr);
       grid-template-columns: minmax(190px, min-content) auto;
-      
+      @media screen and (max-width: 1450px){
+        grid-template-columns: minmax(100px, min-content) auto;
+      }
       align-items: center;
       grid-column: auto / span 2;
 
@@ -572,6 +593,14 @@ i.ico{
     background-size: contain;
     width: 4px;
     height: 20px;
+  }
+  &.defaultFile{
+    background-image: url('/src/images/ico-default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 67px;
+    height: 87px;
   }
 }
 
