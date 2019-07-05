@@ -413,7 +413,7 @@ div.tooltipWrap {
         white-space: nowrap;
         width: 100%;
         overflow: hidden;
-        display: inline;
+        display: inline-block;
         &:hover{
           cursor: pointer;
           text-decoration: underline;
