@@ -59,17 +59,6 @@ input, textarea{
     justify-content: start;
     // align-items: start;
   }
-
-
-  // это overrides, которые в будущем будут на всем 
-  // проекте когда придем к общему стилю для всех форм
-  input, textarea, .p-autocomplete{
-    margin-bottom: 0!important;
-  }
-  .el-input__icon{
-    top: 0px !important;
-    right: 5px;
-  }
 }
 
 
@@ -133,8 +122,4 @@ footer {
 .heart {
   color: maroon;
   font-weight: bold;
-}
-
-.p-autocomplete{
-  display: flex !important;
 }

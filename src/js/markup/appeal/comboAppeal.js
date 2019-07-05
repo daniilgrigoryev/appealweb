@@ -58,7 +58,6 @@ class ComboAppeal extends PureComponent {
     }//
 
     let addrH = <form>
-                  <hr className="txt-hr my6"/>
                   <h4 className='ap-h4'>Адрес</h4>
                  </form>
 
@@ -123,7 +122,7 @@ class ComboAppeal extends PureComponent {
          CONTENT = (<React.Fragment>
             <BasicData disabled={true}/>
             <ClaimantData disabled={true}/>
-             {addrH}
+             {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
@@ -134,7 +133,7 @@ class ComboAppeal extends PureComponent {
         CONTENT = (<React.Fragment>
             <BasicData />
             <ClaimantData />
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr}  />
             <OrganizationsData />
             <SummaryData />
@@ -145,7 +144,7 @@ class ComboAppeal extends PureComponent {
          CONTENT = (<React.Fragment>
               <BasicData disabled={true}/>
               <ClaimantData disabled={true}/>
-              {addrH}
+              {/* {addrH} */}
               <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
               <OrganizationsData disabled={true}/>
               <SummaryData disabled={true}/>
@@ -188,7 +187,7 @@ class ComboAppeal extends PureComponent {
           CONTENT = (<React.Fragment>
             <BasicData disabled={true}/>
             <ClaimantData disabled={true}/>
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} disabled={true} />
             <OrganizationsData disabled={true}/>
             <SummaryData disabled={true}/>
@@ -202,7 +201,7 @@ class ComboAppeal extends PureComponent {
         CONTENT = (<React.Fragment>
             <BasicData/>
             <ClaimantData/>
-            {addrH}
+            {/* {addrH} */}
             <AddressData key={JSON.stringify(fullAddr)} cBack={cBack} fullAddr={fullAddr} />
             <OrganizationsData/>
             <SummaryData/>

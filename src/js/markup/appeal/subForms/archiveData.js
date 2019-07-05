@@ -19,34 +19,33 @@ const ArchiveData = props => {
     
     return (
         <div scrollanchor='archive'>
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card" header={
-                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                {headerTitle}
-                            </h3>                            
+            <Card className="box-card sectionCard" header={
+                <div className="headline">
+                    <h3>
+                        {headerTitle}
+                    </h3>
+                </div>
+            }>
+                <form onSubmit={handleSubmit} className='pb24'>
+                    <div className="form-container">
+                        <h4 className="ap-h4 mb12">Сведения об архивном хранении заявления</h4>
+                        <div className="wrap">
+                            <div className="item">
+                                <small className="label">{M.TOM.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} name={M.TOM.name} component={FInput} />
+                                </div>
+                            </div>
+                            <div className="item">
+                                <small className="label">{M.SHEETS.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} name={M.SHEETS.name} component={FInput} />
+                                </div>
+                            </div>
                         </div>
-                    }>
-                        <form onSubmit={handleSubmit} className='pb24'>
-                            <h4 className="ap-h4 mr18">Сведения об архивном хранении заявления</h4>
-
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.TOM.label}</td>
-                                        <td><Field disabled={disabled} name={M.TOM.name} component={FInput} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td className='ap-input-caption'>{M.SHEETS.label}</td>
-                                        <td><Field disabled={disabled} name={M.SHEETS.name} component={FInput} /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </Card>
-                </Layout.Col>
-            </Layout.Row>
+                    </div>
+                </form>
+            </Card>
         </div>
     )
 };

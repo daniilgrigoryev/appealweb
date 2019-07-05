@@ -27,56 +27,55 @@ export class EQuestionList extends React.Component {
         const {fields, disabled} = this.props
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
-        const ROWS = fields.map((x, i) => (<tr key={i}>
-            <td>
-                <span className='ap-table-list-number mr12'>{i + 1}</span>
-            </td>
-            <td>
-                 <span className='inline-block mr12'>
-                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key}/>
-                 </span>
-            </td>
-            <td>
-                <span className='inline-block mr12'>
+        const ROWS = fields.map((x, i) => (
+
+        <div className="row" key={i}>
+            <div className="column w300">
+                <div className="label">{M.QUEST.label}</div>
+                <div className="value">
+                    <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key}/>
+                </div>
+            </div>
+            <div className="column w180">
+                <div className="label">{M.DEPART.label}</div>
+                <div className="value">
                     <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key}/>
-                </span>
-            </td>
-            <td>
-                <span className='inline-block mr12'>
+                </div>
+            </div>
+            <div className="column w130">
+                <div className="label">Дата контроля</div>
+                <div className="value">
                     <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' />
-                </span>
-            </td>
-            <td>{disabled ? null :
-                <Button size="small" type="text" onClick={rmv(i)}>
-                    <i className="el-icon-close color-red-dark"/>
-                </Button>
-            }
-            </td>
-        </tr>)); //
+                </div>
+            </div>
+            <div className="column column--end">
+                <div className="value">
+                    {disabled ? null :
+                        <Button className="py0" size="small" type="text" onClick={rmv(i)}>
+                            <i className="ico round minus"/>
+                        </Button>
+                    }
+                    {disabled ? null : 
+                        <Button className="py0" size="small" type="text" onClick={add}>
+                            <i className="ico round plus"/>
+                        </Button>
+                    }
+                </div>
+            </div>
+        </div>));
+
 
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных тематик обращения</p>
+                    <p className='my6 txt-em color-gray align-center'>Нет добавленных тематик обращения</p>
                     :
-                    <table>
-                        <thead>
-                        <tr>
-                            <th className='ap-table__header'>№</th>
-                            <th className='ap-table__header'>{M.QUEST.label}</th>
-                            <th className='ap-table__header'>{M.DEPART.label}</th>
-                            <th className='ap-table__header'>Дата контроля</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {ROWS}
-                        </tbody>
-                    </table>
+                    <div className="flex-table">{ROWS}</div>
                 }
 
-                {disabled ? null :
-                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
-                            className="flex-parent mb18"
+                {disabled || fields.length ? null :
+                    <Button size="small" icon="plus" plain={true} onClick={add}
+                            className="flex-parent my6 mx-auto block"
                             title='Добавить тему'>Добавить</Button>
                 }
             </React.Fragment>

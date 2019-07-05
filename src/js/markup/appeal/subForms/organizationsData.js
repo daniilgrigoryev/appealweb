@@ -24,41 +24,37 @@ const OrganizationsData = props => {
     
     return (
         <div scrollanchor='organizations'>
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card" header={
-                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                {headerTitle}
-                            </h3>
+            <Card className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>
+                        {headerTitle}
+                    </h3>
 
-                            {!navi
-                                ? null
-                                : (<div>
-                                    <Tag type="gray" className='mx12'>3/8</Tag>
+                    {!navi
+                        ? null
+                        : (<div>
+                            <Tag type="gray" className='mx12'>3/8</Tag>
 
-                                    <Button.Group>
-                                        <Button type="primary" size='small' icon="arrow-left" onClick={prevPage.bind(isMadi)}/>
-                                        <Button type="primary" size='small' onClick={nextPage.bind(isMadi)}>
-                                            <i className="el-icon-arrow-right el-icon-right"/>
-                                        </Button>
-                                    </Button.Group>
-                                </div>)
-                            }
-                        </div>
-                    }>
-                        <form onSubmit={handleSubmit}>
-                            <h4 className='ap-h4'>{M.SENT_FROM.label}</h4>
-                            <FieldArray name='organizations_from' component={EOrganizationFrom} disabled={disabled}/>
+                            <Button.Group>
+                                <Button type="primary" size='small' icon="arrow-left" onClick={prevPage.bind(isMadi)}/>
+                                <Button type="primary" size='small' onClick={nextPage.bind(isMadi)}>
+                                    <i className="el-icon-arrow-right el-icon-right"/>
+                                </Button>
+                            </Button.Group>
+                        </div>)
+                    }
+                </div>
+            }>
+                <form className="form" onSubmit={handleSubmit}>
+                    <div className="form-container">
+                        <h4 className='ap-h4'>{M.SENT_FROM.label}</h4>
+                        <FieldArray name='organizations_from' component={EOrganizationFrom} disabled={disabled}/>
 
-                            <hr className='txt-hr my18'/>
-
-                            <h4 className='ap-h4'>{M.UNDER_CONTROL.label}</h4>
-                            <FieldArray name='organizations_control' component={EOrganizationControl} disabled={disabled}/>
-                        </form>
-                    </Card>
-                </Layout.Col>
-            </Layout.Row>
+                        <h4 className='ap-h4'>{M.UNDER_CONTROL.label}</h4>
+                        <FieldArray name='organizations_control' component={EOrganizationControl} disabled={disabled}/>
+                    </div>
+                </form>
+            </Card>
         </div>
     )
 }; //

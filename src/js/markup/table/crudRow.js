@@ -162,22 +162,12 @@ export default class CrudRow extends React.Component {
                 <div className="ap-footer">
                     <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main px24'>
                         <div className='flex-parent flex-parent--center-cross'>
-                            <Button onClick={save} disabled={!CHG}
-                                    className="flex-parent">
-                                Сохранить
-                            </Button>
-
-                            <Button type="text" onClick={hideRow}
-                                    className="ml24">
-                                Отмена
-                            </Button>
+                            <Button type="primary" onClick={save} disabled={!CHG} className="flex-parent">Сохранить</Button>
+                            <Button type="text" onClick={hideRow} className="ml24">Отмена</Button>
                         </div>
                         <div>
                             {NWR ? null :
-                                <Button type="danger" onClick={removeCrud}
-                                        className="flex-parent">
-                                    Удалить
-                                </Button>
+                                <Button type="danger" onClick={removeCrud} className="flex-parent">Удалить</Button>
                             }
                         </div>
                     </div>

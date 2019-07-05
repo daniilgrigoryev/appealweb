@@ -93,15 +93,12 @@ div.tooltipWrap {
   line-height: 1.5;
   color: $color-text-headers;
 }
-
 .ap-h4 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 2;
-  margin-bottom: 10px;
-  color: $color-text-headers;
+  line-height: 100%;
+  color: #6B94C2;
   letter-spacing: 0.25px;
-  text-shadow: 1px 1px 0 white;
 }
 
 .txt-h3 {
@@ -277,16 +274,24 @@ div.tooltipWrap {
     bottom: -72px;
   }
 }
-
+.user-avatar-burger{
+  background: url("/src/images/user-avatar-burger.svg") no-repeat center;
+  height: 14px;
+  width: 13px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 .ap-user-menu-toggle {
   $size: 42px;
   width: $size;
   height: $size;
   background: url("/src/images/user.svg") no-repeat center;
   background-size: contain;
-  opacity: 0.65;
+  // opacity: 0.65;
+  filter: grayscale(80%);
+  background-color: gray;
+  border-radius: 100%;
   transition: all 100ms linear;
-
   &:hover {
     opacity: 0.85;
   }
@@ -323,7 +328,8 @@ div.tooltipWrap {
     li {
       padding-left: 20px;
       border-left: 4px solid transparent;
-
+      color: #505A6E;
+      font-size: 14px;
       &:hover, &.active {
         color: $color-blue;
         border-left-color: $color-blue;
@@ -345,3 +351,244 @@ div.tooltipWrap {
   border-top: 1px solid $color-input-border;
   border-bottom: 1px solid $color-input-border;
 }
+
+
+/* Daniil Grigoryev */
+.sectionCard{
+  .headline{
+    h3{
+      font-size: 17px;
+      color: #6B94C2;
+    }
+  }
+}
+
+
+// .ap-h4{
+//   margin: 10px 0 20px 0;
+// }
+
+.txt-middle{
+  font-size: 16px;
+}
+.border-gray{
+  border-color: #ccc;
+}
+.color-gray-light{
+  color: #ccc;
+}
+.w130{
+  width: 130px!important;
+}
+.fileCard{
+  width: 267px;
+  box-sizing: border-box;
+  border: 1px solid #CCCCCC;
+  border-radius: 0;
+  margin: 10px;
+  .fileCard__header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #B9B9B9;
+    height: 140px;
+    overflow: hidden;
+  }
+  .fileCard__footer{
+    padding: 10px;
+    max-height: 77px;
+    background-color: #fff;
+    position: relative;
+    .el-popover{
+      min-width: auto;
+    }
+    .action{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 20px;
+    }
+    .content{
+      width: 215px;
+    }
+    p{
+      color: #797979;
+      &.date{
+        font-size: 13px;
+      }
+    }
+  }
+}
+.form-container{
+  // max-width: 900px;
+  max-width: 1100px;
+  .flex-table{
+    padding-left: 190px;
+    .row{
+      display: flex;
+      align-items: center;
+      
+      .column{
+        margin: 5px 15px 5px 0;
+        .label{
+          color: #797979;
+          font-size: 14px;
+          line-height: 100%;
+          padding: 9px 0;
+          height: 32px;
+        }
+        .value{
+        }
+        &.column--end{
+          align-self: end;
+          margin-left: auto;
+          .value{
+            margin-top: 33px;
+          }
+        }
+      }
+    }
+  }
+
+
+  .wrap{
+    display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-row-gap: 17px;
+    grid-column-gap: 17px;
+    grid-auto-flow: dense;
+
+
+    .item{
+      display: grid;
+      // grid-template-columns: minmax(210px, min-content) minmax(215px, 1fr);
+      grid-template-columns: minmax(190px, min-content) auto;
+      
+      align-items: center;
+      grid-column: auto / span 2;
+
+      .label{
+        font-family: 'Open Sans';
+        margin-right: 15px;
+        text-align: right;
+        font-size: 14px;
+        color: #797979;
+        max-width: 220px;
+        min-width: 108px;
+
+        // span{
+        //   position: absolute;
+        //   right: 0px;
+        //   width: 190px;
+        //   transform: scale;
+        //   top: 50%;
+        //   transform: translateY(-50%);            
+        // }
+      }
+      .value{
+        // min-width: 320px;
+      } 
+    }
+    .item--flow{
+      grid-template-columns: min-content 1fr;
+    }
+    .item--full{
+      grid-column: span 4;
+      max-width: inherit;
+      .value{
+        min-width: 100%;
+      } 
+    }
+    .item--right{
+      // grid-column: 2 / 3;
+      grid-column: 3 / span 2;
+    }
+    .item--left{
+      grid-column: 1 / span 2;
+    }
+  }
+
+
+}
+
+
+.select-container{
+  .select{
+    font-size: 16px;
+    color: #373737;
+    padding: 4px 30px 4px 7px;
+    option{
+      
+    }
+  }
+}
+
+i.ico{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  &.round{
+    &.minus{
+      background-image: url('/src/images/ico-round-minus.svg');
+      background-repeat: no-repeat;
+    }
+    &.plus{
+      background-image: url('/src/images/ico-round-plus.svg');
+      background-repeat: no-repeat;
+    }
+    &.info{
+      background-image: url('/src/images/ico-round-info.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
+  &.minus{
+    background-image: url('/src/images/ico-minus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  &.upload{
+    width: 16px;
+    height: 16px;
+    background-image: url('/src/images/ico-upload.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &.download{
+    background-image: url('/src/images/ico-download.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  &.scan{
+    width: 21px;
+    height: 21px;
+    background-image: url('/src/images/ico-scan.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &.dot{
+    background-image: url('/src/images/ico-dotted.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 4px;
+    height: 20px;
+  }
+}
+
+
+
+/*
+
+                    <div className="item">
+                        <small className="label"></small>
+                        <div className="value">
+
+                        </div>
+                    </div>
+*/

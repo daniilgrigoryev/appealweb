@@ -39,7 +39,7 @@ const SearchRow = (props)=>{
           <div className="form-item__label" title={label}>{label}</div>
           <div className="form-item__controls">
             <div className="mx6 select-container">
-              <select className="select select--s bg-white"
+              <select className="select bg-white"
                   value={oper} 
                   onChange={(evt)=>change(i,'oper',evt.target.value)}>
                   <option value="=">=</option>

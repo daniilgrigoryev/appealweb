@@ -28,56 +28,51 @@ export class EApnList extends React.Component {
         const rmv = (ind) => () => fields.remove(ind);
         const inf = (ind) => () => fields.remove(ind);
 
-        const ROWS = fields.map((x, i) => (<tr key={i}>
-            <td>
-                <span className='ap-table-list-number mr12'>{i + 1}</span>
-            </td>
-            <td>
-                <span className='inline-block mr12'>
-                    <Field disabled={disabled} component={FInput} name={x + M.POST_NUM.name} value={x[M.POST_NUM.name]} className="w240"/>
-                </span>
-            </td>
-            <td>
-                <span className='inline-block mr12'>
+        const ROWS = fields.map((x, i) => (
+        <div className="row" key={i}>
+            <div className="column w300">
+                <div className="label">{M.POST_NUM.label}</div>
+                <div className="value">
+                    <Field disabled={disabled} component={FInput} name={x + M.POST_NUM.name} value={x[M.POST_NUM.name]}/>
+                </div>
+            </div>
+            <div className="column w130">
+                <div className="label">{M.DATE.label}</div>
+                <div className="value">
                     <Field disabled={disabled} component={FPicker} name={x + M.DATE.name} value={x[M.DATE.name]} date='+'/>
-                </span>
-            </td>
-            <td>
-               <span className="">
+                </div>
+            </div>
+            <div className="column column--end">
+               <div className="value">
                     {disabled ? null :
                         <Button type="text" onClick={inf(i)}>
-                            <i className="el-icon-information color-blue"/>
-                        </Button>}
-
+                            <i className="ico round info"/>
+                        </Button>
+                    }
                    {disabled ? null :
-                       <Button size="small" type="text" onClick={rmv(i)}>
-                           <i className="el-icon-close color-red-dark"/>
-                       </Button>}
-               </span>
-            </td>
-        </tr>));
+                        <Button className="py0" size="small" type="text" onClick={rmv(i)}>
+                            <i className="ico round minus"/>
+                        </Button>
+                    }
+                    {disabled ? null : 
+                        <Button className="py0" size="small" type="text" onClick={add}>
+                            <i className="ico round plus"/>
+                        </Button>
+                    }
+               </div>
+            </div>
+        </div>));
 
         return (
             <React.Fragment>
                 {!fields.length 
-                    ? <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных постановлений</p>
-                    : <table>
-                        <thead>
-                        <tr>
-                            <th colSpan='2' className='ap-table__header'>{M.POST_NUM.label}</th>
-                            <th className='ap-table__header'>{M.DATE.label}</th>
-                        </tr>
-                        </thead>
-
-                    <tbody>
-                    {ROWS}
-                    </tbody>
-                </table>
+                    ? <p className='my6 txt-em color-gray align-center'>Нет добавленных постановлений</p>
+                    : <div className="flex-table">{ROWS}</div>
                 }
 
-                {disabled ? null :
-                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
-                            className="flex-parent mb18"
+                {disabled || fields.length ? null :
+                    <Button size="small" icon="plus" plain={true} onClick={add}
+                            className="mx-auto my6 block"
                             title='Добавить тему'>Добавить</Button>}
             </React.Fragment>
         );
