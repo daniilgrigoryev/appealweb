@@ -166,26 +166,20 @@ class AppealExplorer extends React.Component {
 
         return (
             <React.Fragment>
-                <Layout.Row gutter="0">
-                    <Layout.Col span="24">
-                        <Card bodyStyle={{ padding: '0' }} className="box-card scroll-styled scroll-auto" header={
-                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    Поиск обращений
-                                </h3>
-                            </div>
-                        }>
-                            <div className="view-data__container pl18 py12">
-                                <SearchRoot {...{fields,setGetter,setRemover}}/>
-                                <div className='btns align-t'>
-                                    <Button type="primary" onClick={this.search}>Искать</Button>
-                                    <Button type="primary" onClick={remove}>Очистить</Button>
-                                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
-                                </div>
-                            </div>
-                        </Card>
-                    </Layout.Col>
-                </Layout.Row>
+
+                <Card className="box-card sectionCard" header={
+                    <div className="headline">
+                        <h3>Поиск обращений</h3>
+                    </div>
+                }>
+                <SearchRoot {...{fields,setGetter,setRemover}}/>
+                <div className='btns align-t'>
+                    <Button type="primary" onClick={this.search}>Искать</Button>
+                    <Button type="primary" onClick={remove}>Очистить</Button>
+                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
+                </div>
+                </Card>
+
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
