@@ -95,7 +95,7 @@ export default class AppealTable extends React.Component {
         }
 
         const VAL = this.toSuitableVal(TABLE);
-        const head = "Записи с " + (FIRST + 1) + " до " + (END > TABLE.size ? TABLE.size : END) + " из " + TABLE.size + " записей";
+        const head = "Записи с " + (+TABLE.size ? FIRST + 1 : FIRST) + " до " + (END > TABLE.size ? TABLE.size : END) + " из " + TABLE.size + " записей";
         let dynamicColumns = TABLE.columns.filter(col => getField(col.label)).map(col => <Column key={col.label}
                                                                                                  field={col.label}
                                                                                                  header={getField(col.label)}
