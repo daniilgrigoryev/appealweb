@@ -1,19 +1,14 @@
-.saveTable {
-	position: absolute;
-    display: block;
-    width: 25vw;
-    height: 5vh;
-    top: 412px;
-    left: 450px;
-    background-color: rgb(255, 255, 255);
+.searchTable {
+    width: 100%;
+    margin-top: 10px;
 }
 
-.loadTable {
-	position: absolute;
-    display: block;
-    width: 25vw;
-    height: 5vh;
-    top: 412px;
-    left: 110px;
-    background-color: rgb(255, 255, 255);
+.searchCont {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: calc(100% - 500px);
+    align-items: baseline;
+    align-content: start;
 }
+

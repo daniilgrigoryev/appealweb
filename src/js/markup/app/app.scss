@@ -16,16 +16,27 @@ input, textarea{
 
 
 .view-data__container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  
   .items-wrap {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    justify-content: start;
-    align-items: start;
-    grid-auto-rows: min-content;
-    grid-row-gap: 5px;
-    .item{}
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+
+    .item {
+      
+    }
   }
 }
+
+.btns {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+
 .form-item{
   display: flex;
   flex-wrap: wrap;
@@ -51,7 +62,7 @@ input, textarea{
 
 
   // это overrides, которые в будущем будут на всем 
-  // проекте когда прийдем к общему стилю для всех форм
+  // проекте когда придем к общему стилю для всех форм
   input, textarea, .p-autocomplete{
     margin-bottom: 0!important;
   }

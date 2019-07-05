@@ -58,14 +58,17 @@ class AppealExplorer extends React.Component {
 
         this.registerGetSelected = this.registerGetSelected.bind(this);
         this.conditionGetter = null;
+        this.conditionRemover = null;
         this.search   = this.search.bind(this);
         this.getXFile = this.getXFile.bind(this);
+        this.remove   = this.remove.bind(this)
     }
 
     componentDidMount(){
         const alias='TABLE_INFO';
         const table_alias= 'i_obr';
         const orphan = true;
+
         post('db/select',{alias,table_alias,orphan}).then(x=>{
             const {data,error} = x;
             if (_.size(data)){
@@ -101,7 +104,15 @@ class AppealExplorer extends React.Component {
         this.key = 'k' + new Date().getTime();
         this.forceUpdate();
     }
-      
+
+    remove() {
+        const rlyRem = window.confirm('Вы уверены, что хотите очистить условия?');
+        if (!rlyRem) {
+            return;
+        }
+        this.conditionRemover();
+    }
+
     getXFile() {
         const alias = 'I_CLAIM_EXCEL_LIST';
         const {sid} = this.props;
@@ -135,12 +146,12 @@ class AppealExplorer extends React.Component {
     }
 
     registerGetSelected(outerGetSelected) {
-       this.getSelected = outerGetSelected;
-       this.forceUpdate();
+        this.getSelected = outerGetSelected;
+        this.forceUpdate();
     }
 
     render() {
-        const {key,where,state,registerGetSelected} = this;
+        const {key,where,state,registerGetSelected, remove} = this;
         const {fields} = state;
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
@@ -148,8 +159,10 @@ class AppealExplorer extends React.Component {
         templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
 
-        const actionCol =  null && {style, body};
-        const setGetter = (getter)=>this.conditionGetter = getter;
+        const actionCol  =  null && {style, body};
+        const setGetter  = (getter) => this.conditionGetter = getter;
+        const setRemover = (remover) => this.conditionRemover = remover;
+
 
         return (
             <React.Fragment>
@@ -163,9 +176,10 @@ class AppealExplorer extends React.Component {
                             </div>
                         }>
                             <div className="view-data__container pl18 py12">
-                                <SearchRoot {...{fields,setGetter}} />
-                                <div className='inline-block align-t mt12 ml12'>
+                                <SearchRoot {...{fields,setGetter,setRemover}}/>
+                                <div className='btns align-t'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
+                                    <Button type="primary" onClick={remove}>Очистить</Button>
                                     {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
                             </div>
