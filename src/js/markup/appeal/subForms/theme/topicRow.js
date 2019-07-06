@@ -329,12 +329,14 @@ class TopicRow extends React.PureComponent {
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td className='ap-input-caption'>Исполнитель</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
+                                                <td className='ap-input-caption'>Отдел исполнителя</td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} onChange={()=>{
+                                                   // dispatch(change(`appeal`, field + 'executor_id', null));
+                                                }} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
                                             </tr>
                                             <tr>
-                                                <td className='ap-input-caption'>Отдел исполнителя</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
+                                                <td className='ap-input-caption'>Исполнитель</td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Статус по теме</td>

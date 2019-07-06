@@ -141,10 +141,10 @@ class ISignExplorer extends React.Component {
     search() {
         const s = this.conditionGetter();
         let w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
-        if (!_.size(w)){
+        /*if (!_.size(w)){
             window.claimMessageAdd('E','Условие для поиска не задано');
             return;
-        }
+        }*/
 
         this.where = w;        
         this.key = 'k' + new Date().getTime();
@@ -168,7 +168,7 @@ class ISignExplorer extends React.Component {
     render() {
         const {key,where,state,registerGetSelected} = this;
         const {fields} = state;
-        const noTable = _.isEmpty(where);
+        const noTable = this.key == 0;
         const {sid} = this.props;
 
         const actionCol =  null && {style, body};
