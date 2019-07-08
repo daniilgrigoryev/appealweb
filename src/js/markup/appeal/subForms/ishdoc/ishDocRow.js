@@ -289,11 +289,10 @@ const IshDocRow = React.memo(props => {
             </Card>
 
 
-{/* 
             <div className='flex-parent flex-parent--center-cross'>
                 <h4 className="ap-h4 mr18 mb0">{'' && M.FAB_DOC.label}</h4>
                 {DOC_MAKER}
-            </div> */}
+            </div>
 
             <Card className="box-card sectionCard" header={
                 <div className='headline'>

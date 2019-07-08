@@ -318,7 +318,15 @@ div.tooltipWrap {
   color: $color-blue-dark;
   border-right: 1px solid $color-border;
   background: white;
-
+  z-index: 1;
+  box-shadow: 1px 0px 4px rgba(86, 83, 83, 0.23)!important;
+  .sectionCard{
+    border-bottom: none;
+    .el-card__header{
+      border-top: 1px solid #d1dbe5;
+      margin-top: -1px;
+    }
+  }
   .ap-side-panel-left__statuses {
     margin-top: 20px;
     vertical-align: middle;
@@ -437,9 +445,18 @@ div.tooltipWrap {
   }
 }
 .form-container{
-  // max-width: 900px;
   max-width: 1100px;
+}
 
+.form-side-panel{
+  .wrap{
+    .item.item--full{
+      grid-template-columns: minmax(min-content, min-content) auto;
+      .label{
+        min-width: 88px;
+      }
+    }
+  }
 }
 .wrap{
   display: grid;
@@ -548,6 +565,7 @@ div.tooltipWrap {
 .searchRoot__control{
   .flex-table{
     max-height: 334px;
+    min-height: 70px;
     overflow: auto;
     width: 640px;
   }
