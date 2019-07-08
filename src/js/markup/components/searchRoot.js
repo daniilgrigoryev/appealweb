@@ -160,7 +160,7 @@ class SearchRoot extends React.Component {
         const row = Object.assign({oper:'=',value:''},field); 
         root = [...root,row];
         this.setState({root},()=>{
-          setTimeout(()=>(this.scrollElement.scrollTop=this.scrollElement.scrollHeight),50);
+          setTimeout(()=>(this.scrollElement.scrollTop=this.scrollElement.scrollHeight));
         });
    }
 
@@ -302,14 +302,7 @@ class SearchRoot extends React.Component {
         const INNER = showLoadPort  
           ?(<React.Fragment>
               <ESelect key={conditionName} value={conditionName} onChange={(v) => loadCondition(v)} data={conditionsLables}/>
-              <Button className="mx6" size="small" type={notDefaultCondition ? "default" : "primary"} onClick={setDefaultCondition}>
-                {notDefaultCondition ? "Установить по умолчанию" : "Установлено по умолчанию"}
-              </Button> 
-
-              <Button className="mx6" size="small" title="удалить условие" type="text" onClick={deleteCondition}>
-                <i className="ico delete"></i>
-              </Button>
-
+              <Button size="small" className="mx6" type="danger" onClick={deleteCondition}>Удалить</Button>
           </React.Fragment>) 
           :(<React.Fragment>
               <EInput value={conditionName} onChange={(v)=>setName(v)} />
@@ -328,6 +321,10 @@ class SearchRoot extends React.Component {
                     {INNER}
                     <Button size="small" className="mx6" type="text" onClick={showLoadPort?changeLoadPort:changeSavePort}>отмена</Button>
                   </div>
+                  <a className={`link txt-petite ml3 ${notDefaultCondition ? 'default' : 'txt-underline txt-bold'}`} onClick={setDefaultCondition}>
+                    {notDefaultCondition ? "Установить по умолчанию" : "Установлено по умолчанию"}
+                  </a>
+
                 </div>
               </div>
             </div>
@@ -350,14 +347,12 @@ class SearchRoot extends React.Component {
 
       return (
         <React.Fragment>
-
           <div className="searchRoot">
             <div className="panel">
-
               <div>
                 <div className="searchRoot-item searchRoot__add">
                   <div className="wrap">
-                    <div className="item item--full">
+                    <div className="item item--full mb6">
                         <small className="label">Добавить поле для поиска</small>
                         <div className="value">
                           <div className="select-container bg-white">
@@ -374,27 +369,15 @@ class SearchRoot extends React.Component {
                   </div>
                 </div>
               </div>
-
-
-
               <div className="searchRoot-item searchRoot__saver">
-                <div className="flex-parent flex-parent--center-cross flex-parent--end-main">
+                <div className="flex-parent flex-parent--center-cross">
                   <Button size="small" onClick={changeLoadPort}>Загрузить условие</Button>
                   {showSaveBtn && <Button size="small" onClick={changeSavePort}>Сохранить условие</Button>}
                 </div>
-
-
-                {/* <Button size="small" onClick={changeSavePort}>Сохранить условие</Button> */}
                 {showPort}
               </div>
             </div>
           </div>
-
-
-
-
-
-
         </React.Fragment>
       );//
     }
