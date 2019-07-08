@@ -6,18 +6,20 @@ import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as V from '../../../validators'
 import {Button, Card, Layout, Tag} from 'element-react'
-
 import mapping from '../mapping.js'
+import Immutable from 'immutable'
+
+const im = (obj) => Immutable.fromJS(obj);
 
 const M = mapping.questionList;
 
 const getRow = (id,question, department,control_date) => {
-    return {
+    return im({
         id: id||null,
         question: question || null,
         department: department || null,
         control_date: control_date || null
-    }
+    })
 }
 
 // Element component
