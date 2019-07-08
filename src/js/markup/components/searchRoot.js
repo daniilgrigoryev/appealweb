@@ -160,7 +160,7 @@ class SearchRoot extends React.Component {
         const row = Object.assign({oper:'=',value:''},field); 
         root = [...root,row];
         this.setState({root},()=>{
-          setTimeout(()=>(this.scrollElement.scrollTop=this.scrollElement.scrollHeight));
+          setTimeout(()=>(this.scrollElement.scrollTop=this.scrollElement.scrollHeight), 0);
         });
    }
 

@@ -29,7 +29,7 @@ const im = (obj) => Immutable.fromJS(obj)
 
 const desc = {
     info_alias: 'i_obr',
-    alias: 'APPEAL_LIST'
+    alias: null // 'APPEAL_LIST' or 'APPEAL_LIST_MY'
 }
 
 const style = {textAlign: 'center', width: '8em'};
@@ -60,6 +60,7 @@ class AppealExplorer extends React.Component {
         this.conditionGetter = null;
         this.conditionRemover = null;
         this.search   = this.search.bind(this);
+        this.searchMy = this.searchMy.bind(this);
         this.getXFile = this.getXFile.bind(this);
         this.remove   = this.remove.bind(this)
     }
@@ -96,13 +97,25 @@ class AppealExplorer extends React.Component {
         const s = this.conditionGetter();
         const w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
         if (!_.size(w)){
+            this.key=0;
             window.claimMessageAdd('E','Условие для поиска не задано');
+            this.forceUpdate();
             return;
         }
-
+        desc.alias = 'APPEAL_LIST';
         this.where = w;        
         this.key = 'k' + new Date().getTime();
         this.forceUpdate();
+    }
+
+    searchMy(){
+        const s = this.conditionGetter();
+        const w = _.chain(s).filter(x=>x.value || x.oper=='NOT NULL' || x.oper=='NULL').value();
+       
+        desc.alias = 'APPEAL_LIST_MY';
+        this.where = w;        
+        this.key = 'k' + new Date().getTime();
+        this.forceUpdate();        
     }
 
     remove() {
@@ -153,16 +166,14 @@ class AppealExplorer extends React.Component {
     render() {
         const {key,where,state,registerGetSelected, remove} = this;
         const {fields} = state;
-        const noTable = _.isEmpty(where);
+        const noTable = this.key == 0;
         const {sid} = this.props;
 
         templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
-
         const actionCol  =  null && {style, body};
         const setGetter  = (getter) => this.conditionGetter = getter;
         const setRemover = (remover) => this.conditionRemover = remover;
-
 
         return (
             <React.Fragment>
@@ -174,15 +185,15 @@ class AppealExplorer extends React.Component {
                 }>
                 <SearchRoot {...{fields,setGetter,setRemover}}/>
                 <div className='btns align-t mt18'>
-                    <Button className="txt-middle mr12" type="primary" icon="search" onClick={this.search}>Искать</Button>
+                    <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
+                    <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.searchMy}>Поиск среди своих</Button>
+                    {!noTable && (<Button className="txt-middle mx6"  type="primary" onClick={this.getXFile}>xls</Button>)}
                     <Button className="txt-middle" type="text" onClick={remove}>
                         <i className="ico load align-t mr12"/>
                         Очистить
                     </Button>
-                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                 </div>
                 </Card>
-
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>

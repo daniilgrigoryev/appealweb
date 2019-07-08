@@ -19,7 +19,7 @@ const im = (obj)=> Immutable.fromJS(obj);
 const M = mapping.topicList;
 
 const getRow = (id,category, post_n, post_date, docs, cause, uch_pris, apn_adr, apn_date, description, owner, owner_adr, decision, decision_base, chief, decision_date, article, regno) => {
-    return {
+    return im({
         id: id||null,
         category: category || '',
         post_n: post_n || '',
@@ -38,7 +38,7 @@ const getRow = (id,category, post_n, post_date, docs, cause, uch_pris, apn_adr, 
         decision_date: decision_date || null,
         article: article || '',
         regno: regno || ''
-    }
+    })
 }
 
 // Element component

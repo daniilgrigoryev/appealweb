@@ -19,7 +19,7 @@ const M = mapping.ishDocList;
 
 const getRow = (doc_target, args = {}) => {
     const {id,ish_num, ish_date, podpisal, status, related_topic, crypto_signature, doc_vid, delivery_type, sheets_count, edo_num, comment, soprovod, universal, opred, uvedom, vyzov, initiation,claim_id} = args;
-    return {
+    return im({
         id: id || null,
         doc_target: doc_target,
         ish_num: ish_num || '',
@@ -35,7 +35,7 @@ const getRow = (doc_target, args = {}) => {
         comment: comment || '',
         files: [], // {id,name}
         claim_id: claim_id || null
-    }
+    })
 }
 
 const getRowZajav = (args) => im(getRow('Заявитель ФЛ', args));

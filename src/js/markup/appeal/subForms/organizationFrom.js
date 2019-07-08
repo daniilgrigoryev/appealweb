@@ -8,17 +8,19 @@ import {FAutocomplete} from '../../components/fautocomplete.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as V from '../../../validators'
 import mapping from '../mapping.js'
+import Immutable from 'immutable'
 
+const im = (obj) => Immutable.fromJS(obj);
 const M = mapping.organizationFrom;
 
 
 const getRow = (id,name, num, date) => {
-    return {
+    return im({
         id: id || null,
         name: name || '',
         num: num || '',
         date: date || null
-    }
+    })
 };
 
 // Element component

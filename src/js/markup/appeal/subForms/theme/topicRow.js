@@ -329,12 +329,14 @@ class TopicRow extends React.PureComponent {
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td className='ap-input-caption'>Исполнитель</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} /></td>
+                                                <td className='ap-input-caption'>Отдел исполнителя</td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} onChange={()=>{
+                                                   // dispatch(change(`appeal`, field + 'executor_id', null));
+                                                }} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} dbVisibleVal={P.get('executor_org_id_label')} /></td>
                                             </tr>
                                             <tr>
-                                                <td className='ap-input-caption'>Отдел исполнителя</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} /></td>
+                                                <td className='ap-input-caption'>Исполнитель</td>
+                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} dbVisibleVal={P.get('executor_id_label')} /></td>
                                             </tr>
                                             <tr>
                                                 <td className='ap-input-caption'>Статус по теме</td>
@@ -421,7 +423,7 @@ class TopicRow extends React.PureComponent {
                                             {cif(M.DESISION_MAKER.name,
                                                 (<tr>
                                                     <td className='ap-input-caption dog'>{M.DESISION_MAKER.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key} />
+                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
                                                     </td>
                                                     <td className="w120">
                                                         <h5 className='ap-h5 inline-block mx12'>И. О</h5>
