@@ -320,6 +320,26 @@ div.tooltipWrap {
   background: white;
   z-index: 1;
   box-shadow: 1px 0px 4px rgba(86, 83, 83, 0.23)!important;
+  .popperAction{
+    padding: 0 5px;
+    min-width: auto;
+  }
+  .doc-actions{
+    display: flex;
+    justify-content: center;
+    padding: 15px 0px;
+    background: #fff;
+    .big-print{
+      .star-on{
+
+      }
+    }
+    .ico.printer,
+    .ico.doubles{
+      width: 30px;
+      height: 30px;
+    }
+  }
   .sectionCard{
     border-bottom: none;
     .el-card__header{
@@ -675,6 +695,22 @@ i.ico{
   }
   &.load{
     background-image: url('/src/images/ico-loading.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+  }
+  &.printer{
+    background-image: url('/src/images/printer.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+  }
+  &.doubles{
+    background-image: url('/src/images/doubles.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

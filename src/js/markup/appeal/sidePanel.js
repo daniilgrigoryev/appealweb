@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import {Button, Card, Layout, Tag} from 'element-react'
+import {Button, Card, Layout, Tag, Tooltip, Popover} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../components/finput.js'
 import {EAutocomplete, FAutocomplete} from '../components/fautocomplete.js'
@@ -480,27 +480,24 @@ class SidePanel extends Component {
                             </div>
                         </form>
                     </div>
-
-                    <Card className="box-card sectionCard cursor-pointer" bodyStyle={{ padding: 0 }} header={
-                        <div className='headline' onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>
-                            <h3>Печать малый</h3>
-                        </div>
-                    }>
-                    </Card>
-                    <Card className="box-card sectionCard cursor-pointer" bodyStyle={{ padding: 0 }} header={
-                        <div className='headline' onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>
-                            <h3>Печать большой</h3>
-                        </div>
-                    }>
-                    </Card>
-
-                    {showDupe && <Card className="box-card sectionCard" bodyStyle={{ padding: 0 }} header={
-                        <div className='headline' onClick={()=>this.duplicate()}>
-                            <h3>Дублировать</h3>
-                        </div>
-                    }>
-                    </Card>}
-
+                    <div className="doc-actions">
+                        <Popover popperClass="popperAction" placement="bottom" width="90" trigger="hover" content={(
+                            <div>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>Малая</Button>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>Большая</Button>
+                            </div>
+                        )}>
+                            <Button className="px0 py0 cursor-pointer mx18 opacity75 opacity100-on-hover" type="text" >
+                                <i className="ico printer"/>
+                            </Button>
+                        </Popover>
+                        
+                        <Tooltip effect="dark" content="Дубликат" placement="bottom">
+                            <Button className="px0 py0 cursor-pointer mx18 opacity75 opacity100-on-hover" type="text" onClick={()=>this.duplicate()}>
+                                <i className="ico doubles"/>
+                            </Button>
+                        </Tooltip>
+                    </div>
                     <Card className="box-card sectionCard" bodyStyle={{ padding: 0 }} header={
                         <div className='headline'>
                             <h3>Список подразделов</h3>
