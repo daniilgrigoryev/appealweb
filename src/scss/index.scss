@@ -184,7 +184,7 @@ div.tooltipWrap {
   border-radius: 100%;
   border: 1px solid $color-input-border;
   outline: none;
-  background: url("/src/images/arrow-back.svg") no-repeat center;
+  background: url($publicpath + "/images/arrow-back.svg") no-repeat center;
   background-size: 26px;
   transition: all 150ms linear;
 
@@ -276,7 +276,7 @@ div.tooltipWrap {
   $size: 42px;
   width: $size;
   height: $size;
-  background: url("/src/images/user.svg") no-repeat center;
+  background: url($publicpath + "/images/user.svg") no-repeat center;
   background-size: contain;
   opacity: 0.65;
   transition: all 100ms linear;

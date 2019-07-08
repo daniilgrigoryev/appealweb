@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const publicpath = process.argv[1].indexOf('webpack-dev-server') !== -1 ? '/src' : 'js/src';
 
 module.exports = {
     mode: 'development',
@@ -22,9 +23,9 @@ module.exports = {
                     }]]
                 }
             },{
-                test: /(\.css$)/,
+                test: /\.css$/,
                 include: /node_modules/,
-                loaders: ['style-loader', 'css-loader', "sass-loader"]
+                loaders: ['style-loader', 'css-loader']
             },{
                 test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
                 loader: 'url-loader?limit=100000'
@@ -34,9 +35,13 @@ module.exports = {
                 use: [
                     "style-loader", // creates style nodes from JS strings
                     "css-loader?url=false", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS
+                      {loader: 'sass-loader', 
+                        options: {
+                          data: "$publicpath : " + publicpath + ";"
+                        }
+                    }
                 ]
             }
         ]
-    }
+    },
 };
