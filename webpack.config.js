@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const publicpath = process.argv[1].indexOf('webpack-dev-server') !== -1 ? '/src' : 'js/src';
+const DEV_MODE = process.argv[1].indexOf('webpack-dev-server') !== -1
+const publicpath = DEV_MODE ? '/src' : 'js/src';
 
 module.exports = {
     mode: 'development',
@@ -44,4 +45,9 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+      new webpack.DefinePlugin({
+          DEV_MODE: DEV_MODE,
+        })
+    ]
 };
