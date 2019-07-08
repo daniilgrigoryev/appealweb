@@ -209,13 +209,13 @@ const IshDocRow = React.memo(props => {
                         <div className="item">
                             <small className="label">{M.PODPISAL.label}</small>
                             <div className="value">
-                                <Field disabled={true} component={FAutocomplete} name={field + M.PODPISAL.name} dataKey={M.PODPISAL.key} />
+                                <Field disabled={true} component={FInput} name={field + 'podpisal_name'} />
                             </div>
                         </div>
                         <div className="item">
                             <small className="label">Проверяющий</small>
                             <div className="value">
-                                <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} />
+                                <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} dbVisibleVal={value.get('verifier_name')} />
                             </div>
                         </div>
                         <div className="item">
@@ -278,14 +278,6 @@ const IshDocRow = React.memo(props => {
                                 <Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/>
                             </div>
                         </div>
-                        {false && 
-                            (<div className="item">
-                                <small className="label">Статус проекта документов</small>
-                                <div className="value">
-                                    <Field disabled={disabled} component={FAutocomplete} name={field + 'status'} dataKey='APPEAL_DOC_STAGE' />
-                                </div>
-                            </div>
-                        )}
                         <div className="item item--right">
                             <small className="label">{M.CRYPTO_SIGN.label}</small>
                             <div className="value">

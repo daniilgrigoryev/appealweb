@@ -59,7 +59,7 @@ export default class AppealTable extends React.Component {
         return [...selected];
     }
 
-    async onPage(event) { debugger;
+    async onPage(event) {
         const {desc, sid, where} = this.props;
         const JSON_W = JSON.stringify(where);
         const where_tail = true;

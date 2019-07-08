@@ -8,7 +8,8 @@ import {Field, reduxForm} from 'redux-form/immutable'
 import {messageSet} from '../../actions/common.js'
 import positions from 'positions'
 
-import  '../../../scss/searchRoot.scss'
+// import  '../../../scss/searchRoot.scss'
+import  '../../../scss/index.scss';
 
 const SearchRow = (props)=>{
 		const {im,change,remove,label,typ,dict,root,link,oper,i}  = props;
@@ -29,35 +30,49 @@ const SearchRow = (props)=>{
     } //
     
     return (
-      <div className="item">
-        <div className="form-item">
-          <div className="flex-parent flex-parent--center-cross flex-parent--center-main mr12">
-              <button onClick={()=>remove(i)}>
-                <i className="el-icon-close color-red"></i>
-              </button>
+      <div className="row">
+        <div className="column">
+          <div className="value">
+            <EInput value={label} className="readOnly" readOnly/>
           </div>
-          <div className="form-item__label" title={label}>{label}</div>
-          <div className="form-item__controls">
-            <div className="mx6 select-container">
-              <select className="select bg-white"
-                  value={oper} 
-                  onChange={(evt)=>change(i,'oper',evt.target.value)}>
-                  <option value="=">=</option>
-                  <option value=">=">&gt;=</option>
-                  <option value=">">&gt;</option>
-                  <option value="<=">&lt;=</option>
-                  <option value="<">&lt;</option>
-                  <option value="<>">&lt;&gt;</option>
-                  <option value="NULL">NULL</option>
-                  <option value="NOT NULL">NOT NULL</option>
-                  <option value="LIKE">Контекст</option>
-              </select>
-              <div className='select-arrow'></div>
+        </div>
+        <div className="column">
+            <div className="value">
+              <div className="select-container">
+                <select className="select bg-white"
+                    value={oper} 
+                    onChange={(evt)=>change(i,'oper',evt.target.value)}>
+                    <option value="=">=</option>
+                    <option value=">=">&gt;=</option>
+                    <option value=">">&gt;</option>
+                    <option value="<=">&lt;=</option>
+                    <option value="<">&lt;</option>
+                    <option value="<>">&lt;&gt;</option>
+                    <option value="NULL">NULL</option>
+                    <option value="NOT NULL">NOT NULL</option>
+                    <option value="LIKE">Контекст</option>
+                </select>
+                <div className='select-arrow'></div>
+              </div>
             </div>
-            <div>
-              {Row}
-            </div>
+        </div>
+        <div className="column">
+          <div className="value">
+            {Row}
           </div>
+        </div>
+        <div className="column column--end">
+            <div className="value mt0">
+                  <Button className="py0" size="small" type="text" onClick={()=>remove(i)}>
+                      <i className="ico round minus"/>
+                  </Button>
+                
+                {/* {disabled ? null : 
+                    <Button className="py0" size="small" type="text" onClick={add}>
+                        <i className="ico round plus"/>
+                    </Button>
+                } */}
+            </div>
         </div>
       </div>);
 } //
@@ -282,33 +297,41 @@ class SearchRoot extends React.Component {
       const {conditionName, conditionsLables, showLoadPort, showSavePort, defCondName} = this.state;
       const notDefaultCondition = !defCondName || conditionName != defCondName
   
+
       if (showLoadPort || showSavePort) {
         const INNER = showLoadPort  
           ?(<React.Fragment>
-              <td><ESelect key={conditionName} value={conditionName} onChange={(v) => loadCondition(v)} data={conditionsLables}/></td>
-              <td><Button type={notDefaultCondition ? "default" : "primary"} onClick={setDefaultCondition}>
-                    {notDefaultCondition ? "Установить по умолчанию" : "Установлено по умолчанию"}
-                  </Button></td> 
-              <td><Button type="primary" onClick={deleteCondition}>Удалить</Button></td>                       
+              <ESelect key={conditionName} value={conditionName} onChange={(v) => loadCondition(v)} data={conditionsLables}/>
+              <Button className="mx6" size="small" type={notDefaultCondition ? "default" : "primary"} onClick={setDefaultCondition}>
+                {notDefaultCondition ? "Установить по умолчанию" : "Установлено по умолчанию"}
+              </Button> 
+
+              <Button className="mx6" size="small" title="удалить условие" type="text" onClick={deleteCondition}>
+                <i className="ico delete"></i>
+              </Button>
+
           </React.Fragment>) 
           :(<React.Fragment>
-              <td><EInput value={conditionName} onChange={(v)=>setName(v)} /></td>
-              <td><Button type="primary" onClick={saveCondition}>Сохранить</Button></td>
+              <EInput value={conditionName} onChange={(v)=>setName(v)} />
+              <Button size="small" className="mx6" type="primary" onClick={saveCondition}>Сохранить</Button>
           </React.Fragment>); //
 
         return(
-          <div className = 'searchTable'>
-          <table>
-            <tbody>
-              <tr>
-                {INNER}
-                <td><Button size="small" type="text" onClick={showLoadPort?changeLoadPort:changeSavePort}>
-                  <i className="el-icon-close color-red-dark"/>
-                </Button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>);
+          <div className="flex-table pl0">
+            <div className="row">
+              <div className="column">
+                <div className="label">
+                  Сохраненные настройки поиска
+                </div>
+                <div className="value">
+                  <div className="flex-parent flex-parent--center-cross">
+                    {INNER}
+                    <Button size="small" className="mx6" type="text" onClick={showLoadPort?changeLoadPort:changeSavePort}>отмена</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>);
       }
      return null;//
     }
@@ -327,17 +350,44 @@ class SearchRoot extends React.Component {
 
       return (
         <React.Fragment>
-          <div className="items-wrap h240 scroll-styled scroll-auto" ref={el => (this.scrollElement = el) }>
-            {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
-          </div>
-          <div className="searchCont">
-          <div className="select-container wmax240">
-            <select className="w-full select bg-white dg-select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
-            <div className='select-arrow'></div>
-          </div> 
-          <Button type="primary" onClick={changeLoadPort}>Загрузить условие</Button>
-          {showSaveBtn && <Button type="primary" onClick={changeSavePort}>Сохранить условие</Button>}
-          {showPort}
+
+          <div className="searchRoot">
+            <div className="panel">
+
+              <div>
+                <div className="searchRoot-item searchRoot__add">
+                  <div className="wrap">
+                    <div className="item item--full">
+                        <small className="label">Добавить поле для поиска</small>
+                        <div className="value">
+                          <div className="select-container bg-white">
+                            <select className="select" value='000' onChange={(evt)=>add(evt.target.value)}>{ADD}</select>
+                            <div className='select-arrow'></div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="searchRoot-item searchRoot__control">
+                  <div className="flex-table pl0" ref={el => (this.scrollElement = el) }>
+                    {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div className="searchRoot-item searchRoot__saver">
+                <div className="flex-parent flex-parent--center-cross flex-parent--end-main">
+                  <Button size="small" onClick={changeLoadPort}>Загрузить условие</Button>
+                  {showSaveBtn && <Button size="small" onClick={changeSavePort}>Сохранить условие</Button>}
+                </div>
+
+
+                {/* <Button size="small" onClick={changeSavePort}>Сохранить условие</Button> */}
+                {showPort}
+              </div>
+            </div>
           </div>
         </React.Fragment>
       );//

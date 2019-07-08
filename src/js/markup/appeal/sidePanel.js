@@ -199,19 +199,10 @@ class SidePanel extends Component {
         const stateBtnText  = noChanges ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noChanges ? noop : this.save;
 
-        let checking_date = null;
-        let registration_number = null; 
-        let id = null;
-        let processing_stage_id = null;
-        let processing_stage_name = null;
-        const values = !formData ? null : formData.get('values');
-        if (values){
-            checking_date = values.get('checking_date');
-            registration_number = values.get('registration_number');
-            id = values.get('id');
-            processing_stage_id = values.get('processing_stage_id');
-            processing_stage_name = values.get('processing_stage_name');
-        }
+        let values = !formData ? null : formData.get('values');
+        values = values ? values.toJS() : {};
+        let {checking_date,registration_number,id,processing_stage_id,processing_stage_name} = values;
+        
 
         const showDupe = (+processing_stage_id) >= 2; //Зарегистрировано
         
@@ -221,17 +212,13 @@ class SidePanel extends Component {
 
         const cBack = (arg_arr) => _.each(arg_arr||[],x=>dispatch(change(x.name, x.value || '')));
     
-        let fullAddr = {};
-        let fl = false;
-        let line_adr = '';
-        let claim_id;
-        let files = [];
-
-        if (values) {
-          fl       = values.get('zajav_lic')|| false;
-          line_adr = values.get('line_adr') || '';
-          files = values.get('files') || [];
-          fullAddr = _.pick(values.toJS(), [
+        let claim_id = values.id || '';
+        let fl = values.zajav_lic|| false;
+        let {line_adr,files,exec_org_key_label,exec_emp_key_label} = values;
+        
+        line_adr = line_adr || '';
+        files = files || [];
+        let fullAddr = _.pick(values, [
             'cdr_address_id', 
             'dom', 
             'korpus', 
@@ -243,11 +230,7 @@ class SidePanel extends Component {
             'region', 
             'str', 
             'street_id']);
-          claim_id = values.get('id') || ''; 
-          //debugger;
-          //testGetFile(this.props.sid, claim_id);
-        }
-
+        
         const right = 'general_super';
 
         let CONTENT = (<div style={{fontFamily:'monospace', width: '800px', outline: '1px solid #000'}}>
@@ -471,14 +454,14 @@ class SidePanel extends Component {
                             <tr>
                                 <td className='ap-input-caption w120'>{M.STATUS.label}</td>
                                 <td>{STATUS}</td>
-                            </tr>
+                            </tr>  
                             <tr>
                                 <td className='ap-input-caption w120'>{M.DEPART.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.DEPART.name} dataKey={M.DEPART.key}/></td>
+                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_org_key' dataKey='DEPARTMENTS_LIST_KEY' dbVisibleVal={exec_org_key_label}/></td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.EXECUTOR.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/></td>
+                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_emp_key' dataKey='EMPLOYESS_LIST_KEY' dbVisibleVal={exec_emp_key_label}/></td>
                             </tr>
                             <tr>
                                 <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>

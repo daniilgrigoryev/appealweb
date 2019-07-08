@@ -27,8 +27,8 @@ export class EQuestionList extends React.Component {
         const {fields, disabled} = this.props
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
-        const ROWS = fields.map((x, i) => (
 
+        const ROWS = fields.map((x, i, arr) =>(
         <div className="row" key={i}>
             <div className="column w300">
                 <div className="label">{M.QUEST.label}</div>
@@ -39,7 +39,7 @@ export class EQuestionList extends React.Component {
             <div className="column w180">
                 <div className="label">{M.DEPART.label}</div>
                 <div className="value">
-                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key}/>
+                    <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key} dbVisibleVal={arr.get(i).get('org_label')}/>
                 </div>
             </div>
             <div className="column w130">
@@ -63,7 +63,6 @@ export class EQuestionList extends React.Component {
                 </div>
             </div>
         </div>));
-
 
         return (
             <React.Fragment>

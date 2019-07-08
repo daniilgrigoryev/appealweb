@@ -1,5 +1,4 @@
 import React from 'react'
-import withValidators from './tooltipper.js'
 import {AutoComplete} from 'primereact/autocomplete';
 import {getAc, getAcValue, getAcNoCache} from '../../services/acCacher.js'
 
@@ -8,193 +7,141 @@ class EAutocomplete extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSuggestions: null,
-            visibleval: null,
-            data: null,
-            dataKeyed: null
+            dataSuggestions: null, // отображаемая панель с предлагаемыми вариантами
+            visibleval: null, // видимое значение в интерфейсе (props.value - идентификатор записи, далее "ключ"; видимое значение - "текст")
+            data: null // пары ключ->текст в виде массива [{props,value}]
         };
 
-        this.dataWhere = null;
-
+        this.dataWhere = null; // внешнее условия для отображаемого списка
+        this.blur = this.blur.bind(this);
         this.change = this.change.bind(this);
         this.select = this.select.bind(this);
         this.getDatas = this.getDatas.bind(this);
         this.suggestData = this.suggestData.bind(this);
-        this.blur = this.blur.bind(this);
         this.setVisibleVal = this.setVisibleVal.bind(this);
     }
 
-    componentDidUpdate(prevData) { 
+    componentDidUpdate(prevData) { // обновление компонента
         const {value, dataWhere} = this.props;
-        const {dataKeyed,visibleval} = this.state;
-        
+        const {visibleval} = this.state;
         const prevDW = prevData.dataWhere;
-        const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere, prevDW);
+        const dataWhereChanged = dataWhere && prevDW && !_.isEqual(dataWhere, prevDW); // флажок - внешние условие есть и оно изменилось
         
-        if (dataWhereChanged) {
-            this.setState({data: null, dataKeyed: null, dataSuggestions: null, visibleval: ""});
-        } else if (value != prevData.value) {
-            if (value == '' || value == null){
+        if (dataWhereChanged) { // изменились внешние условия для отображаемого списка - сброс кэша
+            this.setState({data: null, dataSuggestions: null, visibleval: ""});
+        } else if (value != prevData.value) { // внешнее значение отсутствует или не менялось, но произошло изменение ключа
+            if (value == '' || value == null){ // для пустоты - пустота
                 this.setState({visibleval: ""});
-            } else if (prevData.value=='' || prevData.value==null) {
+            } else if (prevData.value=='' || prevData.value==null) { // если раньше была пустота, то нужно подгрузить значение из списка по ключу
                 this.setVisibleVal(value);
             }
         }
     }
 
-    componentDidMount() {
-        const {value} = this.props;
-        if (value) {
-            this.setVisibleVal(value)
+    componentDidMount() { // первичная загрузка автокомплита
+        const {value,dbVisibleVal} = this.props;
+        if (dbVisibleVal){
+            this.setState({visibleval:dbVisibleVal}); // значение задано снаружи
+        } else if (value){
+            this.setVisibleVal(value); // если задан ключ - подгрузить видимое значение
         }
     }
 
-    setVisibleVal(value){
-        const {acKey, dataKey,dataWhere} = this.props;
-        const key = acKey || dataKey;
-        const hasWhere = !_.isEmpty(dataWhere);
-        if (!hasWhere) {
-            if (key) { // quick way
-                getAcValue(key, value).then((visibleval) => {
-                    this.setState({visibleval});
-                });
-            } else { // long hard way
-                this.getDatas().then(x => {                        
-                    const queryLow = value.toLowerCase();
-                    const ret = this.filter(null, x.data, x.dataKeyed, queryLow);
-                    const first = _.first(ret);
-                    if (first) {
-                        this.setState({visibleval: first});
-                    }
-                });
+    async setVisibleVal(value){ // установка по ключу видимого значения
+        const {dataKey,dataWhere,dbVisibleVal} = this.props;
+        const noWhere = _.isEmpty(dataWhere); // флажок отсутствия внешнего условия
+        let visibleval = null; // переменная для видимого значения
+        let {data} = this.state;
+        if (noWhere) { // внешнего условия нет
+            (!_.size(data)) && (data = await this.getDatas()); // получение списка из стейта или снаружи                        
+            const queryLow = value.toLowerCase(); // перевод ключа в нижний регистр
+            const ret = this.filter(null,data,queryLow); // фильтрация
+            visibleval = _.first(ret); // первый (ожидаемо единственный) отфильтрованный элемент является искомым (пара {property,value})
+        } else { // внешнее условие есть
+            this.dataWhere = dataWhere; // сохранение в тело элемента условия из пропсов
+            const result = await getAcNoCache(dataKey, JSON.stringify(dataWhere)); // получение списка снаружи с внешним условием
+            const rows = result.data; // данные аякса содержат строки в data поле
+            if (rows && !rows.error) { // если есть строки и нет ошибки
+                visibleval = _.find(rows, x => x.property && x.property == value); // поиск пары {property,value}
             }
-        } else {
-            this.dataWhere = dataWhere;
-            getAcNoCache(key, JSON.stringify(dataWhere)).then((result) => {
-                const rows = result.data;
-                let findVal;
-                if (rows && !rows.error) {
-                    findVal = _.find(rows, x => x.property && x.property == value);
-                }
-                const val = findVal ? findVal.value : 0;
-                this.setState({visibleval: val});
-            });
         }    
-
+        visibleval = (visibleval && visibleval.value) || ''; // если текст не найден - попытка заменить его на прилетевший из бд плейсхолдер, иначе пустая строка
+        this.setState({visibleval,data});    
     }
 
-    async suggestData(event) {
-        const value = event.query.toLowerCase();
-        if (_.size(this.state.data)) { // ac has data
-            return this.filter(value);
-        } // else - loading needs...
-        const d = await this.getDatas();
-        return this.filter(value, d.data, d.dataKeyed)
+    async suggestData(event) { // формирование списка предпологаемых значений
+        const value = event.query.toLowerCase(); // введенное пользователем значение, переведенное в нижний регистр
+        const newState = {}; // дельта состояния 
+        let list; // список предположений
+        if (_.size(this.state.data)) { // данные уже есть
+            list = this.filter(value); // фильтрация
+        } else { // loading needs...
+            newState.data = await this.getDatas();// подсос данных
+            list = this.filter(value, newState.data)  // фильтрация
+        }
+        newState.dataSuggestions = list.map(x=>x.value); // вставка в дельту предполагаемых значений
+        this.setState(newState); // наложение дельты
     }
 
-    async getDatas() {
-        let d = null;
-
-        { // search list source
-            const {data, acKey, dataKey, datagetter, dataWhere, datapromise, readOnly} = this.props;
-            
-            if (datagetter) {
-                d = datagetter();
-            } else if (datapromise) {
-                d = await datapromise();
-            } else if (data) {
-                d = data;
-            } else {
-                const hasWhere = !_.isEmpty(dataWhere);
-                const key = acKey || dataKey;
-                d = hasWhere
-                        ? await getAcNoCache(key, JSON.stringify(dataWhere))
-                        : await getAc(key); // докинуть дополнительные параметры (из пропсов)  
-            }
-            d = d.data ? d.data : d;
-
-            if (readOnly && !d.find(x => x.value === '[отсутствует]')) {
-                d = [{property: '', value: '[отсутствует]'}, ...d];
+    async getDatas() { // загрузка списка
+        const {data, dataKey, datagetter, dataWhere, datapromise, readOnly, value, dbVisibleVal} = this.props;
+        let d = []; // список            
+        if (datagetter) { // задан синхронный геттер для данных
+            d = datagetter();
+        } else if (datapromise) { // задан асинхронный Promise геттер
+            d = await datapromise();
+        } else if (data) { // задан список как готовый объект
+            d = data;
+        } else if (dataKey){ // задан ключ-алиас для загрузки списка
+            d = _.isEmpty(dataWhere) // проверка на наличие внешнего условия
+                ? await getAc(dataKey) // загрузка без приключений
+                : await getAcNoCache(dataKey, JSON.stringify(dataWhere)); // загрузка с внешним условием
+        }
+        d = d.data || d;       
+        if (d && d.length && !d[0].hasOwnProperty('property')) { // если список не пустой и не имеет property поля в первом элементе - подозрение на обычный массив
+            d = d.map(x=>({property:x, value:x})); // преобразование массива в {proprty,value} набор
+        }
+        if (value && dbVisibleVal){ // есть пришедшее снаружи значение
+            const found = d.filter(x=>x.value==value).length; //  поиск наружных значений в текущем списке
+            if (!found){ // если их нет
+                d = [{value: +value,property:dbVisibleVal}, ...d]; // вкидывание пары вручную
             }
         }
-
-        let dataKeyed = d;
-        let dataLabels = d;
-        if (d && d.length) {
-
-            // warning
-            if (typeof d[0].property === 'string' && d[0].value) {
-                dataLabels = d.map(x => x.value);
-            } else {
-                // dataKeyed = null;
-               dataKeyed = d.map(x=>({property: x, value: x}));
-            }
+        if(readOnly){ 
+            d = [{property: '', value: '[отсутствует]'}, ...d]; // если автокомплит только для чтения - вкидываение в список значения 'отсутствует' для отображения безнадежной пустоты
         }
-        return {data: dataLabels, dataKeyed};
+        return d;
     }
 
-    filter(queryLow, data, dataKeyed, queryKey = null) {
-        const d = this.state.data || data;
-        if (!d || d.error) {
-            return [];
+    filter(queryLowValue, data, queryKey = null) { // фильтрация списка
+        const d = this.state.data || data; // забор списка из стейта или из аргументов
+        if (!d || d.error) { // нет списка или он с ошибкой
+            return []; // выход
+        } else if (queryKey) { // есть и список есть
+            const queryLow = queryKey.toLowerCase(); // перевод ключа в нижний регистр
+            return d.filter((row) => row.property == queryLow); // возврат регистронезависимого поиска по ключу
+        } else if (!queryLowValue){
+            return d;
         }
-
-        if (queryKey) {
-            const first = _.first(dataKeyed);
-            const queryLow = queryKey.toLowerCase();
-            return (first.property == first.value) // noKey
-                    ? d.filter((row) => row.toLowerCase().indexOf(queryLow) > -1)
-                    : dataKeyed.filter((row) => row.property == queryLow).map(x => x.value);
-        }
-
-        const dataSuggestions = d.filter((row) => row.toLowerCase().indexOf(queryLow) > -1);
-        const dState = {dataSuggestions};
-
-        if (data && data.length) {
-            dState.data = data;
-            (dataKeyed && dataKeyed.length) && (dState.dataKeyed = dataKeyed);
-        }
-        this.setState(dState);
-        return dataSuggestions;
+        return d.filter((row)=>(row.value+'').toLowerCase().indexOf(queryLowValue) > -1); // озврат регистронезависимого поиска по значению
     }
 
-    getKey(value) {
-        const {data, dataKeyed} = this.state;
-
-        if (!data) {
-            return null;
-        } else if (!dataKeyed) {
-            return value;
-        }
-
-        let K;
-        for (let key in dataKeyed) {
-            if ((K = dataKeyed[key]).value == value) {
-                return K.property;
+    getKey(value) { // получение ключа по тексту
+        const {data} = this.state; // пары ключ-значение
+        if (data) { // если существуют - попытка поиска
+            let K; // хранилка для текущей пары
+            for (let key in data) { // перебор ключей
+                if ((K = data[key]).value === value) { // если текст совпал
+                    return K.property; // то возврат ключа
+                }
             }
         }
-        return null;
+        return null; // увы
     }
 
     blur(event) {
         const value = event.target.value.toLowerCase();
-        const {data} = this.state;
-
-        if (value && data) {
-            let match = data.filter(function (row) {
-                return row.toLowerCase().indexOf(value) > -1;
-            }).length;
-            if (!match) {
-                const {onChange} = this.props; 
-                this.setState({visibleval: ''},()=>{
-                    onChange && (onChange(null));
-                });
-            }
-        } else {
-            setTimeout(() => {
-                this.blur(event);
-            }, 200);
-        }
+        (!value) && (this.change({value:''}));
     }
 
     change(event, cb = null) {
@@ -208,7 +155,7 @@ class EAutocomplete extends React.Component {
         }
     }
 
-    select(event) {
+    select(event) { 
         const {onChange, onSelect, name} = this.props;
         const cb = !onChange ? null : () => {
             const {value} = event;
@@ -225,22 +172,18 @@ class EAutocomplete extends React.Component {
         const readonly = readOnly;
         const onChange = this.change;
         const onSelect = this.select;
-        const onClick = this.click;
         const onBlur = () => this.blur(window.event);
         const suggestions = dataSuggestions;
         const completeMethod = this.suggestData;
         const dropdown = true;
         const value = visibleval;
-        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect, onClick, onBlur}} />
-        } //
-    }
+        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect, onBlur}} />
+    } //
+}
 
-//const EAutocomplete = withValidators(AAutocomplete);
+const FAutocomplete = function FAutocomplete(props) {
+    const {input, meta} = props;
+    return <EAutocomplete {...props} {...input} {...meta} reduxformfield="true" />
+}  //
 
-// redux Form component
-    const FAutocomplete = function FAutocomplete(props) {
-        const {input, meta} = props;
-        return <EAutocomplete {...props} {...input} {...meta} reduxformfield="true" />
-    }  //
-
-    export {EAutocomplete, FAutocomplete};
+export {EAutocomplete, FAutocomplete};
