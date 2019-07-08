@@ -24,6 +24,7 @@ import IncomingLetter from '../letter/inc/incomingLetter.js'
 import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
 import FabulaDocViewer from '../fabulas/fabulaDocViewer.js'
+import User from '../../../images/user.svg'
 
 import {getVersion} from '../../reducers/rootReducer.js'
 

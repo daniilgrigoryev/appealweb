@@ -28,8 +28,11 @@ module.exports = {
                 include: /node_modules/,
                 loaders: ['style-loader', 'css-loader']
             },{
-                test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.(png|svg|gif)$/,
+                loader: 'url-loader?limit=1&name=src/images/[name].[ext]'
+            },{
+                test: /\.(woff|woff2|eot|ttf)$/,
+                loader: 'url-loader?limit=1000000&name=src/fonts/[name].[ext]'
             },{
                 test: /\.scss$/,
                 exclude: /node_modules/,
