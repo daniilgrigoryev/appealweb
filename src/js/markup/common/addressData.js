@@ -235,17 +235,17 @@ class AddressData extends React.Component {
         return (
             <div scrollanchor='adressData'>
                 <Card className="box-card sectionCard" header={
-                <div className='headline'>
-                    <h3>Адрес</h3>
-                </div>
-                }>
-                <form className="form">
-                    <div className="form-container">
-                        <div className="wrap">
-                            {ADDRESS}
-                        </div>
+                    <div className='headline'>
+                        <h3>Адрес</h3>
                     </div>
-                </form>
+                    }>
+                    <form className="form">
+                        <div className="form-container">
+                            <div className="wrap">
+                                {ADDRESS}
+                            </div>
+                        </div>
+                    </form>
                 </Card>
             </div>
         )

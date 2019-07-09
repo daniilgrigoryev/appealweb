@@ -184,12 +184,14 @@ class AppealExplorer extends React.Component {
                     </div>
                 }>
                 <SearchRoot {...{fields,setGetter,setRemover}}/>
-                <div className='btns align-t'>
-                    <Button type="primary" onClick={this.search}>Искать</Button>
-                    <Button type="primary" onClick={this.search}>Поиск</Button>
-                    <Button type="primary" onClick={this.searchMy}>Поиск среди своих</Button>
-                    <Button type="primary" onClick={remove}>Очистить</Button>
-                    {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
+                <div className='btns align-t mt18'>
+                    <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
+                    <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.searchMy}>Поиск среди своих</Button>
+                    {!noTable && (<Button className="txt-middle mx6"  type="primary" onClick={this.getXFile}>xls</Button>)}
+                    <Button className="txt-middle" type="text" onClick={remove}>
+                        <i className="ico load align-t mr12"/>
+                        Очистить
+                    </Button>
                 </div>
                 </Card>
 

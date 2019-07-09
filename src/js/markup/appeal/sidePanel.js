@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
-import {Button, Card, Layout, Tag} from 'element-react'
+import {Button, Card, Layout, Tag, Tooltip, Popover} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../components/finput.js'
 import {EAutocomplete, FAutocomplete} from '../components/fautocomplete.js'
@@ -425,81 +425,98 @@ class SidePanel extends Component {
 
     return (
             <div className='ap-side-panel-wrap'>
-                <div className='ap-side-panel-left'>
-                    <div className="el-card__header">
-                        <h3 className="ap-h3">Статус и исполнитель</h3>
+                <Card className='ap-side-panel-left box-card sectionCard' bodyStyle={{ padding: 0 }} header={
+                    <div className='headline'>
+                        <h3>Статус и исполнитель</h3>
                     </div>
+                    }>
+                    <div className='bg-white px12 py12'>
 
-                    <div className='mr12'>
-                        <table className='ap-side-panel-left__statuses w-full'>
-                            <tbody>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.REG_NUM.label}</td>
-                                <td>
-                                    <span className={`px6 py1 mb6 round bg-blue-faint inline-block ${registration_number ? '' : 'opacity50'}`}>
-                                        {registration_number ? registration_number : '<Отсутствует>'}
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.REG_DATE.label}</td>
-                                <td>
-                                    <Field disabled={disabled} className='w-full' component={FPicker} name={M.REG_DATE.name} date='+'/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table className='w-full'>
-                            <tbody>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.STATUS.label}</td>
-                                <td>{STATUS}</td>
-                            </tr>  
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.DEPART.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_org_key' dataKey='DEPARTMENTS_LIST_KEY' dbVisibleVal={exec_org_key_label}/></td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.EXECUTOR.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_emp_key' dataKey='EMPLOYESS_LIST_KEY' dbVisibleVal={exec_emp_key_label}/></td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.CHK_DATE.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FPicker} name={M.CHK_DATE.name} date='+'/></td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption w120'>{M.CLS_DATE.label}</td>
-                                <td><Field disabled={disabled} className='w-full' component={FPicker} name={M.CLS_DATE.name} date='+'/></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <form className="form form-side-panel">
+                            <div className="form-container">
+                                <div className="wrap">
+                                    <div className="item item--full">
+                                        <small className="label">{M.REG_NUM.label}</small>
+                                        <div className={`value ${registration_number ? '' : 'opacity50'}`}>
+                                            {registration_number ? registration_number : '<Отсутствует>'}
+                                        </div>
+                                    </div>
+                                    <div className="item item--full">
+                                        <small className="label">{M.REG_DATE.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} className='w-full' component={FPicker} name={M.REG_DATE.name} date='+'/>
+                                        </div>
+                                    </div>
 
-                     <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>
-                        <h3 className="ap-h3">Печать малый</h3>
+                                    <div className="item item--full">
+                                        <small className="label">{M.STATUS.label}</small>
+                                        <div className="value">{STATUS}</div>
+                                    </div>
+                                    <div className="item item--full">
+                                        <small className="label">{M.DEPART.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_org_key' dataKey='DEPARTMENTS_LIST_KEY' dbVisibleVal={exec_org_key_label}/>
+                                        </div>
+                                    </div>
+                                    <div className="item item--full">
+                                        <small className="label">{M.EXECUTOR.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} className='w-full' component={FAutocomplete} name='exec_emp_key' dataKey='EMPLOYESS_LIST_KEY' dbVisibleVal={exec_emp_key_label}/>
+                                        </div>
+                                    </div>
+                                    <div className="item item--full">
+                                        <small className="label">{M.CHK_DATE.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} className='w-full' component={FPicker} name={M.CHK_DATE.name} date='+'/>
+                                        </div>
+                                    </div>
+                                    <div className="item item--full">
+                                        <small className="label">{M.CLS_DATE.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} className='w-full' component={FPicker} name={M.CLS_DATE.name} date='+'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div className="el-card__header el-card__header--top-border" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>
-                        <h3 className="ap-h3">Печать большой</h3>
+                    <div className="doc-actions">
+                        <Popover popperClass="popperAction" placement="bottom" width="90" trigger="hover" content={(
+                            <div>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>Малая</Button>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>Большая</Button>
+                            </div>
+                        )}>
+                            <Button className="px0 py0 cursor-pointer mx18 opacity75 opacity100-on-hover" type="text" >
+                                <i className="ico printer"/>
+                            </Button>
+                        </Popover>
+                        
+                        <Tooltip effect="dark" content="Дубликат" placement="bottom">
+                            <Button className="px0 py0 cursor-pointer mx18 opacity75 opacity100-on-hover" type="text" onClick={()=>this.duplicate()}>
+                                <i className="ico doubles"/>
+                            </Button>
+                        </Tooltip>
                     </div>
-                    {showDupe && <div className="el-card__header el-card__header--top-border" onClick={()=>this.duplicate()}>
-                        <h3 className="ap-h3">Дублировать</h3>
-                    </div>}
-
-                    <div className="el-card__header el-card__header--top-border">
-                        <h3 className="ap-h3">Список подразделов</h3>
-                    </div>
-
-                    <ul className='ap-side-panel-left__nav mt12'>
-                        <li onClick={scrollNavi('basic')}>Основные сведения</li>
-                        <li onClick={scrollNavi('claimant')}>Сведения о заявителе</li>
-                        <li onClick={scrollNavi('organizations')}>Организации</li>
-                        <li onClick={scrollNavi('summary')}>Краткое содержание</li>
-                        <li onClick={scrollNavi('topics')}>Темы обращения</li>
-                        <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
-                        <li onClick={scrollNavi('links')}>Связанные обращения/письма</li>
-                        <li onClick={scrollNavi('archive')}>Архивная информация</li>
-                    </ul>
-                </div>
+                    <Card className="box-card sectionCard" bodyStyle={{ padding: 0 }} header={
+                        <div className='headline'>
+                            <h3>Список подразделов</h3>
+                        </div>
+                    }>
+                        <div className="bg-white py18">
+                            <ul className='ap-side-panel-left__nav'>
+                                <li onClick={scrollNavi('basic')}>Основные сведения</li>
+                                <li onClick={scrollNavi('claimant')}>Сведения о заявителе</li>
+                                <li onClick={scrollNavi('organizations')}>Организации</li>
+                                <li onClick={scrollNavi('summary')}>Краткое содержание</li>
+                                <li onClick={scrollNavi('topics')}>Темы обращения</li>
+                                <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
+                                <li onClick={scrollNavi('links')}>Связанные обращения/письма</li>
+                                <li onClick={scrollNavi('archive')}>Архивная информация</li>
+                            </ul>
+                        </div>
+                    </Card>
+                </Card>
                 <div className='ap-side-panel-content'>
                     <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
                         <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
