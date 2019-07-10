@@ -12,6 +12,7 @@ import {ESwitch} from '../components/switch.js'
 import {ESelect} from '../components/select.js'
 import {EPicker} from '../components/picker.js'
 import {ERadio} from '../components/radio.js'
+import ArrowBack from '../../../images/arrow-back.svg'
 
 export default class CrudRow extends React.Component {
 
@@ -146,7 +147,7 @@ export default class CrudRow extends React.Component {
         return (
             <div ref='crudRow'>
                 <h4 className="flex-parent flex-parent--center-cross px18 pt18 ap-h4">
-                    <button onClick={hideRow} className='ap-button-back mr12' title='Вернуться в список'/>
+                    <button onClick={hideRow} className='ap-button-back mr12' title='Вернуться в список' type='button' />
                     {NWR ? 'Создание новой записи' : 'Редактирование записи'}
                 </h4>
                 <hr className='txt-hr my18'/>

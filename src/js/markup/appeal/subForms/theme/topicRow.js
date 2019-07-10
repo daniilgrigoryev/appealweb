@@ -25,7 +25,7 @@ const M_STATUS = mapping.status;
 const data2str = (data) =>{
     if (typeof data == 'string'){
         try{
-            return moment(Date.parse(data)).format('DD.MM.YYYY');
+            return moment(Date.parse(data.replace(/"|'/g, ''))).format('DD.MM.YYYY');
         } catch(e){}
     }
 
@@ -45,8 +45,15 @@ class TopicRow extends React.PureComponent {
 
     constructor(props){
         super(props);
+        const { value , apn_list } = this.props;
+        const post_n = value ? value.get('post_n') : null;
+        const post_date = value ? value.get('post_date') : null;
+        const integWithPost = apn_list ? apn_list.find((item) => {
+            if (item.get('date')) return item.get('date') === post_date && item.get('apn') === post_n
+        }) : false;
+
         this.state = {
-            manualPostLink: false
+            manualPostLink: !(post_n && post_date && integWithPost),
         }
     }
 
@@ -158,32 +165,45 @@ class TopicRow extends React.PureComponent {
 
         if (!expanded) {
             return (<React.Fragment key={id} >
-                    <tr>
-                        <td>
-                            <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12'>{this.props.getValue(P.get(M.CAT.name))}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12 cutted-text wmax180' title={numberRuling}>{numberRuling}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12'>{data2str(P.get(M.POST_DATE.name))}</span>
-                        </td>
-                        <td colSpan='2' className='pr12 align-r'>
-                           <span className="ml12">
-                               <Button type="text" onClick={onXpd}><i className="el-icon-edit color-green"/></Button>
-                               {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
-                               {(disabled || responseMode) ? null : <Button size="small" type="text" onClick={onRmv}><i className="el-icon-close color-red-dark"/></Button>}
-                           </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan='6'>
-                            <hr className='txt-hr my18'/>
-                        </td>
-                    </tr>
+                    <div className="wrap wrap--infoview">
+
+                        <div className="left-aside">
+                            <div className="list-num mr12">{ind + 1}</div>
+                            <Button type="text" onClick={onXpd}>
+                                <i className="ico round edit"/>
+                            </Button>
+
+                        </div>
+                        <div className="right-aside">
+                            {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}>
+                                <i className="ico round info"/>
+                            </Button>}
+                             {(disabled || responseMode) ? null : <Button type="text" onClick={onRmv}>
+                                <i className="ico round minus"/>
+                            </Button>}
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.CAT.label}</small>
+                            <div className="value">
+                                {this.props.getValue(P.get(M.CAT.name)) 
+                                    ? <b>{this.props.getValue(P.get(M.CAT.name))}</b> 
+                                    : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                                }
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.POST_N.label}</small>
+                            <div className="value" title={numberRuling}>
+                                {numberRuling ? numberRuling : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.POST_DATE.label}</small>
+                            <div className="value">
+                                {data2str(P.get(M.POST_DATE.name)) ? data2str(P.get(M.POST_DATE.name)) : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                            </div>
+                        </div>
+                    </div>
                 </React.Fragment>);
         } //
 
@@ -206,8 +226,8 @@ class TopicRow extends React.PureComponent {
     //
         const postSelect = (args)=>{ // подсос даты
             const AL = apn_list;
-            const newDateStr = _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value();
-            const newVal = !newDateStr ? null : new Date(Date.parse(newDateStr));
+            const newDateStr = AL ? _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value() : false;
+            const newVal = newDateStr ? new Date(Date.parse(newDateStr)) : null;
             dispatch(change(`appeal`, fldD, newVal));
         }
 
@@ -238,34 +258,34 @@ class TopicRow extends React.PureComponent {
             reloadRow(); 
         }
 
-        let STATUS_BTN = (<button>Нет исполнителя</button>);//
+        let STATUS_BTN = (<button type='button' >Нет исполнителя</button>);//
         if (_.size(executor_id)){
-            STATUS_BTN = (<button onClick={()=>statusChanger('START')} >Назначен исполнитель. Запустить в работу</button>);//
+            STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('START')} >Назначен исполнитель. Запустить в работу</button>);//
 
             if (stat_in_work){/*
                 STATUS_BTN = (
                     <React.Fragment>
-                        <button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>
-                        <button onClick={()=>statusChanger('PAUSE')} >Остановить производство</button>
+                        <button type='button'  onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>
+                        <button type='button'  onClick={()=>statusChanger('PAUSE')} >Остановить производство</button>
                     </React.Fragment>);*/
 
-                STATUS_BTN = (<button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
+                STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
             } else if (stat_wait_post){
-               // STATUS_BTN = (<button onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
-               STATUS_BTN = (<button onClick={()=>statusChanger('COMMIT')} >Ожидает отправки</button>);/// 
+               // STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
+               STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('COMMIT')} >Ожидает отправки</button>);/// 
             } else if (stat_done){
-                STATUS_BTN = (<button>Исполнено</button>);//
+                STATUS_BTN = (<button type='button' >Исполнено</button>);//
             }
         }
 
         const editable =
             <React.Fragment key={id + 'e1'}>
-                <tr>
+                <tr theme_id={id}>
                     <td colSpan='6'>
                         <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                             <table>
                                 <tbody>
-                                <tr>
+                                <tr scrollAnchor='+'>
                                     <td>
                                         <span className='ap-table-list-number mr12'>{ind + 1}</span>
                                     </td>
@@ -308,8 +328,11 @@ class TopicRow extends React.PureComponent {
                                             onText='РУЧН'
                                             offText='АВТ'
                                             onChange={(value)=>{
+                                                if (!value) {
+                                                    postSelect({visibleval: null, key: ''+post_n, name: fldN});
+                                                }
                                                 this.setManualPostLink(value);
-                                                postClear(); 
+                                                //postClear(); 
                                             }}>
                                           </Switch>)}
                                     

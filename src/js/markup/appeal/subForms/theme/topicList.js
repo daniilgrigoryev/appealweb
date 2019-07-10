@@ -46,11 +46,18 @@ class ETopicList extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        const eid = _.chain(this.props.fileds).first().get('id').value();
+      
         this.state = {
             acCateg: null,
-            expandedId: eid
+            expandedId: -1
         };
+
+        const theme_id = sessionStorage.getItem('show_theme');
+        sessionStorage.removeItem('show_theme');
+        if (theme_id){
+            this.state.expandedId = this.props.fields.getAll().findIndex(x=>x.get('id')==theme_id);
+            setTimeout(()=>(document.querySelector(`tr[theme_id="${theme_id}"]`).scrollIntoView()),500);
+        }
     }
 
     componentDidMount(){
@@ -119,29 +126,16 @@ class ETopicList extends React.PureComponent {
         return (
             <React.Fragment>
                 {!fields.length ?
-                    <p className='mt-neg18 mb18 txt-em color-gray'>Нет добавленных тем обращения</p>
+                    <p className='my6 txt-em color-gray align-center'>Нет добавленных тем обращения</p>
                     :
-                    <table className='w-full mb18'>
-                        <thead>
-                        <tr>
-                            <th className='ap-table__header'>№</th>
-                            <th className='ap-table__header'>{M.CAT.label}</th>
-                            <th className='ap-table__header'>{M.POST_N.label}</th>
-                            <th className='ap-table__header'>{M.POST_DATE.label}</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {ROWS}
-                        </tbody>
-                    </table>
+                    
+                    <React.Fragment>{ROWS}</React.Fragment>
                 }
 
                 {(disabled || responseMode || adminMode) ? null :
-                    <Button size="small" icon="plus" type="success" plain={true} onClick={add}
-                            className="flex-parent mb18"
-                            title='Добавить тему'>Добавить</Button>
+                    <Button size="small" icon="plus" plain={true} onClick={add}
+                            className={`flex-parent mx-auto block ${!fields.length ? 'my6' : 'mt18'}`}
+                            title='добавить тему обращения'>Новая тема обращения</Button>
                 }
             </React.Fragment>
         )

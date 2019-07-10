@@ -1,5 +1,6 @@
 import React from 'react'
 import * as _ from 'lodash'
+import Immutable from 'immutable'
 import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {FInput, EInput} from '../../components/finput.js'
@@ -7,7 +8,6 @@ import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as V from '../../../validators'
 import mapping from '../mapping.js'
-import Immutable from 'immutable'
 
 const im = (obj) => Immutable.fromJS(obj);
 const M = mapping.apnList;

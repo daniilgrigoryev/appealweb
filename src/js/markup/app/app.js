@@ -24,6 +24,21 @@ import IncomingLetter from '../letter/inc/incomingLetter.js'
 import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
 import FabulaDocViewer from '../fabulas/fabulaDocViewer.js'
+import User from '../../../images/user.svg'
+import UserAvatarBurger from '../../../images/user-avatar-burger.svg'
+import IcoRoundMinus from '../../../images/ico-round-minus.svg'
+import IcoRoundPlus from '../../../images/ico-round-plus.svg'
+import IcoRoundInfo from '../../../images/ico-round-info.svg'
+import IcoMinus from '../../../images/ico-minus.svg'
+import IcoUpload from '../../../images/ico-upload.svg'
+import IcoDownload from '../../../images/ico-download.svg'
+import IcoScan from '../../../images/ico-scan.svg'
+import IcoDotted from '../../../images/ico-dotted.svg'
+import IcoDefault from '../../../images/ico-default.svg'
+import IcoTrash from '../../../images/ico-trash.svg'
+import IcoLoading from '../../../images/ico-loading.svg'
+import Printer from '../../../images/printer.svg'
+import Doubles from '../../../images/doubles.svg'
 
 import {getVersion} from '../../reducers/rootReducer.js'
 
@@ -33,13 +48,30 @@ const relocate = (newPath) => {
     window.location.hash = ('#/' + newPath);
 }
 
-export {relocate}
+const hashParams  = (a)=>{  
+    if (!a || !a.length){
+        return {};    
+    }    
+    if (a[0]=='#'){
+        a=a.substring(1);
+    }
+    const ret = {};
+    const pairs = a.split('&').filter(x=>!!x);
+    if (pairs.length){
+        for (let p in pairs){
+            const [field,val] = pairs[p].split('=');
+            ret[field] = val;
+        }
+    }
+    return ret;
+}; 
+
+export {relocate,hashParams}
 
 export default function App() {
     return (
         <HashRouter>
             <LayoutConnected>
-               
                     <Switch>
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
                         <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
@@ -93,7 +125,7 @@ class LayoutMain extends React.Component {
 
         const {children, dispatch, sessionId} = this.props;
 
-        const onSelect = (newVal) => {
+        const onSelect = (newVal) => { 
             if (newVal == 'LOGOUT') {
                 relocate('');
                 dispatch(logoutRequest(sessionId));
@@ -102,7 +134,7 @@ class LayoutMain extends React.Component {
             }
         }
 
-        const onLogout = () => {
+        const onLogout = () => { 
             relocate('');
             dispatch(logoutRequest(sessionId));
         }

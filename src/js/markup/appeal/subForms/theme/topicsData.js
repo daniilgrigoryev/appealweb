@@ -26,20 +26,18 @@ const TopicsData = React.memo(props => {
 
     return (
         <div scrollanchor='topics' id='topics'>
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card" header={
-                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                            <h3 className='ap-h3 flex-parent flex-parent--center-cross'>{headerTitle}</h3>
-                        </div>
-                    }>
-                        <form onSubmit={handleSubmit}>
-                            <h4 className='ap-h4'>Список тем обращения</h4>
-                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges}}/>
-                        </form>
-                    </Card>
-                </Layout.Col>
-            </Layout.Row>
+            <Card className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>{headerTitle}</h3>
+                </div>
+            }>
+                <div className="form-container">
+                    <form onSubmit={handleSubmit}>
+                        <h4 className='ap-h4'>Список тем обращения</h4>
+                        <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges}}/>
+                    </form>
+                </div>
+            </Card>
         </div>
     )
 }); //

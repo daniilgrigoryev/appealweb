@@ -54,7 +54,7 @@ class Login extends React.Component {
               <h1>Login</h1>
               <input type="text"     placeholder="Username" id="username" onChange={this.onInput} value={username}  />
               <input type="password" placeholder="Password" id="password" onChange={this.onInput} value={password}  />
-              <button onClick={this.onLogin}>Submit</button>
+              <button type='button' onClick={this.onLogin}>Submit</button>
           </div>
         </div>
     ); //

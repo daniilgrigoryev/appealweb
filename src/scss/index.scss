@@ -181,7 +181,7 @@ div.tooltipWrap {
   border-radius: 100%;
   border: 1px solid $color-input-border;
   outline: none;
-  background: url("/src/images/arrow-back.svg") no-repeat center;
+  background: url($publicpath + "/images/arrow-back.svg") no-repeat center;
   background-size: 26px;
   transition: all 150ms linear;
 
@@ -275,7 +275,7 @@ div.tooltipWrap {
   }
 }
 .user-avatar-burger{
-  background: url("/src/images/user-avatar-burger.svg") no-repeat center;
+  background: url($publicpath + "/images/user-avatar-burger.svg") no-repeat center;
   height: 14px;
   width: 13px;
   margin-left: 10px;
@@ -285,7 +285,7 @@ div.tooltipWrap {
   $size: 42px;
   width: $size;
   height: $size;
-  background: url("/src/images/user.svg") no-repeat center;
+  background: url($publicpath + "/images/user.svg") no-repeat center;
   background-size: contain;
   // opacity: 0.65;
   filter: grayscale(80%);
@@ -478,6 +478,8 @@ div.tooltipWrap {
     }
   }
 }
+
+
 .wrap{
   display: grid;
   // grid-template-columns: repeat(2, 1fr);
@@ -485,7 +487,45 @@ div.tooltipWrap {
   grid-row-gap: 17px;
   grid-column-gap: 17px;
   grid-auto-flow: dense;
+  position: relative;
 
+
+  &.wrap--infoview{
+    border-bottom: 1px solid #CCCCCC;
+    padding: 25px 0;
+    .item{
+      align-items: flex-start;
+      .label{
+        color: #6B94C2;
+      }
+      .value{
+        color: #505A6E;
+      }
+    }
+    .right-aside{
+      position: absolute;
+      right: 15px;
+      top: 10px;
+    }
+    .left-aside{
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .list-num{
+        font-size: 48px;
+        color: #CCCCCC;
+        line-height: 100%;
+        font-weight: 100;
+      }
+    }
+
+
+
+  }
 
   .item{
     display: grid;
@@ -629,48 +669,52 @@ i.ico{
   width: 25px;
   height: 25px;
   &.round{
+    &.edit{
+      background-image: url($publicpath + '/images/ico-round-edit.svg');
+      background-repeat: no-repeat;
+    }
     &.minus{
-      background-image: url('/src/images/ico-round-minus.svg');
+      background-image: url($publicpath + '/images/ico-round-minus.svg');
       background-repeat: no-repeat;
     }
     &.plus{
-      background-image: url('/src/images/ico-round-plus.svg');
+      background-image: url($publicpath + '/images/ico-round-plus.svg');
       background-repeat: no-repeat;
     }
     &.info{
-      background-image: url('/src/images/ico-round-info.svg');
+      background-image: url($publicpath + '/images/ico-round-info.svg');
       background-repeat: no-repeat;
       background-size: contain;
     }
   }
   &.minus{
-    background-image: url('/src/images/ico-minus.svg');
+    background-image: url($publicpath + '/images/ico-minus.svg');
     background-repeat: no-repeat;
     background-position: center;
   }
   &.upload{
     width: 16px;
     height: 16px;
-    background-image: url('/src/images/ico-upload.svg');
+    background-image: url($publicpath + '/images/ico-upload.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
   }
   &.download{
-    background-image: url('/src/images/ico-download.svg');
+    background-image: url($publicpath + '/images/ico-download.svg');
     background-repeat: no-repeat;
     background-size: contain;
   }
   &.scan{
     width: 21px;
     height: 21px;
-    background-image: url('/src/images/ico-scan.svg');
+    background-image: url($publicpath + '/images/ico-scan.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
   }
   &.dot{
-    background-image: url('/src/images/ico-dotted.svg');
+    background-image: url($publicpath + '/images/ico-dotted.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -678,7 +722,7 @@ i.ico{
     height: 20px;
   }
   &.defaultFile{
-    background-image: url('/src/images/ico-default.svg');
+    background-image: url($publicpath + '/images/ico-default.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -686,7 +730,7 @@ i.ico{
     height: 87px;
   }
   &.delete{
-    background-image: url('/src/images/ico-trash.svg');
+    background-image: url($publicpath + '/images/ico-trash.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -694,7 +738,7 @@ i.ico{
     height: 14px;
   }
   &.load{
-    background-image: url('/src/images/ico-loading.svg');
+    background-image: url($publicpath + '/images/ico-loading.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -702,7 +746,7 @@ i.ico{
     height: 16px;
   }
   &.printer{
-    background-image: url('/src/images/printer.svg');
+    background-image: url($publicpath + '/images/printer.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -710,7 +754,7 @@ i.ico{
     height: 16px;
   }
   &.doubles{
-    background-image: url('/src/images/doubles.svg');
+    background-image: url($publicpath + '/images/doubles.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -718,8 +762,6 @@ i.ico{
     height: 16px;
   }
 }
-
-
 
 /*
 

@@ -87,7 +87,7 @@ class StatusData extends React.Component {
                              </table>
                          )}>
                     <button style={styleBtn} className='bg-blue opacity25 opacity75-on-hover'
-                            title='Показать состояние'>
+                            title='Показать состояние' type='button' >
                         <i className="el-icon-setting color-white"/>
                     </button>
                 </Popover>

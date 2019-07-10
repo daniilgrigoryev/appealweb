@@ -167,9 +167,9 @@ const IshDocRow = React.memo(props => {
     const sendd = <span>Отправлено</span>;
     const nostat = !showBtn ? null : (
         <React.Fragment>
-            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >Передать на проверку (ЭЦП)</Button>
+            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >На проверку (ЭЦП)</Button>
             <Button onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
-            <Button onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Подпись не требуется</Button>
+            <Button onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Без подписи</Button>
         </React.Fragment>);
 
     const STATUS = ({
@@ -218,16 +218,10 @@ const IshDocRow = React.memo(props => {
                                 <Field disabled={disabled || !_.isEmpty(status_alias)} component={FAutocomplete} name={field + 'verifier_id'} dataKey={M.PODPISAL.key} dbVisibleVal={value.get('verifier_name')} />
                             </div>
                         </div>
-                        <div className="item">
-                            {/* <small className="label"></small>
-                            <div className="value">
-                            </div> */}
-                            {disabled? null : STATUS}
+                        <div className="item" style={{'display': 'flex','flexDirection': 'row'}}>
+                            {prop_disabled ? null : STATUS}
                         </div>
                         <div className="item">
-                            {/* <small className="label"></small>
-                            <div className="value">
-                            </div> */}
                             {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
                         </div>
                     </div>
@@ -288,25 +282,23 @@ const IshDocRow = React.memo(props => {
                 </div>
             </Card>
 
-
             <div className='flex-parent flex-parent--center-cross'>
                 <h4 className="ap-h4 mr18 mb0">{'' && M.FAB_DOC.label}</h4>
                 {DOC_MAKER}
             </div>
 
-            <Card className="box-card sectionCard" header={
+            <Card className="box-card sectionCard" bodyStyle={{'padding': 0}} header={
                 <div className='headline'>
                     <h3>{M.FORMED_DOCS.label}</h3>
                 </div>
-            } bodyStyle={{'padding': 0}}>
+            }>
                 <div className="form-container">
                     <FilesStorage {...{files,setFiles,fTypes,sessionId,status_alias,disabled}} />
                 </div>
             </Card>
 
             <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross bg-white px18 py12'>
-                {disabled ? null :
-                <Button type="text" onClick={onRmv}>
+                {disabled ? null : <Button type="text" onClick={onRmv}>
                     <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
                 </Button>}
                 <Button type="text" size="small" onClick={collapse}>

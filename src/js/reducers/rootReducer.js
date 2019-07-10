@@ -26,7 +26,7 @@ const reduceLogout = (state,action)=>{
   AJAX.eraseSid();
   if (state.get('externalLogin')){
     window.close();
-  } else {
+  } else { 
     window.location.reload();
   }
   return state
@@ -59,8 +59,7 @@ const rootReducer = (state, action)=>{
 const initialState = im({
     general : {
       system: '',
-      externalLogin: false && true,
-
+      externalLogin: (DEV_MODE ?  false : true),
       user : {
         username : '',
         sessionId: ''
