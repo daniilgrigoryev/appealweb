@@ -25,7 +25,7 @@ const M_STATUS = mapping.status;
 const data2str = (data) =>{
     if (typeof data == 'string'){
         try{
-            return moment(Date.parse(data)).format('DD.MM.YYYY');
+            return moment(Date.parse(data.replace(/"|'/g, ''))).format('DD.MM.YYYY');
         } catch(e){}
     }
 
@@ -45,8 +45,15 @@ class TopicRow extends React.PureComponent {
 
     constructor(props){
         super(props);
+        const { value , apn_list } = this.props;
+        const post_n = value ? value.get('post_n') : null;
+        const post_date = value ? value.get('post_date') : null;
+        const integWithPost = apn_list ? apn_list.find((item) => {
+            if (item.get('date')) return item.get('date') === post_date && item.get('apn') === post_n
+        }) : false;
+
         this.state = {
-            manualPostLink: false
+            manualPostLink: !(post_n && post_date && integWithPost),
         }
     }
 
@@ -206,8 +213,8 @@ class TopicRow extends React.PureComponent {
     //
         const postSelect = (args)=>{ // подсос даты
             const AL = apn_list;
-            const newDateStr = _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value();
-            const newVal = !newDateStr ? null : new Date(Date.parse(newDateStr));
+            const newDateStr = AL ? _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value() : false;
+            const newVal = newDateStr ? new Date(Date.parse(newDateStr)) : null;
             dispatch(change(`appeal`, fldD, newVal));
         }
 
@@ -308,8 +315,11 @@ class TopicRow extends React.PureComponent {
                                             onText='РУЧН'
                                             offText='АВТ'
                                             onChange={(value)=>{
+                                                if (!value) {
+                                                    postSelect({visibleval: null, key: ''+post_n, name: fldN});
+                                                }
                                                 this.setManualPostLink(value);
-                                                postClear(); 
+                                                //postClear(); 
                                             }}>
                                           </Switch>)}
                                     

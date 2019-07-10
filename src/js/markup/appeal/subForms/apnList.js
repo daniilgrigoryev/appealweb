@@ -1,5 +1,6 @@
 import React from 'react'
 import * as _ from 'lodash'
+import Immutable from 'immutable'
 import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {FInput, EInput} from '../../components/finput.js'
