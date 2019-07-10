@@ -128,7 +128,6 @@ class ETopicList extends React.PureComponent {
                 {!fields.length ?
                     <p className='my6 txt-em color-gray align-center'>Нет добавленных тем обращения</p>
                     :
-                    
                     <React.Fragment>{ROWS}</React.Fragment>
                 }
 
