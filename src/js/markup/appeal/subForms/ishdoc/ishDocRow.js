@@ -85,11 +85,11 @@ const IshDocRow = React.memo(props => {
         return (<React.Fragment key={id} >
                 <tr>
                     <td><span className='ap-table-list-number mr12'>{ind + 1}</span></td>
-                    <td>{P.get(M.DOC_TARGET.name)}</td>
-                    <td>{P.get(M.ISH_NUM.name)}</td>
-                    <td>{data2str(P.get(M.ISH_DATE.name))}</td>
-                    <td>{P.get('podpisal_name')}</td>
-                    <td>{P.get('status_name') || 'Черновик'}</td>
+                    <td><div className='mr12'>{P.get(M.DOC_TARGET.name)}</div></td>
+                    <td><div className='mr12 cutted-text wmax180' title={P.get(M.ISH_NUM.name)}>{P.get(M.ISH_NUM.name)}</div></td>
+                    <td><div className='mr12'>{data2str(P.get(M.ISH_DATE.name))}</div></td>
+                    <td><div className='mr12'>{P.get('podpisal_name')}</div></td>
+                    <td><div className='mr12'>{P.get('status_name') || 'Черновик'}</div></td>
                     <td className='pr12 align-r'>
                         <Button type="text" onClick={onXpd}>
                             <i className="el-icon-edit color-green"/>
