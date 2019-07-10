@@ -48,13 +48,30 @@ const relocate = (newPath) => {
     window.location.hash = ('#/' + newPath);
 }
 
-export {relocate}
+const hashParams  = (a)=>{  
+    if (!a || !a.length){
+        return {};    
+    }    
+    if (a[0]=='#'){
+        a=a.substring(1);
+    }
+    const ret = {};
+    const pairs = a.split('&').filter(x=>!!x);
+    if (pairs.length){
+        for (let p in pairs){
+            const [field,val] = pairs[p].split('=');
+            ret[field] = val;
+        }
+    }
+    return ret;
+}; 
+
+export {relocate,hashParams}
 
 export default function App() {
     return (
         <HashRouter>
             <LayoutConnected>
-               
                     <Switch>
                         <Route exact path='/' render={()=><AppealExplorer/>}/>
                         <Route exact path='/explore_out' render={()=><AppealOutExplorer/>}/>
@@ -108,7 +125,7 @@ class LayoutMain extends React.Component {
 
         const {children, dispatch, sessionId} = this.props;
 
-        const onSelect = (newVal) => {
+        const onSelect = (newVal) => { 
             if (newVal == 'LOGOUT') {
                 relocate('');
                 dispatch(logoutRequest(sessionId));
@@ -117,7 +134,7 @@ class LayoutMain extends React.Component {
             }
         }
 
-        const onLogout = () => {
+        const onLogout = () => { 
             relocate('');
             dispatch(logoutRequest(sessionId));
         }

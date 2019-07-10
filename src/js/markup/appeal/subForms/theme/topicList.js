@@ -46,11 +46,18 @@ class ETopicList extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        const eid = _.chain(this.props.fileds).first().get('id').value();
+      
         this.state = {
             acCateg: null,
-            expandedId: eid
+            expandedId: -1
         };
+
+        const theme_id = sessionStorage.getItem('show_theme');
+        sessionStorage.removeItem('show_theme');
+        if (theme_id){
+            this.state.expandedId = this.props.fields.getAll().findIndex(x=>x.get('id')==theme_id);
+            setTimeout(()=>(document.querySelector(`tr[theme_id="${theme_id}"]`).scrollIntoView()),500);
+        }
     }
 
     componentDidMount(){

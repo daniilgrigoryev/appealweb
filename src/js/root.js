@@ -3,7 +3,7 @@ import '../scss/assembly.scss'
 import '../scss/index.scss'
 
 import React from 'react'
-import App from './markup/app/app.js'
+import App,{hashParams} from './markup/app/app.js'
 import { connect } from 'react-redux'
 import { Notification } from 'element-react'
 import { messagesErase } from './actions/common.js'
@@ -40,14 +40,17 @@ class Root extends React.Component {
   componentDidMount(){
     const MRK = 'sid=';
     const {hash} = window.location;
-
-    let sindex;
-    if ((sindex=hash.indexOf(MRK))!=-1){
-      const sid = hash.substr(sindex+MRK.length);
-      if (sid && sid.length){
-        window.location.hash = '';
-        setTimeout(()=>this.doExternalLogin(sid),5);
+    const HP = hashParams(hash);  
+    const {sid,claim_id,theme_id,remote} = HP;
+    
+    sessionStorage.removeItem('claim_show');
+    
+    if (sid && sid.length){
+      if (remote=='theme_open'){
+        sessionStorage.setItem('claim_show',JSON.stringify({claim_id,theme_id}));
       }
+      window.location.hash = '';
+      setTimeout(()=>this.doExternalLogin(sid),5);
     }
   }
 

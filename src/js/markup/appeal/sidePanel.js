@@ -98,15 +98,15 @@ class SidePanel extends Component {
         this.reloadRow = this.reloadRow.bind(this);  
     }
 
-    async reloadRow() {
+    async reloadRow() { 
         const {dispatch, change, initialize,id} = this.props;
         const alias = 'CLAIM_GET';
         const orphan = true;
         const claim_id = id;
         const x = await post('db/select', {alias, claim_id,orphan});
+        this.curHash = 0;
         dispatch(initialize(im(x.data)));
-        //setTimeout(()=>(this.hashHold && this.hashHold()),500);
-        setTimeout(()=>(this.curHash = this.getHash()),500);
+        setTimeout(this.holdHash,200);
     }
 
     componentDidMount() {
@@ -174,10 +174,10 @@ class SidePanel extends Component {
             const href = window.location.href.replace('/appeal_incoming',`/appeal_incoming&storageKey=${key}`);
             window.open(href,'_blank');
             setTimeout(()=>{
-                    dispatch(initialize(im({})))
-                    dispatch(initialize(im(vals)));       
-                },500);
-            },200);
+                dispatch(initialize(im({})))
+                dispatch(initialize(im(vals)));       
+            },500);
+        },200);
     }
 
     render() {
@@ -357,7 +357,7 @@ class SidePanel extends Component {
       }
     }
 
-    const nextStatus = async (next_status)=>{
+    const nextStatus = async (next_status)=>{ 
         if (!noChanges){
             messageSet('Невозможно изменить статус обращения при наличии несохраненных изменений','error');
             return;
@@ -365,10 +365,10 @@ class SidePanel extends Component {
 
         const claim_id = id;
         const orphan = true;
-       
+
         try{
             const resp = await post("db/select",{alias : 'CLAIM_NEXT_STATUS', claim_id,next_status,orphan}); // информация о постановлении НЕ передается - разрыв
-            const {data,error} = resp;
+            const {data,error} =  resp;
             if (error || data==''){
               throw (error || 'Не удалось получить данные');
             } else {
@@ -378,48 +378,47 @@ class SidePanel extends Component {
             console.error('claim status change error:', exc);
             messageSet('Не удалось изменить статус обращения','error');
         }
-
         reloadRow();
     }
 
     const STAGE = processing_stage_name;
-    let STATUS = <button onClick={()=>nextStatus('STAT_PREPARED')}>Черновик. Сохранить</button>; //
+    let STATUS = <button type='button'  onClick={()=>nextStatus('STAT_PREPARED')}>Черновик. Сохранить</button>; //
 
     if (STAGE=='STAT_PREPARED'){
       STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Ожидает регистрации. Зарегистрировать</button>
-          <button onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Ожидает регистрации. Зарегистрировать</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_REGISTERED'){
       // ! переключение в "У исполнителя" происходит автоматически при начале работы над любой темой в Обращении
       STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_REJECTED')}>Зарегистрировано. Отклонить.</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Зарегистрировано. Отклонить.</button>
         </React.Fragment>);//
     } else if (STAGE=='STAT_RETURNED_TO_REGISTRATOR'){
       STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Возвращено регистратору. Подтвердить исправления</button>
-          <button onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Возвращено регистратору. Подтвердить исправления</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_MOVED_TO_EXECUTOR'){
        STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</button>
-          <button onClick={()=>nextStatus('STAT_RETURNED_TO_REGISTRATOR')}>Вернуть регистратору</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</button>
+          <div onClick={()=>nextStatus('STAT_RETURNED_TO_REGISTRATOR')}>Вернуть регистратору</div>
       </React.Fragment>);//
     } else if (STAGE=='STAT_RESPONSE_PREPARED'){
       STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_SENT')}>Подготовлен ответ. Подтвердить исполнение обращения</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_SENT')}>Подготовлен ответ. Подтвердить исполнение обращения</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_SENT'){
        STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_ARCHIVED')}>Исполнено. Подтвердить передачу в архив</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_ARCHIVED')}>Исполнено. Подтвердить передачу в архив</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_REJECTED'){
       STATUS = (<React.Fragment>
-          <button onClick={()=>nextStatus('STAT_REGISTERED')}>Отклонено. Вернуть в регистрацию</button>
+          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Отклонено. Вернуть в регистрацию</button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_ARCHIVED'){
        STATUS = (<React.Fragment>
-          <button>Архив</button>
+          <button type='button' >Архив</button>
       </React.Fragment>);//
     }
 

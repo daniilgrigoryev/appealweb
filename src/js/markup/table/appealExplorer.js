@@ -62,23 +62,44 @@ class AppealExplorer extends React.Component {
         this.search   = this.search.bind(this);
         this.searchMy = this.searchMy.bind(this);
         this.getXFile = this.getXFile.bind(this);
-        this.remove   = this.remove.bind(this)
+        this.remove   = this.remove.bind(this);
+        this.checkRemoteCommands = this.checkRemoteCommands.bind(this);
     }
 
     componentDidMount(){
+        this.checkRemoteCommands();
+    }
+
+    async checkRemoteCommands(){
         const alias='TABLE_INFO';
         const table_alias= 'i_obr';
         const orphan = true;
-
-        post('db/select',{alias,table_alias,orphan}).then(x=>{
+        const CS = sessionStorage.getItem('claim_show');
+        sessionStorage.removeItem('claim_show');
+        if (CS){ // есть внешний запрос на показ Обращения
+            const {claim_id,theme_id} = JSON.parse(CS);
+            if (claim_id){
+                sessionStorage.setItem('show_theme',theme_id);
+                this.openRow({ID:claim_id},true)();
+            } else if (theme_id) {                
+                const alias = 'GET_CLAIM_ID_BY_THEME';
+                const x = await post('db/select', {alias, theme_id,orphan})
+                const claim_id = parseInt(x.data);
+                if (!isNaN(claim_id)){
+                    sessionStorage.setItem('show_theme',theme_id);
+                    this.openRow({ID:claim_id},true)();
+                }
+            }
+        } else { // внешнего запроса нет - показ таблицы
+            const x = await post('db/select',{alias,table_alias,orphan});
             const {data,error} = x;
             if (_.size(data)){
                 this.setState({fields:data});   
             }
-        })
+        }
     }
 
-    openRow(rowData, column) {
+    openRow(rowData, holdTab) {
         const {dispatch, change, initialize, sid} = this.props;
         const alias = 'CLAIM_GET';
         const orphan = true;
@@ -87,9 +108,13 @@ class AppealExplorer extends React.Component {
             const x = await post('db/select', {alias, claim_id,orphan});
 
             dispatch(initialize(im(x.data)));
-            const key = window.stateSave();
-            const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
-            window.open(href,'_blank');
+            if (holdTab){
+                 relocate('appeal_incoming');
+            } else {
+                const key = window.stateSave();
+                const href = window.location.href.replace('/explore',`/appeal_incoming&storageKey=${key}`);
+                window.open(href,'_blank');
+            }
         }
     }
 
@@ -175,8 +200,7 @@ class AppealExplorer extends React.Component {
         const setGetter  = (getter) => this.conditionGetter = getter;
         const setRemover = (remover) => this.conditionRemover = remover;
 
-        return (
-            <React.Fragment>
+        return (<React.Fragment>
 
                 <Card className="box-card sectionCard" header={
                     <div className="headline">
@@ -199,8 +223,7 @@ class AppealExplorer extends React.Component {
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
                                 <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where, registerGetSelected}} hdelta={'515'}  selectable={true} />
                             </Card>}
-            </React.Fragment>
-        )
+            </React.Fragment>);
     } //
 }
 

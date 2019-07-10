@@ -238,34 +238,34 @@ class TopicRow extends React.PureComponent {
             reloadRow(); 
         }
 
-        let STATUS_BTN = (<button>Нет исполнителя</button>);//
+        let STATUS_BTN = (<button type='button' >Нет исполнителя</button>);//
         if (_.size(executor_id)){
-            STATUS_BTN = (<button onClick={()=>statusChanger('START')} >Назначен исполнитель. Запустить в работу</button>);//
+            STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('START')} >Назначен исполнитель. Запустить в работу</button>);//
 
             if (stat_in_work){/*
                 STATUS_BTN = (
                     <React.Fragment>
-                        <button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>
-                        <button onClick={()=>statusChanger('PAUSE')} >Остановить производство</button>
+                        <button type='button'  onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>
+                        <button type='button'  onClick={()=>statusChanger('PAUSE')} >Остановить производство</button>
                     </React.Fragment>);*/
 
-                STATUS_BTN = (<button onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
+                STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('END')}>В работе. Исполнить.</button>);///            
             } else if (stat_wait_post){
-               // STATUS_BTN = (<button onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
-               STATUS_BTN = (<button onClick={()=>statusChanger('COMMIT')} >Ожидает отправки</button>);/// 
+               // STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('REWIND')} >Ожидает отправки. Вернуть в работу</button>);/// 
+               STATUS_BTN = (<button type='button'  onClick={()=>statusChanger('COMMIT')} >Ожидает отправки</button>);/// 
             } else if (stat_done){
-                STATUS_BTN = (<button>Исполнено</button>);//
+                STATUS_BTN = (<button type='button' >Исполнено</button>);//
             }
         }
 
         const editable =
             <React.Fragment key={id + 'e1'}>
-                <tr>
+                <tr theme_id={id}>
                     <td colSpan='6'>
                         <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
                             <table>
                                 <tbody>
-                                <tr>
+                                <tr scrollAnchor='+'>
                                     <td>
                                         <span className='ap-table-list-number mr12'>{ind + 1}</span>
                                     </td>
