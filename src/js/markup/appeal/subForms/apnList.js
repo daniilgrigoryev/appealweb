@@ -1,5 +1,6 @@
 import React from 'react'
 import * as _ from 'lodash'
+import Immutable from 'immutable'
 import {Button} from 'element-react'
 import {Field, reduxForm} from 'redux-form/immutable'
 import {FInput, EInput} from '../../components/finput.js'
@@ -12,11 +13,11 @@ import mapping from '../mapping.js'
 const M = mapping.apnList;
 
 const getRow = (id,apn, date) => {
-    return {
+    return Immutable.fromJS({
         id: id || null,
         apn: apn || null,
         date: date || null
-    }
+    })
 }
 
 // Element component
