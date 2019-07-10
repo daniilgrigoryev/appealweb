@@ -8,7 +8,6 @@ import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as V from '../../../validators'
 import mapping from '../mapping.js'
-import Immutable from 'immutable'
 
 const im = (obj) => Immutable.fromJS(obj);
 const M = mapping.apnList;
