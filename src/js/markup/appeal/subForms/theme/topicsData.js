@@ -25,7 +25,7 @@ const TopicsData = React.memo(props => {
     const isMadi = system == 'M';
 
     return (
-        <div scrollanchor='topics'>
+        <div scrollanchor='topics' id='topics'>
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
                     <Card className="box-card" header={

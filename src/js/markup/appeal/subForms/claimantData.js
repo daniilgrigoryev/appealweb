@@ -157,7 +157,7 @@ class ClaimantData extends React.Component {
             : null;
 
         return (
-            <div scrollanchor='claimant'>
+            <div scrollanchor='claimant' id='claimant'>
                 <Card className="box-card sectionCard" header={
                     <div className='headline'>
                         <h3>Заявитель</h3>

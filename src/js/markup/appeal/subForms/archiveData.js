@@ -18,7 +18,7 @@ const ArchiveData = props => {
     const { handleSubmit, pristine, submitting, header,disabled } = props;
     
     return (
-        <div scrollanchor='archive'>
+        <div scrollanchor='archive' id='archive'>
             <Card className="box-card sectionCard" header={
                 <div className="headline">
                     <h3>

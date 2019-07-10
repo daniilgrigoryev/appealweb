@@ -31,6 +31,8 @@ import DocsLink from './subForms/docsLink.js'
 import StatusData from './subForms/statusData.js'
 import {appealSetId} from '../../actions/common.js'
 import {getRights} from  '../../services/rights.js'
+import Scrollspy from 'react-scrollspy'
+
 
 const alias = 'CLAIM_PUSH_COMBO';
 const headerTitle = 'Основные сведения';
@@ -45,6 +47,7 @@ const scrollNavi = (attr) => {
         el && el.scrollIntoView();
     }
 }
+
 
 const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
     const params = new URLSearchParams()
@@ -86,7 +89,6 @@ const data2str = (data) =>{
 } 
 
 class SidePanel extends Component {
-
     constructor(props) {
         super(props);
         this.curHash = 0;
@@ -95,9 +97,8 @@ class SidePanel extends Component {
         this.getHash = this.getHash.bind(this);
         this.holdHash = this.holdHash.bind(this);
         this.duplicate = this.duplicate.bind(this);
-        this.reloadRow = this.reloadRow.bind(this);  
+        this.reloadRow = this.reloadRow.bind(this);
     }
-
     async reloadRow() {
         const {dispatch, change, initialize,id} = this.props;
         const alias = 'CLAIM_GET';
@@ -108,21 +109,17 @@ class SidePanel extends Component {
         //setTimeout(()=>(this.hashHold && this.hashHold()),500);
         setTimeout(()=>(this.curHash = this.getHash()),500);
     }
-
     componentDidMount() {
         this.curHash = this.getHash();
     }
-
     holdHash(){
         this.curHash = this.getHash();
         this.forceUpdate();
     }
-
     getHash() {
         const {formData} = this.props;
         return !formData ? 0 : hashCode(JSON.stringify(_.omit(formData.toJS().values,['linked_docs'])));
     }
-
     save() {
         const a = this;
         const {formData, dispatch, change, initialize} = this.props;
@@ -175,7 +172,7 @@ class SidePanel extends Component {
             window.open(href,'_blank');
             setTimeout(()=>{
                     dispatch(initialize(im({})))
-                    dispatch(initialize(im(vals)));       
+                    dispatch(initialize(im(vals)));
                 },500);
             },200);
     }
@@ -194,6 +191,7 @@ class SidePanel extends Component {
           //debugger;
         }//
 
+        
         const noChanges = !!(this.curHash && this.curHash == this.getHash()); 
         
         const stateBtnText  = noChanges ? 'Нет изменений' : 'Сохранить';
@@ -481,10 +479,10 @@ class SidePanel extends Component {
                         </form>
                     </div>
                     <div className="doc-actions">
-                        <Popover popperClass="popperAction" placement="bottom" width="90" trigger="hover" content={(
+                        <Popover popperClass="popperAction" placement="bottom" width="140" trigger="hover" content={(
                             <div>
-                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>Малая</Button>
-                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>Большая</Button>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_OLD',registration_number)}>Карточка малая</Button>
+                                <Button className="block mx0 my3" type="text" size="mini" onClick={()=>testGetFile(sessionId, id,'IN_APPEAL_FULL',registration_number)}>Карточка большая</Button>
                             </div>
                         )}>
                             <Button className="px0 py0 cursor-pointer mx18 opacity75 opacity100-on-hover" type="text" >
@@ -504,16 +502,20 @@ class SidePanel extends Component {
                         </div>
                     }>
                         <div className="bg-white py18">
-                            <ul className='ap-side-panel-left__nav'>
-                                <li onClick={scrollNavi('basic')}>Основные сведения</li>
-                                <li onClick={scrollNavi('claimant')}>Сведения о заявителе</li>
-                                <li onClick={scrollNavi('organizations')}>Организации</li>
-                                <li onClick={scrollNavi('summary')}>Краткое содержание</li>
-                                <li onClick={scrollNavi('topics')}>Темы обращения</li>
-                                <li onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
-                                <li onClick={scrollNavi('links')}>Связанные обращения/письма</li>
-                                <li onClick={scrollNavi('archive')}>Архивная информация</li>
-                            </ul>
+                            <Scrollspy
+                                className='ap-side-panel-left__nav'
+                                items={['basic', 'claimant', 'organizations', 'summary', 'topics', 'ishDoc', 'links', 'archive']} 
+                                currentClassName='active'
+                                rootEl='.ap-side-panel-content'>
+                                <li href="#basic" onClick={scrollNavi('basic')}>Основные сведения</li>
+                                <li href="#claimant" onClick={scrollNavi('claimant')}>Сведения о заявителе</li>
+                                <li href="#organizations" onClick={scrollNavi('organizations')}>Организации</li>
+                                <li href="#summary" onClick={scrollNavi('summary')}>Краткое содержание</li>
+                                <li href="#topics" onClick={scrollNavi('topics')}>Темы обращения</li>
+                                <li href="#ishDoc" onClick={scrollNavi('ishDoc')}>Исходящие документы</li>
+                                <li href="#links" onClick={scrollNavi('links')}>Связанные обращения/письма</li>
+                                <li href="#archive" onClick={scrollNavi('archive')}>Архивная информация</li>
+                            </Scrollspy>
                         </div>
                     </Card>
                 </Card>

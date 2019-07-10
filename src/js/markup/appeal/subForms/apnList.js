@@ -27,7 +27,7 @@ export class EApnList extends React.Component {
         const {fields, disabled} = this.props
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
-        const inf = (ind) => () => fields.remove(ind);
+        // const inf = (ind) => () => fields.remove(ind);
 
         const ROWS = fields.map((x, i) => (
         <div className="row" key={i}>
@@ -46,7 +46,7 @@ export class EApnList extends React.Component {
             <div className="column column--end">
                <div className="value">
                     {disabled ? null :
-                        <Button type="text" onClick={inf(i)}>
+                        <Button type="text">
                             <i className="ico round info"/>
                         </Button>
                     }
