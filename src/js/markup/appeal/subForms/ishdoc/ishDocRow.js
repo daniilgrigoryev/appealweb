@@ -163,6 +163,7 @@ const IshDocRow = React.memo(props => {
     const signd = (<React.Fragment> 
         <span>Подписано</span>
         <Button onClick={()=>setCheckSt('SENDED')} >Отправлено вручную</Button>
+        <Button onClick={()=>setCheckSt('SEND_QUEUE')} >АВТО отправка</Button>
     </React.Fragment>);
     const sendd = <span>Отправлено</span>;
     const nostat = !showBtn ? null : (
@@ -219,7 +220,7 @@ const IshDocRow = React.memo(props => {
                             </div>
                         </div>
                         <div className="item" style={{'display': 'flex','flexDirection': 'row'}}>
-                            {prop_disabled ? null : STATUS}
+                            {(prop_disabled || !noChanges) ? null : STATUS}
                         </div>
                         <div className="item">
                             {(disabled || status_alias != 'AWAIT_SIGN') ? null : (<CryptoSL doSign={(cert)=>getSign(id,cert)} />) }
@@ -266,18 +267,18 @@ const IshDocRow = React.memo(props => {
                                 <Field disabled={disabled} component={FInput} name={field + M.EDO_NUM.name} />
                             </div>
                         </div>
-                        <div className="item item--left">
+                        <div className="item item--right">
                             <small className="label">{M.COMMENT.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FInput} name={field + M.COMMENT.name} type="textarea"/>
                             </div>
                         </div>
-                        <div className="item item--right">
+                        {false && <div className="item item--left">
                             <small className="label">{M.CRYPTO_SIGN.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FCheckbox} name={field + M.CRYPTO_SIGN.name} />
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </Card>

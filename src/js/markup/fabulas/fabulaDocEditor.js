@@ -149,7 +149,7 @@ class FabulaDocEditor extends React.Component {
 
 const state2props = (state) => {
     const sid = getSessionId(state);
-    const sys = getSystem(state);
+    const sys = getSystem(state); debugger;
     return {sid, sys};
 }
 

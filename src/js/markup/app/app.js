@@ -166,11 +166,11 @@ class LayoutMain extends React.Component {
                                 <Menu.Item index="explore_out">Исходящие: Поиск</Menu.Item>
                         </Menu.SubMenu>
 
-                        <Menu.SubMenu index="2" title="Служебные письма">
+                        {false && <Menu.SubMenu index="2" title="Служебные письма">
                             <Menu.Item index="letter_incoming?new">Новое входящее</Menu.Item>
                             <Menu.Item index="letter_outgoing?new">Новое исходящее</Menu.Item>
                             <Menu.Item index="explore_letter">Поиск</Menu.Item>
-                        </Menu.SubMenu>
+                        </Menu.SubMenu>}
 
                         <Menu.SubMenu index="3" title="Справочники">
                             <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>

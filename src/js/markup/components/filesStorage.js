@@ -111,9 +111,14 @@ const FilesStorage = React.memo(function FilesStorage(props){
                     <div className="content">
                         <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
                         {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
+
                         {x.get('source_alias') ? <p className="txt-em">{txtSourceAlias(x.get('source_alias'))}</p> : null}
+
                         {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
-                            <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
+                            <React.Fragment>
+                                <span>ЭЦП</span>
+                                <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
+                             </React.Fragment>
                             : null
                         }
                     </div>
