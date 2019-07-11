@@ -63,7 +63,7 @@ class TopicRow extends React.PureComponent {
 
     render(){
         const {manualPostLink} = this.state;
-        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges} = this.props;
+        const {ind, field, value, onChange, onRemove, onInfo, onExpand, checkExpand, collapse,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges,adm_app,externalSid} = this.props;
         let {disabled} = this.props;
         disabled = disabled || responseMode || adminMode;
 
@@ -118,16 +118,37 @@ class TopicRow extends React.PureComponent {
         const doLink = ()=>linkDecree(true);
         const doUnlink = ()=>linkDecree(false);
 
+        const toAP = async ()=>{
+            const theme_id = id;
+            const resp = await post("db/select",{alias : 'AP_LAST_ACTION', theme_id,denormalize:true});
+         
+            const {data} = resp;
+            const first = _.first(data);
+            if (!_.size(first)){
+                return messageSet('Нет данных о синхронизации с АП','error');
+            }
+
+            const adm_application = adm_app;
+            const authSid = externalSid;
+            const delo_id = first.DELO_ID;
+            const doc_id = first.CARD_ID;
+            const category = '7';
+            window.open(`${adm_application}?sid=${authSid}&delo_id=${delo_id}&doc_id=${doc_id}&category=${category}&component=deloTreeCardView`,'_blank')  
+        }
+
         let LinkerBTN = (<span>Невозможно связать с АПР</span>); //
         const apn_readonly = stat_in_work || apn_post_decree_id;    
         if (!noChanges){
             LinkerBTN = (<span>Для связи с АПР все изменения должны быть зафиксированы в БД</span>);
         } else {
             if (stat_in_work || stat_wait_post|| stat_done){
-                LinkerBTN = apn_post_decree_id ? (<span>Связано с АПР</span>) : (<span>Не связано с АПР</span>); //
+                LinkerBTN = apn_post_decree_id ? (<Button onClick={toAP} title='Перейти в карточку АП'>Связано с АПР</Button>) : (<span>Не связано с АПР</span>); //
             } else {
                 if (apn_post_decree_id){
-                    LinkerBTN = (<Button onClick={doUnlink}>Отвязать от АПР</Button>); //
+                    LinkerBTN = (<React.Fragment>
+                                    <Button onClick={doUnlink}>Отвязать от АПР</Button>
+                                    <Button onClick={toAP}>Карточка АПР</Button>
+                                </React.Fragment>); //
                 } else if (post_n && post_date) {
                     LinkerBTN = (<Button onClick={doLink}>Связать с АПР</Button>); //
                 }

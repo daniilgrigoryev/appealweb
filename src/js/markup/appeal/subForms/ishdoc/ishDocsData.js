@@ -34,9 +34,9 @@ class IshDocsData extends React.PureComponent {
 
     render(){
         const props = this.props;
-        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow,noChanges} = props;
+        const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app} = props;
         const fTypes = this.state.fabulaDocTypes;
-        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow,noChanges};
+        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app};
 
         return (
             <div scrollanchor='ishDoc'>

@@ -19,7 +19,7 @@ const headerTitle = 'Темы обращения';
 const M = mapping.TopicsData;
 
 const TopicsData = React.memo(props => {
-    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges} = props;
+    const {handleSubmit, pristine, nextPage, prevPage, submitting, header, system, disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges,adm_app,externalSid} = props;
     const navi = !disabled && (nextPage||prevPage);
     
     const isMadi = system == 'M';
@@ -35,7 +35,7 @@ const TopicsData = React.memo(props => {
                     }>
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>Список тем обращения</h4>
-                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges}}/>
+                            <FieldArray name='topics_data' component={FTopicList} {...{disabled,claim_id,dispatch,apn_list,sessionId,responseMode,adminMode,reloadRow,noChanges,adm_app,externalSid}}/>
                         </form>
                     </Card>
                 </Layout.Col>
@@ -45,6 +45,8 @@ const TopicsData = React.memo(props => {
 }); //
 
 const mapStateToProps = (state) => ({
+    externalSid: state.getIn(['general','user','externalSid']),
+    adm_app: state.getIn(['general','user','params','ADM_APPLICATION']),
     sessionId:state.getIn(['general','user','sessionID']),
     system:   state.getIn(['general', 'system']),
     claim_id: state.getIn(['form', 'appeal','values','id']),
