@@ -166,7 +166,6 @@ class TopicRow extends React.PureComponent {
         if (!expanded) {
             return (<React.Fragment key={id} >
                     <div className="wrap wrap--infoview">
-
                         <div className="left-aside">
                             <div className="list-num mr12">{ind + 1}</div>
                             <Button type="text" onClick={onXpd}>
@@ -208,13 +207,13 @@ class TopicRow extends React.PureComponent {
         } //
 
         const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
-            <div className="item">
+            <div className="item item--full">
                 <small className="label">{M.RASSMOTR_DATE.label}</small>
                 <div className="value">
                     <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
                 </div>
             </div>
-            <div className="item">
+            <div className="item item--full">
                 <div className="value">
                     {null && <Button type="text" size="small">
                         <span className='color-blue'>Зарезервировать слот в СУО</span>
@@ -287,7 +286,7 @@ class TopicRow extends React.PureComponent {
             }>
                 <div className="form-container">
                     <div className="wrap">
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">{M.CAT.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
@@ -297,7 +296,7 @@ class TopicRow extends React.PureComponent {
                         </div>
 
                         {manualPostLink
-                        ? (<div className="item">
+                        ? (<div className="item item--full">
                             <small className="label">{M.POST_N.label}</small>
                             <div className="value">
                                 <Field disabled={disabled || apn_readonly} component={FInput} name={field + M.POST_N.name}
@@ -305,7 +304,7 @@ class TopicRow extends React.PureComponent {
                                             value={P[M.POST_N.name]}/>
                             </div>
                         </div>)
-                        : (<div className="item">
+                        : (<div className="item item--full">
                             <small className="label">{M.POST_N.label}</small>
                             <div className="value">
                                 <Field disabled={disabled || apn_readonly} component={FAutocomplete} name={field + M.POST_N.name}
@@ -314,7 +313,7 @@ class TopicRow extends React.PureComponent {
                             </div>
                         </div>)}
 
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">{M.POST_DATE.label}</small>
                             <div className="value">
                                 <Field disabled={!manualPostLink || disabled || apn_readonly} component={FPicker} name={field + M.POST_DATE.name} 
@@ -322,7 +321,7 @@ class TopicRow extends React.PureComponent {
                             </div>
                         </div>
                         
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">-</small>
                             <div className="value">
                                 {(disabled || apn_readonly) ? null : (
@@ -343,13 +342,13 @@ class TopicRow extends React.PureComponent {
                             </div>
                         </div>
 
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">-</small>
                             <div className="value">
                                 Ручной ввод
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">-</small>
                             <div className="value">
                             {LinkerBTN}
@@ -367,7 +366,7 @@ class TopicRow extends React.PureComponent {
             }>
                 <div className="form-container">
                     <div className="wrap" key={id + 'e2'}>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Отдел исполнителя</small>
                             <div className="value">
                             <Field disabled={disabled && !adminMode} component={FAutocomplete} onChange={()=>{
@@ -375,19 +374,19 @@ class TopicRow extends React.PureComponent {
                                                 }} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} dbVisibleVal={P.get('executor_org_id_label')} />
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Исполнитель</small>
                             <div className="value">
                                 <Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} dbVisibleVal={P.get('executor_id_label')} />               
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Статус по теме</small>
                             <div className="value">
                                 {STATUS_BTN}
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Дата контроля</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FPicker} name={field + 'control_date'} datepicker='+' />
@@ -399,7 +398,7 @@ class TopicRow extends React.PureComponent {
                                 <TopicDocs rows={filesRows} sessionId={sessionId} />
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">{M.UCH_PRIS.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
@@ -408,7 +407,7 @@ class TopicRow extends React.PureComponent {
                         {PRIS_UCH}
 
                         {cif(M.CODEX_ARTICLE.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.CODEX_ARTICLE.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field + M.CODEX_ARTICLE.name}/>
@@ -416,7 +415,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.OWNER_TS.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.OWNER_TS.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FInput} value={P[M.OWNER_TS.name]} name={field + M.OWNER_TS.name}/>
@@ -444,7 +443,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.APN_DATA.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.APN_DATA.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FPicker} value={P[M.APN_DATA.name]} name={field + M.APN_DATA.name} datepicker='+'/>
@@ -452,7 +451,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.DESCRIPTION.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.DESCRIPTION.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FInput} value={P[M.DESCRIPTION.name]} name={field + M.DESCRIPTION.name} type="textarea"/>
@@ -460,7 +459,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.DECISION_DATE.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.DECISION_DATE.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field + M.DECISION_DATE.name} datepicker='+'/>
@@ -468,7 +467,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.VIOLATOR_REGNO.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.VIOLATOR_REGNO.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field + M.VIOLATOR_REGNO.name}/>
@@ -476,7 +475,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.APPEAL_CAUSE.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.APPEAL_CAUSE.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]} name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
@@ -485,13 +484,13 @@ class TopicRow extends React.PureComponent {
                         )}
                         {cif(M.DESISION_MAKER.name,
                             (<React.Fragment>
-                            <div className="item">
+                            <div className="item item--full">
                                 <small className="label">{M.DESISION_MAKER.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
                                 </div>
                             </div>
-                            <div className="item">
+                            <div className="item item--full">
                                 <small className="label">И. О</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
@@ -500,7 +499,7 @@ class TopicRow extends React.PureComponent {
                             </React.Fragment>)
                         )}
                         {cif(M.DECISION_THEME.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.DECISION_THEME.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_THEME.name]} name={field + M.DECISION_THEME.name} dataKey={M.DECISION_THEME.key}/>
@@ -508,7 +507,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.DECISION_BASIS.name,
-                            (<div className="item">
+                            (<div className="item item--full">
                                 <small className="label">{M.DECISION_BASIS.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_BASIS.name]} name={field + M.DECISION_BASIS.name} dataKey={M.DECISION_BASIS.key}/>
@@ -516,26 +515,26 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.POST_APPEAL_CAUSE.name,
-                            (false &&  <div className="item">
+                            (false &&  <div className="item item--full">
                                 <small className="label">{M.POST_APPEAL_CAUSE.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.POST_APPEAL_CAUSE.name]} name={field + M.POST_APPEAL_CAUSE.name} dataKey={M.POST_APPEAL_CAUSE.key}/>
                                 </div>
                             </div>)
                         )}
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Решение по АП</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_decis_id'} dataKey='APR_DECIS'/>
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Статья-основание решения по АП</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_cause_id'} dataKey='APR_DECIS_CAUSE'/>
                             </div>
                         </div>
-                        <div className="item">
+                        <div className="item item--full">
                             <small className="label">Причина прекращения по АП</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/>
