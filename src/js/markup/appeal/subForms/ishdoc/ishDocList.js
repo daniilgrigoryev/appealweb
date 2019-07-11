@@ -118,18 +118,18 @@ class EIshDocList extends React.PureComponent {
             <React.Fragment>
                 {!fields.length ?
                     <p className='my6 txt-em color-gray align-center'>Нет исходящих документов</p>
-                    : <div>{ROWS}</div>
+                    : <React.Fragment>{ROWS}</React.Fragment>
                 }
 
-                <div className='flex-parent flex-parent--center-main'>
+                <div className={`flex-parent flex-parent--center-main ${!fields.length ? 'my6' : 'mt18'}`}>
                     {disabled ? null :
                         <Button size="small" icon="plus" plain={true} onClick={add(getRowZajav)}
-                                className="my6 block"
+                                className="block"
                                 title='Добавить тему'>Проект документов для заявителя</Button>}
 
                     {disabled ? null :
                         <Button size="small" icon="plus" plain={true} onClick={add(getRowOrg)}
-                                className="my6 block"
+                                className="block"
                                 title='Добавить тему'>Проект документов для организации</Button>}
                 </div>
                 {DIALOG}
