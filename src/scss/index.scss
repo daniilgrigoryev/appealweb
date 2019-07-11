@@ -576,6 +576,13 @@ div.tooltipWrap {
   .item--left{
     grid-column: 1 / span 2;
   }
+  .item-fully{
+    display: grid;
+    grid-column: auto / span 4;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+
 }
 .flex-table{
   padding-left: 190px;

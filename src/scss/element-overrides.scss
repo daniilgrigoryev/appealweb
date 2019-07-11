@@ -219,8 +219,10 @@
 }
 
 .el-textarea__inner {
-  font-size: $input-font-size;
-  color: $color-input-text;
+  // font-size: $input-font-size;
+  // color: $color-input-text;
+  font-size: 16px;
+  color: #373737;
   border-color: $color-input-border;
   border-radius: 0;
 }
