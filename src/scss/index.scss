@@ -409,7 +409,9 @@ div.tooltipWrap {
 }
 .w130{
   width: 130px!important;
+  min-width: 130px!important;
 }
+
 .fileCard{
   width: 267px;
   box-sizing: border-box;

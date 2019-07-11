@@ -88,13 +88,13 @@ const IshDocRow = React.memo(props => {
                     <div className="list-num mr12">{ind + 1}</div>
                 </div>
                 <div className="right-aside">
-                    <Button type="text" onClick={onXpd}>
-                        <i className="ico round edit"/>
-                    </Button>
                     {disabled ? null :
                     <Button size="small" type="text" onClick={onRmv}>
                         <i className="ico round minus"/>
                     </Button>}
+                    <Button type="text" onClick={onXpd}>
+                        <i className="ico round edit"/>
+                    </Button>
                 </div>
                 <div className="item">
                     <small className="label">{M.DOC_TARGET.label}</small>
