@@ -26,9 +26,38 @@ const linkedDocs = (props) => {
     const inf = (ind) => () => fields.remove(ind); // ! replace me
     const ROWS = fields.map((x, i)=>(
         <tr key={i}>
-            <td><Field component={FInput} name={x + 'name'}                value={x.name}                disabled={true}/></td>
-            <td><Field component={FInput} name={x + 'registration_number'} value={x.registration_number} disabled={true}/></td>
-            <td>{disabled ? null : <button type='button' onClick={rmv(i)}>Удалить</button>}</td>
+            <td className="align-center">
+                {/* <Field component={FInput} name={x + 'registration_number'} value={x.registration_number} disabled={true}/> */}
+                <a href="">78-08-19084/5</a>
+            </td>
+            <td>
+                <span>782101771503040</span>
+            </td>
+            <td>
+                <span>Письмо</span>
+            </td>
+            <td>
+                {/* <Field component={FInput} name={x + 'name'} value={x.name} disabled={true}/> */}
+                <span>Исходящее</span>
+            </td>
+            <td>
+                <span>Колесников Александр Васильевич</span>
+            </td>
+            <td>
+                <span>Милушкин А. Ю. (Майорова Н. И.)</span>
+            </td>
+            <td>
+                <span>19.04.2019</span>
+            </td>
+            <td>
+                <span>Исполнено</span>
+            </td>
+            <td>
+                {disabled ? null : 
+                <Button size="small" type="text" onClick={rmv(i)}>
+                    <i className="ico round minus"/>
+                </Button>}
+            </td>
         </tr>)); //
 
     //<td>{disabled ? null : <button type='button' onClick={inf(i)}>I</button>}</td>
@@ -36,51 +65,40 @@ const linkedDocs = (props) => {
     return (
         <React.Fragment>
             {!fields.length 
-                ? <p className='mt-neg18 mb18 txt-em color-gray'>Нет связанных документов</p>
-                : <table>
-                    <tbody>
-                    <tr>
-                        <td className='ap-input-caption'></td>
-                        <td>
-                            <table>
-                                <thead>
+                ? <p className="my6 txt-em color-gray align-center">Нет связанных документов</p>
+                : <div className="style-table-wrapper">
+                        <table className="style-table">
+                            <thead>
                                 <tr>
-                                    <th className='ap-table-header'>Документ</th>
-                                    <th className='ap-table-header'>Регистрационный номер</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {ROWS}
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            }
+                                    <th style={{'width': '180px'}}>№ документа</th>
+                                    <th style={{'width': '180px'}}>№ постановления</th>
+                                    <th style={{'width': '140px'}}>Тип документа</th>
+                                    <th style={{'width': '140px'}}>Направление</th>
+                                    <th style={{'width': '210px'}}>Заявитель</th>
+                                    <th style={{'width': '160px'}}>Исполнители</th>
+                                    <th style={{'width': '160px'}}>Дата регистрации</th>
+                                    <th style={{'width': '140px'}}>Стадия</th>
+                                    <th style={{'width': '60px'}}>-</th>
 
-            <table>
-                <tbody>
-                <tr>
-                    <td className='ap-input-caption'></td>
-                    <td>
-                        <table className='wmin300'>
+                                    {/* <th className='ap-table-header'>Документ</th>
+                                    <th className='ap-table-header'>Регистрационный номер</th> */}
+                                </tr>
+                            </thead>
                             <tbody>
-                            <tr>
-                                <td colSpan='3'>
-                                    {disabled ? null :
-                                        <Button size="small" icon="plus" onClick={add} type="success" plain={true}
-                                                className="flex-parent mb18"
-                                                title='Добавить адресата'>Добавить</Button>
-                                    }
-                                </td>
-                            </tr>
+                                {ROWS}
                             </tbody>
                         </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </div>
+
+            }
+
+            {disabled ? null :
+                <Button size="small" icon="plus" onClick={add} plain={true}
+                    className={`flex-parent mx-auto block ${!fields.length ? 'my6' : 'mt18'}`}
+                        title='Добавить адресата'>Добавить</Button>
+            }
+
+
         </React.Fragment>
     ); //
 }
@@ -140,19 +158,13 @@ class DocLinker extends React.Component {
 
             return [
                 <div scrollanchor='links' key='ili' id='links'>
-                    <Layout.Row gutter="20">
-                        <Layout.Col span="24">
-                            <Card className="box-card" header={
-                                <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                    <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                        Связанные обращения/письма
-                                    </h3>
-                                </div>
-                            }>
-                                {CONTENT}
-                            </Card>
-                        </Layout.Col>
-                    </Layout.Row>
+                    <Card className="box-card sectionCard" bodyStyle={{padding: '0 0 20px 0'}} header={
+                        <div className="headline">
+                            <h3>Связанные обращения/письма</h3>
+                        </div>
+                    }>
+                        {CONTENT}
+                    </Card>
                 </div>
                 ,
                 LINKER
