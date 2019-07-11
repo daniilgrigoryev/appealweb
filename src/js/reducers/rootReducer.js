@@ -60,7 +60,7 @@ const rootReducer = (state, action)=>{
 const initialState = im({
     general : {
       system: '',
-      externalLogin: true || (DEV_MODE ?  false : true),
+      externalLogin: (DEV_MODE ?  false : true),
       user : {
         username : '',
         sessionId: ''
