@@ -409,7 +409,9 @@ div.tooltipWrap {
 }
 .w130{
   width: 130px!important;
+  min-width: 130px!important;
 }
+
 .fileCard{
   width: 267px;
   box-sizing: border-box;
@@ -478,6 +480,8 @@ div.tooltipWrap {
     }
   }
 }
+
+
 .wrap{
   display: grid;
   // grid-template-columns: repeat(2, 1fr);
@@ -485,7 +489,45 @@ div.tooltipWrap {
   grid-row-gap: 17px;
   grid-column-gap: 17px;
   grid-auto-flow: dense;
+  position: relative;
 
+
+  &.wrap--infoview{
+    border-bottom: 1px solid #CCCCCC;
+    padding: 25px 0;
+    .item{
+      align-items: flex-start;
+      .label{
+        color: #6B94C2;
+      }
+      .value{
+        color: #505A6E;
+      }
+    }
+    .right-aside{
+      position: absolute;
+      right: 15px;
+      top: 10px;
+    }
+    .left-aside{
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .list-num{
+        font-size: 48px;
+        color: #CCCCCC;
+        line-height: 100%;
+        font-weight: 100;
+      }
+    }
+
+
+
+  }
 
   .item{
     display: grid;
@@ -536,6 +578,13 @@ div.tooltipWrap {
   .item--left{
     grid-column: 1 / span 2;
   }
+  .item-fully{
+    display: grid;
+    grid-column: auto / span 4;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+
 }
 .flex-table{
   padding-left: 190px;
@@ -629,6 +678,10 @@ i.ico{
   width: 25px;
   height: 25px;
   &.round{
+    &.edit{
+      background-image: url($publicpath + '/images/ico-round-edit.svg');
+      background-repeat: no-repeat;
+    }
     &.minus{
       background-image: url($publicpath + '/images/ico-round-minus.svg');
       background-repeat: no-repeat;

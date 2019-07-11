@@ -128,12 +128,8 @@ class TopicRow extends React.PureComponent {
                 return messageSet('Нет данных о синхронизации с АП','error');
             }
 
-            const adm_application = adm_app;
-            const authSid = externalSid;
-            const delo_id = first.DELO_ID;
-            const doc_id = first.CARD_ID;
-            const category = '7';
-            window.open(`${adm_application}?sid=${authSid}&delo_id=${delo_id}&doc_id=${doc_id}&category=${category}&component=deloTreeCardView`,'_blank')  
+            const {DELO_ID,CARD_ID,CATEGORY} = first;
+            window.open(`${adm_app}?sid=${externalSid}&delo_id=${DELO_ID}&doc_id=${CARD_ID}&category=${CATEGORY}&component=deloTreeCardView`,'_blank')  
         }
 
         let LinkerBTN = (<span>Невозможно связать с АПР</span>); //
@@ -146,11 +142,11 @@ class TopicRow extends React.PureComponent {
             } else {
                 if (apn_post_decree_id){
                     LinkerBTN = (<React.Fragment>
-                                    <Button onClick={doUnlink}>Отвязать от АПР</Button>
-                                    <Button onClick={toAP}>Карточка АПР</Button>
+                                    <Button size="small" onClick={doUnlink}>Отвязать от АПР</Button>
+                                    <Button size="small" onClick={toAP}>Карточка АПР</Button>
                                 </React.Fragment>); //
                 } else if (post_n && post_date) {
-                    LinkerBTN = (<Button onClick={doLink}>Связать с АПР</Button>); //
+                    LinkerBTN = (<Button  size="small" onClick={doLink}>Связать с АПР</Button>); //
                 }
             }
         }
@@ -186,50 +182,60 @@ class TopicRow extends React.PureComponent {
 
         if (!expanded) {
             return (<React.Fragment key={id} >
-                    <tr>
-                        <td>
-                            <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12'>{this.props.getValue(P.get(M.CAT.name))}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12 cutted-text wmax180' title={numberRuling}>{numberRuling}</span>
-                        </td>
-                        <td>
-                            <span className='inline-block mr12'>{data2str(P.get(M.POST_DATE.name))}</span>
-                        </td>
-                        <td colSpan='2' className='pr12 align-r'>
-                           <span className="ml12">
-                               <Button type="text" onClick={onXpd}><i className="el-icon-edit color-green"/></Button>
-                               {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}><i className="el-icon-information color-blue"/></Button>}
-                               {(disabled || responseMode) ? null : <Button size="small" type="text" onClick={onRmv}><i className="el-icon-close color-red-dark"/></Button>}
-                           </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan='6'>
-                            <hr className='txt-hr my18'/>
-                        </td>
-                    </tr>
+                    <div className="wrap wrap--infoview">
+                        <div className="left-aside">
+                            <div className="list-num mr12">{ind + 1}</div>
+                        </div>
+                        <div className="right-aside">
+                            <Button type="text" onClick={onXpd}>
+                                <i className="ico round edit"/>
+                            </Button>
+                            {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}>
+                                <i className="ico round info"/>
+                            </Button>}
+                             {(disabled || responseMode) ? null : <Button type="text" onClick={onRmv}>
+                                <i className="ico round minus"/>
+                            </Button>}
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.CAT.label}</small>
+                            <div className="value">
+                                {this.props.getValue(P.get(M.CAT.name)) 
+                                    ? <b>{this.props.getValue(P.get(M.CAT.name))}</b> 
+                                    : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                                }
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.POST_N.label}</small>
+                            <div className="value" title={numberRuling}>
+                                {numberRuling ? numberRuling : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.POST_DATE.label}</small>
+                            <div className="value">
+                                {data2str(P.get(M.POST_DATE.name)) ? data2str(P.get(M.POST_DATE.name)) : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                            </div>
+                        </div>
+                    </div>
                 </React.Fragment>);
         } //
 
         const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
-            <tr>
-                <td className='ap-input-caption'>{M.RASSMOTR_DATE.label}</td>
-                <td>
+            <div className="item item--left">
+                <small className="label">{M.RASSMOTR_DATE.label}</small>
+                <div className="value w130">
                     <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
+                </div>
+            </div>
+            <div className="item item--right">
+                <div className="value">
                     {null && <Button type="text" size="small">
                         <span className='color-blue'>Зарезервировать слот в СУО</span>
                     </Button>}
-                </td>
-            </tr>
+                </div>
+            </div>
         </React.Fragment>);
     //
         const postSelect = (args)=>{ // подсос даты
@@ -286,249 +292,290 @@ class TopicRow extends React.PureComponent {
             }
         }
 
-        const editable =
-            <React.Fragment key={id + 'e1'}>
-                <tr theme_id={id}>
-                    <td colSpan='6'>
-                        <div className='px12 py12 my6 ml-neg12 bg-white border round border--gray-light shadow-darken10'>
-                            <table>
-                                <tbody>
-                                <tr scrollAnchor='+'>
-                                    <td>
-                                        <span className='ap-table-list-number mr12'>{ind + 1}</span>
-                                    </td>
-                                    <td>
-                                        <span className='inline-block mr12 wmin60'>
-                                            <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
-                                                   placeholder={M.CAT.label}
-                                                   dataKey={M.CAT.key} value={P[M.CAT.name]}/>
-                                        </span>
-                                    </td>
-
-                                    {manualPostLink
-                                        ? (<td>
-                                             <span className='inline-block mr12 w240'>
-                                                <Field disabled={disabled || apn_readonly} component={FInput} name={field + M.POST_N.name}
-                                                       placeholder={M.POST_N.label}
-                                                       value={P[M.POST_N.name]}/>
-                                             </span>
-                                            </td>)
-                                        : (<td>
-                                            <span className='inline-block mr12 w240'>
-                                                <Field disabled={disabled || apn_readonly} component={FAutocomplete} name={field + M.POST_N.name}
-                                                       placeholder={M.POST_N.label} onSelect={postSelect}
-                                                       datapromise={apnPromise} value={P[M.POST_N.name]}/>
-                                             </span>
-                                            </td>)}                                
-
-                                    <td>
-                                        <span className='inline-block mr12 w240'>
-                                            <Field disabled={!manualPostLink || disabled || apn_readonly} component={FPicker} name={field + M.POST_DATE.name} 
-                                            placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {(disabled || apn_readonly) ? null : (
-                                         <Switch
-                                            value={manualPostLink}
-                                            onValue={true}
-                                            offValue={false}
-                                            onText='РУЧН'
-                                            offText='АВТ'
-                                            onChange={(value)=>{
-                                                if (!value) {
-                                                    postSelect({visibleval: null, key: ''+post_n, name: fldN});
-                                                }
-                                                this.setManualPostLink(value);
-                                                //postClear(); 
-                                            }}>
-                                          </Switch>)}
-                                    
-                                    </td>
-                                    <td className='ap-input-caption w120'>Ручной ввод</td>
-                                    <td>{LinkerBTN}</td>
-                                </tr>
-
-                                <tr>
-                                    <td colSpan='7'>
-                                        <h4 className="ap-h4">Детальная информация по теме</h4>
-                                    </td>
-                                </tr>
-
-                                <tr key={id + 'e2'}>
-                                    <td colSpan='6'>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td className='ap-input-caption'>Отдел исполнителя</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} onChange={()=>{
-                                                   // dispatch(change(`appeal`, field + 'executor_id', null));
-                                                }} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} dbVisibleVal={P.get('executor_org_id_label')} /></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>Исполнитель</td>
-                                                <td><Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} dbVisibleVal={P.get('executor_id_label')} /></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>Статус по теме</td>
-                                                <td>{STATUS_BTN}</td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>Дата контроля</td>
-                                                <td><Field disabled={disabled} component={FPicker} name={field + 'control_date'} datepicker='+' /></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>{M.REL_DOCS.label}</td>
-                                                <td className='ap-input ap-input--disabled'>
-                                                    <TopicDocs rows={filesRows} sessionId={sessionId} />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>{M.UCH_PRIS.label}</td>
-                                                <td><Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/></td>
-                                            </tr>
-
-                                            {PRIS_UCH}
-
-                                            {cif(M.CODEX_ARTICLE.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.CODEX_ARTICLE.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field + M.CODEX_ARTICLE.name}/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.OWNER_TS.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.OWNER_TS.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.OWNER_TS.name]} name={field + M.OWNER_TS.name}/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.OWNER_TS_ADR.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.OWNER_TS_ADR.label}</td>
-                                                    <td><AddressData2 key={getAdrKey(value,['owner_ts_adr_id','owner_ts_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['owner_ts_adr_id','owner_ts_adr_kvart','owner_ts_adr_line']}  disabled={disabled}>
-                                                            {value.get('owner_ts_adr_line') || ''}
-                                                        </AddressData2>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.APN_ADR.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.APN_ADR.label}</td>
-                                                    <td><AddressData2 key={getAdrKey(value,['apn_adr_id','apn_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['apn_adr_id','apn_adr_kvart','apn_adr_line']} disabled={disabled}>
-                                                        {value.get('apn_adr_line') || ''}
-                                                        </AddressData2>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.APN_DATA.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.APN_DATA.label}</td>
-                                                    <td><Field disabled={disabled} component={FPicker} value={P[M.APN_DATA.name]} name={field + M.APN_DATA.name} datepicker='+'/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.DESCRIPTION.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.DESCRIPTION.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.DESCRIPTION.name]} name={field + M.DESCRIPTION.name} type="textarea"/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.DECISION_DATE.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.DECISION_DATE.label}</td>
-                                                    <td><Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field + M.DECISION_DATE.name} datepicker='+'/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.VIOLATOR_REGNO.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.VIOLATOR_REGNO.label}</td>
-                                                    <td><Field disabled={disabled} component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field + M.VIOLATOR_REGNO.name}/></td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.APPEAL_CAUSE.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.APPEAL_CAUSE.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]} name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.DESISION_MAKER.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption dog'>{M.DESISION_MAKER.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
-                                                    </td>
-                                                    <td className="w120">
-                                                        <h5 className='ap-h5 inline-block mx12'>И. О</h5>
-                                                        <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.DECISION_THEME.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.DECISION_THEME.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_THEME.name]} name={field + M.DECISION_THEME.name} dataKey={M.DECISION_THEME.key}/>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.DECISION_BASIS.name,
-                                                (<tr>
-                                                    <td className='ap-input-caption'>{M.DECISION_BASIS.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_BASIS.name]} name={field + M.DECISION_BASIS.name} dataKey={M.DECISION_BASIS.key}/>
-                                                    </td>
-                                                </tr>)
-                                            )}
-                                            {cif(M.POST_APPEAL_CAUSE.name,
-                                                (false && <tr>
-                                                    <td className='ap-input-caption'>{M.POST_APPEAL_CAUSE.label}</td>
-                                                    <td><Field disabled={disabled} component={FAutocomplete} value={P[M.POST_APPEAL_CAUSE.name]} name={field + M.POST_APPEAL_CAUSE.name} dataKey={M.POST_APPEAL_CAUSE.key}/>
-                                                    </td>
-                                                </tr>)
-                                            )}
-
-                                            <tr>
-                                                <td className='ap-input-caption'>Решение по АП</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_decis_id'} dataKey='APR_DECIS'/></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>Статья-основание решения по АП</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_cause_id'} dataKey='APR_DECIS_CAUSE'/></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='ap-input-caption'>Причина прекращения по АП</td>
-                                                <td><Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <hr className='txt-hr my18'/>
-                            <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross'>
-                                <Button type="text" size="small" onClick={collapse}>
-                                    <span className='color-blue'>Свернуть</span>
-                                </Button>
-                                <div>
-                                    {disabled ? null :
-                                        <Button type="text" onClick={onInf}>
-                                            <i className="el-icon-information color-blue"/>
-                                        </Button>}
-
-                                    {disabled ? null :
-                                        <Button size="small" type="text" onClick={onRmv}>
-                                            <i className="el-icon-close color-red-dark"/>
-                                        </Button>}
-                                </div>
+        const editable = (
+        <div className="shadow-darken10" style={{'border':'1px solid #CCC'}} key={id + 'e1'} theme_id={id} >
+            
+            <Card className="box-card sectionCard" scrollAnchor='+' header={
+                <div className='headline'>
+                    <h3>Краткая информация по теме</h3>
+                </div>
+            }>
+                <div className="form-container">
+                    <div className="wrap">
+                        <div className="item item--full">
+                            <small className="label">{M.CAT.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + M.CAT.name}
+                                                    placeholder={M.CAT.label}
+                                                    dataKey={M.CAT.key} value={P[M.CAT.name]}/>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colSpan='6'>
-                        <hr className='txt-hr my18'/>
-                    </td>
-                </tr>
-            </React.Fragment>
-        ;
+
+                        {manualPostLink
+                        ? (<div className="item">
+                            <small className="label">{M.POST_N.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled || apn_readonly} component={FInput} name={field + M.POST_N.name}
+                                            placeholder={M.POST_N.label}
+                                            value={P[M.POST_N.name]}/>
+                            </div>
+                        </div>)
+                        : (<div className="item">
+                            <small className="label">{M.POST_N.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled || apn_readonly} component={FAutocomplete} name={field + M.POST_N.name}
+                                        placeholder={M.POST_N.label} onSelect={postSelect}
+                                        datapromise={apnPromise} value={P[M.POST_N.name]}/>
+                            </div>
+                        </div>)}
+
+                        <div className="item">
+                            <small className="label">{M.POST_DATE.label}</small>
+                            <div className="value w130">
+                                <Field disabled={!manualPostLink || disabled || apn_readonly} component={FPicker} name={field + M.POST_DATE.name} 
+                                                                            placeholder={M.POST_DATE.label} value={P[M.POST_DATE.name]} datepicker='+'/>
+                            </div>
+                        </div>
+                        
+                        <div className="item">
+                            <small className="label">Ручной ввод</small>
+                            <div className="value">
+                                {(disabled || apn_readonly) ? null : (
+                                    <Switch
+                                    value={manualPostLink}
+                                    onValue={true}
+                                    offValue={false}
+                                    onText='РУЧН'
+                                    offText='АВТ'
+                                    onChange={(value)=>{
+                                        if (!value) {
+                                            postSelect({visibleval: null, key: ''+post_n, name: fldN});
+                                        }
+                                        this.setManualPostLink(value);
+                                        //postClear(); 
+                                    }}>
+                                    </Switch>)}
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Связь с АПР</small>
+                            <div className="value">
+                                {LinkerBTN}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+            
+            <Card className="box-card sectionCard" theme_id={id} header={
+                <div className='headline'>
+                    <h3>Детальная информация по теме</h3>
+                </div>
+            }>
+                <div className="form-container">
+                    <div className="wrap" key={id + 'e2'}>
+                        <div className="item">
+                            <small className="label">Отдел исполнителя</small>
+                            <div className="value">
+                            <Field disabled={disabled && !adminMode} component={FAutocomplete} onChange={()=>{
+                                                   // dispatch(change(`appeal`, field + 'executor_id', null));
+                                                }} name={field + 'executor_org_id'} dataKey={M_STATUS.DEPART.key} dbVisibleVal={P.get('executor_org_id_label')} />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Исполнитель</small>
+                            <div className="value">
+                                <Field disabled={disabled && !adminMode} component={FAutocomplete} name={field + 'executor_id'} dataKey={M_STATUS.EXECUTOR.key} dbVisibleVal={P.get('executor_id_label')} />               
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Статус по теме</small>
+                            <div className="value">
+                                {STATUS_BTN}
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Дата контроля</small>
+                            <div className="value w130">
+                                <Field disabled={disabled} component={FPicker} name={field + 'control_date'} datepicker='+' />
+                            </div>
+                        </div>
+                        <div className="item item--full">
+                            <small className="label">{M.REL_DOCS.label}</small>
+                            <div className="value">
+                                <TopicDocs rows={filesRows} sessionId={sessionId} />
+                            </div>
+                        </div>
+                        <div className="item item--full">
+                            <small className="label">{M.UCH_PRIS.label}</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
+                            </div>
+                        </div>
+                        {PRIS_UCH}
+
+                        {cif(M.CODEX_ARTICLE.name,
+                            (<div className="item">
+                                <small className="label">{M.CODEX_ARTICLE.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} value={P[M.CODEX_ARTICLE.name]} name={field + M.CODEX_ARTICLE.name}/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.OWNER_TS.name,
+                            (<div className="item">
+                                <small className="label">{M.OWNER_TS.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} value={P[M.OWNER_TS.name]} name={field + M.OWNER_TS.name}/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.OWNER_TS_ADR.name,
+                            (<div className="item item--full">
+                                <small className="label">{M.OWNER_TS_ADR.label}</small>
+                                <div className="value">
+                                    <AddressData2 key={getAdrKey(value,['owner_ts_adr_id','owner_ts_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['owner_ts_adr_id','owner_ts_adr_kvart','owner_ts_adr_line']}  disabled={disabled}>
+                                        {value.get('owner_ts_adr_line') || ''}
+                                    </AddressData2>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.APN_ADR.name,
+                            (<div className="item  item--full">
+                                <small className="label">{M.APN_ADR.label}</small>
+                                <div className="value">
+                                    <AddressData2 key={getAdrKey(value,['apn_adr_id','apn_adr_kvart'])} dispatchForm={dispatchForm} source={value} rootField={field} fields={['apn_adr_id','apn_adr_kvart','apn_adr_line']} disabled={disabled}>
+                                        {value.get('apn_adr_line') || ''}
+                                    </AddressData2>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.APN_DATA.name,
+                            (<div className="item item--full">
+                                <small className="label">{M.APN_DATA.label}</small>
+                                <div className="value w130">
+                                    <Field disabled={disabled} component={FPicker} value={P[M.APN_DATA.name]} name={field + M.APN_DATA.name} datepicker='+'/>
+                                </div>
+                            </div>)
+                        )}
+
+                        {cif(M.DESCRIPTION.name,
+                            (<div className="item item--full">
+                                <small className="label">{M.DESCRIPTION.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} value={P[M.DESCRIPTION.name]} name={field + M.DESCRIPTION.name} type="textarea"/>
+                                </div>
+                            </div>)
+                        )}
+
+                        {cif(M.VIOLATOR_REGNO.name,
+                            (<div className="item">
+                                <small className="label">{M.VIOLATOR_REGNO.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field + M.VIOLATOR_REGNO.name}/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.APPEAL_CAUSE.name,
+                            (<div className="item">
+                                <small className="label">{M.APPEAL_CAUSE.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]} name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
+                                </div>
+                            </div>)
+                        )}
+
+                        {cif(M.DESISION_MAKER.name,
+                            (<div className="item-fully">
+                            <div className="item" style={{'grid-column':'1 / span 3'}}>
+                                <small className="label">{M.DESISION_MAKER.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
+                                </div>
+                            </div>
+                            <div className="item item--flow" style={{'grid-column':'auto / span 1'}}>
+                                <small className="label">И. О</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
+                                </div>
+                            </div>
+                            </div>)
+                        )}
+                        {cif(M.DECISION_THEME.name,
+                            (<div className="item">
+                                <small className="label">{M.DECISION_THEME.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_THEME.name]} name={field + M.DECISION_THEME.name} dataKey={M.DECISION_THEME.key}/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.DECISION_DATE.name,
+                            (<div className="item">
+                                <small className="label">{M.DECISION_DATE.label}</small>
+                                <div className="value w130">
+                                    <Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field + M.DECISION_DATE.name} datepicker='+'/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.DECISION_BASIS.name,
+                            (<div className="item">
+                                <small className="label">{M.DECISION_BASIS.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.DECISION_BASIS.name]} name={field + M.DECISION_BASIS.name} dataKey={M.DECISION_BASIS.key}/>
+                                </div>
+                            </div>)
+                        )}
+                        {cif(M.POST_APPEAL_CAUSE.name,
+                            (false &&  <div className="item">
+                                <small className="label">{M.POST_APPEAL_CAUSE.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.POST_APPEAL_CAUSE.name]} name={field + M.POST_APPEAL_CAUSE.name} dataKey={M.POST_APPEAL_CAUSE.key}/>
+                                </div>
+                            </div>)
+                        )}
+                        <div className="item">
+                            <small className="label">Решение по АП</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_decis_id'} dataKey='APR_DECIS'/>
+                            </div>
+                        </div>
+                        <div className="item item--full">
+                            <small className="label">Статья-основание решения по АП</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_cause_id'} dataKey='APR_DECIS_CAUSE'/>
+                            </div>
+                        </div>
+                        <div className="item item--full">
+                            <small className="label">Причина прекращения по АП</small>
+                            <div className="value">
+                                <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+
+
+
+            <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross bg-white px18 py12'>
+                <Button type="text" size="small" onClick={collapse}>
+                    <span className='color-blue'>Свернуть</span>
+                </Button>
+                <div>
+                    {disabled ? null :
+                        <Button type="text" onClick={onInf}>
+                            <i className="el-icon-information color-blue"/>
+                        </Button>}
+
+                    {disabled ? null :
+                        <Button size="small" type="text" onClick={onRmv}>
+                            <i className="el-icon-close color-red-dark"/>
+                        </Button>}
+                </div>
+            </div>
+        </div>
+        );
         return editable;
     } //
 }

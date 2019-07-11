@@ -39,7 +39,7 @@ class IshDocsData extends React.PureComponent {
         const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app};
 
         return (
-            <div scrollanchor='ishDoc'>
+            <div scrollanchor='ishDoc' id='ishDoc'>
                 <Card className="box-card sectionCard" header={
                     <div className="headline">
                         <h3>{headerTitle}</h3>

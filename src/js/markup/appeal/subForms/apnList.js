@@ -51,6 +51,7 @@ export class EApnList extends React.Component {
         const {fields, disabled} = this.props
         const add = () => fields.push(getRow());
         const rmv = (ind) => () => fields.remove(ind);
+
         const inf = (x,i,arr) => async (evt) =>{
             const denormalize = true;
             const alias = 'AP_PROT_SEARCH';

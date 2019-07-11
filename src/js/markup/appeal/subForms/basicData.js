@@ -17,7 +17,7 @@ const BasicData = props => {
     const {nextPage, handleSubmit, prevPage, disabled} = props;
     const navi = !disabled && (nextPage||prevPage);
     return (
-        <div scrollanchor='basic'>
+        <div scrollanchor='basic' id="basic">
             <Layout.Row gutter="20">
                 <Layout.Col span="24">
                     <Card className="box-card sectionCard" header={
@@ -28,12 +28,6 @@ const BasicData = props => {
                     <form className="form"  onSubmit={handleSubmit}>
                         <div className="form-container">
                             <div className="wrap">
-                                <div className="item">
-                                    <small className="label">Регистрационный номер</small>
-                                    <div className="value">
-                                        <span className="txt-middle color-gray-light">[отсутствует]</span>
-                                    </div>
-                                </div>
                                 <div className="item">
                                     <small className="label">{M.EDO_NUM.label}</small>
                                     <div className="value">
@@ -54,7 +48,7 @@ const BasicData = props => {
                                 </div>
                                 <div className="item">
                                     <small className="label">{M.SHEETS_COUNT.label}</small>
-                                    <div className="value w36">
+                                    <div className="value" style={{'width': '80px'}}>
                                         <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
                                     </div>
                                 </div>

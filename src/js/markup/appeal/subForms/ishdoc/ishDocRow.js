@@ -83,24 +83,50 @@ const IshDocRow = React.memo(props => {
 
     if (!expanded) { // collapsed
         return (<React.Fragment key={id} >
-                <tr>
-                    <td><span className='ap-table-list-number mr12'>{ind + 1}</span></td>
-                    <td><div className='mr12'>{P.get(M.DOC_TARGET.name)}</div></td>
-                    <td><div className='mr12 cutted-text wmax180' title={P.get(M.ISH_NUM.name)}>{P.get(M.ISH_NUM.name)}</div></td>
-                    <td><div className='mr12'>{data2str(P.get(M.ISH_DATE.name))}</div></td>
-                    <td><div className='mr12'>{P.get('podpisal_name')}</div></td>
-                    <td><div className='mr12'>{P.get('status_name') || 'Черновик'}</div></td>
-                    <td className='pr12 align-r'>
-                        <Button type="text" onClick={onXpd}>
-                            <i className="el-icon-edit color-green"/>
-                        </Button>
-
-                        {disabled ? null :
-                            <Button size="small" type="text" onClick={onRmv}>
-                                <i className="el-icon-close color-red-dark"/>
-                            </Button>}
-                    </td>
-                </tr>
+            <div className="wrap wrap--infoview">
+                <div className="left-aside">
+                    <div className="list-num mr12">{ind + 1}</div>
+                </div>
+                <div className="right-aside">
+                    {disabled ? null :
+                    <Button size="small" type="text" onClick={onRmv}>
+                        <i className="ico round minus"/>
+                    </Button>}
+                    <Button type="text" onClick={onXpd}>
+                        <i className="ico round edit"/>
+                    </Button>
+                </div>
+                <div className="item">
+                    <small className="label">{M.DOC_TARGET.label}</small>
+                    <div className="value">
+                        {P.get(M.DOC_TARGET.name)}
+                    </div>
+                </div>
+                <div className="item">
+                    <small className="label">{M.ISH_DATE.label}</small>
+                    <div className="value">
+                        {data2str(P.get(M.ISH_DATE.name)) 
+                            ? <span>{data2str(P.get(M.ISH_DATE.name))}</span> 
+                            : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                        }
+                    </div>
+                </div>
+                <div className="item">
+                    <small className="label">Подписант</small>
+                    <div className="value">
+                        {P.get('podpisal_name')
+                            ? <span>{P.get('podpisal_name')}</span> 
+                            : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                        }
+                    </div>
+                </div>
+                <div className="item">
+                    <small className="label">Статус</small>
+                    <div className="value">
+                        {P.get('status_name') || 'Черновик'}
+                    </div>
+                </div>
+            </div>  
             </React.Fragment>);
     } //
 

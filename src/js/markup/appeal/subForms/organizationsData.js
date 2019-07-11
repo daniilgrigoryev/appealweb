@@ -23,7 +23,7 @@ const OrganizationsData = props => {
     const navi = !disabled && (nextPage||prevPage);
     
     return (
-        <div scrollanchor='organizations'>
+        <div scrollanchor='organizations' id='organizations'>
             <Card className="box-card sectionCard" header={
                 <div className='headline'>
                     <h3>
