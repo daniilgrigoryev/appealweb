@@ -158,11 +158,18 @@ const IshDocRow = React.memo(props => {
                                 {fTypes.map(x=><Dropdown.Item key={x.property} command={x.property}>{x.value}</Dropdown.Item>)}
                         </Dropdown.Menu>;
 
-            DOC_MAKER = <Dropdown onCommand={commandFabula} menu={menu}>
+            DOC_MAKER = <Dropdown onCommand={commandFabula} menu={menu} className="mx-auto my18">
                         <Button size="small">Создать по шаблону<i className="el-icon-arrow-down el-icon--right"></i></Button>
                     </Dropdown>;
         } else { //
-            DOC_MAKER = <span>Конструктор шаблонов доступен после связывания документа с темой и отсутствии несохраненных изменений</span>;
+            DOC_MAKER = (
+                <div className="flex-parent flex-parent--center-main flex-parent--column w-full">
+                    <i className="ico round info w30 h30 mx-auto mt18"/>
+                    <p className="my6 mb18 txt-em color-gray align-center">
+                        Конструктор шаблонов доступен после связывания документа с темой и отсутствии несохраненных изменений 
+                    </p>
+                </div>
+            );;
         }
     } //
 
@@ -184,19 +191,19 @@ const IshDocRow = React.memo(props => {
         dispatch(change('appeal',field,newstatus));
     } //
 
-    const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
+    const await_c = !showBtn ? null : (<Button size="small" onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
     const await_s = (<Button onClick={()=>setCheckSt('REVOKE_SIGN')}>Ожидает подписи. Отказ от подписи</Button>);
     const signd = (<React.Fragment> 
         <span>Подписано</span>
-        <Button onClick={()=>setCheckSt('SENDED')} >Отправлено вручную</Button>
-        <Button onClick={()=>setCheckSt('SEND_QUEUE')} >АВТО отправка</Button>
+        <Button size="small" onClick={()=>setCheckSt('SENDED')} >Отправлено вручную</Button>
+        <Button size="small" onClick={()=>setCheckSt('SEND_QUEUE')} >АВТО отправка</Button>
     </React.Fragment>);
     const sendd = <span>Отправлено</span>;
     const nostat = !showBtn ? null : (
         <React.Fragment>
-            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >На проверку (ЭЦП)</Button>
-            <Button onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
-            <Button onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Без подписи</Button>
+            <Button size="small" onClick={()=>setCheckSt('AWAIT_CHECK')} >На проверку (ЭЦП)</Button>
+            <Button size="small" onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
+            <Button size="small" onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Без подписи</Button>
         </React.Fragment>);
 
     const STATUS = ({
@@ -325,11 +332,15 @@ const IshDocRow = React.memo(props => {
             </Card>
 
             <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross bg-white px18 py12'>
-                {disabled ? null : <Button type="text" onClick={onRmv}>
-                    <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
-                </Button>}
-                <Button type="text" size="small" onClick={collapse}>
-                    <span className='color-blue'>Свернуть</span>
+                <div>
+                    {disabled ? null : <Button type="text" onClick={onRmv}>
+                        <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
+                    </Button>}
+                </div>
+
+
+                <Button type="primary" size="small" onClick={collapse}>
+                    <span>Свернуть</span>
                 </Button>
             </div>
 

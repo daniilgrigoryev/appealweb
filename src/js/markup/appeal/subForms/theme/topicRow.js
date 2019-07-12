@@ -187,15 +187,15 @@ class TopicRow extends React.PureComponent {
                             <div className="list-num mr12">{ind + 1}</div>
                         </div>
                         <div className="right-aside">
-                            <Button type="text" onClick={onXpd}>
-                                <i className="ico round edit"/>
-                            </Button>
+                            {(disabled || responseMode) ? null : <Button type="text" onClick={onRmv}>
+                                <i className="ico round minus"/>
+                            </Button>}
                             {(disabled || responseMode) ? null : <Button type="text" onClick={onInf}>
                                 <i className="ico round info"/>
                             </Button>}
-                             {(disabled || responseMode) ? null : <Button type="text" onClick={onRmv}>
-                                <i className="ico round minus"/>
-                            </Button>}
+                            <Button type="text" onClick={onXpd}>
+                                <i className="ico round edit"/>
+                            </Button>
                         </div>
                         <div className="item">
                             <small className="label">{M.CAT.label}</small>
@@ -559,20 +559,20 @@ class TopicRow extends React.PureComponent {
 
 
             <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross bg-white px18 py12'>
-                <Button type="text" size="small" onClick={collapse}>
-                    <span className='color-blue'>Свернуть</span>
-                </Button>
                 <div>
-                    {disabled ? null :
+                    {/* {disabled ? null :
                         <Button type="text" onClick={onInf}>
                             <i className="el-icon-information color-blue"/>
-                        </Button>}
+                        </Button>} */}
 
                     {disabled ? null :
                         <Button size="small" type="text" onClick={onRmv}>
-                            <i className="el-icon-close color-red-dark"/>
+                            <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
                         </Button>}
                 </div>
+                <Button type="primary" size="small" onClick={collapse}>
+                    <span>Свернуть</span>
+                </Button>
             </div>
         </div>
         );

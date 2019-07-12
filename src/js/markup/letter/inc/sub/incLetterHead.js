@@ -101,16 +101,16 @@ const tdExpanded = (fld, el, i, disabled, rmv, expd) => {
 
                         <hr className='txt-hr my18'/>
                         <div className='flex-parent flex-parent--space-between-main flex-parent--center-cross'>
-                            <Button type="text" size="small">
-                                <span className='color-blue'>Свернуть</span>
-                            </Button>
                             <div>
                                 {disabled ? null :
                                     <Button size="small" type="text" onClick={rmv(i)}>
-                                        <i className="el-icon-close color-red-dark"/>
+                                        <i className="el-icon-delete color-red-dark" style={{'fontSize': '18px'}}/>
                                     </Button>
                                 }
                             </div>
+                            <Button type="primary" size="small">
+                                <span>Свернуть</span>
+                            </Button>
                         </div>
                     </div>
                 </td>

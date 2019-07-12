@@ -430,17 +430,17 @@ div.tooltipWrap {
     padding: 10px;
     background-color: #fff;
     position: relative;
-    .el-popover{
-      min-width: auto;
-    }
-    .popoverContent{
-      .actionButton:nth-child(2){
-        margin-top: 6px;
-      }
-    }
+    // .el-popover{
+    //   min-width: auto;
+    // }
+    // .popoverContent{
+    //   .actionButton:nth-child(2){
+    //     margin-top: 6px;
+    //   }
+    // }
     .action{
       position: absolute;
-      right: 10px;
+      right: 15px;
       top: 10px;
       width: 20px;
     }
@@ -481,7 +481,15 @@ div.tooltipWrap {
   }
 }
 
+.adressData2 .wrap{
+  .preView{
+    grid-template-columns: 1fr!important;
+  }
+  .item{
+    grid-template-columns: minmax(min-content, min-content) auto;
+  }
 
+}
 .wrap{
   display: grid;
   // grid-template-columns: repeat(2, 1fr);
@@ -583,9 +591,45 @@ div.tooltipWrap {
     grid-column: auto / span 4;
     grid-template-columns: repeat(4, 1fr);
   }
-
-
 }
+.style-table-wrapper{
+  overflow-x: auto;
+}
+.style-table{
+  // background: red;
+  width: 100%;
+  min-width: 1256px;
+  thead{
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    tr{
+      th{
+        padding: 15px 0;
+        font-size: 14px;
+        color: #505A6E;
+        font-weight: 600;
+        text-align: left;
+      }
+    }
+  }
+  tbody{
+    tr{
+      border-bottom: 1px solid #CCCCCC;
+      td{
+        color: #797979;
+        padding: 15px 0;
+        a{
+          color: #6B94C2;
+          text-decoration: underline;
+          &:hover{
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
 .flex-table{
   padding-left: 190px;
   @media screen and (max-width: 1450px){
@@ -677,6 +721,10 @@ i.ico{
   vertical-align: middle;
   width: 25px;
   height: 25px;
+  opacity: 0.7;
+  &:hover{
+    opacity: 1;
+  }
   &.round{
     &.edit{
       background-image: url($publicpath + '/images/ico-round-edit.svg');

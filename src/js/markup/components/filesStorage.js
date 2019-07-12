@@ -91,38 +91,28 @@ const FilesStorage = React.memo(function FilesStorage(props){
                     <i className="ico defaultFile"></i>
                 </div>
                 <div className="fileCard__footer">
-                    <Popover placement="left" width="200px" trigger="click" content={(
-                            <div className="flex-parent flex-parent--column popoverContent">
-                                {disabled ? null :
-                                    <Button className="actionButton py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                                        <i className="ico round minus mr6"/> удалить
-                                    </Button>
-                                }
-                                <Button className="actionButton py0 ml0" size="small" type="text" onClick={()=>download(sessionId,x)}>
-                                    <i className="ico download mr6"/> скачать
-                                </Button>
-                            </div>
-                        )}>
-                        <Button className="action py0" size="small" type="text">
-                            <i className="ico dot"/>
+
+                    {disabled ? null :
+                        <Button className="action py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                            <i className="ico round minus mr6"/>
                         </Button>
-                    </Popover>
+                    }
 
                     <div className="content">
                         <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
                         {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
-
-                        {x.get('source_alias') ? <p className="txt-em">{txtSourceAlias(x.get('source_alias'))}</p> : null}
-
-                        {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
-                            <React.Fragment>
+                        
+                        <div className="flex-parent flex-parent--space-between-main my6">
+                            {x.get('source_alias') ? <p className="txt-em inline-block">{txtSourceAlias(x.get('source_alias'))}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                            {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
+                             <React.Fragment>
                                 <span>ЭЦП</span>
-                                <ECheckbox onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
-                             </React.Fragment>
+                                <ECheckbox сlassName="inline-block" onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
+                            </React.Fragment>
                             : null
-                        }
+                            }
+                        </div>
                     </div>
-
                 </div>
             </Card>))); //
 
