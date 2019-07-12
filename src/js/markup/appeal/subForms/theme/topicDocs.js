@@ -26,21 +26,11 @@ export default (props)=>{
 						<i className="ico defaultFile"></i>
 				</div>
 				<div className="fileCard__footer">
-						<Popover placement="left" width="200px" trigger="click" content={(
-										<div className="flex-parent flex-parent--column popoverContent">
-												<Button className="actionButton py0 ml0" size="small" type="text" onClick={()=>download(x.get('storage_id'),x.get('description'))}>
-														<i className="ico download mr6"/> скачать
-												</Button>
-										</div>
-								)}>
-								<Button className="action py0" size="small" type="text">
-										<i className="ico dot"/>
-								</Button>
-						</Popover>
-
 						<div className="content">
-								<p className="fileName" title="Скачать" onClick={()=>download(x.get('storage_id'),x.get('description'))}>{x.get('description')}</p>
-								{x.get('type_name') ? <p className="txt-em">{x.get('type_name')}</p> : null}
+								<p className="fileName" title="Скачать" onClick={()=>download(x.get('storage_id'),x.get('description'))}>
+									{x.get('description') ? x.get('description') : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+								</p>
+								{x.get('type_name') ? <p className="txt-em">{x.get('type_name')}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}
 						</div>
 
 				</div>

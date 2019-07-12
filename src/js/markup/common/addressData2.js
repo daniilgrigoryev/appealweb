@@ -159,84 +159,138 @@ class AddressData2 extends React.Component {
         const placeholder = children || line_adr || '';    
         
         const ADDRESS = this.state.isStr
-                ? (<tr>
-                        <td colSpan='2'>
-                            {disabled ? null : 
-                                <Button size="small" icon="plus" type="success" plain={true}
-                                    className="flex-parent mb18"
-                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
-                        </td>
-                        <td>{placeholder}</td>
+                ? (
+                    <div className="item item--full preView">
+                        <div>
+                            <p>{placeholder}</p>
 
-                    </tr>
+                            {disabled ? null : 
+                                <Button size="small" icon="plus" 
+                                    plain={true} className="my6 block"
+                                    title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>}
+                        </div>
+
+                    </div>
+
                 )
                 : (
-                    <React.Fragment><tr>
-                        <td className='ap-input-caption'>{M.REGION.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F[M.REGION.name]} key={F[M.REGION.name]} onChange={(val)=>this.onListChange(val,M.REGION.name)} dataKey={M.REGION.key} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.RAYON.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F['rayon_id']} key={F['rayon_id']} onChange={(val)=>this.onListChange(val,'rayon_id')} dataWhere={_.pick(F, [M.REGION.name])} dataKey={M.RAYON.key} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.NPUNKT.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F['city_id']} key={F['city_id']} onChange={(val)=>this.onListChange(val,'city_id')} dataWhere={_.pick(F, [M.REGION.name, 'rayon_id'])} dataKey={M.NPUNKT.key}  /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.STREET.label}</td>
-                        <td colSpan='3'><EAutocomplete value={F['street_id']} key={F['street_id']} onChange={(val)=>this.onListChange(val,'street_id')} dataWhere={_.pick(F, [M.REGION.name,'rayon_id','city_id'])} dataKey={M.STREET.key}  /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.DOM.label}</td>
-                        <td><EInput value={F[M.DOM.name]} onChange={(v)=>this.onFieldChange([M.DOM.name],v)}/></td>
-                        <td className='ap-input-caption'>{M.KORPUS.label}</td>
-                        <td><EInput value={F[M.KORPUS.name]} onChange={(v)=>this.onFieldChange([M.KORPUS.name],v)} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.STR.label}</td>
-                        <td><EInput value={F[M.STR.name]} onChange={(v)=>this.onFieldChange([M.STR.name],v)} /></td>
-                        <td className='ap-input-caption'>Квартира/офис</td>
-                        <td><EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} /></td>             
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.PINDEX.label}</td>
-                        <td colSpan='3'><EInput value={F[M.PINDEX.name]} onChange={(v)=>this.onFieldChange([M.PINDEX.name],v)} /></td>
-                    </tr>
+                    <React.Fragment>
+                    <div className="item item--full">
+                        <small className="label">{M.REGION.label}</small>
+                        <div className="value">
+                            <EAutocomplete value={F[M.REGION.name]} key={F[M.REGION.name]} onChange={(val)=>this.onListChange(val,M.REGION.name)} dataKey={M.REGION.key} />
+                        </div>
+                    </div>
+                    <div className="item item--full">
+                        <small className="label">{M.RAYON.label}</small>
+                        <div className="value">
+                            <EAutocomplete value={F['rayon_id']} key={F['rayon_id']} onChange={(val)=>this.onListChange(val,'rayon_id')} dataWhere={_.pick(F, [M.REGION.name])} dataKey={M.RAYON.key} />
+                        </div>
+                    </div>
+                    <div className="item item--full">
+                        <small className="label">{M.NPUNKT.label}</small>
+                        <div className="value">
+                            <EAutocomplete value={F['city_id']} key={F['city_id']} onChange={(val)=>this.onListChange(val,'city_id')} dataWhere={_.pick(F, [M.REGION.name, 'rayon_id'])} dataKey={M.NPUNKT.key}  />
+                        </div>
+                    </div>
+                    <div className="item" style={{gridColumn: '1 / span 3'}}>
+                        <small className="label">{M.STREET.label}</small>
+                        <div className="value">
+                            <EAutocomplete value={F['street_id']} key={F['street_id']} onChange={(val)=>this.onListChange(val,'street_id')} dataWhere={_.pick(F, [M.REGION.name,'rayon_id','city_id'])} dataKey={M.STREET.key}  />
+                        </div>
+                    </div>
+                    <div className="item item--flow" style={{gridColumn: 'auto / 5'}}>
+                        <small className="label">{M.PINDEX.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.PINDEX.name]} onChange={(v)=>this.onFieldChange([M.PINDEX.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item" style={{gridColumn: 'auto / span 1'}}>
+                        <small className="label">{M.DOM.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.DOM.name]} onChange={(v)=>this.onFieldChange([M.DOM.name],v)}/>
+                        </div>
+                    </div>
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
+                        <small className="label">{M.KORPUS.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.KORPUS.name]} onChange={(v)=>this.onFieldChange([M.KORPUS.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
+                        <small className="label">{M.STR.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.STR.name]} onChange={(v)=>this.onFieldChange([M.STR.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item item--flow" style={{gridColumn: 'auto / span 1'}}>
+                        <small className="label">Квартира/офис</small>
+                        <div className="value">
+                            <EInput value={F[M.KVART.name]} onChange={(v)=>this.onFieldChange([M.KVART.name],v)} />
+                        </div>
+                    </div>
 
-                    {false && <React.Fragment><tr>
-                        <td className='ap-input-caption'>{M.MESTO.label}</td>
-                        <td colSpan='3'><EInput value={F[M.MESTO.name]} onChange={(v)=>this.onFieldChange([M.MESTO.name],v)} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.KM.label}</td>
-                        <td><EInput value={F[M.KM.name]} onChange={(v)=>this.onFieldChange([M.KM.name],v)} /></td>
-                        <td className='ap-input-caption'>{M.MGO.label}</td>
-                        <td><EInput value={F[M.MGO.name]} onChange={(v)=>this.onFieldChange([M.MGO.name],v)} /></td>
-                        <td className='ap-input-caption'>{M.MGT.label}</td>
-                        <td><EInput value={F[M.MGT.name]} onChange={(v)=>this.onFieldChange([M.MGT.name],v)} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.DOP_SVED.label}</td>
-                        <td colSpan='3'><EInput value={F[M.DOP_SVED.name]} onChange={(v)=>this.onFieldChange([M.DOP_SVED.name],v)} /></td>
-                    </tr>
-                    <tr>
-                        <td className='ap-input-caption'>{M.SHIR.label}</td>
-                        <td><EInput value={F[M.SHIR.name]} onChange={(v)=>this.onFieldChange([M.SHIR.name],v)} /></td>
-                        <td className='ap-input-caption'>{M.DOLG.label}</td>
-                        <td><EInput value={F[M.DOLG.name]} onChange={(v)=>this.onFieldChange([M.DOLG.name],v)} /></td>
-                    </tr></React.Fragment>}
-                    <tr>
-                        <td><Button size="small" icon="plus" type="success" plain={true}
-                                className="flex-parent mb18"
-                                title='Применить' onClick={this.save}>Применить</Button></td>
-                    </tr></React.Fragment>
+                    {false && <React.Fragment>
+                    <div className="item">
+                        <small className="label">{M.MESTO.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.MESTO.name]} onChange={(v)=>this.onFieldChange([M.MESTO.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.KM.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.KM.name]} onChange={(v)=>this.onFieldChange([M.KM.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.MGO.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.MGO.name]} onChange={(v)=>this.onFieldChange([M.MGO.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.MGT.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.MGT.name]} onChange={(v)=>this.onFieldChange([M.MGT.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.DOP_SVED.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.DOP_SVED.name]} onChange={(v)=>this.onFieldChange([M.DOP_SVED.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.SHIR.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.SHIR.name]} onChange={(v)=>this.onFieldChange([M.SHIR.name],v)} />
+                        </div>
+                    </div>
+                    <div className="item">
+                        <small className="label">{M.DOLG.label}</small>
+                        <div className="value">
+                            <EInput value={F[M.DOLG.name]} onChange={(v)=>this.onFieldChange([M.DOLG.name],v)} />
+                        </div>
+                    </div>
+                    
+                    </React.Fragment>}
+                    <div className="item item--right">
+                            <div style={{'grid-column': 'span 2'}}>
+                                <div className="flex-parent flex-parent--end-main mb12">
+                                    <Button size="small" icon="plus" type="success" plain={true} className="flex-parent" title='Применить' onClick={this.save}>Применить</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </React.Fragment>
                 );
 
         return (       
-                <div className='ml0'>
+            <div className="form-container adressData2">
+                <div className="wrap">
                     {ADDRESS}
                 </div>
+            </div>
         )
     }
 } //

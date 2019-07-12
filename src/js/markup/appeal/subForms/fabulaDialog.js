@@ -156,19 +156,29 @@ class FabulaDialog extends React.Component {
 	        closeOnPressEscape={false}
 	        lockScroll={true} >
 
-	        <Dialog.Body className='dialBod'>
-			        			<div className = 'spDiv'>Выбор документа</div>
-			        				<Select className='selEl' value={this.state.doc} onChange={this.setDoc.bind(this)} >
-										{ docList.map(el =>(<Select.Option key={el.property} label={el.value} value={el} />)) }
-									</Select>
-		        		{_.isEmpty(secList) ? null
-		        			: (<React.Fragment>
-		        				<div className = 'spDiv'>Выбор секции</div>
-				        				<Select className='selEl' value={this.state.sec} onChange={this.setSection.bind(this)} >
-											{ secList.map(el =>(<Select.Option key={el.property} label={el.value} value={el}  />)) }
+
+					<Dialog.Body className="w-full">
+						<div className="wrap">
+							<div className="item item--full">
+									<small className="label">Выбор документа</small>
+									<div className="value">
+										<Select className='selEl w-full txt-middle' value={this.state.doc} onChange={this.setDoc.bind(this)}>
+											{docList.map(el =>(<Select.Option className="txt-middle" key={el.property} label={el.value} value={el} />))}
 										</Select>
-								</React.Fragment>)}
-	        </Dialog.Body>
+									</div>
+							</div>
+
+							{_.isEmpty(secList) ? null
+								: (<div className="item item--full">
+											<small className="label">Выбор секции</small>
+											<div className="value">
+												<Select className='selEl w-full txt-middle' value={this.state.sec} onChange={this.setSection.bind(this)} >
+													{secList.map(el =>(<Select.Option className="txt-middle" key={el.property} label={el.value} value={el}  />)) }
+												</Select>
+											</div>
+									</div>)}
+							</div>
+					</Dialog.Body>
 
 	        <Dialog.Footer className="dialog-footer, dialFoot">
 	        			<div className = 'ftMes'>{strVal}</div>

@@ -381,43 +381,63 @@ class SidePanel extends Component {
     }
 
     const STAGE = processing_stage_name;
-    let STATUS = <button type='button'  onClick={()=>nextStatus('STAT_PREPARED')}>Черновик. Сохранить</button>; //
-
+    let STATUS = <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_PREPARED')}>Черновик. Сохранить</Button>; //
+    
     if (STAGE=='STAT_PREPARED'){
       STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Ожидает регистрации. Зарегистрировать</button>
-          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+          <Tooltip content="Ожидает регистрации. Зарегистрировать" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REGISTERED')}>Ожидает регистрации. Зарегистрировать</Button>
+          </Tooltip>
+          <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</Button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_REGISTERED'){
       // ! переключение в "У исполнителя" происходит автоматически при начале работы над любой темой в Обращении
       STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Зарегистрировано. Отклонить.</button>
+            <Tooltip content="Зарегистрировано. Отклонить." placement="top">
+                <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REJECTED')}>Зарегистрировано. Отклонить.</Button>
+            </Tooltip>
         </React.Fragment>);//
     } else if (STAGE=='STAT_RETURNED_TO_REGISTRATOR'){
       STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Возвращено регистратору. Подтвердить исправления</button>
-          <button type='button'  onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</button>
+            <Tooltip content="Возвращено регистратору. Подтвердить исправления" placement="top">
+                <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REGISTERED')}>Возвращено регистратору. Подтвердить исправления</Button>
+            </Tooltip>
+
+          <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REJECTED')}>Отклонить</Button>
       </React.Fragment>);//
     } else if (STAGE=='STAT_MOVED_TO_EXECUTOR'){
        STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</button>
-          <div onClick={()=>nextStatus('STAT_RETURNED_TO_REGISTRATOR')}>Вернуть регистратору</div>
+          <Tooltip content="У исполнителя. Подтвердить готовность ответа" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_RESPONSE_PREPARED')}>У исполнителя. Подтвердить готовность ответа</Button>
+          </Tooltip>
+          <Tooltip content="Вернуть регистратору" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_RETURNED_TO_REGISTRATOR')}>Вернуть регистратору</Button>
+          </Tooltip>
+
       </React.Fragment>);//
     } else if (STAGE=='STAT_RESPONSE_PREPARED'){
       STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_SENT')}>Подготовлен ответ. Подтвердить исполнение обращения</button>
+          <Tooltip content="Подготовлен ответ. Подтвердить исполнение обращения" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_SENT')}>Подготовлен ответ. Подтвердить исполнение обращения</Button>
+          </Tooltip>
       </React.Fragment>);//
     } else if (STAGE=='STAT_SENT'){
        STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_ARCHIVED')}>Исполнено. Подтвердить передачу в архив</button>
+          <Tooltip content="Исполнено. Подтвердить передачу в архив" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_ARCHIVED')}>Исполнено. Подтвердить передачу в архив</Button>
+          </Tooltip>
+
       </React.Fragment>);//
     } else if (STAGE=='STAT_REJECTED'){
       STATUS = (<React.Fragment>
-          <button type='button'  onClick={()=>nextStatus('STAT_REGISTERED')}>Отклонено. Вернуть в регистрацию</button>
+        <Tooltip content="Отклонено. Вернуть в регистрацию" placement="top">
+            <Button size="small" className="my3 mx0 txt-truncate w-full" onClick={()=>nextStatus('STAT_REGISTERED')}>Отклонено. Вернуть в регистрацию</Button>
+        </Tooltip>
+
       </React.Fragment>);//
     } else if (STAGE=='STAT_ARCHIVED'){
        STATUS = (<React.Fragment>
-          <button type='button' >Архив</button>
+          <Button size="small" className="my3 mx0 txt-truncate w-full">Архив</Button>
       </React.Fragment>);//
     }
 

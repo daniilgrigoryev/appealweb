@@ -125,51 +125,55 @@ class LinkerSearch extends React.Component {
 
         return (
             <div>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td className="ap-input-caption">{M.POST_NUMBER.label}</td>
-                        <td><Input id={M.POST_NUMBER.name} value={S[M.POST_NUMBER.name]} onChange={(v)=>this.onInput('npost',v)}/></td>
-                    </tr>
-                    <tr>
-                        <td className="ap-input-caption">{M.NUM.label}</td>
-                        <td><Input id={M.NUM.name} value={S[M.NUM.name]} onChange={(v)=>this.onInput('number',v)}/></td>
-                    </tr>
-                    {false && (<tr>
-                        <td className="ap-input-caption">{M.FIO_ORG.label}</td>
-                        <td><Input id={M.FIO_ORG.name} value={S[M.FIO_ORG.name]} onChange={(v)=>this.onInput('fio',v)}/></td>
-                    </tr>)}
-                    <tr>
-                        <td className="ap-input-caption">{M.SEARCH_DIR.label}</td>
-                        <td><Radio value={M.SEARCH_DIR_IN.name}  checked={searchDirection === M.SEARCH_DIR_IN.name}  onChange={()=>this.onInput('searchDirection',M.SEARCH_DIR_IN.name)}>{M.SEARCH_DIR_IN.label}</Radio></td>
-                        <td><Radio value={M.SEARCH_DIR_OUT.name} checked={searchDirection === M.SEARCH_DIR_OUT.name} onChange={()=>this.onInput('searchDirection',M.SEARCH_DIR_OUT.name)}>{M.SEARCH_DIR_OUT.label}</Radio></td>
-                    </tr>
-                    <tr>
-                        <td className="ap-input-caption">Поиск по</td>
-                        <td><Radio value={M.SEARCH_DOC_CLAIM.name}  checked={searchDocs === M.SEARCH_DOC_CLAIM.name}  onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_CLAIM.name)}>{M.SEARCH_DOC_CLAIM.label}</Radio></td>
-                        <td><Radio value={M.SEARCH_DOC_LETTER.name} checked={searchDocs === M.SEARCH_DOC_LETTER.name} onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_LETTER.name)}>{M.SEARCH_DOC_LETTER.label}</Radio></td>
-                    </tr>
-                    
-                    <tr>
-                        <td></td>
-                        <td colSpan='4'>
-                            <div className='flex-parent flex-parent--center-cross mt24'>
-                                <Button size="small" type='primary' icon="search" onClick={this.onSearch}
-                                        className="flex-parent mb18"
-                                        title='Добавить тему'>Поиск</Button>
-
-                                {false && (<Button size="small" icon="share" onClick={this.performLink} 
-                                        className="flex-parent mb18"
-                                        title='Добавить связь между основным и выбранным документами'>Связать</Button>)}      
-
-                                <Button size="small" icon="share" onClick={dialogClose} 
-                                        className="flex-parent mb18"
-                                        title='Добавить связь между основным и выбранным документами'>Закрыть</Button>                
+                <div className="form-container">
+                    <div className="wrap">
+                        <div className="item">
+                            <small className="label">{M.POST_NUMBER.label}</small>
+                            <div className="value">
+                                <Input id={M.POST_NUMBER.name} value={S[M.POST_NUMBER.name]} onChange={(v)=>this.onInput('npost',v)}/>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.NUM.label}</small>
+                            <div className="value">
+                                <Input id={M.NUM.name} value={S[M.NUM.name]} onChange={(v)=>this.onInput('number',v)}/>
+                            </div>
+                        </div>
+                        {false && (<div className="item">
+                            <small className="label">{M.FIO_ORG.label}</small>
+                            <div className="value">
+                                <Input id={M.FIO_ORG.name} value={S[M.FIO_ORG.name]} onChange={(v)=>this.onInput('fio',v)}/>
+                            </div>
+                        </div>)}
+                        <div className="item">
+                            <small className="label">{M.SEARCH_DIR.label}</small>
+                            <div className="value">
+                                <Radio value={M.SEARCH_DIR_IN.name}  checked={searchDirection === M.SEARCH_DIR_IN.name}  onChange={()=>this.onInput('searchDirection',M.SEARCH_DIR_IN.name)}>{M.SEARCH_DIR_IN.label}</Radio>
+                                <Radio value={M.SEARCH_DIR_OUT.name} checked={searchDirection === M.SEARCH_DIR_OUT.name} onChange={()=>this.onInput('searchDirection',M.SEARCH_DIR_OUT.name)}>{M.SEARCH_DIR_OUT.label}</Radio>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Поиск по</small>
+                            <div className="value">
+                                <Radio value={M.SEARCH_DOC_CLAIM.name}  checked={searchDocs === M.SEARCH_DOC_CLAIM.name}  onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_CLAIM.name)}>{M.SEARCH_DOC_CLAIM.label}</Radio>
+                                <Radio value={M.SEARCH_DOC_LETTER.name} checked={searchDocs === M.SEARCH_DOC_LETTER.name} onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_LETTER.name)}>{M.SEARCH_DOC_LETTER.label}</Radio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex-parent flex-parent--center-main flex-parent--center-cross mt24'>
+                    <Button size="small" type='small' icon="search" onClick={this.onSearch}
+                            className="flex-parent mb18"
+                            title='Добавить тему'>Поиск</Button>
+
+                    {false && (<Button size="small" icon="share" onClick={this.performLink} 
+                            className="flex-parent mb18"
+                            title='Добавить связь между основным и выбранным документами'>Связать</Button>)}      
+
+                    <Button size="small" icon="share" onClick={dialogClose} 
+                            className="flex-parent mb18"
+                            title='Добавить связь между основным и выбранным документами'>Закрыть</Button> 
+                </div>
 
                 {TABLE}
 

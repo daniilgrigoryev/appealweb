@@ -129,12 +129,15 @@ class DocLinker extends React.Component {
         const {linkerVisible} = this.state;
 
         const CONTENT = (!id) 
-            ? (<Alert title="Связывание возможно только для зарегистрированных обращений"
-                      type="warning"
-                      description="Вначале сохраните документ, нажав кнопку 'Зарегистрировать' "
-                      showIcon={true}
-                      closable={false}
-            />)
+            ? (
+            <div className="flex-parent flex-parent--center-main flex-parent--column form-container">
+                <i className="ico round info w30 h30 mx-auto mt18"/>
+                <p className="my6 txt-em color-gray align-center">
+                    Связывание возможно только для зарегистрированных обращений <br/>
+                    Вначале сохраните документ, нажав кнопку 'Зарегистрировать
+                </p>
+            </div>
+            )
             : (<div key='ili'>
                     <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
                 </div>)
