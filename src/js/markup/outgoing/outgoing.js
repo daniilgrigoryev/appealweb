@@ -55,9 +55,9 @@ class Outgoing extends React.Component {
         const x = await post('db/select', {alias, claim_id, orphan});
         dispatch(initialize(im(x.data)));
         setTimeout(() => {
-                    a.curHash = a.getHash();
-                    a.forceUpdate();
-                }, 1000);
+            a.curHash = a.getHash();
+            a.forceUpdate();
+        }, 1000);
     }
 
     checkIn() {
@@ -66,25 +66,21 @@ class Outgoing extends React.Component {
         const data = JSON.stringify(formData);
 
         const jsonMode = true;
-        post('db/select', {alias, data, jsonMode}).then(x => {
+        post('db/select', {alias, data, jsonMode,orphan:true}).then(x => { 
             const F = formData;
             const V = F ? F.values : {};
             const {error} = x.data;
             if (error) {
-                let exc = error.split('Detail')[0];
-                throw exc;
+                throw error.split('Detail')[0];
             }
 
-            const ID = x.data.rows[0][0].value; // the first column value of single row expected
-            try {
-                const R = JSON.parse(ID);
-                if (R.claim_id) { /// upsert claim
-                    dispatch(change('id', R.claim_id)); //  !CASE SENSITIVE
-                    setTimeout(() => this.reloadRow(), 500);
-                }
-            } catch (exc) {
-                console.error(exc);
+            const R = x.data;
+            const id = R.claim_id || R.id || false; 
+            if (!id) {
+                throw 'Не удалось сохранить изменения';
             }
+            dispatch(change('id', id)); //  !CASE SENSITIVE
+            setTimeout(() => this.reloadRow(), 500);
         }).catch(x => {
             messageSet(x, 'error');
             console.error(x);
@@ -99,7 +95,7 @@ class Outgoing extends React.Component {
 
 
     render() {
-        const {formData, files, sid, dispatch, initialize} = this.props;
+        const {formData, files, sid, dispatch, initialize,id} = this.props;
         try {
             const h = window.location.hash.split('?');
             if (h[1]=='new'){
@@ -107,28 +103,26 @@ class Outgoing extends React.Component {
                 setTimeout(()=>dispatch(initialize(im({}))),100);
             }
         } catch (exc) {
-        //debugger;
+            //debugger;
         }//
 
         const noSave = !!(this.curHash && this.curHash == this.getHash())
         const stateBtnText = noSave ? 'Нет изменений' : 'Сохранить';
         const stateBtnClick = noSave ? () => {} : this.checkIn;
+        const notInsert = !_.isEmpty(id);
+        const P = {notInsert,reloadRow:this.reloadRow};
 
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-content'>
                     <Layout.Row gutter="20">
                         <Layout.Col span="24">
-                            <Card className="box-card mb60" header={
-                                <h3 className='ap-h3'>
-                                    Новое исходящее обращение
-                                </h3>
-                            }>
-                                <IshHead/>
-                                <IshBasic/>
-                                <IshLinksPost/>
-                                <IshLinkInner reloadRow={this.reloadRow}/>
-                                <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} />
+                            <Card className="box-card mb60" header={<h3 className='ap-h3'>Исходящее обращение</h3>}>
+                                <IshHead {...P} />
+                                <IshBasic {...P} />
+                                <IshLinksPost {...P} />
+                                <IshLinkInner {...P} />
+                                <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />
                             </Card>
                             <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
                                 <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
@@ -145,10 +139,11 @@ class Outgoing extends React.Component {
 const mapStateToProps = (state) => {
     const sid = getSessionId(state);
     const sys = getSystem(state);
-    let formData = state.getIn(['form', 'outgoing', 'values']);
-    let files;
+    const formData = state.getIn(['form', 'outgoing', 'values']);
+    const id = state.getIn(['form', 'outgoing', 'values','id']);
+    let files = [];
     formData && (files = state.getIn(['form', 'outgoing', 'values' ,'files']));
-    return {formData, files, sid, sys};
+    return {formData, files, sid, sys,id};
 }
 
 export default compose(

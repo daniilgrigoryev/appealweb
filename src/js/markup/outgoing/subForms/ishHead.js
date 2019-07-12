@@ -5,21 +5,23 @@ import {FInput, EInput} from '../../components/finput.js'
 import {ESelect, FSelect} from '../../components/select.js'
 import {EPicker, FPicker} from '../../components/picker.js'
 import * as _ from 'lodash'
+import Immutable from 'immutable'
 import {Button, Card, Layout} from 'element-react'
 
 import mapping from '../mapping.js'
 
 const M = mapping.ishHead;
 
+const im = (obj) => Immutable.fromJS(obj)
 
 const nDoc = [{property: '78-08', value: '78-08'}, 
              {property: '78-00', value: '78-00'}];
 
 const getRow = (id, addr) => {
-    return {
+    return im({
         id: id || null,
         addr: addr || null
-    }
+    })
 }
 
 const addressee = (props) => {
@@ -44,7 +46,7 @@ const addressee = (props) => {
                     </Button>
                 }
             </td>
-        </tr>));
+        </tr>));//
 
     return (
         <React.Fragment>
@@ -83,7 +85,8 @@ const addressee = (props) => {
 class IshHead extends React.Component {//
 
     render() {
-        const {disabled} = this.props
+        const {disabled,notInsert} = this.props
+
         return (
             <React.Fragment>
                 <Layout.Row gutter="0">
@@ -94,12 +97,17 @@ class IshHead extends React.Component {//
                                 <td className='ap-input-caption wmin180'>
                                     {M.ZAJAV_NDOC.label}
                                 </td>
-                                <td className='w120 pr6'>
-                                    <Field disabled={disabled} component={FSelect} name={M.DOC_NUM.name} data={nDoc}/>
-                                </td>
-                                <td>
-                                    <Field disabled={disabled} component={FInput} name={M.ORDER_NUM.name}/>
-                                </td>
+
+                                {notInsert 
+                                    ? <td colSpan='2'> <Field disabled={true} readonly={true} component={FInput} name='registration_number'/></td>
+                                    : <React.Fragment>
+                                        <td className='w120 pr6'>
+                                            <Field disabled={disabled || notInsert} readonly={disabled || notInsert} component={FSelect} name={M.DOC_NUM.name} data={nDoc}/>
+                                        </td>
+                                        <td>
+                                            <Field disabled={disabled || notInsert} readonly={disabled || notInsert} component={FInput} name={M.ORDER_NUM.name}/>
+                                        </td>
+                                    </React.Fragment>}
                             </tr>
                             <tr>
                                 <td className='ap-input-caption wmin180'>
@@ -131,8 +139,7 @@ class IshHead extends React.Component {//
                                     {M.EXECUTOR.label}
                                 </td>
                                 <td colSpan='2' className='w120'>
-                                    <Field disabled={disabled} component={FAutocomplete} name={M.EXECUTOR.name}
-                                           dataKey={M.EXECUTOR.key}/>
+                                    <Field disabled={disabled} component={FAutocomplete} name={M.EXECUTOR.name} dataKey={M.EXECUTOR.key}/>
                                 </td>
                             </tr>
 
@@ -143,7 +150,7 @@ class IshHead extends React.Component {//
 
                 <FieldArray name='addressee' component={addressee} disabled={disabled}/>
             </React.Fragment>
-        )
+        );
     }
 }
 
