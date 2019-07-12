@@ -184,7 +184,7 @@ const IshDocRow = React.memo(props => {
         dispatch(change('appeal',field,newstatus));
     } //
 
-    const await_c = !showBtn ? null : (<Button onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
+    const await_c = !showBtn ? null : (<Button size="small" onClick={()=>setCheckSt('REVOKE_CHECK')}>Отмена ожидания проверки</Button>);
     const await_s = (<Button onClick={()=>setCheckSt('REVOKE_SIGN')}>Ожидает подписи. Отказ от подписи</Button>);
     const signd = (<React.Fragment> 
         <span>Подписано</span>
@@ -193,9 +193,9 @@ const IshDocRow = React.memo(props => {
     const sendd = <span>Отправлено</span>;
     const nostat = !showBtn ? null : (
         <React.Fragment>
-            <Button onClick={()=>setCheckSt('AWAIT_CHECK')} >На проверку (ЭЦП)</Button>
-            <Button onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
-            <Button onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Без подписи</Button>
+            <Button size="small" onClick={()=>setCheckSt('AWAIT_CHECK')} >На проверку (ЭЦП)</Button>
+            <Button size="small" onClick={()=>setCheckSt('SIGNED')} >Подписано вручную</Button>
+            <Button size="small" onClick={()=>setCheckSt('NO_SIGN_NEEDS')} >Без подписи</Button>
         </React.Fragment>);
 
     const STATUS = ({

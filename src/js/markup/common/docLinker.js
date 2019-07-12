@@ -70,7 +70,7 @@ const linkedDocs = (props) => {
                         <table className="style-table">
                             <thead>
                                 <tr>
-                                    <th style={{'width': '180px'}}>№ документа</th>
+                                    <th style={{'width': '180px'}} className="align-center">№ документа</th>
                                     <th style={{'width': '180px'}}>№ постановления</th>
                                     <th style={{'width': '140px'}}>Тип документа</th>
                                     <th style={{'width': '140px'}}>Направление</th>

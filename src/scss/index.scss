@@ -590,16 +590,17 @@ div.tooltipWrap {
 .style-table{
   // background: red;
   width: 100%;
-  min-width: 1320px;
+  min-width: 1256px;
   thead{
     background: #fff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
     tr{
       th{
-        padding: 15px 15px;
+        padding: 15px 0;
         font-size: 14px;
         color: #505A6E;
         font-weight: 600;
+        text-align: left;
       }
     }
   }
@@ -608,7 +609,7 @@ div.tooltipWrap {
       border-bottom: 1px solid #CCCCCC;
       td{
         color: #797979;
-        padding: 15px 15px;
+        padding: 15px 0;
         a{
           color: #6B94C2;
           text-decoration: underline;
