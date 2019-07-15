@@ -7,10 +7,12 @@ import LinkerSearch from './linkerSearch.js'
 import {FInput, EInput} from '../components/finput.js'
 import {EPicker, FPicker} from '../components/picker.js'
 import {messageSet} from '../../actions/common.js'
+import Immutable from 'immutable'
 
+const im = (obj) => Immutable.fromJS(obj)
 
 const linkedDocs = (props) => {
-    const {fields, disabled, hideLinker, showLinker,dispatch} = props
+    const {fields, disabled, hideLinker, showLinker,dispatch,change,initialize} = props
     const add = showLinker;
 
     const rmv = (indx) => async () => { // replace with db call needed
@@ -24,39 +26,48 @@ const linkedDocs = (props) => {
        }
     } 
     const inf = (ind) => () => fields.remove(ind); // ! replace me
-    const ROWS = fields.map((x, i)=>(
-        <tr key={i}>
-            <td className="align-center">
-                <Field component={FInput} name={x + 'registration_number'} value={x.registration_number} disabled={true}/> 
-            </td>
-            <td>
-                {null && <span>782101771503040</span>}
-            </td>
-            <td>
-                {null && <span>Письмо</span>}
-            </td>
-            <td>
-                <Field component={FInput} name={x + 'name'} value={x.name} disabled={true}/> 
-            </td>
-            <td>
-                {null && <span>Колесников Александр Васильевич</span>}
-            </td>
-            <td>
-                {null && <span>Милушкин А. Ю. (Майорова Н. И.)</span>}
-            </td>
-            <td>
-                {null && <span>19.04.2019</span>}
-            </td>
-            <td>
-                {null && <span>Исполнено</span>}
-            </td>
-            <td>
-                {disabled ? null : 
-                <Button size="small" type="text" onClick={rmv(i)}>
-                    <i className="ico round minus"/>
-                </Button>}
-            </td>
-        </tr>)); //
+    const ROWS = fields.map((x, i,arr)=>{      
+        const {l_dir,l_doc,doc_id} = arr.get(i).toJS();
+
+        const openRow = async () => {
+            let alias = false;
+            let redir = false;
+            if (l_dir=='IN' && l_doc=='CLAIM'){
+                alias = 'CLAIM_GET';
+                redir = '/appeal_incoming&storageKey=';            
+            } else if (l_dir=='OUT' && l_doc=='CLAIM'){
+                alias = 'CLAIM_OUT_GET';
+                redir = '/appeal_outgoing&storageKey=';
+            } else {
+                return  messageSet('Не удалось открыть документ','error');;
+            } // http://127.0.0.1:8081/#/appeal_incoming
+
+            const orphan = true;
+            const claim_id = doc_id;
+            const x = await post('db/select', {alias, claim_id,orphan});
+
+            dispatch(initialize(im(x.data)));
+            const key = window.stateSave();
+            const href =  window.location.href.replace(/[^\/]+$/,redir + key);
+            window.open(href,'_blank');            
+        }
+
+        return (<tr key={i}>
+                    <td><Field component={FInput} name={x + 'registration_number'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'post_n'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'name'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'zajav'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'isp_name'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'reg_date'} disabled={true}/></td>
+                    <td><Field component={FInput} name={x + 'status'} disabled={true}/></td>
+                    <td>
+                        {disabled ? null : 
+                        <Button size="small" type="text" onClick={rmv(i)}>
+                            <i className="ico round minus"/>
+                        </Button>}
+                    </td>
+                </tr>);
+    }); //
 
     //<td>{disabled ? null : <button type='button' onClick={inf(i)}>I</button>}</td>
             
@@ -70,16 +81,12 @@ const linkedDocs = (props) => {
                                 <tr>
                                     <th style={{'width': '180px'}} className="align-center">№ документа</th>
                                     <th style={{'width': '180px'}}>№ постановления</th>
-                                    <th style={{'width': '140px'}}>Тип документа</th>
-                                    <th style={{'width': '140px'}}>Направление</th>
+                                    <th style={{'width': '140px'}}>Документ</th>
                                     <th style={{'width': '210px'}}>Заявитель</th>
                                     <th style={{'width': '160px'}}>Исполнители</th>
                                     <th style={{'width': '160px'}}>Дата регистрации</th>
                                     <th style={{'width': '140px'}}>Стадия</th>
                                     <th style={{'width': '60px'}}>-</th>
-
-                                    {/* <th className='ap-table-header'>Документ</th>
-                                    <th className='ap-table-header'>Регистрационный номер</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,8 +102,6 @@ const linkedDocs = (props) => {
                     className={`flex-parent mx-auto block ${!fields.length ? 'my6' : 'mt18'}`}
                         title='Добавить адресата'>Добавить</Button>
             }
-
-
         </React.Fragment>
     ); //
 }
@@ -123,7 +128,7 @@ class DocLinker extends React.Component {
     }
 
     render() {
-        const {disabled, array, dispatch,id,reloadRow,root_doc,root_dir} = this.props
+        const {disabled, array, dispatch,id,reloadRow,root_doc,root_dir,initialize} = this.props
         const {linkerVisible} = this.state;
 
         const CONTENT = (!id) 
@@ -137,7 +142,7 @@ class DocLinker extends React.Component {
             </div>
             )
             : (<div key='ili'>
-                    <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
+                    <FieldArray name='linked_docs' component={linkedDocs} disabled={disabled} initialize={initialize} showLinker={this.showLinker} hideLinker={this.hideLinker}/>
                 </div>)
         
         const LINKER = !linkerVisible
@@ -156,20 +161,15 @@ class DocLinker extends React.Component {
                 </Dialog.Body>
             </Dialog>); //
 
-
             return [
                 <div scrollanchor='links' key='ili' id='links'>
                     <Card className="box-card sectionCard" bodyStyle={{padding: '0 0 20px 0'}} header={
                         <div className="headline">
                             <h3>Связанные обращения/письма</h3>
                         </div>
-                    }>
-                        {CONTENT}
-                    </Card>
+                    }>{CONTENT}</Card>
                 </div>
-                ,
-                LINKER
-                ];
+                ,LINKER];
     };
 } //
 

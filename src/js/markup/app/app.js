@@ -24,6 +24,8 @@ import IncomingLetter from '../letter/inc/incomingLetter.js'
 import DialSPI from '../settings/diapSPI.js'
 import Postage from '../settings/postage.js'
 import FabulaDocViewer from '../fabulas/fabulaDocViewer.js'
+import IncomingPosts from '../appeal/incomingPosts.js'
+
 import User from '../../../images/user.svg'
 import UserAvatarBurger from '../../../images/user-avatar-burger.svg'
 import IcoRoundMinus from '../../../images/ico-round-minus.svg'
@@ -81,6 +83,7 @@ export default function App() {
                         <Route path='/explore' render={()=><AppealExplorer/>}/>
                         <Route path='/i_check' render={()=><IDecisExplorer/>} />
                         <Route path='/i_sign' render={()=><ISignExplorer/>} />
+                        <Route path='/incoming_posts' render={()=><IncomingPosts/>} />
                         <Route path='/letter_incoming' render={(props)=><IncomingLetter hashChange = {props.location.search}/>}/>
                         <Route path='/letter_outgoing' render={(props)=><OutcomingLetter hashChange = {props.location.search}/>}/>
                         <Route path='/sprav/fabulas' render={()=><FabulaDocViewer/>}/>
@@ -172,11 +175,15 @@ class LayoutMain extends React.Component {
                             <Menu.Item index="explore_letter">Поиск</Menu.Item>
                         </Menu.SubMenu>}
 
-                        <Menu.SubMenu index="3" title="Справочники">
+                        <Menu.SubMenu index="4" title="Правовое управление">
+                            <Menu.Item index="incoming_posts">Входящие обжалования</Menu.Item>
+                        </Menu.SubMenu>
+
+                        <Menu.SubMenu index="5" title="Справочники">
                             <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
                         </Menu.SubMenu>
                             
-                        {false && <Menu.SubMenu index="3" title="Справочники">
+                        {false && <Menu.SubMenu index="6" title="Справочники">
                             <Menu.Item index="sprav/fabulas">Фабулы</Menu.Item>
                             <Menu.Item index="sprav/decisions">Решения</Menu.Item>
                             <Menu.Item index="sprav/categories">Категории</Menu.Item>
@@ -185,7 +192,7 @@ class LayoutMain extends React.Component {
                         </Menu.SubMenu>
                         }
 
-                        {false && <Menu.SubMenu index="4" title="Настройки">
+                        {false && <Menu.SubMenu index="7" title="Настройки">
                             <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
                             <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
                         </Menu.SubMenu>}
