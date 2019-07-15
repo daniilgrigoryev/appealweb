@@ -154,7 +154,8 @@ class DocLinker extends React.Component {
                        closeOnPressEscape={false}
                        visible={linkerVisible}
                        onCancel={this.hideLinker}
-                       lockScroll={true} >
+                       lockScroll={true} 
+                       className="style-modal">
 
                 <Dialog.Body>
                     <LinkerSearch dialogClose={this.hideLinker} reloadRow={reloadRow} root_id={id} root_doc={root_doc} root_dir={root_dir}/>

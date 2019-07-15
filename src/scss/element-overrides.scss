@@ -293,7 +293,7 @@
 
 .el-card__body {
   background-color: $light-gray;
-
+  overflow: hidden;
 
   .ap-card-white-bg & {
     background: white;

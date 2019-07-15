@@ -118,7 +118,7 @@ export class EApnList extends React.Component {
 
 
                 {noApnDialog ? null :  
-                    <Dialog header="Информация о постановлении" visible={true} style={{width: '50vw'}} closable={false} >
+                    <Dialog header="Информация о постановлении" className="style-modal" visible={true} style={{width: '50vw'}} closable={false} >
                         <table>
                             <tbody>
                                 <tr>

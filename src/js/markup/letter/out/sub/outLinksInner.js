@@ -122,6 +122,7 @@ class OutLinkInner extends React.Component {
         const LINKER = !linkerVisible
             ? null
             : (<Dialog key='ilid'
+                       className="style-modal"
                        title="Связанные документы"
                        showClose={false}
                        closeOnClickModal={false}

@@ -470,6 +470,26 @@ div.tooltipWrap {
   max-width: 1100px;
 }
 
+.style-modal{
+  .el-dialog__header{
+    padding: 4px 20px;
+    border-color: #D9D9D9;
+    background-color: #FAFAFA;
+    border-radius: 0;
+    border-bottom: 1px solid #d1dbe5;
+    box-sizing: border-box;
+    .el-dialog__title{
+      font-size: 17px;
+      color: #6B94C2;
+      font-weight: normal;
+    }
+  }
+  .el-dialog__body{
+    padding: 20px;
+  }
+}
+
+
 .form-side-panel{
   .wrap{
     .item.item--full{
