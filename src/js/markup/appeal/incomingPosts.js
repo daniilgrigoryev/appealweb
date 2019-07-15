@@ -114,45 +114,6 @@ export default class IncomingPosts extends React.Component {
 
     </Card>
 
-
-
-  
-
-
-
-
-
-
-
-
-        // <div>
-        //   <table>
-        //     <tbody>
-        //       <tr>
-        //         <td colSpan='2'>N постановления</td>
-        //         <td>Дата</td>
-        //       </tr>
-              
-        //       {posts.map((x,i)=>(
-        //           <tr>
-        //           <td><Button onClick={()=>this.removePost(i)} >-</Button></td>
-        //             <td><input type='text' value={x.num}  onChange={(e)=>this.setterPosts(i,'num',e.target.value)} /></td>
-        //             <td><EPicker value={x.date} onChange={(x)=>this.setterPosts(i,'date',x)} date='+' /></td>
-        //           </tr>)
-        //       )}
-        //     </tbody>
-        //   </table>
-
-        //   <table>
-        //     <tbody>
-        //       <tr>
-        //         <td><Button onClick={this.addPost}>+</Button></td>
-        //         <td colSpan='2' ><Button onClick={this.save} >Сохранить</Button></td>
-        //       </tr>
-        //     </tbody>
-        //   </table>
-        // </div>
-
     );
   }
 }

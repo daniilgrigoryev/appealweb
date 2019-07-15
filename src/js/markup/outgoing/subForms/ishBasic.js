@@ -14,47 +14,44 @@ class IshBasic extends React.Component {
     render() {
         const {disabled} = this.props
         return (
-            <React.Fragment>
-                <hr className='txt-hr my6'/>
+
+            <div className="form-container my24">
                 <h4 className='ap-h4'>Основные сведения:</h4>
 
-                <Layout.Row gutter="0">
-                    <Layout.Col xs="24" md="12" lg="10">
-                        <table className='mb18 w-full'>
-                            <tbody>
-                            <tr>
-                                <td className='ap-input-caption wmin180'>{M.VID_DOC.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} component={FSelect} name={M.VID_DOC.name}
-                                                       dataKey={M.VID_DOC.key}/></td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption wmin180'>{M.SUMMARY.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.SUMMARY.name}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </Layout.Col>
-                    <Layout.Col xs="24" md="12" lg="10">
-                        <table className='mb18 w-full'>
-                            <tbody>
-                            <tr>
-                                <td className='ap-input-caption wmin180'>{M.NOTES.label}</td>
-                                <td colSpan='3'><Field disabled={disabled} component={FInput} name={M.NOTES.name}
-                                                       textarea='+'/></td>
-                            </tr>
-                            <tr>
-                                <td className='ap-input-caption wmin180'>{M.DELIV_TYPE.label}</td>
-                                <td className='wmin120'><Field disabled={disabled} component={FSelect} name={M.DELIV_TYPE.name}
-                                                               dataKey={M.DELIV_TYPE.key}/></td>
-                                <td className='ap-input-caption w120'>{M.SHEETS_COUNT.label}</td>
-                                <td className='w120'><Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </Layout.Col>
-                </Layout.Row>
-            </React.Fragment>
+                <div className="wrap my12">
+                    <div className="item item--left">
+                        <small className="label">{M.VID_DOC.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} component={FSelect} name={M.VID_DOC.name} dataKey={M.VID_DOC.key}/>
+                        </div>
+                    </div>
+
+                    <div className="item item--right">
+                        <small className="label">{M.NOTES.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} component={FInput} name={M.NOTES.name} textarea='+'/>
+                        </div>
+                    </div>
+                    <div className="item" style={{'gridColumn': 'auto / span 2'}}>
+                        <small className="label">{M.SUMMARY.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} component={FInput} name={M.SUMMARY.name}/>
+                        </div>
+                    </div>
+                    <div className="item"  style={{'gridColumn': 'auto / span 1', 'grid-template-columns': 'minmax(190px, max-content) max-content'}}>
+                        <small className="label">{M.DELIV_TYPE.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} component={FSelect} name={M.DELIV_TYPE.name} dataKey={M.DELIV_TYPE.key}/>
+                        </div>
+                    </div>
+                    <div className="item item--flow"  style={{'gridColumn': 'auto / span 1'}}>
+                        <small className="label">{M.SHEETS_COUNT.label}</small>
+                        <div className="value">
+                            <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }//
 }

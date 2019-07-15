@@ -143,9 +143,9 @@ class AppealOutExplorer extends React.Component {
         return (
             <React.Fragment>
                 <Card className="box-card sectionCard" header={
-                    <h3 className='headline'>
-                        Поиск исходящих обращений
-                    </h3>
+                    <div className='headline'>
+                        <h3>Поиск исходящих обращений</h3>
+                    </div>
                 }>
                     <SearchRoot {...{fields,setGetter}} />
 

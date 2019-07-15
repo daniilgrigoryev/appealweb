@@ -115,21 +115,21 @@ class Outgoing extends React.Component {
         return (
             <div className='ap-side-panel-wrap'>
                 <div className='ap-side-panel-content'>
-                    <Layout.Row gutter="20">
-                        <Layout.Col span="24">
-                            <Card className="box-card mb60" header={<h3 className='ap-h3'>Исходящее обращение</h3>}>
-                                <IshHead {...P} />
-                                <IshBasic {...P} />
-                                <IshLinksPost {...P} />
-                                <IshLinkInner {...P} />
-                                <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />
-                            </Card>
-                            <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
-                                <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
-                                <Button size="small" type='text'>Отменить</Button>
-                            </div>
-                        </Layout.Col>
-                    </Layout.Row>
+                    <Card className="box-card sectionCard" header={
+                        <div className='headline'>
+                            <h3>Исходящее обращение</h3>
+                        </div>
+                    }>
+                        <IshHead {...P} />
+                        <IshBasic {...P} />
+                        <IshLinksPost {...P} />
+                        <IshLinkInner {...P} />
+                        <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />
+                    </Card>
+                    <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
+                        <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
+                        <Button size="small" type='text'>Отменить</Button>
+                    </div>
                 </div>
             </div>
         );
