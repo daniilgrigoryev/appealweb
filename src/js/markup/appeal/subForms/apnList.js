@@ -119,29 +119,39 @@ export class EApnList extends React.Component {
 
                 {noApnDialog ? null :  
                     <Dialog header="Информация о постановлении" className="style-modal" visible={true} style={{width: '50vw'}} closable={false} >
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>Постановление</td>
-                                    <td>{apnNum}</td>
-                                </tr>
-                                <tr>
-                                    <td>Дата</td>
-                                    <td>{apnDate}</td>
-                                </tr>
-                                <tr>
-                                    <td>Нарушитель</td>
-                                    <td>{apnViolator}</td>
-                                </tr>
-                                <tr>
-                                    <td>Информация</td>
-                                    <td>{apnText}</td>
-                                </tr>
-                                <tr>
-                                    <td><Button onClick={()=>this.hideApn()} >Закрыть</Button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div className="wrap wrap--compact">
+                        <div className="item">
+                            <small className="label">Постановление</small>
+                            <div className="value">
+                                <span>{apnNum}</span>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Дата</small>
+                            <div className="value">
+                                <span>{apnDate}</span>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Нарушитель</small>
+                            <div className="value">
+                                <span>{apnViolator}</span>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">Информация</small>
+                            <div className="value">
+                                <span>{apnText}</span>
+                            </div>
+                        </div>
+                        <div className="item item--right">
+                            <div style={{'grid-column': 'span 2 / auto'}}>
+                                <div className="flex-parent flex-parent--end-main mb12">
+                                    <Button size="small" onClick={()=>this.hideApn()}>Закрыть</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </Dialog>}
             </React.Fragment>
         );
