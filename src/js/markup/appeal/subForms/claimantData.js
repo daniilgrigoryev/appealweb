@@ -167,7 +167,7 @@ class ClaimantData extends React.Component {
                         <div className="form-container">
                             <div className="wrap">
                                 <div className="item" key='flSurname'>
-                                    <small className="label">Тип лица</small>
+                                    <small className="label">{M.ZAJAV_LIC.label}</small>
                                     <div className="value">
                                         <Field disabled={disabled} name={M.ZAJAV_LIC.name} component={FSelect}
                                                     placeholder={M.ZAJAV_LIC.label}
