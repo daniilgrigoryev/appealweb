@@ -24,8 +24,6 @@ class ClaimantData extends React.Component {
     render() {
         const {handleSubmit, nextPage, prevPage, pristine, submitting, header, content, disabled} = this.props;
         const navi = !disabled && (nextPage||prevPage);
-
-        console.log(content, 'content');
     
         let isPred = false;
         let isFL = false;
