@@ -26,6 +26,7 @@ const download = async (sessionId,row)=>{
     tempLink.click();
     setTimeout(()=>(tempLink && (tempLink.remove())),5000);    
 }
+
 const getPath = (sessionId,row) => {
     const params = new URLSearchParams();
     params.append('sessionId',sessionId);
