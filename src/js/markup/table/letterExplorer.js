@@ -38,6 +38,7 @@ const mapping = {
 }
 
 const templating = {};
+const condKey = 'i_let'
 
 class LetterExplorer extends React.Component {
 
@@ -49,6 +50,8 @@ class LetterExplorer extends React.Component {
         this.key      = 0;
         this.registerGetSelected = this.registerGetSelected.bind(this);
         this.conditionGetter = null;
+        this.conditionRemover = null;
+        this.remove   = this.remove.bind(this);
         this.search   = this.search.bind(this);
         this.getXFile = this.getXFile.bind(this);
     }
@@ -129,8 +132,16 @@ class LetterExplorer extends React.Component {
         this.forceUpdate();
     }
 
+    remove() {
+        const rlyRem = window.confirm('Вы уверены, что хотите очистить условия?');
+        if (!rlyRem) {
+            return;
+        }
+        this.conditionRemover();
+    }
+
     render() {
-        const {key,where,state,registerGetSelected} = this;
+        const {key,where,state,registerGetSelected,remove} = this;
         const {fields} = state;
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
@@ -140,6 +151,7 @@ class LetterExplorer extends React.Component {
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
+        const setRemover = (remover) => this.conditionRemover = remover;
 
         return (
             <React.Fragment>
@@ -153,11 +165,15 @@ class LetterExplorer extends React.Component {
                             </div>
                         }>
                             <div className="view-data__container pl18 py12">
-                                <SearchRoot {...{fields,setGetter}} />
+                                <SearchRoot {...{fields,setGetter,setRemover,condKey}} />
                                 <div className='inline-block align-t mt12 ml12'>
                                     <Button type="primary" onClick={this.search}>Искать</Button>
                                     {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
+                                <Button className="txt-middle" type="text" onClick={remove}>
+                                    <i className="ico load align-t mr12"/>
+                                    Очистить
+                                </Button>
                             </div>
                         </Card>
                     </Layout.Col>
