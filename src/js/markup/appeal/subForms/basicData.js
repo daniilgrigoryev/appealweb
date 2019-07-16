@@ -18,47 +18,42 @@ const BasicData = props => {
     const navi = !disabled && (nextPage||prevPage);
     return (
         <div scrollanchor='basic' id="basic">
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card sectionCard" header={
-                        <div className='headline'>
-                            <h3>{headerTitle}</h3>
-                        </div>
-                    }>
-                    <form className="form"  onSubmit={handleSubmit}>
-                        <div className="form-container">
-                            <div className="wrap">
-                                <div className="item">
-                                    <small className="label">{M.EDO_NUM.label}</small>
-                                    <div className="value">
-                                        <Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/>
-                                    </div>
+            <Card className="box-card sectionCard" header={
+                    <div className='headline'>
+                        <h3>{headerTitle}</h3>
+                    </div>
+                }>
+                <form className="form"  onSubmit={handleSubmit}>
+                    <div className="form-container">
+                        <div className="wrap">
+                            <div className="item">
+                                <small className="label">{M.EDO_NUM.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} name={M.EDO_NUM.name}/>
                                 </div>
-                                <div className="item">
-                                    <small className="label">{M.ECOO_NUM.label}</small>
-                                    <div className="value">
-                                        <Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/>  
-                                    </div>
+                            </div>
+                            <div className="item">
+                                <small className="label">{M.ECOO_NUM.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FInput} name={M.ECOO_NUM.name}/>  
                                 </div>
-                                <div className="item">
-                                    <small className="label">{M.REQUEST_TYPE.label}</small>
-                                    <div className="value">
-                                        <Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/>
-                                    </div>
+                            </div>
+                            <div className="item">
+                                <small className="label">{M.REQUEST_TYPE.label}</small>
+                                <div className="value">
+                                    <Field disabled={disabled} component={FSelect} name={M.REQUEST_TYPE.name} dataKey={M.REQUEST_TYPE.key} placeholder='Выбор'/>
                                 </div>
-                                <div className="item">
-                                    <small className="label">{M.SHEETS_COUNT.label}</small>
-                                    <div className="value" style={{'width': '80px'}}>
-                                        <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
-                                    </div>
+                            </div>
+                            <div className="item">
+                                <small className="label">{M.SHEETS_COUNT.label}</small>
+                                <div className="value" style={{'width': '80px'}}>
+                                    <Field disabled={disabled} component={FInput} name={M.SHEETS_COUNT.name}/>
                                 </div>
                             </div>
                         </div>
-                    </form>
-
-                    </Card>
-                </Layout.Col>
-            </Layout.Row>
+                    </div>
+                </form>
+            </Card>
         </div>
     )
 } //

@@ -54,51 +54,57 @@ const scannedDocs = (props) => {
         setFiles((files || im([])).push(im({ description: description, source_alias: source_alias, id: null, storage_id: data.id })));
     }
 
-    const ROWS = !files ? null : files.map((x, i) => (   
-        <tr key={x.get('storage_id')}>
-            <td className="align-r pr6 w24">
-                <span className='ap-table-list-number'>
-                    {i + 1}
-                </span>
-            </td>
-            <td className='inline-block w-full' onClick={()=>download(sid,x)}>{x.get('description')}</td>
-            <td>
-                <Button size="small" className="absolute mt-neg2" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                        <i className="el-icon-close color-red-dark ml6"/></Button>
-            </td>
-        </tr>));
-//
+    const ROWS = !files ? null : files.map((x, i) => ( 
+        <Card className="fileCard" key={x.get('storage_id')} bodyStyle={{'padding': 0}}>
+            <div className="fileCard__header">
+                <i className="ico defaultFile"></i>
+            </div>
+            <div className="fileCard__footer">
+                {disabled ? null :
+                    <Button className="action py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                        <i className="ico round minus mr6"/>
+                    </Button>
+                }
+                <div className="content">
+                    <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
+                    {/* {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
+                    
+                    <div className="flex-parent flex-parent--space-between-main my6">
+                        {x.get('source_alias') ? <p className="txt-em inline-block">{txtSourceAlias(x.get('source_alias'))}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}
+                        {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
+                            <React.Fragment>
+                            <span>ЭЦП</span>
+                            <ECheckbox сlassName="inline-block" onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
+                        </React.Fragment>
+                        : null
+                        }
+                    </div> */}
+               </div>
+            </div>
+        </Card>
+
+    ));
 
     return (
         <React.Fragment>
-            {!files ?
-                <p className='mt-neg18 mb18 txt-em color-gray'>Нет сканированных документов</p>
-                :
-                <Layout.Row gutter="0">
-                    <Layout.Col xs="24" md="12" lg="10">
-                        <table className='mb18 w-full'>
-                            <tbody>
-                            {ROWS}
-                            </tbody>
-                        </table>
-                    </Layout.Col>
-                </Layout.Row>
+            {!files 
+                ? <p className='my6 txt-em color-gray align-center'>Нет сканированных документов</p>
+                : <div className="flex-parent flex-parent--center-main flex-parent--wrap">{ROWS}</div>
             }
-            <div className='flex-parent flex-parent--center-cross'>
+            <div className='flex-parent flex-parent--center-main'>
                 {disabled ? null :
-                    <Button size="small" icon="upload2" onClick={clickFile} type="success" plain={true}
-                            className="flex-parent mb18 mr12"
-                            title='Добавить постановление'>Загрузить</Button>
+                    <Button size="small" className="my6 block h30 py0" onClick={clickFile} plain={true}>
+                        <i className="ico upload mr6"></i>
+                        <span className="align-middle">Загрузить документ</span>
+                    </Button>
                 }
-
-                {disabled ? null : 
-                    <input type="file" name="file" style={{'display':'none'}} ref={finput} onChange={onFileLoad}/>}
-
                 {disabled ? null :
-                    <Button size="small" icon="picture" type="success" plain={true}
-                            className="flex-parent mb18"
-                            title='Добавить постановление'>Сканировать</Button>
+                    <Button size="small" className="my6 block h30 py0"> {/* onClick={onFileScan} */}
+                        <i className="ico scan mr6"></i>
+                        <span className="align-middle">Сканировать документ</span>
+                    </Button>
                 }
+                {disabled ? null : <input type="file" name="file" style={{'display':'none'}} ref={finput} onChange={onFileLoad}/>}
             </div>
         </React.Fragment>);
 };
@@ -107,11 +113,16 @@ class IshLinkScan extends React.Component { //
     render() {
         const {disabled, setFiles, files, sid} = this.props;
         return (
-            <div>
-                <hr className='txt-hr my18'/>
-                <h4 className='ap-h4'>{M.SCAN_DOC.label}</h4>
-
-                <FieldArray name={M.SCAN_DOC.name} component={scannedDocs} disabled={disabled} setFiles={setFiles} files={files} sid={sid}/>
+            <div scrollanchor="ishDoc" id="ishDoc">
+                <Card className="box-card sectionCard" header={
+                    <div className='headline'>
+                        <h3>Загруженные документы</h3>
+                    </div>
+                }>
+                    <div className="form-container">
+                        <FieldArray name={M.SCAN_DOC.name} component={scannedDocs} disabled={disabled} setFiles={setFiles} files={files} sid={sid}/>
+                    </div>
+                </Card>
             </div>
         )
     }

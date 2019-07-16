@@ -73,9 +73,16 @@ class IshLinkPost extends React.Component {
     render() {
         const {disabled} = this.props
         return (
-            <div className="form-container my24">
-                <h4 className='ap-h4'>Список постановлений:</h4>
-                <FieldArray name={M.POSTS.name} component={posts} disabled={disabled}/>
+            <div scrollanchor="regulations" id="regulations">
+                <Card  className="box-card sectionCard" header={
+                    <div className='headline'>
+                        <h3>Список постановлений</h3>
+                    </div>
+                }>
+                    <div className="form-container">
+                        <FieldArray name={M.POSTS.name} component={posts} disabled={disabled}/>
+                    </div>
+                </Card>
             </div>
         )
     }
