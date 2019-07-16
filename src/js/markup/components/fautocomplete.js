@@ -13,7 +13,6 @@ class EAutocomplete extends React.Component {
         };
 
         this.dataWhere = null; // внешнее условия для отображаемого списка
-        this.blur = this.blur.bind(this);
         this.change = this.change.bind(this);
         this.select = this.select.bind(this);
         this.getDatas = this.getDatas.bind(this);
@@ -139,11 +138,6 @@ class EAutocomplete extends React.Component {
         return null; // увы
     }
 
-    blur(event) {
-        const value = event.target.value.toLowerCase();
-        (!value) && (this.change({value:''}));
-    }
-
     change(event, cb = null) {
         const {value} = event;
         if (value == '' || value == '[отсутствует]') {
@@ -172,12 +166,11 @@ class EAutocomplete extends React.Component {
         const readonly = readOnly;
         const onChange = this.change;
         const onSelect = this.select;
-        const onBlur = () => this.blur(window.event);
         const suggestions = dataSuggestions;
         const completeMethod = this.suggestData;
         const dropdown = true;
         const value = visibleval;
-        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect, onBlur}} />
+        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect}} />
     } //
 }
 
