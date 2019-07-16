@@ -15,10 +15,9 @@ import {ECheckbox} from './checkbox.js'
 const im = (obj)=> Immutable.fromJS(obj);
 
 const download = async (sessionId,row)=>{
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(); 
     params.append('sessionId',sessionId);
     params.append('storage_id',row.get('storage_id'));
-    
     const path = 'storage/pull?'; 
     const tempLink = document.createElement('a');
     tempLink.href = baseUrl() + path + params.toString();

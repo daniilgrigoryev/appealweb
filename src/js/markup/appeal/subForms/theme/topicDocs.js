@@ -11,7 +11,6 @@ export default (props)=>{
 		const params = new URLSearchParams();
 	    params.append('sessionId',sessionId);
 	    params.append('storage_id',storage_id);
-	    
 	    const path = 'storage/pull?'; 
 	    const tempLink = document.createElement('a');
 	    tempLink.href = baseUrl() + path + params.toString();

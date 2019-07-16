@@ -1,7 +1,9 @@
 import React from 'react'
 import * as _ from 'lodash'
+import moment from 'moment'
 import {Button} from 'element-react'
 import {EPicker} from '../components/picker.js'
+import {messageSet} from '../../actions/common.js'
 import {post,postFile,mpt,get} from '../../services/ajax.js'
 
 export default class IncomingPosts extends React.Component {
@@ -41,9 +43,33 @@ export default class IncomingPosts extends React.Component {
     this.setState({posts});  
   }
   
-  save(){
-  
-  }
+  save() {
+        const a = this;
+        const {posts} = this.state;
+        const data = JSON.stringify(this.state);
+        const jsonMode = true;
+        const denormalize = true;
+        const alias = 'PUSH_PU_CLAIMS';
+
+        post('db/select', {alias, data, jsonMode,denormalize}).then(x => {
+            const rows = x.data; // the first column value of single row expected
+            const exc = 'ERROR Ошибка получения данных';
+            posts.forEach((x,i)=>{
+            	try{
+            		const date_ok = x.date.substring(0,10)==rows[i].POST_DATE.substring(0,10);
+            		const num_ok = x.num==rows[i].POST_N;
+            		posts[i].error =  (date_ok && num_ok) ? x.ERR : exc;            		
+            	} catch (exc){
+            		console.error(exc);
+            		posts[i].error = exc;
+            	}
+            });            
+            this.setState({posts});
+        }).catch(x => {
+            messageSet(x, 'error');
+            console.error(x);
+        });
+    }
   
   render() {
   	const {edo,posts}=this.state;
