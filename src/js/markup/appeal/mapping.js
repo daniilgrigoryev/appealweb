@@ -29,7 +29,7 @@ export default {
 		PRED_NAME:       {name:  'pred_name',	  label: 'Представитель: Имя'},
 		PRED_SURNAME:    {name:  'pred_surname',  label: 'Представитель: Отчество'},
 		PRED_SEX:        {name:  'pred_sex',	  label: 'Пол'},
-		ZAJAV_LIC:       {name:  'zajav_lic',     label: '#radiobutton#'},
+		ZAJAV_LIC:       {name:  'zajav_lic',     label: 'Тип лица',								   key: 'PERSON_TYPE'},
 		ORG_NAME:        {name:  'org_name',      label: 'Название контролирующей организации',        key: 'ORG_LIST'},
 		INN:             {name:  'inn',           label: 'ИНН'},
 		KPP:             {name:  'kpp',           label: 'КПП'},

@@ -24,6 +24,8 @@ class ClaimantData extends React.Component {
     render() {
         const {handleSubmit, nextPage, prevPage, pristine, submitting, header, content, disabled} = this.props;
         const navi = !disabled && (nextPage||prevPage);
+
+        console.log(content, 'content');
     
         let isPred = false;
         let isFL = false;
@@ -169,7 +171,9 @@ class ClaimantData extends React.Component {
                                 <div className="item" key='flSurname'>
                                     <small className="label">Тип лица</small>
                                     <div className="value">
-                                        <Field disabled={disabled} name={M.ZAJAV_LIC.name} component={FRadio} options={zajavOptions}/>
+                                        <Field disabled={disabled} name={M.ZAJAV_LIC.name} component={FSelect}
+                                                    placeholder={M.ZAJAV_LIC.label}
+                                                    dataKey={M.ZAJAV_LIC.key}/>
                                     </div>
                                 </div>
                                 {ZAJAV_SOURCE}
