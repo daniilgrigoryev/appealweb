@@ -68,7 +68,7 @@ export default class IncomingPosts extends React.Component {
         </div>
 
         <div className="search-result">
-          <div className="flex-table pl0">
+          <div className="flex-table ml0">
             {posts.map((x,i)=>(
               <div className="row">
                 <div className="column">

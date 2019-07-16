@@ -138,9 +138,7 @@ class IDecisExplorer extends React.Component {
                                 </h3>
                             </div>
                         }>
-
                             <SearchRoot {...{fields,setGetter}} />
-
                             <div className="btns align-t mt18">
                                 <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                                 <Button className="txt-middle mx6" type="primary" icon="circle-check" onClick={this.verify}>Проверить</Button>

@@ -310,7 +310,7 @@ class SearchRoot extends React.Component {
           </React.Fragment>); //
 
         return(
-          <div className="flex-table pl0">
+          <div className="flex-table ml0">
             <div className="row">
               <div className="column">
                 <div className="label">
@@ -364,7 +364,7 @@ class SearchRoot extends React.Component {
                   </div>
                 </div>
                 <div className="searchRoot-item searchRoot__control">
-                  <div className="flex-table pl0" ref={el => (this.scrollElement = el) }>
+                  <div className="flex-table ml0" ref={el => (this.scrollElement = el) }>
                     {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
                   </div>
                 </div>

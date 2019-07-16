@@ -31,13 +31,13 @@ const addressee = (props) => {
     const ROWS = fields.map((x, i) => (
         <div className="row" key={i}>
             <div className="column">
-                <div className="label">Кому:</div>
+                {!i ? <div className="label">Кому</div> : null}
                 <div className="value">
                     <Field disabled={disabled} component={FInput} name={x + M.ADDR.name} value={x[M.ADDR.name]} placeholder='Имя адресата'/>
                 </div>
             </div>
             <div className="column column--end">
-                <div className="value">
+                <div className={`value ${!i ? null :  'mt0'}`}>
                 {disabled ? null :
                     <Button className="py0" size="small" type="text" onClick={rmv(i)}>
                         <i className="ico round minus"/>
@@ -57,7 +57,7 @@ const addressee = (props) => {
             {!fields.length  ?
                 <p className='my6 txt-em color-gray align-center'>Нет добавленных адресатов</p>
                 :
-                <div className="flex-table mb6">
+                <div className="flex-table mb6" style={{'maxWidth': '310px'}}>
                     {ROWS}
                 </div>
             }
