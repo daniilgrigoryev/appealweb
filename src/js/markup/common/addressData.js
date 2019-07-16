@@ -110,9 +110,11 @@ class AddressData extends React.Component {
         const ADDRESS = this.state.isStr
                 ? (<div className="item item--full flex-parent--center-main">
                         {disabled ? null : 
+                            <React.Fragment>
                             <Button size="small" icon="plus" 
                                     plain={true} className="mx-auto my6 block" 
                                     title='Раскрыть' onClick={this.changeMode}>Редактировать</Button>
+                                    <div>{placeholder}</div></React.Fragment>
                         }
                     </div>
                 )
