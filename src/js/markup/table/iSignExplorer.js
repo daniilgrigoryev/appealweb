@@ -190,8 +190,8 @@ class ISignExplorer extends React.Component {
 
                             <SearchRoot {...{fields,setGetter}} />
 
-                            <div className='mt12'>
-                                <Button type="primary" onClick={this.search}>Искать</Button>
+                            <div className='btns align-t mt18'>
+                                <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                                 <CryptoSL doSign={(cert)=>this.sign(cert)} />
                             </div>
                         </Card>

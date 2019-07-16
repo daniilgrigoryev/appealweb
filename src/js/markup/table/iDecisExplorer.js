@@ -141,9 +141,9 @@ class IDecisExplorer extends React.Component {
 
                             <SearchRoot {...{fields,setGetter}} />
 
-                            <div className='mt12'>
-                                <Button type="primary" onClick={this.search}>Искать</Button>
-                                <Button type="primary" onClick={this.verify}>Проверить</Button>
+                            <div className="btns align-t mt18">
+                                <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
+                                <Button className="txt-middle mx6" type="primary" icon="circle-check" onClick={this.verify}>Проверить</Button>
                             </div>
                         </Card>
                     </Layout.Col>
