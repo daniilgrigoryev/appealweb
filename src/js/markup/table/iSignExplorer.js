@@ -46,6 +46,8 @@ const mapping = {
 
 const templating = {};
 
+const condKey = 'i_obr_sig'
+
 class ISignExplorer extends React.Component {
 
     constructor(props) {
@@ -56,6 +58,8 @@ class ISignExplorer extends React.Component {
         this.key      = 0;
 
         this.conditionGetter = null;
+        this.conditionRemover = null;
+        this.remove   = this.remove.bind(this);
         this.registerGetSelected = this.registerGetSelected.bind(this);
         this.search = this.search.bind(this);
         this.sign = this.sign.bind(this);
@@ -165,14 +169,23 @@ class ISignExplorer extends React.Component {
         }
     }
 
+    remove() {
+        const rlyRem = window.confirm('Вы уверены, что хотите очистить условия?');
+        if (!rlyRem) {
+            return;
+        }
+        this.conditionRemover();
+    }
+
     render() {
-        const {key,where,state,registerGetSelected} = this;
+        const {key,where,state,registerGetSelected,remove} = this;
         const {fields} = state;
         const noTable = this.key == 0;
         const {sid} = this.props;
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
+        const setRemover = (remover) => this.conditionRemover = remover;
 
         templating['REG_NUM'] = (rowData, column) => (<a onClick={this.openRow(rowData)}>{rowData.REG_NUM}</a>); //
 
@@ -188,11 +201,15 @@ class ISignExplorer extends React.Component {
                             </div>
                         }>
 
-                            <SearchRoot {...{fields,setGetter}} />
+                            <SearchRoot {...{fields,setGetter,setRemover,condKey}} />
 
                             <div className='btns align-t mt18'>
                                 <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                                 <CryptoSL doSign={(cert)=>this.sign(cert)} />
+                                <Button className="txt-middle" type="text" onClick={remove}>
+                                    <i className="ico load align-t mr12"/>
+                                        Очистить
+                                </Button>
                             </div>
                         </Card>
                     </Layout.Col>

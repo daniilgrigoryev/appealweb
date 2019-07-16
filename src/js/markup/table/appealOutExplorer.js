@@ -43,6 +43,7 @@ const mapping = {
 }
 
 const templating = {};
+const condKey = 'o_obr'
 
 class AppealOutExplorer extends React.Component {
 
@@ -55,6 +56,8 @@ class AppealOutExplorer extends React.Component {
         this.registerGetSelected = this.registerGetSelected.bind(this);
         this.getXFile = this.getXFile.bind(this);
         this.conditionGetter = null;
+        this.conditionRemover = null;
+        this.remove   = this.remove.bind(this);
         this.search   = this.search.bind(this);
     }
 
@@ -100,6 +103,14 @@ class AppealOutExplorer extends React.Component {
         this.getSelected = outerGetSelected;
     }
 
+    remove() {
+        const rlyRem = window.confirm('Вы уверены, что хотите очистить условия?');
+        if (!rlyRem) {
+            return;
+        }
+        this.conditionRemover();
+    }
+
     openRow(rowData, column) {
         const {dispatch, change, initialize} = this.props;
         const alias = 'CLAIM_OUT_GET';
@@ -129,7 +140,7 @@ class AppealOutExplorer extends React.Component {
     }
 
     render() {
-        const {key,where,state,registerGetSelected} = this;
+        const {key,where,state,registerGetSelected,remove} = this;
         const {fields} = state;
         const noTable = _.isEmpty(where);
         const {sid} = this.props;
@@ -139,6 +150,7 @@ class AppealOutExplorer extends React.Component {
 
         const actionCol =  null && {style, body};
         const setGetter = (getter)=>this.conditionGetter = getter;
+        const setRemover = (remover) => this.conditionRemover = remover;
 
         return (
             <React.Fragment>
@@ -147,11 +159,15 @@ class AppealOutExplorer extends React.Component {
                         <h3>Поиск исходящих обращений</h3>
                     </div>
                 }>
-                    <SearchRoot {...{fields,setGetter}} />
+                    <SearchRoot {...{fields,setGetter,condKey,setRemover}} />
 
                     <div className='btns align-t mt18'>
                         <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                         {!noTable && (<Button className="txt-middle mx6"  type="primary" onClick={this.getXFile}>xls</Button>)}
+                        <Button className="txt-middle" type="text" onClick={remove}>
+                            <i className="ico load align-t mr12"/>
+                                Очистить
+                        </Button>
                     </div>
                 </Card>
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>

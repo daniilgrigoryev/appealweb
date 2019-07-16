@@ -165,8 +165,9 @@ class SearchRoot extends React.Component {
    }
 
    getConditions() {
+    const {condKey} = this.props
       try {
-          const serializedState = localStorage.getItem('conditionMap');
+          const serializedState = localStorage.getItem(condKey);
           if (serializedState) {
             return JSON.parse(serializedState);
           }
@@ -176,8 +177,9 @@ class SearchRoot extends React.Component {
     }
 
     getDefaultConditionKey() {
+      const {condKey} = this.props
       try {
-          const cKey = localStorage.getItem('defaultConditionKey');
+          const cKey = localStorage.getItem(condKey+'_key');
           if (cKey) {
             return cKey;
           }
@@ -191,6 +193,7 @@ class SearchRoot extends React.Component {
         return;
       }
       const {root, conditionName} = this.state;
+      const {condKey} = this.props
       const conditions = this.getConditions();
       if (conditions[conditionName]){
         messageSet('Условие перезаписано', 'info');
@@ -198,7 +201,7 @@ class SearchRoot extends React.Component {
       conditions[conditionName] = root;
       const serializedCond = JSON.stringify(conditions);
       
-      localStorage.setItem('conditionMap', serializedCond);
+      localStorage.setItem(condKey, serializedCond);
 
       this.setState({
         showSavePort : false,
@@ -209,7 +212,8 @@ class SearchRoot extends React.Component {
 
     loadCondition(condName) {
       const conditionName = !condName ? '' : condName;
-      let {root} = this.state 
+      let {root} = this.state
+      const {condKey} = this.props 
       const conditions = this.getConditions();
 
       if (conditions && !_.isEmpty(conditions[conditionName])) {
@@ -224,18 +228,19 @@ class SearchRoot extends React.Component {
         return;
       }
       const {root, conditionName, defCondName} = this.state;
+      const {condKey} = this.props
       const conditions = this.getConditions();
       let defCond = defCondName;
 
       if (conditionName == defCondName) {
-        localStorage.removeItem('defaultConditionKey')
+        localStorage.removeItem(condKey+'_key')
         defCond = '';
       }
 
       delete conditions[conditionName];
       const serializedCond = JSON.stringify(conditions);
       
-      localStorage.setItem('conditionMap', serializedCond);
+      localStorage.setItem(condKey, serializedCond);
 
       this.setState({
         root : [],
@@ -263,14 +268,14 @@ class SearchRoot extends React.Component {
 
     setDefaultCondition() {
       const {conditionName, defCondName, conditionsLables} = this.state;
+      const {condKey} = this.props
       if (this.hasErrors() || conditionName == defCondName) {
         return;
       }
       const conditions = _.without(conditionsLables, conditionName);
       conditions.unshift(conditionName);
       this.setState({defCondName : conditionName, conditionsLables : conditions});
-
-      localStorage.setItem('defaultConditionKey', conditionName);
+      localStorage.setItem(condKey+'_key', conditionName);
       messageSet('Установлено по умолчанию', 'info');
     }
 
@@ -336,7 +341,7 @@ class SearchRoot extends React.Component {
     render() {
     	const {change, remove, add, changeSavePort, changeLoadPort} = this;
     	const {root} = this.state;
-      const {fields} = this.props;
+      const {fields,condKey} = this.props;
       
       const showSaveBtn = root && !_.isEmpty(root);
 
@@ -370,10 +375,10 @@ class SearchRoot extends React.Component {
                 </div>
               </div>
               <div className="searchRoot-item searchRoot__saver">
-                <div className="flex-parent flex-parent--center-cross">
+                {!condKey ? null: <div className="flex-parent flex-parent--center-cross">
                   <Button size="small" onClick={changeLoadPort}>Загрузить условие</Button>
                   {showSaveBtn && <Button size="small" onClick={changeSavePort}>Сохранить условие</Button>}
-                </div>
+                </div>}
                 {showPort}
               </div>
             </div>

@@ -47,6 +47,8 @@ const mapping = {
 
 const templating = {};
 
+const condKey = 'i_obr'
+
 class AppealExplorer extends React.Component {
 
     constructor(props) {
@@ -207,7 +209,7 @@ class AppealExplorer extends React.Component {
                         <h3>Поиск обращений</h3>
                     </div>
                 }>
-                <SearchRoot {...{fields,setGetter,setRemover}}/>
+                <SearchRoot {...{fields,setGetter,setRemover,condKey}}/>
                 <div className='btns align-t mt18'>
                     <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                     <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.searchMy}>Поиск среди своих</Button>
