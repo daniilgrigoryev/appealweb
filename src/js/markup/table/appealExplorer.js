@@ -212,9 +212,9 @@ class AppealExplorer extends React.Component {
                     <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                     <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.searchMy}>Поиск среди своих</Button>
                     {!noTable && (<Button className="txt-middle mx6"  type="primary" onClick={this.getXFile}>xls</Button>)}
-                    <Button className="txt-middle" type="text" onClick={remove}>
+                    <Button size="small" className="txt-middle color-darken75 opacity50 opacity100-on-hover" type="text" onClick={remove}>
                         <i className="ico load align-t mr12"/>
-                        Очистить
+                        <span>Очистить</span>
                     </Button>
                 </div>
                 </Card>

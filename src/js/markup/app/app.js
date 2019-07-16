@@ -28,6 +28,7 @@ import IncomingPosts from '../appeal/incomingPosts.js'
 
 import User from '../../../images/user.svg'
 import UserAvatarBurger from '../../../images/user-avatar-burger.svg'
+import IcoRoundEdit from '../../../images/ico-round-edit.svg'
 import IcoRoundMinus from '../../../images/ico-round-minus.svg'
 import IcoRoundPlus from '../../../images/ico-round-plus.svg'
 import IcoRoundInfo from '../../../images/ico-round-info.svg'

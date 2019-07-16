@@ -130,7 +130,8 @@ class FabulaDialog extends React.Component {
 		const SHDIAL = !showDialog 
       		? null 
       		: ( <Dialog key='mku7'
-              title="Tips"
+							title="Tips"
+							className="style-modal"
        		  size="tiny"
         	  visible={ true }
         	  onCancel={()=>{}}>
@@ -146,9 +147,9 @@ class FabulaDialog extends React.Component {
 
 		return ( 
 	      [<Dialog 
-	      	className="dialIsh"
+	      	className="dialIsh style-modal"
 	        title={title}
-	        size="tiny"
+					size="tiny"
 	        visible={true}
 	        onCancel={cancel}
 	        showClose={false}

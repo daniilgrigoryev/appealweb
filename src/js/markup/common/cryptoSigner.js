@@ -16,7 +16,10 @@ export default (props)=>{
 
 	useEffect(()=>(list.length==1 && (getCertificates().then(onList)), void 0));
 
-	return (<select style={{width:'300px'}} onChange={onChange}>
+	return (<div className="select-container">
+						<select className="select bg-white h-full" style={{width:'300px'}} onChange={onChange}>
                 {list.map(x=><option key={x.thumbprint} value={x.thumbprint}>{extractSignerInfo(x.subjectInfo)}</option>)}
-            </select>);
+						</select>
+						<div class='select-arrow'></div>
+					</div>);
 } //

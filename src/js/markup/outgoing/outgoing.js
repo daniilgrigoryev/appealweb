@@ -13,12 +13,22 @@ import IshBasic from './subForms/ishBasic.js'
 import IshLinksPost from './subForms/ishLinksPost.js'
 import IshLinkInner from './subForms/ishLinksInner.js'
 import IshLinkScan from './subForms/ishLinksScan.js'
+import Scrollspy from 'react-scrollspy'
 
 const im = (obj) => Immutable.fromJS(obj)
 
 const hashCode = (s) => (s || '').split('').reduce((hash, val) => (((hash << 5) - hash) + val.charCodeAt(0)) | 0, 0);
 
 const alias = 'CLAIM_OUT_PUSH'
+
+
+const scrollNavi = (attr) => {
+    return () => {
+        const el = document.querySelector('div[scrollanchor="' + attr + '"]');
+        el && el.scrollIntoView();
+    }
+}
+
 
 class Outgoing extends React.Component {
 
@@ -114,22 +124,47 @@ class Outgoing extends React.Component {
 
         return (
             <div className='ap-side-panel-wrap'>
+                <Card className='ap-side-panel-left box-card sectionCard' bodyStyle={{ padding: 0 }}>
+                    <Card className="box-card sectionCard" bodyStyle={{ padding: 0 }} header={
+                        <div className='headline'>
+                            <h3>Список подразделов</h3>
+                        </div>
+                    }>
+                        <div className="bg-white py18">
+                            <Scrollspy
+                                className='ap-side-panel-left__nav'
+                                items={['basic', 'addbasic', 'destinations', 'regulations', 'links', 'ishDoc']} 
+                                currentClassName='active'
+                                rootEl='.ap-side-panel-content'>
+                                <li href="#basic" onClick={scrollNavi('basic')}>Основные сведения</li>
+                                <li href="#addBasic" onClick={scrollNavi('addBasic')}>Дополнительные сведения</li>
+                                <li href="#destinations" onClick={scrollNavi('destinations')}>Список адресатов</li>
+                                <li href="#regulations" onClick={scrollNavi('regulations')}>Список постановлений</li>
+                                <li href="#links" onClick={scrollNavi('links')}>Связанные обращения/письма</li>
+                                <li href="#ishDoc" onClick={scrollNavi('ishDoc')}>Загруженные документы</li>
+                            </Scrollspy>
+                        </div>
+                    </Card>
+                </Card>
                 <div className='ap-side-panel-content'>
-                    <Layout.Row gutter="20">
-                        <Layout.Col span="24">
-                            <Card className="box-card mb60" header={<h3 className='ap-h3'>Исходящее обращение</h3>}>
-                                <IshHead {...P} />
-                                <IshBasic {...P} />
-                                <IshLinksPost {...P} />
-                                <IshLinkInner {...P} />
-                                <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />
-                            </Card>
-                            <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
-                                <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
-                                <Button size="small" type='text'>Отменить</Button>
-                            </div>
-                        </Layout.Col>
-                    </Layout.Row>
+                    <Card className="ap-sticky-card box-card" bodyStyle={{ padding: 0 }} header={
+                        <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
+                            <h1 className='ap-h1 flex-parent flex-parent--center-cross'>
+                                Исходящее обращение
+                            </h1>
+                        </div>
+                    }>
+                        <IshBasic {...P} />
+                        <IshHead {...P} />
+
+                        <IshLinksPost {...P} />
+                        <IshLinkInner {...P} />
+                        <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />
+                    </Card>
+                    <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
+                        <Button disabled={noSave} type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
+                        <Button size="small" type='text'>Отменить</Button>
+                    </div>
                 </div>
             </div>
         );

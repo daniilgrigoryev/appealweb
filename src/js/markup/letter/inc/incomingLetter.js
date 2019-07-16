@@ -120,7 +120,7 @@ class IncomingLetter extends React.Component {
                                 <DocsLink reloadRow = {this.reloadRow}/>
                                 <IncLinkScan files={files} setFiles={this.setFiles} sid={sid}/>
                             </Card>
-                            <div className="ap-footer" className={`ap-footer ${noSave ? 'hidden' : ''}`}>
+                            <div className={`ap-footer ${noSave ? 'hidden' : ''}`}>
                                 <Button type="success" size="small" plain={true} className='mr18' onClick={stateBtnClick}>{stateBtnText}</Button>
                                 <Button size="small" type='text'>Отменить</Button>
                             </div>

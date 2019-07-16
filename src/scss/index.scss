@@ -470,6 +470,33 @@ div.tooltipWrap {
   max-width: 1100px;
 }
 
+.style-modal,
+.p-dialog.style-modal{
+  .el-dialog__header,
+  .p-dialog-titlebar{
+    padding: 4px 20px;
+    border-color: #D9D9D9;
+    background-color: #FAFAFA;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #d1dbe5;
+    box-sizing: border-box;
+    .el-dialog__title,
+    .p-dialog-title{
+      font-size: 17px;
+      color: #6B94C2;
+      font-weight: normal;
+    }
+  }
+  .el-dialog__body,
+  .p-dialog-content{
+    padding: 20px;
+    border: none;
+
+  }
+}
+
+
 .form-side-panel{
   .wrap{
     .item.item--full{
@@ -499,6 +526,11 @@ div.tooltipWrap {
   grid-auto-flow: dense;
   position: relative;
 
+  &.wrap--compact{
+    .item{
+      grid-template-columns: minmax(min-content, min-content) auto;
+    }
+  }
 
   &.wrap--infoview{
     border-bottom: 1px solid #CCCCCC;
@@ -631,9 +663,9 @@ div.tooltipWrap {
 }
 
 .flex-table{
-  padding-left: 190px;
+  margin-left: 190px;
   @media screen and (max-width: 1450px){
-    padding-left: 0;
+    margin-left: 0;
   }
 
   .row{
