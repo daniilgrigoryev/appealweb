@@ -41,7 +41,7 @@ const blob2user = (blob,filename)=>{
 const data2str = (data) =>{
     if (typeof data == 'string'){
         try{
-            return moment(Date.parse(data)).format('DD.MM.YYYY');
+            return moment(Date.parse(data.replace(/"|'/g, ''))).format('DD.MM.YYYY');
         } catch(e){}
     }
 

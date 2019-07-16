@@ -78,7 +78,7 @@ const testGetFile = (sessionId, claim_id,report_alias,report_fname)=>{
 const data2str = (data) =>{
     if (typeof data == 'string'){
         try{
-            return moment(Date.parse(data)).format('DD.MM.YYYY');
+            return moment(Date.parse(data.replace(/"|'/g, ''))).format('DD.MM.YYYY');
         } catch(e){}
     }
 
