@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import React from 'react'
 import {connect} from 'react-redux'
-import {Button} from 'element-react'
+import {Button, Card} from 'element-react'
 import {getSessionId, getSystem} from '../../selectors/common.js'
 import {post} from '../../services/ajax.js'
 import FabulaSecEditor from './fabulaSecEditor.js'
@@ -57,7 +57,7 @@ class FabulaSecViewer extends React.Component {
         const {doc_id} = this.props;
 
         if (doc_id == -1 || (typeof doc_id == "undefined")) {
-            return <div>Редактирование секций доступно только для сохраненных документов</div>;
+            return <p className='my6 txt-em color-gray align-center'>Редактирование секций доступно только для сохраненных документов</p>;
         }
 
         const {rows} = this.state;
@@ -65,59 +65,39 @@ class FabulaSecViewer extends React.Component {
         const ROWS = _.isEmpty(rows) ? null : rows.map(this.getRow);
 
         return (
-            <React.Fragment>
-                <hr className='txt-hr my12'/>
-                <h4 className="ap-h4">Фабулы секций</h4>
-                {_.isEmpty(rows) ?
-                    <p className="mt-neg18 mb18 txt-em color-gray">Нет секций для отображения</p>
-                    :
-                    <table className='w-full'>
+            <Card bodyStyle={{padding: '0'}} className="box-card sectionCard" header={
+                <div className='headline'>
+                    <h3>Фабулы секций</h3>
+                </div>}>
+                    {_.isEmpty(rows) 
+                    ? <p className="my6 txt-em color-gray align-center">Нет секций для отображения</p>
+                    : <table className='w-full table-styled'>
                         <tbody>
-                        <tr>
-                            <td className='ap-input-caption'></td>
-                            <td>
-                                <table className='w-full mb18'>
-                                    <thead>
-                                    <tr>
-                                        <td className='ap-table__th ap-table__header'>Наименование</td>
-                                        <td className='ap-table__th ap-table__header'>Категория</td>
-                                        <td className='ap-table__th ap-table__header'>Решение</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {ROWS}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
+                            <tr>
+                                <td className='ap-input-caption'></td>
+                                <td>
+                                    <table className='w-full mb18'>
+                                        <thead>
+                                        <tr>
+                                            <td className='ap-table__th ap-table__header'>Наименование</td>
+                                            <td className='ap-table__th ap-table__header'>Категория</td>
+                                            <td className='ap-table__th ap-table__header'>Решение</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {ROWS}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                      </tbody>
                     </table>
                 }
-
-                <table>
-                    <tbody>
-                    <tr>
-                        <td className='ap-input-caption'></td>
-                        <td>
-                            <table className='wmin300'>
-                                <tbody>
-                                <tr>
-                                    <td colSpan='3'>
-                                        <Button size="small" icon="plus" type="success" plain={true}
-                                                onClick={() => this.addRow()}
-                                                className="flex-parent mb18">
-                                            Добавить секцию
-                                        </Button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </React.Fragment>);
-    }//
+                <Button size="small" icon="plus" className="mb18 mt6 mx-auto block" plain={true} onClick={() => this.addRow()}>
+                    Добавить секцию
+                </Button>
+            </Card>);
+    }
 
   	 getRow(x) {
         const id = x.ID || -1;
