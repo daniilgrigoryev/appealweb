@@ -131,11 +131,9 @@ class IDecisExplorer extends React.Component {
             <React.Fragment>
                 <Layout.Row gutter="0">
                     <Layout.Col span="24">
-                        <Card className="box-card" header={
-                            <div className='flex-parent flex-parent--center-cross flex-parent--space-between-main'>
-                                <h3 className='ap-h3 flex-parent flex-parent--center-cross'>
-                                    Поиск ожидающих проверки обращений
-                                </h3>
+                        <Card className="box-card sectionCard" header={
+                            <div className='headline'>
+                                <h3>Поиск ожидающих проверки обращений</h3>
                             </div>
                         }>
                             <SearchRoot {...{fields,setGetter}} />
