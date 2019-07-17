@@ -41,20 +41,53 @@ const stopPg = (cb, id) => (evt) => {
     return false;
 }
 
+const isDatesEqual = (date1, date2) => {
+    if ( !date1 || !date2) {
+        return false;
+    }
+    date1 = typeof(date1) == 'object' ? date1.toString() : date1;
+    date1 = typeof(date1) == 'string' ? date1.replace(/"|'/g, '') : date1;
+
+    date2 = typeof(date2) == 'object' ? date2.toString() : date2;
+    date2 = typeof(date2) == 'string' ? date2.replace(/"|'/g, '') : date2;
+    
+    return moment(date1).isSame(date2, 'day');
+};
+
 class TopicRow extends React.PureComponent {
 
     constructor(props){
         super(props);
+        this.state = {
+            manualPostLink: this.isApnsAndDatesNotEqual() // true === ручной режим (нет совпадений между постановлениями и заявками)
+        }
+
+        this.getDateByNumber = this.getDateByNumber.bind(this);
+        this.isApnsAndDatesNotEqual = this.isApnsAndDatesNotEqual.bind(this);
+    }
+
+    isApnsAndDatesNotEqual() {
         const { value , apn_list } = this.props;
         const post_n = value ? value.get('post_n') : null;
         const post_date = value ? value.get('post_date') : null;
-        const integWithPost = apn_list ? apn_list.find((item) => {
-            if (item.get('date')) return item.get('date') === post_date && item.get('apn') === post_n
-        }) : false;
 
-        this.state = {
-            manualPostLink: !(post_n && post_date && integWithPost),
-        }
+        let integWithPost = apn_list && apn_list.find((item) => {
+            const alDate = item.get('date');
+            const alApn = item.get('apn');
+
+            if (alDate) {
+                return isDatesEqual(alDate ,post_date) && alApn === post_n;
+            }
+            return false;
+        });
+
+        return !integWithPost; 
+    }
+
+    getDateByNumber(apn){
+        const { apn_list } = this.props;
+        const itemRegulation = apn_list ? apn_list.find((item) => item.get('apn') === apn) : null;
+        return itemRegulation ? itemRegulation.get('date') : null;
     }
 
     setManualPostLink(manualPostLink){
@@ -239,10 +272,19 @@ class TopicRow extends React.PureComponent {
         </React.Fragment>);
     //
         const postSelect = (args)=>{ // подсос даты
-            const AL = apn_list;
-            const newDateStr = AL ? _.chain(AL.toJS()||[]).filter(x=>+x.apn==+args.key).first().get('date').value() : false;
-            const newVal = newDateStr ? new Date(Date.parse(newDateStr)) : null;
-            dispatch(change(`appeal`, fldD, newVal));
+            const notEqual = this.isApnsAndDatesNotEqual();
+            let date = null
+            let appNumber = null
+
+            if (args) {
+                date = this.getDateByNumber(args.key);
+                appNumber = date ? args.key : null;
+            } else if (!notEqual || !post_date) {
+                date = this.getDateByNumber(post_n);
+                appNumber = post_n;
+            }
+            dispatch(change('appeal', fldD, date));
+            dispatch(change('appeal', fldN, appNumber));
         }
 
         const dispatchForm = (fieldName,fieldVal)=>dispatch(change('appeal',fieldName,fieldVal));
@@ -349,7 +391,7 @@ class TopicRow extends React.PureComponent {
                                     offText='АВТ'
                                     onChange={(value)=>{
                                         if (!value) {
-                                            postSelect({visibleval: null, key: ''+post_n, name: fldN});
+                                            postSelect();
                                         }
                                         this.setManualPostLink(value);
                                         //postClear(); 
