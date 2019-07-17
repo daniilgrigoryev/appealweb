@@ -1,4 +1,6 @@
 import React from 'react'
+import {compose} from 'redux'
+import {connect} from 'react-redux'
 import {Button, Card, Layout, Tag} from 'element-react'
 import {Field, FieldArray, reduxForm} from 'redux-form/immutable'
 import {EInput, FInput} from '../../components/finput.js'
@@ -19,7 +21,7 @@ const headerTitle = 'Краткое содержание';
 const M = mapping.SummaryData;
 
 const SummaryData = props => {
-    const {handleSubmit,disabled} = props;
+    const {handleSubmit,disabled, checking_date} = props;
     
     return (
         <div scrollanchor='summary' id='summary'>
@@ -31,7 +33,7 @@ const SummaryData = props => {
                       <div className="form-container">
                         <form onSubmit={handleSubmit}>
                             <h4 className='ap-h4'>Тематики</h4>
-                            <FieldArray component={EQuestionList} name='questions' disabled={disabled}/>
+                            <FieldArray component={EQuestionList} name='questions' disabled={disabled} checkingDate={checking_date}/>
                             
                             <h4 className='ap-h4'>Постановления</h4>
                             <FieldArray component={EApnList} name='apn_list' disabled={disabled}/>
@@ -41,10 +43,17 @@ const SummaryData = props => {
         </div>
     )
 } //
+const mapStateToProps = (state) => {
+    const checking_date = state.getIn(['form', 'appeal', 'values', 'checking_date']);
+    return {checking_date};
+};
 
-export default reduxForm({
-    form: 'appeal', // <------ same form name
-    destroyOnUnmount: false, // <------ preserve form data
-    forceUnregisterOnUnmount: true//, // <------ unregister fields on unmount
-    //validate
-})(SummaryData)
+export default compose(
+    connect(mapStateToProps),
+    reduxForm({
+        form: 'appeal', // <------ same form name
+        destroyOnUnmount: false, // <------ preserve form data
+        forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+        //validate
+    })
+)(SummaryData)
