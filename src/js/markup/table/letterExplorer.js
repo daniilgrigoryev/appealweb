@@ -170,7 +170,7 @@ class LetterExplorer extends React.Component {
                                     <Button type="primary" onClick={this.search}>Искать</Button>
                                     {!noTable && (<Button type="primary" onClick={this.getXFile}>xls</Button>)}
                                 </div>
-                                <Button className="txt-middle" type="text" onClick={remove}>
+                                <Button  className="txt-middle color-darken75 opacity50 opacity100-on-hover ml12"  type="text" onClick={remove}>
                                     <i className="ico load align-t mr12"/>
                                     Очистить
                                 </Button>

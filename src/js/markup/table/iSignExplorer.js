@@ -203,7 +203,7 @@ class ISignExplorer extends React.Component {
                             <div className='btns align-t mt18'>
                                 <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                                 <CryptoSL doSign={(cert)=>this.sign(cert)} />
-                                <Button className="txt-middle ml12" type="text" onClick={remove}>
+                                <Button  className="txt-middle color-darken75 opacity50 opacity100-on-hover ml12"  type="text" onClick={remove}>
                                     <i className="ico load align-t mr12"/>
                                         Очистить
                                 </Button>

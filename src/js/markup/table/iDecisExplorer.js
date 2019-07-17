@@ -152,11 +152,14 @@ class IDecisExplorer extends React.Component {
                             <SearchRoot {...{fields,setGetter,setRemover,condKey}} />
 
                             <div className='btns align-t mt18'>
-                                <Button type="primary" onClick={this.search}>Искать</Button>
-                                <Button type="primary" onClick={this.verify}>Проверить</Button>
-                                <Button className="txt-middle ml12" type="text" onClick={remove}>
-                                    <i className="ico load align-t mr12"/>
-                                        Очистить
+                                <Button className="txt-middle mx6" type="primary" icon="search"  onClick={this.search}>
+                                    Искать
+                                </Button>
+                                <Button className="txt-middle mx6" type="primary" icon="circle-check" onClick={this.verify}>
+                                    Проверить
+                                </Button>
+                                <Button  className="txt-middle color-darken75 opacity50 opacity100-on-hover ml12"  type="text" onClick={remove}>
+                                    <i className="ico load align-t mr12"/> Очистить
                                 </Button>
                             </div>
                         </Card>

@@ -164,9 +164,9 @@ class AppealOutExplorer extends React.Component {
                     <div className='btns align-t mt18'>
                         <Button className="txt-middle mx6" type="primary" icon="search" onClick={this.search}>Поиск</Button>
                         {!noTable && (<Button className="txt-middle mx6"  type="primary" onClick={this.getXFile}>xls</Button>)}
-                        <Button className="txt-middle" type="text" onClick={remove}>
+                        <Button className="txt-middle color-darken75 opacity50 opacity100-on-hover"  type="text" onClick={remove}>
                             <i className="ico load align-t mr12"/>
-                                Очистить
+                            Очистить
                         </Button>
                     </div>
                 </Card>
