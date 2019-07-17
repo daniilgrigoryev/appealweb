@@ -151,10 +151,10 @@ class IDecisExplorer extends React.Component {
 
                             <SearchRoot {...{fields,setGetter,setRemover,condKey}} />
 
-                            <div className='mt12'>
+                            <div className='btns align-t mt18'>
                                 <Button type="primary" onClick={this.search}>Искать</Button>
                                 <Button type="primary" onClick={this.verify}>Проверить</Button>
-                                <Button className="txt-middle" type="text" onClick={remove}>
+                                <Button className="txt-middle ml12" type="text" onClick={remove}>
                                     <i className="ico load align-t mr12"/>
                                         Очистить
                                 </Button>
