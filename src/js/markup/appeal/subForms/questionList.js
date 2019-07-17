@@ -24,12 +24,12 @@ const getRow = (id,question, department,control_date) => {
 
 const dateBoundary = (time, borderTime) =>{
     let checkingDate = new Date(borderTime);
-    if(checkingDate instanceof Date && !isNaN(checkingDate.getTime()) && time instanceof Data){
+    if(checkingDate instanceof Date && time instanceof Date && !isNaN(checkingDate.getTime())){
         checkingDate.setDate(checkingDate.getDate() + 30);
         return time.getTime() > checkingDate.getTime();
     }else{
         return false;
-    }    
+    }
 };
 // Element component
 export class EQuestionList extends React.Component {
@@ -53,8 +53,9 @@ export class EQuestionList extends React.Component {
                     <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key} dbVisibleVal={arr.get(i).get('org_label')}/>
                 </div>
             </div>
+
             <div className="column w130">
-                <div className="label">Дата контроля {checkingDate} </div>
+                <div className="label">Резолюция</div>
                 <div className="value">
                     <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' disabledDate={time=>dateBoundary(time, checkingDate)}/>
                 </div>
