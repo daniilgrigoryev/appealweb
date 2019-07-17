@@ -76,7 +76,7 @@ class ClaimantData extends React.Component {
             )
             : (<React.Fragment>
                     <div className="item item--left" key='ulOrgName'>
-                        <small className="label">{M.ORG_NAME.label}</small>
+                        <small className="label">Название организации</small>
                         <div className="value">
                             <Field disabled={disabled} name={M.ORG_NAME.name} component={FInput}/>
                         </div>
