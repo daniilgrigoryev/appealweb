@@ -41,23 +41,34 @@ export class EQuestionList extends React.Component {
 
         const ROWS = fields.map((x, i, arr) =>(
         <div className="row" key={i}>
-            <div className="column w300">
+            <div className="column w240">
                 <div className="label">{M.QUEST.label}</div>
                 <div className="value">
                     <Field disabled={disabled} component={FSelect} name={x + M.QUEST.name} value={x[M.QUEST.name]} dataKey={M.QUEST.key}/>
                 </div>
             </div>
-            <div className="column w180">
+            <div className="column w130">
                 <div className="label">{M.DEPART.label}</div>
                 <div className="value">
                     <Field disabled={disabled} component={FSelect} name={x + M.DEPART.name} value={x[M.DEPART.name]} dataKey={M.DEPART.key} dbVisibleVal={arr.get(i).get('org_label')}/>
                 </div>
             </div>
-
             <div className="column w130">
                 <div className="label">Резолюция</div>
                 <div className="value">
                     <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' disabledDate={time=>dateBoundary(time, checkingDate)}/>
+                </div>
+            </div>
+            <div className="column w130">
+                <div className="label">Типы резолюций</div>
+                <div className="value">
+                    <Field disabled={disabled} component={FSelect} name={x + 'type_resolution'} value={x['type_resolution']} dataKey={null}/>
+                </div>
+            </div>
+            <div className="column w300">
+                <div className="label">Комментарий</div>
+                <div className="value">
+                    <Field disabled={disabled} component={FInput} autosize={{ minRows: 0, maxRows: 4}} name={x + 'description'} value={x['description']} type="textarea" style={{'height':'32px'}}/>
                 </div>
             </div>
             <div className="column column--end">
@@ -81,7 +92,7 @@ export class EQuestionList extends React.Component {
                 {!fields.length ?
                     <p className='my6 txt-em color-gray align-center'>Нет добавленных тематик обращения</p>
                     :
-                    <div className="flex-table">{ROWS}</div>
+                    <div className="flex-table ml0">{ROWS}</div>
                 }
 
                 {disabled || fields.length ? null :

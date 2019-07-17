@@ -217,7 +217,11 @@
 .el-time-panel .el-time-panel__footer {
   display: flex;
 }
-
+.el-textarea{
+  textarea{
+    height: 100%!important;
+  }
+}
 .el-textarea__inner {
   // font-size: $input-font-size;
   // color: $color-input-text;
