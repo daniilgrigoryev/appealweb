@@ -161,3 +161,14 @@ input, textarea, .p-autocomplete{
   }
 }
 
+.fixedDropDown{
+  .p-autocomplete-panel {
+    position: fixed!important;
+    overflow: auto;
+    margin-top: 31px;
+    // min-width: auto;
+    min-width: 215px!important;
+    width: max-content;
+    max-width: 500px;
+  }
+}

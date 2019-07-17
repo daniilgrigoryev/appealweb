@@ -16,13 +16,13 @@ const SearchRow = (props)=>{
     let {value} = props;
       
     const nullable =(oper=='NULL' || oper=='NOT NULL');  
-    let Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} />;
+    let Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)}/>;
     if (nullable){
     	Row = <span />;
     } else if (!!dict){
-      Row= <ESelect {...{value}} onChange={(e)=>change(i,'value',e)} dataKey={dict} />;
+      Row= <ESelect {...{value}} onChange={(e)=>change(i,'value',e)} dataKey={dict}/>;
     } else if (typ=='N'){
-    	Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} type="number" />;
+    	Row = <EInput {...{value}} onChange={(e)=>change(i,'value',e)} type="number"/>;
     } else if (typ=='D'){
     	Row = <EPicker className="w60"  {...{value}} onChange={(e)=>change(i,'value',e)} datepicker='+'/>;
     } else if (typ=='B'){
@@ -57,7 +57,7 @@ const SearchRow = (props)=>{
             </div>
         </div>
         <div className="column">
-          <div className="value">
+          <div className="value fixedDropDown">
             {Row}
           </div>
         </div>
