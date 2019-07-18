@@ -223,7 +223,7 @@ class AppealExplorer extends React.Component {
 
                 { noTable ? <div className='mt60'><h3 className='txt-h3 align-center color-darken10'>Нет результатов поиска</h3></div>
                           : <Card className="box-card" bodyStyle={{ padding: '0' }}>
-                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where, registerGetSelected}} hdelta={'515'}  selectable={true} />
+                                <AppealTable {...{key,sid,desc,actionCol,mapping,templating,where, registerGetSelected}} hdelta={'420'}  selectable={true} />
                             </Card>}
             </React.Fragment>);
     } //

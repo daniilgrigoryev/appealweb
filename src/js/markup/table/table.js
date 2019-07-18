@@ -46,12 +46,14 @@ export default class AppealTable extends React.Component {
     }
 
     setTableHeight() {
+        // const heightSearchArea = document.getElementsByClassName("js--searchArea")[0].getBoundingClientRect().height;
+        // this.setState({tableHeight : window.innerHeight - this.offsetTop - heightSearchArea + "px"});
         this.setState({tableHeight : window.innerHeight - this.offsetTop - this.props.hdelta + "px"});
     }
 
     toSuitableVal(table) { 
         const colFields = this.state.table.columns.map(y => y.label);
-        return table.rows.map(x => _.zipObject(colFields, x.map(y => y.value)))
+        return table.rows.map(x => _.zipObject(colFields, x.map(y => y.value)));
     }
 
     getSelected() {
@@ -126,8 +128,7 @@ export default class AppealTable extends React.Component {
                        header={head}
                        rowsPerPageOptions={[10, 25, 50, 100, 200, 300]}
                        selection={S.selected}
-                       onSelectionChange={e => this.setState({selected: e.value})}
-                       >
+                       onSelectionChange={e => this.setState({selected: e.value})}>
                 {dynamicColumns}
             </DataTable>
         ); //
