@@ -727,9 +727,13 @@ div.tooltipWrap {
   max-width: 180px;
   span{
     top: 50%;
+    background: #fff;
     transform: translateY(-50%);
     width: 20px;
     justify-content: center;
+    &.el-input-number__increase{
+      right: 1px;
+    }
   }
 }
 .searchRoot__add{
