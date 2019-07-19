@@ -148,7 +148,7 @@ class DocLinker extends React.Component {
         const LINKER = !linkerVisible
             ? null
             : (<Dialog key='ilid'
-                       title="Связанные обращения/письма"
+                       title="Связанные обращения"
                        showClose={false}
                        closeOnClickModal={false}
                        closeOnPressEscape={false}
@@ -166,7 +166,7 @@ class DocLinker extends React.Component {
                 <div scrollanchor='links' key='ili' id='links'>
                     <Card className="box-card sectionCard" bodyStyle={{padding: '0 0 20px 0'}} header={
                         <div className="headline">
-                            <h3>Связанные обращения/письма</h3>
+                            <h3>Связанные обращения</h3>
                         </div>
                     }>{CONTENT}</Card>
                 </div>

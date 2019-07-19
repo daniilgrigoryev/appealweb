@@ -6,7 +6,7 @@ import MaskedInput from 'react-text-mask'
 
 // Element component
 
-const DATE_FORMAT = 'YYYY-MM-DD"T"HH:mm:ss"Z"';
+const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ';
 
 class APicker extends React.Component {
     render() {
