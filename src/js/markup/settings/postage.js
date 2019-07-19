@@ -38,199 +38,146 @@ export default class Postage extends React.Component {
 
                     <h4 className='ap-h4'>Основные сведения:</h4>
 
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td className='ap-input-caption'>
-                                Вес конверта DL
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('weigthDL')}
-                                                    onChange={chg('weigthDL')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Вес большого конверта <br/> (Письмо до 100г)
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('weigthBig')}
-                                                onChange={chg('weigthBig')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Вес конверта Бандероль
-                            </td>
-                            <td>
-                                <span>
-                                    <InputNumber className='w120' defaultValue={get('weightPackage')}
-                                                onChange={chg('weightPackage')}/>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className='ap-input-caption'>
-                                Максимальное число <br/> листов в конверте DL
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('maxSheetsDL')}
-                                                    onChange={chg('maxSheetsDL')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Минимальное число <br/> листов в бандероли
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('minSheetsPkg')}
-                                                onChange={chg('minSheetsPkg')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Вес одного листа
-                            </td>
-                            <td>
-                                <span>
-                                    <InputNumber className='w120' defaultValue={get('weightSheet')}
-                                                onChange={chg('weightSheet')}/>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className='ap-input-caption'>
-                                Горизонтальный отступ <br/> шапки с ШПИ
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('offsetHorSPI')}
-                                                    onChange={chg('offsetHorSPI')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Вертикальный отступ <br/> шапки с ШПИ
-                            </td>
-                            <td>
-                                <span className='mr12'>
-                                    <InputNumber className='w120' defaultValue={get('offsetVertSPI')}
-                                                onChange={chg('offsetVertSPI')}/>
-                                </span>
-                            </td>
-                            <td className='ap-input-caption'>
-                                Размер пакета выгрузки
-                            </td>
-                            <td>
-                                <span>
-                                    <InputNumber className='w120' defaultValue={get('unloadPackSize')}
-                                                onChange={chg('unloadPackSize')}/>
-                                </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div className="form-container">
+                        <div className="wrap">
+                            <div className="item item--250">
+                                <small className="label">Вес конверта DL</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('weigthDL')} onChange={chg('weigthDL')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Вес большого конверта <br/> (Письмо до 100г)</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('weigthBig')} onChange={chg('weigthBig')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Вес конверта Бандероль</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('weightPackage')} onChange={chg('weightPackage')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Максимальное число <br/> листов в конверте DL</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('maxSheetsDL')} onChange={chg('maxSheetsDL')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Минимальное число <br/> листов в бандероли</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('minSheetsPkg')} onChange={chg('minSheetsPkg')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Вес одного листа</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('weightSheet')} onChange={chg('weightSheet')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Горизонтальный отступ <br/> шапки с ШПИ</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('offsetHorSPI')} onChange={chg('offsetHorSPI')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Вертикальный отступ <br/> шапки с ШПИ</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('offsetVertSPI')} onChange={chg('offsetVertSPI')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Размер пакета выгрузки</small>
+                                <div className="value">
+                                    <InputNumber className='w120' defaultValue={get('unloadPackSize')} onChange={chg('unloadPackSize')}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <hr className='txt-hr my18'/>
                     <h4 className='ap-h4'>Стоимость:</h4>
 
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td className='ap-input-caption'>
-                                <span>НДС, %</span>
-                            </td>
-                            <td>
-                                <InputNumber className='w120' defaultValue={get('nds')} onChange={chg('nds')}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td className='ap-table__header'>Значение без НДС</td>
-                            <td className='ap-table__header'>Значение с НДС</td>
-                        </tr>
-                        <tr>
-                            <td className='ap-input-caption'>Заказное письмо до 20 г, руб</td>
-                            <td>
-                                <span className='mr60'>
-                                    <InputNumber className='w120' defaultValue={get('letter20under')}
-                                                    onChange={chg('letter20under')}/>
-                                </span>
-                            </td>
-                            <td>
-                                <Input className='w120' value={nds('letter20under')} disabled={true}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='ap-input-caption'>
-                                За каждые последующие полные или неполные 20 г веса заказного письма, руб
-                            </td>
-                            <td>
-                                <span className='mr60'>
-                                    <InputNumber className='w120' defaultValue={get('letter20over')}
-                                                onChange={chg('letter20over')}/>
-                                </span>
-                            </td>
-                            <td>
-                                <Input className='w120' value={nds('letter20over')} disabled={true}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='ap-input-caption'>Заказная бандероль весом 100 г, руб</td>
-                            <td>
-                                <span className='mr60'>
-                                    <InputNumber className='w120' defaultValue={get('letter100under')}
-                                                onChange={chg('letter100under')}/>
-                                </span>
-                            </td>
-                            <td>
-                                <Input className='w120' value={nds('letter100under')} disabled={true}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='ap-input-caption'>
-                                За каждые последующие полные или неполные 20 г веса заказной бандероли, руб
-                            </td>
-                            <td>
-                                <span className='mr60'>
-                                    <InputNumber className='w120' defaultValue={get('letter100over')}
-                                                onChange={chg('letter100over')}/>
-                                </span>
-                            </td>
-                            <td>
-                                <Input className='w120' value={nds('letter100over')} disabled={true}/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div className="form-container">
+                        <div className="wrap">
+                            <div className="item item--full item--250">
+                                <small className="label">НДС, %</small>
+                                <div className="value">
+                                    <InputNumber className="w120" defaultValue={get('nds')} onChange={chg('nds')}/>
+                                </div>
+                            </div>
+                            <div className="item item--full item--250">
+                                <small className="label"></small>
+                                <div className="value">
+                                    <div className="flex-parent flex-parent--space-between-main wmax360">
+                                        <span className="color-gray-dark">Значение без НДС</span>
+                                        <span className="color-gray-dark">Значение с НДС</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="item item--full item--250">
+                                <small className="label">Заказное письмо до 20 г, руб</small>
+                                <div className="value">
+                                    <div className="flex-parent flex-parent--space-between-main wmax360">
+                                        <InputNumber className='w120' defaultValue={get('letter20under')} onChange={chg('letter20under')}/>
+                                        <Input className='w120' value={nds('letter20under')} disabled={true}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="item item--full item--250">
+                                <small className="label">За каждые последующие полные или неполные 20 г веса заказного письма, руб</small>
+                                <div className="value">
+                                    <div className="flex-parent flex-parent--space-between-main wmax360">
+                                        <InputNumber className='w120' defaultValue={get('letter20over')} onChange={chg('letter20over')}/>
+                                        <Input className='w120' value={nds('letter20over')} disabled={true}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="item item--full item--250">
+                                <small className="label">Заказная бандероль весом 100 г, руб</small>
+                                <div className="value">
+                                    <div className="flex-parent flex-parent--space-between-main wmax360">
+                                        <InputNumber className='w120' defaultValue={get('letter100under')} onChange={chg('letter100under')}/>
+                                        <Input className='w120' value={nds('letter100under')} disabled={true}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="item item--full item--250">
+                                <small className="label">За каждые последующие полные или неполные 20 г веса заказной бандероли, руб</small>
+                                <div className="value">
+                                    <div className="flex-parent flex-parent--space-between-main wmax360">
+                                        <InputNumber className='w120' defaultValue={get('letter100over')} onChange={chg('letter100over')}/>
+                                        <Input className='w120' value={nds('letter100over')} disabled={true}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <hr className='txt-hr my18'/>
                     <h4 className='ap-h4'>Выгрузки:</h4>
 
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td colSpan='2' className='ap-input-caption'>
-                                Регулярная выгрузка (архивы)
-                            </td>
-                            <td>
-                                <Switch value={S.unloadArchive} onText="ВКЛ" offText="ВЫКЛ"
-                                        onChange={chg('unloadArchive')}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan='2' className='ap-input-caption'>
-                                Регулярная выгрузка (почт.сервис)
-                            </td>
-                            <td>
-                                <Switch value={S.unloadPost} onText="ВКЛ" offText="ВЫКЛ"
-                                        onChange={chg('unloadPost')}/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+                    <div className="form-container">
+                        <div className="wrap">
+                            <div className="item item--250">
+                                <small className="label">Регулярная выгрузка (архивы)</small>
+                                <div className="value">
+                                    <Switch value={S.unloadArchive} onText="ВКЛ" offText="ВЫКЛ" onChange={chg('unloadArchive')}/>
+                                </div>
+                            </div>
+                            <div className="item item--250">
+                                <small className="label">Регулярная выгрузка (почт.сервис)</small>
+                                <div className="value">
+                                    <Switch value={S.unloadPost} onText="ВКЛ" offText="ВЫКЛ" onChange={chg('unloadPost')}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Card>
 
                 <div className="ap-footer">

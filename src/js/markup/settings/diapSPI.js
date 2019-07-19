@@ -119,9 +119,6 @@ export default class DiapSPI extends React.Component {
                         <Switch className="ml18" value={rw.visible}/>
                     </div>
                 </div>
-
-
-
             </div>
         ));
 

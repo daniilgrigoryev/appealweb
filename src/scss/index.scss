@@ -601,6 +601,9 @@ div.tooltipWrap {
       // min-width: 320px;
     } 
   }
+  .item--250{
+    grid-template-columns: minmax(250px, min-content) auto;
+  }
   .item--flow{
     grid-template-columns: min-content 1fr;
   }
