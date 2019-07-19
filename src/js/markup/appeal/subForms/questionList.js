@@ -68,7 +68,7 @@ export class EQuestionList extends React.Component {
             <div className="column w300">
                 <div className="label">Комментарий</div>
                 <div className="value">
-                    <Field disabled={disabled} component={FInput} autosize={{ minRows: 0, maxRows: 4}} name={x + 'description'} value={x['description']} type="textarea" style={{'height':'32px'}}/>
+                    <Field disabled={disabled} component={FInput} autosize={{ minRows: 2, maxRows: 4}} name={x + 'description'} value={x['description']} type="textarea" style={{'height':'32px'}}/>
                 </div>
             </div>
             <div className="column column--end">

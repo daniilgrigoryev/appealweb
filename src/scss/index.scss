@@ -719,6 +719,16 @@ div.tooltipWrap {
   }
 
 }
+.el-input-number{
+  width: inherit;
+  max-width: 180px;
+  span{
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    justify-content: center;
+  }
+}
 .searchRoot__add{
   max-width: 670px;
   .item.item--full{

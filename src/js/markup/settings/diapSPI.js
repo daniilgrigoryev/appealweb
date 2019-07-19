@@ -35,88 +35,111 @@ export default class DiapSPI extends React.Component {
         const chg = (field) => (value) => this.onInput(field, value);
 
         const EDITOR = (
-            <tr>
-                <td>
-                    <Input className='w180 mr24' value={newRow.index} onChange={chg('index')}/>
-                </td>
-                <td>
-                    <DatePicker className='mr24' value={newRow.date} onChange={chg('date')}/>
-                </td>
-                <td>
-                    <InputNumber className='mr24' value={newRow.diap_start} onChange={chg('diap_start')}/>
-                </td>
-                <td>
-                    <InputNumber className='mr24' value={newRow.diap_end} onChange={chg('diap_end')}/>
-                </td>
-                <td className='ap-input-caption'></td>
-                <td colSpan='2' className='flex-parent'>
-                    <Button size="small" icon="plus" onClick={this.pushNewRow}
-                            className="flex-parent mb18">
-                        Добавить
-                    </Button>
-                    <Button size="small" icon="upload2"
-                            className="flex-parent mb18">
-                        Загрузить
-                    </Button>
-                </td>
-            </tr>
+            <div className="row">
+                <div className="column">
+                    <div className="label">Индекс предприятия связи</div>
+                    <div className="value">
+                        <Input value={newRow.index} onChange={chg('index')}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="label">Дата</div>
+                    <div className="value">
+                        <DatePicker value={newRow.date} onChange={chg('date')}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="label">Начало диапазона</div>
+                    <div className="value">
+                        <InputNumber value={newRow.diap_start} onChange={chg('diap_start')}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="label">Конец диапазона</div>
+                    <div className="value">
+                        <InputNumber value={newRow.diap_end} onChange={chg('diap_end')}/>
+                    </div>
+                </div>
+                <div className="column w130" style={{'height':'64px'}}>
+                    <div className="label">Состояние</div>
+                </div>
+                <div className="column w130" style={{'height':'64px'}}>
+                    <div className="label">Осталось</div>
+                </div>
+                <div className="column">
+                    <div className="value" style={{'margin-top': '33px'}}>
+                        <Button style={{'border': '1px solid #eaebec','width':'25px','height': '25px'}} 
+                                className="py0 px0 round-full bg-white" 
+                                size="small" type="text" 
+                                onClick={()=>this.removePost(i)}>
+                            <i className="ico upload w12"/>
+                        </Button>
+
+                        <Button className="py0" size="small" type="text" onClick={this.pushNewRow}>
+                            <i className="ico round plus"/>
+                        </Button>
+                    </div>
+                </div>
+
+            </div>
         );
 
         const ROWS = rows.map((rw, index) => (
-            <tr key={index}>
-                <td>
-                    <Input value={rw.index} disabled={true}/>
-                </td>
-                <td>
-                    <DatePicker value={rw.date} isDisabled={true}/>
-                </td>
-                <td>
-                    <Input defaultValue={rw.diap_start} disabled={true}/>
-                </td>
-                <td>
-                    <Input defaultValue={rw.diap_end} disabled={true}/>
-                </td>
-                <td className='ap-input-caption align-l'>
-                    Осталось {rw.estimate}
-                </td>
-                <td colSpan='2'>
-                    <Switch className='mt12' value={rw.visible}/>
-                </td>
-            </tr>
+            <div className="row" key={index}>
+                <div className="column">
+                    <div className="value">
+                        <Input value={rw.index} disabled={true}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="value">
+                        <DatePicker value={rw.date} isDisabled={true}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="value">
+                        <Input defaultValue={rw.diap_start} disabled={true}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="value">
+                        <Input defaultValue={rw.diap_end} disabled={true}/>
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="value">
+                        {rw.estimate
+                            ? <span>{rw.estimate}</span>
+                            : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                        }
+                    </div>
+                </div>
+                <div className="column w130">
+                    <div className="value">
+                        <Switch className="ml18" value={rw.visible}/>
+                    </div>
+                </div>
+
+
+
+            </div>
         ));
 
         return (
-            <Layout.Row gutter="20">
-                <Layout.Col span="24">
-                    <Card className="box-card mb60" header={
-                        <h3 className='ap-h3'>
-                            Настройки / Диапазоны ШПИ
-                        </h3>
-                    }>
-                        <table>
-                            <thead>
-                            <tr>
-                                <td className='ap-table__header'>Индекс предприятия связи</td>
-                                <td className='ap-table__header'>Дата</td>
-                                <td className='ap-table__header'>Начало диапазона</td>
-                                <td className='ap-table__header'>Конец диапазона</td>
-                                <td className='ap-table__header'>Состояние</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {EDITOR}
-                            {ROWS}
-                            </tbody>
-                        </table>
-                    </Card>
-
-                    <div className="ap-footer">
-                        <Button size="small">Сохранить</Button>
+            <React.Fragment>
+                <Card className="box-card sectionCard" header={
+                    <div className="headline">
+                        <h3>Настройки / Диапазоны ШПИ</h3>
                     </div>
-                </Layout.Col>
-            </Layout.Row>
+                }>
+                    <div className="flex-table">{EDITOR}</div>
+                    <div className="flex-table">{ROWS}</div>
+                </Card>
+
+                <div className="ap-footer">
+                    <Button size="small">Сохранить</Button>
+                </div>
+            </React.Fragment>
         );
     }
 };

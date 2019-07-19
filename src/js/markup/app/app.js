@@ -193,10 +193,10 @@ class LayoutMain extends React.Component {
                         </Menu.SubMenu>
                         }
 
-                        {false && <Menu.SubMenu index="7" title="Настройки">
+                        <Menu.SubMenu index="7" title="Настройки">
                             <Menu.Item index="settings/diapSPI">Диапазоны ШПИ</Menu.Item>
                             <Menu.Item index="settings/postage">Почтовые отправления</Menu.Item>
-                        </Menu.SubMenu>}
+                        </Menu.SubMenu>
 
                         {/*<Menu.Item index="LOGOUT">Выход</Menu.Item>*/}
                     </Menu>

@@ -129,8 +129,9 @@ export default class IncomingPosts extends React.Component {
                 <p className="my6 txt-em color-gray align-center">Нет добавленных обжалований</p>
                 <Button size="small" icon="plus"  className="flex-parent mx-auto my6 block" onClick={this.addPost}>Добавить</Button>
               </div>
-            : <div>
-                <Button size="small" className="flex-parent mx-auto my6 block" onClick={this.save}>Сохранить</Button>
+            : <div className="flex-parent flex-parent--center-cross flex-parent--center-main">
+                <Button size="small" icon="plus" className="flex-parent my6 block" onClick={this.addPost}>Добавить</Button>
+                <Button size="small" className="flex-parent my6 block" onClick={this.save}>Сохранить</Button>
               </div>
           }
         </div>
