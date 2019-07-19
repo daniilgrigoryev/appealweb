@@ -28,20 +28,20 @@ const timeOfs = new Date().getTimezoneOffset() * 60 * 1000;
 const im = (obj) => Immutable.fromJS(obj)
 
 const desc = {
-    info_alias: 'i_obr',
+    info_alias: 'i_sign',
     alias: 'APPEAL_SIGN_LIST'
 }
 
 const style = {textAlign: 'center', width: '8em'};
 const mapping = {
-    REG_NUM: 'Регистрационный номер',
-    DATE_REG: 'Дата регистрации',
-    NAME: 'Заявитель',
-    FP_NAME: 'Физ. лицо',
-    JP_NAME: 'ЮЛ наименование',
-    ISP_NAME: 'Исполнитель',
+    DESCRIPTION: 'Описание файла',
+    VERIFIER_NAME: 'Проверяющий',
+    DOC_TARGET: 'Проект документов',
+    REGISTRATION_NUMBER: 'Регистрационный номер',
     ISP_OTD: 'Отдел',
-    DOC_TARGET: 'Проект документов'
+    ISP_NAME: 'Исполнитель',
+    REG_DATE: 'Дата регистрации',
+    ZAJAV: 'Заявитель'
 }
 
 const templating = {};
@@ -67,7 +67,7 @@ class ISignExplorer extends React.Component {
 
     componentDidMount(){
         const alias='TABLE_INFO';
-        const table_alias= 'i_obr';
+        const table_alias= 'i_sign';
         const orphan = true;
         post('db/select',{alias,table_alias,orphan}).then(x=>{
             const {data,error} = x;
@@ -93,6 +93,7 @@ class ISignExplorer extends React.Component {
         const getSign = async (ishdoc_id,cert,onDone)=>{
             let sign_error = '';
             let sign_xml = '';
+
             try {
                 const responseXml = await get('storage/pullXml',{ishdoc_id});
                 const xml = responseXml.data;
@@ -110,6 +111,7 @@ class ISignExplorer extends React.Component {
                 }
                 
                 const responseSignedPdf = await post('storage/stampPdf',pdfParams);
+                debugger;
             } catch (exc){
                 sign_xml   = 'error';
                 sign_error = exc + '';
