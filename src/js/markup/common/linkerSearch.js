@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import React from 'react'
 import {connect} from 'react-redux'
+import {Field} from 'redux-form/immutable'
 import {Button, Input, Radio} from 'element-react'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
@@ -8,12 +9,20 @@ import AppealTable from '../table/table.js'
 import {post} from '../../services/ajax.js'
 import {getSessionId} from '../../selectors/common.js'
 import {messageSet} from '../../actions/common.js'
+import {EPicker, FPicker} from '../components/picker.js'
+import {EAutocomplete, FAutocomplete} from '../components/fautocomplete.js'
 
 
 const M = {
         POST_NUMBER:       {name: 'npost',              label: '№ постановления'},
-        NUM:               {name: 'number',             label: '№ обращения/письма'},
+        NUM:               {name: 'number',             label: '№ обращения'},
         FIO_ORG:           {name: 'fio',                label: 'ФИО/Организация'},
+        REG_DATE:          {name: 'reg_date',           label: 'Дата регистрации'},
+        CONTR_DATE:        {name: 'contr_date',         label: 'Дата контроля'},
+        SUM:               {name: 'sum',                label: 'Краткое содержание'},
+        ISP:               {name: 'isp',                label: 'Исполнитель'},
+        CLS_DATE:          {name: 'cls_date',           label: 'Дата закрытия'},
+        STAGE:             {name: 'stage_id',           label: 'Стадия'},
         SEARCH_DIR:        {name: 'search_dir',         label: 'Направление'},
         SEARCH_DIR_IN:     {name: 'IN',                 label: 'Входящие'},
         SEARCH_DIR_OUT:    {name: 'OUT',                label: 'Исходящие'},
@@ -30,6 +39,12 @@ class LinkerSearch extends React.Component {
             npost: null,
             fio: null,
             number: null,
+            reg_date: null,  
+            contr_date: null,
+            sum: null,       
+            isp: null,       
+            cls_date: null,  
+            stage_id: null,     
 
             searchDirection : M.SEARCH_DIR_IN.name,
             searchDocs: M.SEARCH_DOC_CLAIM.name,
@@ -47,8 +62,9 @@ class LinkerSearch extends React.Component {
     }
 
     getSearchDesc() {
-        const  {npost, fio, number, searchDirection, searchDocs} = this.state;
-        return {npost, fio, number, searchDirection, searchDocs};
+        debugger;
+        const  {npost, fio, number, searchDirection, searchDocs, reg_date, contr_date, sum, isp, cls_date, stage_id} = this.state;
+        return {npost, fio, number, searchDirection, searchDocs, reg_date, contr_date, sum, isp, cls_date, stage_id};
     }
 
     async onSearch() {
@@ -115,7 +131,14 @@ class LinkerSearch extends React.Component {
                        >
                 <Column body={this.linkTemplate} style={{width:'200px'}}/>        
                 <Column key='NUM'               field='NUM'               header='Номер' />
-                <Column key='REGISTRATION_DATE' field='REGISTRATION_DATE' header='Дата регистрации' />       
+                <Column key='REGISTRATION_DATE_STR' field='REGISTRATION_DATE_STR' header='Дата регистрации' />
+                <Column key='CHECK_DATE_STR' field='CHECK_DATE_STR' header='Дата контроля' />
+                <Column key='ZAJAV_STR' field='ZAJAV_STR' header='ФИО/Название организации' />
+                <Column key='SUMMARY' field='SUMMARY' header='Краткое содержание' />       
+                <Column key='APN_NUMBERS_STR' field='APN_NUMBERS_STR' header='Номер постановления' />
+                <Column key='ISPOLN_TOPICS_STR' field='ISPOLN_TOPICS_STR' header='Исполнители' />
+                <Column key='CLOSING_DATE_STR' field='CLOSING_DATE_STR' header='Дата закрытия' />       
+                <Column key='PROCESSING_STAGE' field='PROCESSING_STAGE' header='Стадия' />
             </DataTable>);
         } else if (_.isEmpty(rows) && _.isEmpty(searchEmpty)){ //
             TABLE = (<div className='mt18 py36'><h4 className='txt-h4 align-center color-darken10'>Условие для поиска не задано</h4></div>);
@@ -139,12 +162,48 @@ class LinkerSearch extends React.Component {
                                 <Input id={M.NUM.name} value={S[M.NUM.name]} onChange={(v)=>this.onInput('number',v)}/>
                             </div>
                         </div>
-                        {false && (<div className="item">
+                        <div className="item">
                             <small className="label">{M.FIO_ORG.label}</small>
                             <div className="value">
                                 <Input id={M.FIO_ORG.name} value={S[M.FIO_ORG.name]} onChange={(v)=>this.onInput('fio',v)}/>
                             </div>
-                        </div>)}
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.REG_DATE.label}</small>
+                            <div className="value">
+                                <EPicker value={S[M.REG_DATE.name]} onChange={(v)=>this.onInput('reg_date',v)} date='+' />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.CONTR_DATE.label}</small>
+                            <div className="value">
+                                <EPicker value={S[M.CONTR_DATE.name]} onChange={(v)=>this.onInput('contr_date',v)} date='+' />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.SUM.label}</small>
+                            <div className="value">
+                                <Input id={M.SUM.name} value={S[M.SUM.name]} onChange={(v)=>this.onInput('sum',v)}/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.ISP.label}</small>
+                            <div className="value">
+                                <EAutocomplete value={S[M.ISP.name]} key={S[M.ISP.name]} onChange={(v)=>this.onInput('isp',v)} dataKey={'EMPLOYESS_LIST_KEY'}/>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.CLS_DATE.label}</small>
+                            <div className="value">
+                                <EPicker value={S[M.CLS_DATE.name]} onChange={(v)=>this.onInput('cls_date',v)} date='+' />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <small className="label">{M.STAGE.label}</small>
+                            <div className="value">
+                                <EAutocomplete value={S[M.STAGE.name]} key={S[M.STAGE.name]} onChange={(v)=>this.onInput('stage_id',v)} dataKey={'PROCESSING_STAGES'}/>
+                            </div>
+                        </div>
                         <div className="item">
                             <small className="label">{M.SEARCH_DIR.label}</small>
                             <div className="value">
@@ -152,13 +211,13 @@ class LinkerSearch extends React.Component {
                                 <Radio value={M.SEARCH_DIR_OUT.name} checked={searchDirection === M.SEARCH_DIR_OUT.name} onChange={()=>this.onInput('searchDirection',M.SEARCH_DIR_OUT.name)}>{M.SEARCH_DIR_OUT.label}</Radio>
                             </div>
                         </div>
-                        <div className="item">
-                            <small className="label">Поиск по</small>
+                        {false && <div className="item">
+                            <small className="label">Поиск по </small>
                             <div className="value">
                                 <Radio value={M.SEARCH_DOC_CLAIM.name}  checked={searchDocs === M.SEARCH_DOC_CLAIM.name}  onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_CLAIM.name)}>{M.SEARCH_DOC_CLAIM.label}</Radio>
                                 <Radio value={M.SEARCH_DOC_LETTER.name} checked={searchDocs === M.SEARCH_DOC_LETTER.name} onChange={()=>this.onInput('searchDocs',M.SEARCH_DOC_LETTER.name)}>{M.SEARCH_DOC_LETTER.label}</Radio>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
                 <div className='flex-parent flex-parent--center-main flex-parent--center-cross mt24'>
