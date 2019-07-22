@@ -157,7 +157,7 @@ class DocLinker extends React.Component {
                        lockScroll={true} 
                        className="style-modal">
 
-                <Dialog.Body>
+                <Dialog.Body className="px0 py0">
                     <LinkerSearch dialogClose={this.hideLinker} reloadRow={reloadRow} root_id={id} root_doc={root_doc} root_dir={root_dir}/>
                 </Dialog.Body>
             </Dialog>); //

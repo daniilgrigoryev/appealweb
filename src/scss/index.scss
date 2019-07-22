@@ -630,6 +630,34 @@ div.tooltipWrap {
 .style-table-wrapper{
   overflow-x: auto;
 }
+.style-table.style-table--mini{
+  .p-datatable-scrollable-header-box{
+    margin-right: 0!important;
+  }
+  thead.p-datatable-thead{
+    tr{
+      th{
+      text-align: center !important;
+      font-size: 6px !important;
+      font-weight: 400 !important;
+      color: #000 !important;
+      background-color: #ffff!important;
+      line-height: 1 !important;
+      border: none !important;
+      }
+    }
+  }
+  .p-datatable-tbody > tr > td{
+    padding: 15px 0!important;
+  }
+  thead{
+    tr{
+      th{
+        padding: 15px 0!important;
+      }
+    }
+  }
+}
 .style-table{
   // background: red;
   width: 100%;

@@ -98,10 +98,7 @@ class LinkerSearch extends React.Component {
 
     linkTemplate(rowData, column) {
         const {ENTITY_TYPE_ID,ID} = rowData;
-        return <div>
-            <Button size="small" icon="share" onClick={()=>this.performLink(ENTITY_TYPE_ID,ID)} className="flex-parent mb18"
-                title='Добавить связь между основным и выбранным документами'>Связать</Button>   
-        </div>;
+        return <Button size="small" icon="share" onClick={()=>this.performLink(ENTITY_TYPE_ID,ID)} title='Добавить связь между основным и выбранным документами'></Button>  
     } //
 
     render() {
@@ -125,12 +122,13 @@ class LinkerSearch extends React.Component {
                        //totalRecords={size}
                        scrollHeight='400px'
                        value={rows}
+                       className="style-table style-table--mini"
                        //header={head}
                        //selection={S.selected}
                        //onSelectionChange={e => this.setState({selected: e.value})} 
                        >
-                <Column body={this.linkTemplate} style={{width:'200px'}}/>        
-                <Column key='NUM'               field='NUM'               header='Номер' />
+                <Column body={this.linkTemplate} style={{'width':'80px', 'text-align':'center'}}/>        
+                <Column key='NUM' field='NUM' header='Номер' />
                 <Column key='REGISTRATION_DATE_STR' field='REGISTRATION_DATE_STR' header='Дата регистрации' />
                 <Column key='CHECK_DATE_STR' field='CHECK_DATE_STR' header='Дата контроля' />
                 <Column key='ZAJAV_STR' field='ZAJAV_STR' header='ФИО/Название организации' />
@@ -148,7 +146,7 @@ class LinkerSearch extends React.Component {
 
         return (
             <div>
-                <div className="form-container">
+                <div className="form-container px18 py18">
                     <div className="wrap">
                         <div className="item">
                             <small className="label">{M.POST_NUMBER.label}</small>
@@ -234,7 +232,9 @@ class LinkerSearch extends React.Component {
                             title='Добавить связь между основным и выбранным документами'>Закрыть</Button> 
                 </div>
 
-                {TABLE}
+                <div className="scroll-auto">
+                    {TABLE}
+                </div>
 
             </div>
         ); //
