@@ -448,13 +448,13 @@ class TopicRow extends React.PureComponent {
                                 <TopicDocs rows={filesRows} sessionId={sessionId} />
                             </div>
                         </div>
-                        <div className="item item--full">
+                        {/* <div className="item item--full">
                             <small className="label">{M.UCH_PRIS.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
                             </div>
-                        </div>
-                        {PRIS_UCH}
+                        </div> */}
+                        {/* {PRIS_UCH} */}
 
                         {cif(M.CODEX_ARTICLE.name,
                             (<div className="item">
@@ -511,7 +511,7 @@ class TopicRow extends React.PureComponent {
                         )}
 
                         {cif(M.VIOLATOR_REGNO.name,
-                            (<div className="item">
+                            (<div className="item item--left">
                                 <small className="label">{M.VIOLATOR_REGNO.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FInput} value={P[M.VIOLATOR_REGNO.name]} name={field + M.VIOLATOR_REGNO.name}/>
@@ -519,7 +519,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
                         {cif(M.APPEAL_CAUSE.name,
-                            (<div className="item">
+                            (<div className="item item--left">
                                 <small className="label">{M.APPEAL_CAUSE.label}</small>
                                 <div className="value">
                                     <Field disabled={disabled} component={FAutocomplete} value={P[M.APPEAL_CAUSE.name]} name={field + M.APPEAL_CAUSE.name} dataKey={M.APPEAL_CAUSE.key}/>
@@ -527,22 +527,7 @@ class TopicRow extends React.PureComponent {
                             </div>)
                         )}
 
-                        {cif(M.DESISION_MAKER.name,
-                            (<div className="item-fully">
-                            <div className="item" style={{'grid-column':'1 / span 3'}}>
-                                <small className="label">{M.DESISION_MAKER.label}</small>
-                                <div className="value">
-                                    <Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
-                                </div>
-                            </div>
-                            <div className="item item--flow" style={{'grid-column':'auto / span 1'}}>
-                                <small className="label">И. О</small>
-                                <div className="value">
-                                    <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
-                                </div>
-                            </div>
-                            </div>)
-                        )}
+
                         {cif(M.DECISION_THEME.name,
                             (<div className="item">
                                 <small className="label">{M.DECISION_THEME.label}</small>
@@ -551,14 +536,7 @@ class TopicRow extends React.PureComponent {
                                 </div>
                             </div>)
                         )}
-                        {cif(M.DECISION_DATE.name,
-                            (<div className="item">
-                                <small className="label">{M.DECISION_DATE.label}</small>
-                                <div className="value w130">
-                                    <Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field + M.DECISION_DATE.name} datepicker='+'/>
-                                </div>
-                            </div>)
-                        )}
+
                         {cif(M.DECISION_BASIS.name,
                             (<div className="item">
                                 <small className="label">{M.DECISION_BASIS.label}</small>
@@ -593,6 +571,30 @@ class TopicRow extends React.PureComponent {
                                 <Field disabled={disabled} component={FAutocomplete} name={field + 'apr_stop_cause_id'} dataKey='APR_DECIS_STOP_CAUSE'/>
                             </div>
                         </div>
+                        {cif(M.DESISION_MAKER.name,
+                            (<div className="item-fully">
+                                <div className="item" style={{'grid-column':'1 / span 2'}}>
+                                    <small className="label">{M.DESISION_MAKER.label}</small>
+                                    <div className="value">
+                                        <Field disabled={disabled} component={FAutocomplete} value={P[M.DESISION_MAKER.name]} name={field + M.DESISION_MAKER.name} dataKey={M.DESISION_MAKER.key}  dbVisibleVal={P.get('decision_maker_label')} />
+                                    </div>
+                                </div>
+                                <div className="item item--flow" style={{'grid-column':'auto / span 1'}}>
+                                    <small className="label">И. О</small>
+                                    <div className="value">
+                                        <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
+                                    </div>
+                                </div>
+                                {cif(M.DECISION_DATE.name,
+                                    (<div className="item item--flow" style={{'grid-column':'auto / span 1'}}>
+                                        <small className="label">{M.DECISION_DATE.label}</small>
+                                        <div className="value w130">
+                                            <Field disabled={disabled} component={FPicker} value={P[M.DECISION_DATE.name]} name={field + M.DECISION_DATE.name} datepicker='+'/>
+                                        </div>
+                                    </div>)
+                                )}
+                            </div>)
+                        )}
                     </div>
                 </div>
             </Card>
