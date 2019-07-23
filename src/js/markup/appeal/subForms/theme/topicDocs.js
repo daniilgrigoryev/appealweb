@@ -20,23 +20,40 @@ export default (props)=>{
 	}
 
 	const ROWS = rows.map(x=>(
-		<Card className="fileCard" bodyStyle={{'padding': 0}}>
-				<div className="fileCard__header">
-						<i className="ico defaultFile"></i>
-				</div>
-				<div className="fileCard__footer">
-						<div className="content">
-								<p className="fileName" title="Скачать" onClick={()=>download(x.get('storage_id'),x.get('description'))}>
+
+			<div className="row">
+					<div className="column">
+						<div className="label">Наименование</div>
+						<div className="value w180 txt-truncate txt-nowrap">
+								<p className="link" title="Скачать" onClick={()=>download(x.get('storage_id'),x.get('description'))}>
 									{x.get('description') ? x.get('description') : <span className="txt-middle color-gray-light">[не заполнено]</span>}
 								</p>
-								{x.get('type_name') ? <p className="txt-em">{x.get('type_name')}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}
 						</div>
-
-				</div>
-		</Card>
-	)); //
+					</div>
+					<div className="column">
+							<div className="label">Тип</div>
+							<div className="value">
+									{x.get('type_name') 
+										? <p className="txt-em">{x.get('type_name')}</p> 
+										: <span className="txt-middle color-gray-light">[не заполнено]</span>
+									}
+							</div>
+					</div>
+					<div className="column column--end">
+						<div className="value">
+								<Button style={{'border': '1px solid #eaebec','width':'25px','height': '25px'}} 
+												className="py0 px0 round-full bg-white" 
+												size="small" type="text" 
+												onClick={()=>download(x.get('storage_id'),x.get('description'))}>
+										<i className="ico download w12 h12"/>
+								</Button>
+						</div>
+					</div>
+			</div>
+	));
 
 	return (
-		<div className="flex-parent flex-parent--wrap">{ROWS}</div>
+		// <div className="flex-parent flex-parent--wrap">{ROWS}</div>
+		<div className="flex-table ml0 px24">{ROWS}</div>
 	);
 }

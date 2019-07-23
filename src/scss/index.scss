@@ -579,7 +579,7 @@ div.tooltipWrap {
     align-items: center;
     grid-column: auto / span 2;
 
-    .label{
+    & > .label{
       font-family: 'Open Sans';
       margin-right: 15px;
       text-align: right;

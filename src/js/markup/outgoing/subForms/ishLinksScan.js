@@ -54,42 +54,37 @@ const scannedDocs = (props) => {
         setFiles((files || im([])).push(im({ description: description, source_alias: source_alias, id: null, storage_id: data.id })));
     }
 
-    const ROWS = !files ? null : files.map((x, i) => ( 
-        <Card className="fileCard" key={x.get('storage_id')} bodyStyle={{'padding': 0}}>
-            <div className="fileCard__header">
-                <i className="ico defaultFile"></i>
+    const ROWS = !files ? null : files.map((x, i) => (
+        <div className="row" key={x.get('storage_id')}>
+            <div className="column">
+                <div className="label">Наименование</div>
+                <div className="value w180 txt-truncate txt-nowrap">
+                    <p className="link" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
+                </div>
             </div>
-            <div className="fileCard__footer">
-                {disabled ? null :
-                    <Button className="action py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
-                        <i className="ico round minus mr6"/>
+            <div className="column column--end">
+                <div className="value">
+                    {disabled ? null : 
+                        <Button className="py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
+                            <i className="ico round minus"/>
+                        </Button>
+                    }
+                    <Button style={{'border': '1px solid #eaebec','width':'25px','height': '25px'}} 
+                            className="py0 px0 round-full bg-white" 
+                            size="small" type="text" 
+                            onClick={()=>download(sessionId,x)}>
+                        <i className="ico download w12 h12"/>
                     </Button>
-                }
-                <div className="content">
-                    <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
-                    {/* {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
-                    
-                    <div className="flex-parent flex-parent--space-between-main my6">
-                        {x.get('source_alias') ? <p className="txt-em inline-block">{txtSourceAlias(x.get('source_alias'))}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}
-                        {(fTypes && !disabled && showCheckCB && _.endsWith(x.get('description').toLowerCase(),'.docx')) ? 
-                            <React.Fragment>
-                            <span>ЭЦП</span>
-                            <ECheckbox сlassName="inline-block" onChange={(v)=>onChange(i,'for_check',v)} value={x.get('for_check')} style={{marginLeft: '10px'}}/>
-                        </React.Fragment>
-                        : null
-                        }
-                    </div> */}
-               </div>
+                </div>
             </div>
-        </Card>
-
+        </div>
     ));
 
     return (
         <React.Fragment>
             {!files 
                 ? <p className='my6 txt-em color-gray align-center'>Нет сканированных документов</p>
-                : <div className="flex-parent flex-parent--center-main flex-parent--wrap">{ROWS}</div>
+                : <div className="flex-table ml0 px24">{ROWS}</div>
             }
             <div className='flex-parent flex-parent--center-main'>
                 {disabled ? null :
