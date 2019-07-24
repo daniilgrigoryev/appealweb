@@ -80,18 +80,92 @@ const IshDocRow = React.memo(props => {
 
     const prop_disabled = disabled;
     disabled = disabled || !!status_alias; // при любом из установленных статусов (ожидает проверки, ожидает подписи, подписано (ожидает отправки), отправлено) редактирование запрещено
+    
+    const headerTable = (
+        <div className="row" style={{'padding-left': '80px'}}>
+            <div className="column w180">
+                <div className="label">{M.DOC_TARGET.label}</div>
+            </div>
+            <div className="column w180">
+                <div className="label">{M.ISH_DATE.label}</div>
+            </div>
+            <div className="column w180">
+                <div className="label">Подписант</div>
+            </div>
+            <div className="column">
+                <div className="label">Статус</div>
+            </div>
+        </div>
+    );
+
+
 
     if (!expanded) { // collapsed
-        return (<React.Fragment key={id} >
-            <div className="wrap wrap--infoview">
+        return (
+            <React.Fragment>
+                {!ind ? headerTable : null}
+                <div className="row row--editable" key={id} onClick={onXpd}>
+                    <div className="column w60">
+                        <div className="value">
+                            <span className="list-num">{ind + 1}</span>
+                        </div>
+                    </div>
+                    <div className="column w180">
+                        <div className="value">
+                            {P.get(M.DOC_TARGET.name)
+                                ? <span>{P.get(M.DOC_TARGET.name)}</span> 
+                                : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                            }
+                        </div>
+                    </div>
+                    <div className="column w180">
+                        <div className="value">
+                            {data2str(P.get(M.ISH_DATE.name)) 
+                                ? <span>{data2str(P.get(M.ISH_DATE.name))}</span> 
+                                : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                            }
+                        </div>
+                    </div>
+                    <div className="column w180">
+                        <div className="value">
+                            {P.get('podpisal_name')
+                                ? <span>{P.get('podpisal_name')}</span> 
+                                : <span className="txt-middle color-gray-light">[не заполнено]</span>
+                            }
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="value">
+                            {P.get('status_name') || 'Черновик'}
+                        </div>
+                    </div>
+                    <div className="column column--end">
+                        <div className="value mt0">
+                            {disabled ? null :
+                            <Button size="small" type="text" onClick={onRmv}>
+                                <i className="ico round minus"/>
+                            </Button>}
+                            <Button type="text" onClick={onXpd}>
+                                <i className="ico round edit"/>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
+
+
+              
+
+            /* <div className="wrap wrap--infoview">
                 <div className="left-aside">
                     <div className="list-num mr12">{ind + 1}</div>
                 </div>
                 <div className="right-aside">
                     {disabled ? null :
-                    <Button size="small" type="text" onClick={onRmv}>
-                        <i className="ico round minus"/>
-                    </Button>}
+                        <Button size="small" type="text" onClick={onRmv}>
+                            <i className="ico round minus"/>
+                        </Button>
+                    }
                     <Button type="text" onClick={onXpd}>
                         <i className="ico round edit"/>
                     </Button>
@@ -126,8 +200,8 @@ const IshDocRow = React.memo(props => {
                         {P.get('status_name') || 'Черновик'}
                     </div>
                 </div>
-            </div>  
-            </React.Fragment>);
+            </div> */
+        );
     } //
 
     const getSign = async (filename,cert)=>{

@@ -116,9 +116,10 @@ class EIshDocList extends React.PureComponent {
         
         return (
             <React.Fragment>
-                {!fields.length ?
-                    <p className='my6 txt-em color-gray align-center'>Нет исходящих документов</p>
-                    : <React.Fragment>{ROWS}</React.Fragment>
+                {!fields.length 
+                    ? <p className='my6 txt-em color-gray align-center'>Нет исходящих документов</p>
+                    : <div className="flex-table ml0">{ROWS}</div>
+                                        // : <React.Fragment>{ROWS}</React.Fragment>
                 }
 
                 <div className={`flex-parent flex-parent--center-main ${!fields.length ? 'my6' : 'mt18'}`}>
