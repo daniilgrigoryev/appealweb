@@ -55,7 +55,7 @@ const addressee = (props) => {
     return (
         <div>
             {!fields.length  ?
-                <p className='my6 txt-em color-gray align-center'>Нет добавленных адресатов</p>
+                <p className='mt18 mb6 txt-em color-gray align-center'>Нет добавленных адресатов</p>
                 :
                 <div className="flex-table mb6" style={{'maxWidth': '310px'}}>
                     {ROWS}
@@ -63,7 +63,7 @@ const addressee = (props) => {
             }
 
             {disabled || fields.length ? null :
-                <Button size="small" icon="plus" onClick={add} plain={true} className="mb18 mt6 mx-auto block" title='Добавить адресата'>Добавить</Button>
+                <Button size="small" icon="plus" onClick={add} plain={true} className="mt6 mx-auto block" title='Добавить адресата'>Добавить</Button>
             }
         </div>
     );
@@ -76,11 +76,7 @@ class IshHead extends React.Component {//
         return (
             <React.Fragment>
                 <div scrollanchor="addBasic" id="addBasic">
-                    <Card className="box-card sectionCard" header={
-                        <div className='headline'>
-                            <h3>Дополнительные сведения</h3>
-                        </div>
-                    }>
+                    <Card className="box-card sectionCard">
                         <div className="form-container">
                             <div className="wrap">
                                 <div className="item">
@@ -95,12 +91,25 @@ class IshHead extends React.Component {//
                                         }
                                     </div>
                                 </div>
-                                <div className="item item--left">
+                                <div className="item item--right">
                                     <small className="label">{M.DOC_DAT.label}</small>
                                     <div className="value w130">
                                         <Field disabled={disabled} component={FPicker} name={M.DOC_DAT.name} datepicker='+'/>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+                <div scrollanchor="destinations" id="destinations">
+                    <Card className="box-card sectionCard" header={
+                        <div className='headline'>
+                            <h3>Список адресатов</h3>
+                        </div>
+                    }>
+                        <div className="form-container">
+                            <div className="wrap">
                                 <div className="item">
                                     <small className="label">{M.SIGNER.label}</small>
                                     <div className="value">
@@ -115,14 +124,6 @@ class IshHead extends React.Component {//
                                 </div>
                             </div>
                         </div>
-                    </Card>
-                </div>
-                <div scrollanchor="destinations" id="destinations">
-                    <Card className="box-card sectionCard" header={
-                        <div className='headline'>
-                            <h3>Список адресатов</h3>
-                        </div>
-                    }>
                         <div className="form-container">
                             <FieldArray name='addressee' component={addressee} disabled={disabled}/> 
                         </div>

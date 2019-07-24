@@ -74,7 +74,7 @@ const linkedDocs = (props) => {
     return (
         <React.Fragment>
             {!fields.length 
-                ? <p className="my6 txt-em color-gray align-center">Нет связанных документов</p>
+                ? <p className="py6 txt-em color-gray align-center">Нет связанных документов</p>
                 : <div className="style-table-wrapper">
                         <table className="style-table">
                             <thead>

@@ -133,12 +133,11 @@ class Outgoing extends React.Component {
                         <div className="bg-white py18">
                             <Scrollspy
                                 className='ap-side-panel-left__nav'
-                                items={['basic', 'addbasic', 'destinations', 'regulations', 'links', 'ishDoc']} 
+                                items={['destinations', 'basic', 'regulations', 'links', 'ishDoc']} 
                                 currentClassName='active'
                                 rootEl='.ap-side-panel-content'>
-                                <li href="#basic" onClick={scrollNavi('basic')}>Основные сведения</li>
-                                <li href="#addBasic" onClick={scrollNavi('addBasic')}>Дополнительные сведения</li>
                                 <li href="#destinations" onClick={scrollNavi('destinations')}>Список адресатов</li>
+                                <li href="#basic" onClick={scrollNavi('basic')}>Основные сведения</li>
                                 <li href="#regulations" onClick={scrollNavi('regulations')}>Список постановлений</li>
                                 <li href="#links" onClick={scrollNavi('links')}>Связанные обращения/письма</li>
                                 <li href="#ishDoc" onClick={scrollNavi('ishDoc')}>Загруженные документы</li>
@@ -154,9 +153,8 @@ class Outgoing extends React.Component {
                             </h1>
                         </div>
                     }>
-                        <IshBasic {...P} />
                         <IshHead {...P} />
-
+                        <IshBasic {...P} />
                         <IshLinksPost {...P} />
                         <IshLinkInner {...P} />
                         <IshLinkScan setFiles={this.setFiles} files={files} sid={sid} {...{P}} />

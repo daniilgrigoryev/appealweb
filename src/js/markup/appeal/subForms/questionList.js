@@ -59,8 +59,8 @@ export class EQuestionList extends React.Component {
                     <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' disabledDate={time=>dateBoundary(time, checkingDate)}/>
                 </div>
             </div>
-            
-            <div className="column w130">
+
+            {/* <div className="column w130">
                 <div className="label">Типы резолюций</div>
                 <div className="value">
                     <Field disabled={disabled} component={FSelect} name={x + 'type_resolution'} value={x['type_resolution']} dataKey={null}/>
@@ -69,10 +69,10 @@ export class EQuestionList extends React.Component {
             <div className="column w300">
                 <div className="label">Комментарий</div>
                 <div className="value">
-                    <Field disabled={disabled} component={FInput} autosize={{ minRows: 2, maxRows: 4}} name={x + 'description'} value={x['description']} type="textarea"/>
+                    <Field disabled={disabled} component={FInput} autosize={{ minRows: 1, maxRows: 1}} name={x + 'description'} value={x['description']} type="textarea"/>
                 </div>
-            </div>
-        
+            </div> */}
+            
             <div className="column column--end">
                 <div className="value">
                     {disabled ? null :
