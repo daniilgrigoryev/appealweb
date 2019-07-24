@@ -174,13 +174,27 @@ class ClaimantData extends React.Component {
                                                     dataKey={M.ZAJAV_LIC.key}/>
                                     </div>
                                 </div>
+
+
                                 {ZAJAV_SOURCE}
-                                <div className="item item--left" key='flPred'>
-                                    <small className="label">{M.PRED.label}</small>
-                                    <div className="value">
-                                        <Field disabled={disabled} name={M.PRED.name} component={FCheckbox}/>
+
+                                <div className="item item--left flex-parent flex-parent--space-between-main">
+                                    <div className="item item--left" key='flPred'>
+                                        <small className="label">{M.PRED.label}</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} name={M.PRED.name} component={FCheckbox}/>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="item item--right">
+                                        <small className="label">Необходимо присутствие участника</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} component={FCheckbox} value={null} name={null}/>
+                                        </div>
                                     </div>
                                 </div>
+
                                 {PREDST}
                             </div>
                         </div>

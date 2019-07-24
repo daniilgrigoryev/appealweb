@@ -255,21 +255,21 @@ class TopicRow extends React.PureComponent {
                 </React.Fragment>);
         } //
 
-        const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
-            <div className="item item--left">
-                <small className="label">{M.RASSMOTR_DATE.label}</small>
-                <div className="value w130">
-                    <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
-                </div>
-            </div>
-            <div className="item item--right">
-                <div className="value">
-                    {null && <Button type="text" size="small">
-                        <span className='color-blue'>Зарезервировать слот в СУО</span>
-                    </Button>}
-                </div>
-            </div>
-        </React.Fragment>);
+        // const PRIS_UCH = (!P.get(M.UCH_PRIS.name)) ? null : (<React.Fragment>
+        //     <div className="item item--left">
+        //         <small className="label">{M.RASSMOTR_DATE.label}</small>
+        //         <div className="value w130">
+        //             <Field disabled={disabled} component={FPicker} name={field + M.RASSMOTR_DATE.name} value={P[M.RASSMOTR_DATE.name]} datetimepicker='+'/>
+        //         </div>
+        //     </div>
+        //     <div className="item item--right">
+        //         <div className="value">
+        //             {null && <Button type="text" size="small">
+        //                 <span className='color-blue'>Зарезервировать слот в СУО</span>
+        //             </Button>}
+        //         </div>
+        //     </div>
+        // </React.Fragment>);
     //
         const postSelect = (args)=>{ // подсос даты
             const notEqual = this.isApnsAndDatesNotEqual();
@@ -448,13 +448,15 @@ class TopicRow extends React.PureComponent {
                                 <TopicDocs rows={filesRows} sessionId={sessionId} />
                             </div>
                         </div>
+
+
                         {/* <div className="item item--full">
                             <small className="label">{M.UCH_PRIS.label}</small>
                             <div className="value">
                                 <Field disabled={disabled} component={FCheckbox} value={P[M.UCH_PRIS.name]} name={field + M.UCH_PRIS.name}/>
                             </div>
-                        </div> */}
-                        {/* {PRIS_UCH} */}
+                        </div>
+                        {PRIS_UCH} */}
 
                         {cif(M.CODEX_ARTICLE.name,
                             (<div className="item">
