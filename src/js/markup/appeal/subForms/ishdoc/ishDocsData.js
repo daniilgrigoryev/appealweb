@@ -22,21 +22,23 @@ class IshDocsData extends React.PureComponent {
         super(props);
 
         this.state = {
-            fabulaDocTypes: []
+            fabulaDocTypes: [],
+            postList: []
         }
     }
 
     componentDidMount(){
-        const alias = 'AVAILABLE_FAB_DOC_TYPES';
         const listValueField = 'value';
-        post('db/select',{alias,listValueField}).then(x=>this.setState({fabulaDocTypes:x.data}));
+        post('db/select',{alias: 'AVAILABLE_FAB_DOC_TYPES' ,listValueField}).then(x=>this.setState({fabulaDocTypes:x.data}));
+        //post('db/select',{alias: 'STAMP_POST_LIST' ,listValueField}).then(x=>this.setState({postList:x.data}));
     }
 
     render(){
         const props = this.props;
         const {handleSubmit,disabled,categories,claim_id,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app} = props;
         const fTypes = this.state.fabulaDocTypes;
-        const p = {disabled,categories,claim_id,fTypes,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app};
+        const {postList} = this.state;
+        const p = {disabled,categories,claim_id,fTypes,postList,dispatch,change,initialize,sessionId,reloadRow,noChanges,adm_app};
 
         return (
             <div scrollanchor='ishDoc' id='ishDoc'>

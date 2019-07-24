@@ -62,7 +62,6 @@ class LinkerSearch extends React.Component {
     }
 
     getSearchDesc() {
-        debugger;
         const  {npost, fio, number, searchDirection, searchDocs, reg_date, contr_date, sum, isp, cls_date, stage_id} = this.state;
         return {npost, fio, number, searchDirection, searchDocs, reg_date, contr_date, sum, isp, cls_date, stage_id};
     }

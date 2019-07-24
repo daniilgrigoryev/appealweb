@@ -60,7 +60,7 @@ const stopPg = (cb, id) => (evt) => {
 const themesLoad = (claim_id)=>post("db/select",{alias : 'CLAIM_THEMES_BY_ID', listValueField : 'value', claim_id});
 
 const IshDocRow = React.memo(props => {
-    const {ind, field, value, onRemove, onInfo, onExpand, checkExpand, onFabula, fabData, claim_id, collapse,fTypes,dispatch,sessionId,initialize,reloadRow,noChanges} = props;
+    const {ind,field,value,onRemove,onInfo,onExpand,checkExpand,onFabula,fabData,claim_id,collapse,fTypes,postList,dispatch,sessionId,initialize,reloadRow,noChanges} = props;
     let {disabled} = props;
     const id = value.get('id');
     const ver_id = value.get('verifier_id');
@@ -327,7 +327,7 @@ const IshDocRow = React.memo(props => {
                 </div>
             }>
                 <div className="form-container">
-                    <FilesStorage {...{files,setFiles,fTypes,sessionId,status_alias,disabled}} />
+                    <FilesStorage {...{files,setFiles,fTypes,postList,sessionId,status_alias,disabled}} />
                 </div>
             </Card>
 

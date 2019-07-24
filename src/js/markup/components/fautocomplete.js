@@ -149,7 +149,7 @@ class EAutocomplete extends React.Component {
         }
     }
 
-    select(event) { 
+    select(event) {
         const {onChange, onSelect, name} = this.props;
         const cb = !onChange ? null : () => {
             const {value} = event;
@@ -162,15 +162,15 @@ class EAutocomplete extends React.Component {
 
     render() {
         const {visibleval, dataSuggestions} = this.state;
-        const {readOnly, disabled} = this.props;
+        const {readOnly, disabled, placeholder} = this.props;
         const readonly = readOnly;
         const onChange = this.change;
         const onSelect = this.select;
         const suggestions = dataSuggestions;
         const completeMethod = this.suggestData;
         const dropdown = true;
-        const value = visibleval;
-        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect}} />
+        const value = visibleval || null;
+        return <AutoComplete {...{value, suggestions, completeMethod, dropdown, disabled, readonly, onChange, onSelect, placeholder}} />
     } //
 }
 

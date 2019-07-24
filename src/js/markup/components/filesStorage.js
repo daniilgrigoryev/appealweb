@@ -38,7 +38,7 @@ const getPath = (sessionId,row) => {
 }
 
 const FilesStorage = React.memo(function FilesStorage(props){
-    const {files,setFiles,sessionId,fTypes,status_alias,disabled} = props;
+    const {files,setFiles,sessionId,fTypes,postList,status_alias,disabled} = props;
     const finput = useRef(null);
     const clickFile = ()=> {
         finput.current.value = null;
@@ -95,12 +95,12 @@ const FilesStorage = React.memo(function FilesStorage(props){
                     {disabled ? null :
                         <Button className="action py0" size="small" type="text" onClick={()=>remove(x.get('storage_id'))}>
                             <i className="ico round minus mr6"/>
-                        </Button>
-                    }
+                        </Button>}
 
                     <div className="content">
                         <p className="fileName" title="Скачать" onClick={()=>download(sessionId,x)}>{x.get('description')}</p>
-                        {(!fTypes) ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} />}
+                        {(!fTypes)   ? null : <EAutocomplete onChange={(newVal)=>onChange(i,'type_id',newVal)} value={x.get('type_id')} data={fTypes} disabled={disabled} placeholder='Тип документа' />}
+                        {(!postList) ? null : null && <EAutocomplete onChange={(newVal)=>onChange(i,'post_id',newVal)} value={x.get('post_id')} data={postList} disabled={false && disabled} placeholder='Почтовое отделение' />}
                         
                         <div className="flex-parent flex-parent--space-between-main my6">
                             {x.get('source_alias') ? <p className="txt-em inline-block">{txtSourceAlias(x.get('source_alias'))}</p> : <span className="txt-middle color-gray-light">[не заполнено]</span>}

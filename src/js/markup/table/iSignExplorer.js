@@ -111,7 +111,7 @@ class ISignExplorer extends React.Component {
                 }
                 
                 const responseSignedPdf = await post('storage/stampPdf',pdfParams);
-                debugger;
+                
             } catch (exc){
                 sign_xml   = 'error';
                 sign_error = exc + '';

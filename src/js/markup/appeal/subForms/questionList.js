@@ -59,6 +59,7 @@ export class EQuestionList extends React.Component {
                     <Field disabled={disabled} component={FPicker} name={x + 'control_date'} datepicker='+' disabledDate={time=>dateBoundary(time, checkingDate)}/>
                 </div>
             </div>
+            
             <div className="column w130">
                 <div className="label">Типы резолюций</div>
                 <div className="value">
@@ -71,29 +72,26 @@ export class EQuestionList extends React.Component {
                     <Field disabled={disabled} component={FInput} autosize={{ minRows: 2, maxRows: 4}} name={x + 'description'} value={x['description']} type="textarea"/>
                 </div>
             </div>
+        
             <div className="column column--end">
                 <div className="value">
                     {disabled ? null :
                         <Button className="py0" size="small" type="text" onClick={rmv(i)}>
                             <i className="ico round minus"/>
-                        </Button>
-                    }
+                        </Button>}
                     {disabled ? null : 
                         <Button className="py0" size="small" type="text" onClick={add}>
                             <i className="ico round plus"/>
-                        </Button>
-                    }
+                        </Button>}
                 </div>
             </div>
         </div>));
 
         return (
             <React.Fragment>
-                {!fields.length ?
-                    <p className='my6 txt-em color-gray align-center'>Нет добавленных тематик обращения</p>
-                    :
-                    <div className="flex-table ml0">{ROWS}</div>
-                }
+                {!fields.length 
+                    ? <p className='my6 txt-em color-gray align-center'>Нет добавленных тематик обращения</p>
+                    : <div className="flex-table ml0">{ROWS}</div>}
 
                 {disabled || fields.length ? null :
                     <Button size="small" icon="plus" plain={true} onClick={add}
