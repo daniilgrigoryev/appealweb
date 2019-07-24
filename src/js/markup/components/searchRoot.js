@@ -368,8 +368,8 @@ class SearchRoot extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="searchRoot-item searchRoot__control">
-                  <div className="flex-table ml0" ref={el => (this.scrollElement = el) }>
+                <div className="searchRoot-item searchRoot__control" ref={el => (this.scrollElement = el) }>
+                  <div className="flex-table ml0">
                     {root.map((x,i)=><SearchRow {...x} {...{change,remove,i}} />)}
                   </div>
                 </div>
