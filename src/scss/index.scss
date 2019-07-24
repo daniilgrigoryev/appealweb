@@ -739,11 +739,13 @@ div.tooltipWrap {
   }
 }
 .searchRoot__control{
+  max-height: 334px;
+  min-height: 70px;
+  overflow-x: auto;
+  width: 680px;
+  padding-right: 40px;
   .flex-table{
-    max-height: 334px;
-    min-height: 70px;
-    overflow: auto;
-    width: 640px;
+    overflow: visible;
   }
   .readOnly input:focus{
     border: 1px solid #D9D9D9!important;
