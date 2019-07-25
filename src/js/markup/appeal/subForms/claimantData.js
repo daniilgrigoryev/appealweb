@@ -182,15 +182,25 @@ class ClaimantData extends React.Component {
                                     <div className="item item--left" key='flPred'>
                                         <small className="label">{M.PRED.label}</small>
                                         <div className="value">
-                                            <Field disabled={disabled} name={M.PRED.name} component={FCheckbox}/>
+                                            <Field disabled={disabled} name={M.PRED.name} component={FSwitch}/>
                                         </div>
                                     </div>
 
 
                                     <div className="item item--right">
+                                        <small className="label">Комментарий</small>
+                                        <div className="value">
+                                            <Field disabled={disabled} component={FInput} name='notes' type="textarea"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div className="item item--left flex-parent flex-parent--space-between-main">
+                                    <div className="item item--right">
                                         <small className="label">Необходимо присутствие участника</small>
                                         <div className="value">
-                                            <Field disabled={disabled} component={FCheckbox} value={null} name={null}/>
+                                            <Field disabled={disabled} component={FSwitch} name='pris_uch'/>
                                         </div>
                                     </div>
                                 </div>
